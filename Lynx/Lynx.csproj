@@ -1,0 +1,310 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E3DC003D-B49F-4BDE-8CF6-F78B2D2D0A5A}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Lynx</RootNamespace>
+    <AssemblyName>Lynx</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Forms\Characters\CharabaseWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Characters\CharabaseWindow.Designer.cs">
+      <DependentUpon>CharabaseWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Characters\CharaParamWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Characters\CharaParamWindow.Designer.cs">
+      <DependentUpon>CharaParamWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Characters\NewCharabaseWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Characters\NewCharabaseWindow.Designer.cs">
+      <DependentUpon>NewCharabaseWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Characters\NewCharaparamWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Characters\NewCharaparamWindow.designer.cs">
+      <DependentUpon>NewCharaparamWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Home\Home.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Home\Home.Designer.cs">
+      <DependentUpon>Home.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Home\LanguageWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Home\LanguageWindow.Designer.cs">
+      <DependentUpon>LanguageWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Maps\MapEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Maps\MapEditor.Designer.cs">
+      <DependentUpon>MapEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Maps\MapSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Maps\MapSelect.Designer.cs">
+      <DependentUpon>MapSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Nyanko\Nyanko.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Nyanko\Nyanko.Designer.cs">
+      <DependentUpon>Nyanko.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Nyanko\SearchWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Nyanko\SearchWindow.Designer.cs">
+      <DependentUpon>SearchWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Scipts\NewScriptWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Scipts\NewScriptWindow.Designer.cs">
+      <DependentUpon>NewScriptWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Scipts\ScriptEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Scipts\ScriptEditor.Designer.cs">
+      <DependentUpon>ScriptEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Scipts\ScriptSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Scipts\ScriptSelect.Designer.cs">
+      <DependentUpon>ScriptSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Shops\ShopWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Shops\ShopWindow.Designer.cs">
+      <DependentUpon>ShopWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InazumaEleven\Common\GrowStats.cs" />
+    <Compile Include="InazumaEleven\Common\Bodies.cs" />
+    <Compile Include="InazumaEleven\Common\CharaTypes.cs" />
+    <Compile Include="InazumaEleven\Common\ExperienceCurve.cs" />
+    <Compile Include="InazumaEleven\Common\MovePositions.cs" />
+    <Compile Include="InazumaEleven\Common\PlayerPositions.cs" />
+    <Compile Include="InazumaEleven\Common\Genders.cs" />
+    <Compile Include="InazumaEleven\Common\Skins.cs" />
+    <Compile Include="InazumaEleven\Common\Elements.cs" />
+    <Compile Include="InazumaEleven\Common\Years.cs" />
+    <Compile Include="InazumaEleven\Games\GameSupports.cs" />
+    <Compile Include="InazumaEleven\Games\GO\GO.cs" />
+    <Compile Include="InazumaEleven\Games\GO\GOSupport.cs" />
+    <Compile Include="InazumaEleven\Games\IGame.cs" />
+    <Compile Include="InazumaEleven\Logic\ICommunityInfo.cs" />
+    <Compile Include="InazumaEleven\Logic\IShopConfig.cs" />
+    <Compile Include="InazumaEleven\Logic\IItemConfig.cs" />
+    <Compile Include="InazumaEleven\Logic\Player.cs" />
+    <Compile Include="InazumaEleven\Logic\IAvatar.cs" />
+    <Compile Include="InazumaEleven\Logic\ITalkConfig.cs" />
+    <Compile Include="InazumaEleven\Logic\ITalkInfo.cs" />
+    <Compile Include="InazumaEleven\Logic\INPCAppear.cs" />
+    <Compile Include="InazumaEleven\Logic\INPCPreset.cs" />
+    <Compile Include="InazumaEleven\Logic\INPCBase.cs" />
+    <Compile Include="InazumaEleven\Logic\ITrainingUD.cs" />
+    <Compile Include="InazumaEleven\Logic\ICharabase.cs" />
+    <Compile Include="InazumaEleven\Logic\ICharaparam.cs" />
+    <Compile Include="InazumaEleven\Logic\ISkillConfig.cs" />
+    <Compile Include="InazumaEleven\Logic\ISkillTable.cs" />
+    <Compile Include="Level5\Archive\ARC0\ARC0.cs" />
+    <Compile Include="Level5\Archive\ARC0\ARC0Support.cs" />
+    <Compile Include="Level5\Archive\IArchive.cs" />
+    <Compile Include="Level5\Archive\XPCK\XPCK.cs" />
+    <Compile Include="Level5\Archive\XPCK\XPCKSupport.cs" />
+    <Compile Include="Level5\Base64\Condition.cs" />
+    <Compile Include="Level5\Binary\CfgBin.cs" />
+    <Compile Include="Level5\Binary\CfgBinSupport.cs" />
+    <Compile Include="Level5\Binary\Logic\Entry.cs" />
+    <Compile Include="Level5\Binary\Logic\OffsetTextPair.cs" />
+    <Compile Include="Level5\Binary\Logic\Type.cs" />
+    <Compile Include="Level5\Binary\Logic\Variable.cs" />
+    <Compile Include="Level5\Compression\Compressor.cs" />
+    <Compile Include="Level5\Compression\ETC1\ETC1.cs" />
+    <Compile Include="Level5\Compression\ETC1\ETC1Decoder.cs" />
+    <Compile Include="Level5\Compression\ETC1\RGB.cs" />
+    <Compile Include="Level5\Compression\Huffman\Huffman.cs" />
+    <Compile Include="Level5\Compression\Huffman\HuffmanDecoder.cs" />
+    <Compile Include="Level5\Compression\ICompression.cs" />
+    <Compile Include="Level5\Compression\LZ10\LZ10.cs" />
+    <Compile Include="Level5\Compression\NoCompression\NoCompression.cs" />
+    <Compile Include="Level5\Compression\RLE\RLE.cs" />
+    <Compile Include="Level5\Compression\ZLib\Zlib.cs" />
+    <Compile Include="Level5\Image\Color Formats\ColorFormats.cs" />
+    <Compile Include="Level5\Image\Color Formats\IColorFormat.cs" />
+    <Compile Include="Level5\Image\IMGC.cs" />
+    <Compile Include="Level5\Image\IMGCSupport.cs" />
+    <Compile Include="Level5\Image\IMGCSwizzle.cs" />
+    <Compile Include="Level5\Text\Logic\TextConfig.cs" />
+    <Compile Include="Level5\Text\T2bþ.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools\BinaryDataReader.cs" />
+    <Compile Include="Tools\BinaryDataWriter.cs" />
+    <Compile Include="Tools\Crc32.cs" />
+    <Compile Include="Tools\Draw.cs" />
+    <Compile Include="Tools\ResourceReader.cs" />
+    <Compile Include="Tools\SubMemoryStream.cs" />
+    <Compile Include="Tools\VirtualDirectory.cs" />
+    <Compile Include="UI\FlatCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\FlatComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\FlatNumericUpDown.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\LineNumberRTB.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\LineNumberRTB.Designer.cs">
+      <DependentUpon>LineNumberRTB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\VSTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <EmbeddedResource Include="Forms\Characters\CharabaseWindow.resx">
+      <DependentUpon>CharabaseWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Characters\CharaParamWindow.resx">
+      <DependentUpon>CharaParamWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Characters\NewCharabaseWindow.resx">
+      <DependentUpon>NewCharabaseWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Characters\NewCharaparamWindow.resx">
+      <DependentUpon>NewCharaparamWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Home\Home.resx">
+      <DependentUpon>Home.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Home\LanguageWindow.resx">
+      <DependentUpon>LanguageWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Maps\MapEditor.resx">
+      <DependentUpon>MapEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Maps\MapSelect.resx">
+      <DependentUpon>MapSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Nyanko\Nyanko.resx">
+      <DependentUpon>Nyanko.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Nyanko\SearchWindow.resx">
+      <DependentUpon>SearchWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Scipts\NewScriptWindow.resx">
+      <DependentUpon>NewScriptWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Scipts\ScriptEditor.resx">
+      <DependentUpon>ScriptEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Scipts\ScriptSelect.resx">
+      <DependentUpon>ScriptSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Shops\ShopWindow.resx">
+      <DependentUpon>ShopWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="UI\LineNumberRTB.resx">
+      <DependentUpon>LineNumberRTB.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_0.png" />
+    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_0_selected.png" />
+    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_1.png" />
+    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_1_selected.png" />
+    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_2.png" />
+    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_2_selected.png" />
+    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_3.png" />
+    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_3_selected.png" />
+    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_4.png" />
+    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_4_selected.png" />
+    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_5.png" />
+    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_5_selected.png" />
+    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_6.png" />
+    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_6_selected.png" />
+    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_7.png" />
+    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_7_selected.png" />
+    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_8.png" />
+    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_selected.png" />
+    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_x.png" />
+    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_x2.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
