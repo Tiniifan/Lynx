@@ -13,7 +13,9 @@ using Lynx.InazumaEleven.Games.GO;
 using Lynx.Forms.Characters;
 using Lynx.Forms.Maps;
 using Lynx.Forms.Shops;
+using Lynx.Forms.Skills;
 using Lynx.Forms.Scipts;
+using Lynx.Forms.SaveEditor;
 
 namespace Lynx.Forms.Home
 {
@@ -62,6 +64,10 @@ namespace Lynx.Forms.Home
                     ShopWindow shopWindow = new ShopWindow(GameOpened);
                     shopWindow.ShowDialog();
                     break;
+                case "Skills":
+                    SkillWindow skillWindow = new SkillWindow(GameOpened);
+                    skillWindow.ShowDialog();
+                    break;
                 case "Scripts":
                     ScriptSelect scriptSelect = new ScriptSelect(GameOpened);
                     scriptSelect.ShowDialog();
@@ -70,6 +76,10 @@ namespace Lynx.Forms.Home
                     MessageBox.Show("Please note that the map editor is not available, you can only view the maps.");
                     MapSelect mapSelectWindow = new MapSelect(GameOpened);
                     mapSelectWindow.ShowDialog();
+                    break;
+                case "Save Editor":
+                    SaveEditorWindow saveEditorWindow = new SaveEditorWindow(GameOpened);
+                    saveEditorWindow.ShowDialog();
                     break;
             }
         }

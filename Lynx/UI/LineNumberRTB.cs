@@ -1,8 +1,8 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Globalization;
+using System.ComponentModel;
 
 // LineNumberRTB by Thảo Meo TV
 

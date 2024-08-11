@@ -239,6 +239,12 @@ namespace Lynx.Forms.Shops
             }
 
         }
+
+        private void ShopWindow_Shown(object sender, EventArgs e)
+        {
+            shopTreeView.Focus();
+        }
+
         private void ShopTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (e.Node.Parent != null)
@@ -434,7 +440,9 @@ namespace Lynx.Forms.Shops
                     shopDataGridView.Rows[rowIndex].Cells[0].Value = comboBox.Items[comboBox.Items.IndexOf("No Item")];
                 }
 
-                Shops[SelectedShopID].Add(GameOpened.GetEmptyObject<IShopConfig>());
+                IShopConfig newShopConfig = GameOpened.GetEmptyObject<IShopConfig>();
+                newShopConfig.Condition = 0;
+                Shops[SelectedShopID].Add(newShopConfig);
             }
 
             ResetDatagridViewIndex();
@@ -489,7 +497,7 @@ namespace Lynx.Forms.Shops
         {
             foreach(KeyValuePair<string, List<IShopConfig>> shop in Shops)
             {
-                GameOpened.SaveShop(shop.Key, shop.Value.ToArray());
+                GameOpened.SaveShop(shop.Key, shop.Value.Where(x => x.ItemID != 0x0).ToArray());
             }
 
             GameOpened.SaveCommunities(Communities.ToArray());

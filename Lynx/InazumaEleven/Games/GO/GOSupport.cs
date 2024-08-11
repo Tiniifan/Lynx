@@ -97,19 +97,19 @@ namespace Lynx.InazumaEleven.Games.GO
             public int EvolutionGrow { get; set; }
             public int SkillPosition { get; set; }
             public int TPCost { get; set; }
-            public int Unk3 { get; set; }
-            public int Unk4 { get; set; }
+            public int Number { get; set; }
+            public int SkillType { get; set; }
             public int EffectType { get; set; }
             public int PartnerNumber { get; set; }
-            public int Unk5 { get; set; }
-            public int Unk6 { get; set; }
-            public int Unk7 { get; set; }
-            public int Unk8 { get; set; }
+            public int Unk1 { get; set; }
+            public int Unk2 { get; set; }
+            public int Unk3 { get; set; }
+            public int Fault { get; set; }
             public int Power { get; set; }
-            public int Unk9 { get; set; }
-            public int Unk10 { get; set; }
-            public int Unk11 { get; set; }
-            public int NameHash2 { get; set; }
+            public int Technique { get; set; }
+            public int BoostActiveOn { get; set; }
+            public int SkillBoost { get; set; }
+            public int NameWazaID { get; set; }
         }
 
         public class Avatar : IAvatar

@@ -60,6 +60,63 @@ namespace Lynx.Forms.Maps
             mapListBox.Items.AddRange(MapName.Values.ToArray());
         }
 
+        private void FillListBox(string searchText)
+        {
+            Dictionary<string, string> mapName = MapName;
+
+            if (searchText == null)
+            {
+                mapName = MapName;
+            }
+            else
+            {
+                mapName = MapName
+                .Where(x => x.Value.ToLower().Contains(searchText.ToLower()))
+                .ToDictionary(x => x.Key, y => y.Value);
+            }
+
+            mapListBox.Items.Clear();
+
+            // Shops
+            foreach (KeyValuePair<string, string> map in mapName)
+            {
+                mapListBox.Items.Add(map.Value);
+            }
+        }
+
+        private void MapSelect_Shown(object sender, System.EventArgs e)
+        {
+            mapListBox.Focus();
+        }
+
+        private void SearchTextBox_TextChanged(object sender, System.EventArgs e)
+        {
+            if (!searchTextBox.Focused || searchTextBox.Enabled == false || searchTextBox.Text == "Search...") return;
+
+            FillListBox(searchTextBox.Text);
+        }
+
+        private void SearchTextBox_MouseEnter(object sender, System.EventArgs e)
+        {
+            if (searchTextBox.Text != "Search...") return;
+
+            this.Focus();
+            searchTextBox.Enabled = false;
+            searchTextBox.Text = "";
+            searchTextBox.Enabled = true;
+            searchTextBox.Focus();
+        }
+
+        private void SearchTextBox_MouseLeave(object sender, System.EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(searchTextBox.Text)) return;
+
+            searchTextBox.Enabled = false;
+            FillListBox(null);
+            searchTextBox.Text = "Search...";
+            searchTextBox.Enabled = true;
+        }
+
         private void MapListBox_SelectedIndexChanged(object sender, System.EventArgs e)
         {
             string mapName = mapListBox.SelectedItem.ToString();
@@ -74,6 +131,6 @@ namespace Lynx.Forms.Maps
             {
                 MessageBox.Show("Can't open map");
             }
-        }
+        }   
     }
 }

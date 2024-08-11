@@ -29,6 +29,7 @@ namespace Lynx.Forms.Home
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Home));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -97,8 +98,10 @@ namespace Lynx.Forms.Home
             "Charabase",
             "Charaparam",
             "Shops",
+            "Skills",
             "Scripts",
-            "Map Editor"});
+            "Map Editor",
+            "Save Editor"});
             this.featuresListBox.Location = new System.Drawing.Point(6, 19);
             this.featuresListBox.Name = "featuresListBox";
             this.featuresListBox.Size = new System.Drawing.Size(188, 381);
@@ -117,6 +120,7 @@ namespace Lynx.Forms.Home
             this.ClientSize = new System.Drawing.Size(225, 450);
             this.Controls.Add(this.featuresGroupBox);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Home";
             this.Text = "Home";

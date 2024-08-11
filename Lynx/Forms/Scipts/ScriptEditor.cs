@@ -28,6 +28,7 @@ namespace Lynx.Forms.Scipts
             scriptLineNumberRTB.Strip.BackColor = Color.FromArgb(35, 35, 35);
             scriptLineNumberRTB.Strip.BoxedLineColor = Color.FromArgb(35, 35, 35);
             scriptLineNumberRTB.Strip.ForeColor = Color.FromArgb(255, 255, 255);
+            scriptLineNumberRTB.RichTextBox.AcceptsTab = true;
 
             Filename = filename;
             scriptLineNumberRTB.Enabled = false;
@@ -39,6 +40,13 @@ namespace Lynx.Forms.Scipts
 
         public void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            string directoryPath = "./temp";
+
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+
             File.WriteAllText($"./temp/{Filename}", scriptLineNumberRTB.RichTextBox.Text);
 
             ProcessStartInfo processStartInfo = new ProcessStartInfo

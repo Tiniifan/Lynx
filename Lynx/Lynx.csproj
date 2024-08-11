@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
@@ -107,6 +110,12 @@
     <Compile Include="Forms\Nyanko\SearchWindow.Designer.cs">
       <DependentUpon>SearchWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SaveEditor\SaveEditorWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SaveEditor\SaveEditorWindow.Designer.cs">
+      <DependentUpon>SaveEditorWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Scipts\NewScriptWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,6 +139,18 @@
     </Compile>
     <Compile Include="Forms\Shops\ShopWindow.Designer.cs">
       <DependentUpon>ShopWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Skills\NewSkillWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Skills\NewSkillWindow.Designer.cs">
+      <DependentUpon>NewSkillWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Skills\SkillWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Skills\SkillWindow.Designer.cs">
+      <DependentUpon>SkillWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="InazumaEleven\Common\GrowStats.cs" />
     <Compile Include="InazumaEleven\Common\Bodies.cs" />
@@ -182,12 +203,38 @@
     <Compile Include="Level5\Compression\LZ10\LZ10.cs" />
     <Compile Include="Level5\Compression\NoCompression\NoCompression.cs" />
     <Compile Include="Level5\Compression\RLE\RLE.cs" />
+    <Compile Include="Level5\Compression\XORShift\XORShift.cs" />
     <Compile Include="Level5\Compression\ZLib\Zlib.cs" />
     <Compile Include="Level5\Image\Color Formats\ColorFormats.cs" />
     <Compile Include="Level5\Image\Color Formats\IColorFormat.cs" />
     <Compile Include="Level5\Image\IMGC.cs" />
     <Compile Include="Level5\Image\IMGCSupport.cs" />
     <Compile Include="Level5\Image\IMGCSwizzle.cs" />
+    <Compile Include="Level5\Save\Games\IEGOCS\IEGOCS.cs" />
+    <Compile Include="Level5\Save\Games\IEGOCS\IEGOCSHelper.cs" />
+    <Compile Include="Level5\Save\Games\IEGOGalaxy\IEGOGalaxy.cs" />
+    <Compile Include="Level5\Save\Games\IEGOGalaxy\IEGOGalaxyHelper.cs" />
+    <Compile Include="Level5\Save\Games\IEGO\IEGO.cs" />
+    <Compile Include="Level5\Save\Games\IEGO\IEGOHelper.cs" />
+    <Compile Include="Level5\Save\Games\IGame.cs" />
+    <Compile Include="Level5\Save\Logic\Avatar.cs" />
+    <Compile Include="Level5\Save\Logic\BestMatch.cs" />
+    <Compile Include="Level5\Save\Logic\Competition Route\Cell.cs" />
+    <Compile Include="Level5\Save\Logic\Competition Route\Route.cs" />
+    <Compile Include="Level5\Save\Logic\Element.cs" />
+    <Compile Include="Level5\Save\Logic\Equipment.cs" />
+    <Compile Include="Level5\Save\Logic\Gender.cs" />
+    <Compile Include="Level5\Save\Logic\Item.cs" />
+    <Compile Include="Level5\Save\Logic\MixiMax.cs" />
+    <Compile Include="Level5\Save\Logic\Move.cs" />
+    <Compile Include="Level5\Save\Logic\Player.cs" />
+    <Compile Include="Level5\Save\Logic\PlayRecord.cs" />
+    <Compile Include="Level5\Save\Logic\Position.cs" />
+    <Compile Include="Level5\Save\Logic\Save.cs" />
+    <Compile Include="Level5\Save\Logic\Streetpass.cs" />
+    <Compile Include="Level5\Save\Logic\Team.cs" />
+    <Compile Include="Level5\Save\Saves\IE\IE.cs" />
+    <Compile Include="Level5\Save\Saves\ISave.cs" />
     <Compile Include="Level5\Text\Logic\TextConfig.cs" />
     <Compile Include="Level5\Text\T2bþ.cs" />
     <Compile Include="Program.cs" />
@@ -247,6 +294,9 @@
     <EmbeddedResource Include="Forms\Nyanko\SearchWindow.resx">
       <DependentUpon>SearchWindow.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SaveEditor\SaveEditorWindow.resx">
+      <DependentUpon>SaveEditorWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Scipts\NewScriptWindow.resx">
       <DependentUpon>NewScriptWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -258,6 +308,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Shops\ShopWindow.resx">
       <DependentUpon>ShopWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Skills\NewSkillWindow.resx">
+      <DependentUpon>NewSkillWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Skills\SkillWindow.resx">
+      <DependentUpon>SkillWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -305,6 +361,9 @@
     <EmbeddedResource Include="InazumaEleven\Images\npc_icon_selected.png" />
     <EmbeddedResource Include="InazumaEleven\Images\npc_icon_x.png" />
     <EmbeddedResource Include="InazumaEleven\Images\npc_icon_x2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

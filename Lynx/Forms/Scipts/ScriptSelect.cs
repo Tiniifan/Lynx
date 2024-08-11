@@ -65,6 +65,11 @@ namespace Lynx.Forms.Scipts
             }
         }
 
+        private void ScriptSelect_Shown(object sender, EventArgs e)
+        {
+            scriptTreeView.Focus();
+        }
+
         private void ScriptTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (e.Node.Parent != null)
@@ -78,6 +83,13 @@ namespace Lynx.Forms.Scipts
 
                 if (GameOpened.Game.Directory.IsFullPathExists(scriptFullPath))
                 {
+                    string directoryPath = "./temp";
+
+                    if (!Directory.Exists(directoryPath))
+                    {
+                        Directory.CreateDirectory(directoryPath);
+                    }
+
                     byte[] scriptData = GameOpened.Game.Directory.GetFileFromFullPath(scriptFullPath);
                     File.WriteAllBytes($"./temp/{scriptFileNameWithoutExtension}.nutb", scriptData);
 

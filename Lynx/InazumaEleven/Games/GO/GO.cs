@@ -69,6 +69,8 @@ namespace Lynx.InazumaEleven.Games.GO
                     return new GOSupport.ShopConfig() as T;
                 case System.Type t when t == typeof(ICommunityInfo):
                     return new GOSupport.CommunityInfo() as T;
+                case System.Type t when t == typeof(ISkillConfig):
+                    return new GOSupport.SkillConfig() as T;
                 default:
                     return null;
             }
@@ -235,7 +237,7 @@ namespace Lynx.InazumaEleven.Games.GO
                 baseBegin.Children.Add(newBaseEntry);
             }
 
-            Game.Directory.GetFolderFromFullPath("/data/res/skill").Files["skill_config.bin"].ByteContent = skillconfigFile.Save();
+            Game.Directory.GetFolderFromFullPath("/data/res/skill").Files["skill_config.cfg.bin"].ByteContent = skillconfigFile.Save();
         }
 
         public ISkillTable[] GetSkillTable()
@@ -363,7 +365,15 @@ namespace Lynx.InazumaEleven.Games.GO
             shopFile.Open(Game.Directory.GetFileFromFullPath($"/data/res/shop/shop_{shopID}.cfg.bin"));
 
             Entry baseBegin = shopFile.Entries.Where(x => x.GetName() == "SHOP_CONFIG_INFO_BEGIN").FirstOrDefault();
-            baseBegin.Children.Clear();
+
+            if (baseBegin != null)
+            {
+                baseBegin.Children.Clear();
+            } else
+            {
+                baseBegin = new Entry("SHOP_CONFIG_INFO_BEGIN_0", new List<Variable>() { new Variable(Level5.Binary.Logic.Type.Int, shop.Length) }, Encoding.UTF8, true);
+                shopFile.Entries.Add(baseBegin);
+            }
 
             for (int i = 0; i < shop.Count(); i++)
             {

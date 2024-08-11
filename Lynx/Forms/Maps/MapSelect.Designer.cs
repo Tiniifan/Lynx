@@ -42,6 +42,9 @@
             this.searchTextBox.Size = new System.Drawing.Size(185, 13);
             this.searchTextBox.TabIndex = 6;
             this.searchTextBox.Text = "Search...";
+            this.searchTextBox.TextChanged += new System.EventHandler(this.SearchTextBox_TextChanged);
+            this.searchTextBox.MouseEnter += new System.EventHandler(this.SearchTextBox_MouseEnter);
+            this.searchTextBox.MouseLeave += new System.EventHandler(this.SearchTextBox_MouseLeave);
             // 
             // mapListBox
             // 
@@ -64,6 +67,7 @@
             this.Controls.Add(this.mapListBox);
             this.Name = "MapSelect";
             this.Text = "MapSelect";
+            this.Shown += new System.EventHandler(this.MapSelect_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
