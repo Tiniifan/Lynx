@@ -96,6 +96,8 @@ namespace Lynx.InazumaEleven.Games.GO
             Entry baseBegin = charaBaseFile.Entries.Where(x => x.GetName() == "CHARA_BASE_INFO_BEGIN").FirstOrDefault();
             baseBegin.Children.Clear();
 
+            baseBegin.Variables[0].Value = charabases.Length;
+
             for (int i = 0; i < charabases.Count(); i++)
             {
                 Entry newBaseEntry = new Entry("CHARA_BASE_INFO_" + i, new List<Variable>(), Encoding.UTF8);
@@ -125,6 +127,8 @@ namespace Lynx.InazumaEleven.Games.GO
 
             Entry baseBegin = charaparamFile.Entries.Where(x => x.GetName() == "CHARA_PARAM_INFO_BEGIN").FirstOrDefault();
             baseBegin.Children.Clear();
+
+            baseBegin.Variables[0].Value = charaparams.Length;
 
             for (int i = 0; i < charaparams.Count(); i++)
             {
@@ -193,6 +197,8 @@ namespace Lynx.InazumaEleven.Games.GO
             Entry baseBegin = itemconfigFile.Entries.Where(x => x.GetName() == "ITEM_AVATAR_BEGIN").FirstOrDefault();
             baseBegin.Children.Clear();
 
+            // baseBegin.Variables[0].Value = avatars.Length;
+
             for (int i = 0; i < avatars.Count(); i++)
             {
                 Entry newBaseEntry = new Entry("ITEM_AVATAR_INFO_" + i, new List<Variable>(), Encoding.UTF8);
@@ -230,6 +236,8 @@ namespace Lynx.InazumaEleven.Games.GO
             Entry baseBegin = skillconfigFile.Entries.Where(x => x.GetName() == "SKILL_CONFIG_INFO_BEGIN").FirstOrDefault();
             baseBegin.Children.Clear();
 
+            baseBegin.Variables[0].Value = skills.Length;
+
             for (int i = 0; i < skills.Count(); i++)
             {
                 Entry newBaseEntry = new Entry("SKILL_CONFIG_INFO_" + i, new List<Variable>(), Encoding.UTF8);
@@ -259,6 +267,8 @@ namespace Lynx.InazumaEleven.Games.GO
 
             Entry baseBegin = skilltableFile.Entries.Where(x => x.GetName() == "SKILL_TABLE_BEGIN").FirstOrDefault();
             baseBegin.Children.Clear();
+
+            baseBegin.Variables[0].Value = skills.Length;
 
             for (int i = 0; i < skills.Count(); i++)
             {
@@ -375,6 +385,8 @@ namespace Lynx.InazumaEleven.Games.GO
                 shopFile.Entries.Add(baseBegin);
             }
 
+            baseBegin.Variables[0].Value = shop.Length;
+
             for (int i = 0; i < shop.Count(); i++)
             {
                 Entry newBaseEntry = new Entry("SHOP_CONFIG_INFO_" + i, new List<Variable>(), Encoding.UTF8);
@@ -410,6 +422,8 @@ namespace Lynx.InazumaEleven.Games.GO
 
             Entry baseBegin = communityFile.Entries.Where(x => x.GetName() == "COMMUNITY_INFO_BEGIN").FirstOrDefault();
             baseBegin.Children.Clear();
+
+            baseBegin.Variables[0].Value = communities.Length;
 
             for (int i = 0; i < communities.Count(); i++)
             {
@@ -496,7 +510,6 @@ namespace Lynx.InazumaEleven.Games.GO
                 return null;
             }
         }
-
 
         public void SaveTextFile(GameSupports.GameFile fileName, T2bþ fileData)
         {

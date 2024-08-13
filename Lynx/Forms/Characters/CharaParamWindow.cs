@@ -233,6 +233,11 @@ namespace Lynx.Forms.Characters
             SelectedPlayer.SpecialMoves[specialMoveIndex].Level = Convert.ToInt32(specialMoveNumericUpDown.Value);
         }
 
+        private void CharaParamWindow_Shown(object sender, EventArgs e)
+        {
+            characterListBox.Focus();
+        }
+
         private void CharaParamWindow_Load(object sender, EventArgs e)
         {
             Charabases = GameOpened.GetCharabase().ToList();
@@ -380,9 +385,12 @@ namespace Lynx.Forms.Characters
             if (!string.IsNullOrEmpty(searchTextBox.Text)) return;
 
             searchTextBox.Enabled = false;
-            characterListBox.Items.Clear();
-            characterListBox.Items.AddRange(GetNames(Players.Select(x => x.Charaparam).ToArray()).ToArray());
-            PlayersFiltred = null;
+            if (!string.IsNullOrEmpty(searchTextBox.Text))
+            {
+                characterListBox.Items.Clear();
+                characterListBox.Items.AddRange(GetNames(Players.Select(x => x.Charaparam).ToArray()).ToArray());
+                PlayersFiltred = null;
+            }
             searchTextBox.Text = "Search...";
             searchTextBox.Enabled = true;
         }

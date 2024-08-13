@@ -114,6 +114,7 @@ namespace Lynx.Forms.Home
             // 
             // Home
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
@@ -124,6 +125,8 @@ namespace Lynx.Forms.Home
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Home";
             this.Text = "Home";
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Home_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Home_DragEnter);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.featuresGroupBox.ResumeLayout(false);

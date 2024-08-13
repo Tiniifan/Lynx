@@ -570,7 +570,8 @@ namespace Lynx.Forms.Skills
             if (!string.IsNullOrEmpty(searchTextBox.Text)) return;
 
             searchTextBox.Enabled = false;
-            FillTreeView(null);
+            if (!string.IsNullOrEmpty(searchTextBox.Text))
+                FillTreeView(null);
             searchTextBox.Text = "Search...";
             searchTextBox.Enabled = true;
         }

@@ -557,32 +557,32 @@ namespace Lynx.Level5.Save.Games.IEGO
                 newPlayer.IsTrained = selectedPlayer.IsTrained;
                 newPlayer.Score = selectedPlayer.Score;
                 newPlayer.Participation = selectedPlayer.Participation;
-                //newPlayer.Moves = new List<Move>();
+                newPlayer.Moves = selectedPlayer.Moves;
 
                 //for (int i = 0; i < newPlayer.UInt32Moves.Count; i++)
                 //{
-                    //Move newMove = Moves[(int)newPlayer.UInt32Moves[i]];
-                    //newMove.Level = 1;
-                    //newMove.UsedCount = newMove.EvolutionSpeed.TimeLevel[0];
+                //Move newMove = Moves[(int)newPlayer.UInt32Moves[i]];
+                //newMove.Level = 1;
+                //newMove.UsedCount = newMove.EvolutionSpeed.TimeLevel[0];
 
-                    //if (selectedPlayer.Level < 99)
-                    //{
-                        //newMove.Unlock = false;
-                    //}
-                    //else
-                    //{
-                        //newMove.Unlock = true;
-                    //}
+                //if (selectedPlayer.Level < 99)
+                //{
+                //newMove.Unlock = false;
+                //}
+                //else
+                //{
+                //newMove.Unlock = true;
+                //}
 
-                    //newPlayer.Moves.Add(newMove);
+                //newPlayer.Moves.Add(newMove);
                 //}
 
                 //for (int i = 0; i < 2; i++)
                 //{
-                    //Move newMove = Moves[0x00];
-                    //newMove.Level = 1;
-                    //newMove.UsedCount = 0;
-                    //newPlayer.Moves.Add(newMove);
+                //Move newMove = Moves[0x00];
+                //newMove.Level = 1;
+                //newMove.UsedCount = 0;
+                //newPlayer.Moves.Add(newMove);
                 //}
             }
 

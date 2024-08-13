@@ -238,7 +238,8 @@ namespace Lynx.Forms.Scipts
             if (!string.IsNullOrEmpty(searchTextBox.Text)) return;
 
             searchTextBox.Enabled = false;
-            GetScripts(searchTextBox.Text);
+            if (!string.IsNullOrEmpty(searchTextBox.Text))
+                GetScripts(searchTextBox.Text);
             searchTextBox.Text = "Search...";
             searchTextBox.Enabled = true;
         }

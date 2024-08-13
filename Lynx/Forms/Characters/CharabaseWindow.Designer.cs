@@ -405,6 +405,7 @@ namespace Lynx.Forms.Characters
             this.Text = "CharabaseWindow";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CharabaseWindow_FormClosed);
             this.Load += new System.EventHandler(this.CharabaseWindow_Load);
+            this.Shown += new System.EventHandler(this.CharabaseWindow_Shown);
             this.characterContextMenuStrip.ResumeLayout(false);
             this.characterGroupBox.ResumeLayout(false);
             this.characterGroupBox.PerformLayout();

@@ -542,7 +542,13 @@ namespace Lynx.Forms.Shops
             // Add Community
             if (typeIndex == 1)
             {
-                Communities.Add(GameOpened.GetEmptyObject<ICommunityInfo>());
+                // Get crc32 hash
+                uint crc32 = Crc32.Compute(Encoding.GetEncoding("Shift-JIS").GetBytes(shopName));
+                int crc32AsInt = (int)crc32;
+
+                ICommunityInfo community = GameOpened.GetEmptyObject<ICommunityInfo>();
+                community.ShopID = crc32AsInt;
+                Communities.Add(community);
             }
 
             // Update tree view
@@ -613,7 +619,8 @@ namespace Lynx.Forms.Shops
             if (!string.IsNullOrEmpty(searchTextBox.Text)) return;
 
             searchTextBox.Enabled = false;
-            FillTreeView(null);
+            if (!string.IsNullOrEmpty(searchTextBox.Text))
+                FillTreeView(null);
             searchTextBox.Text = "Search...";
             searchTextBox.Enabled = true;
         }

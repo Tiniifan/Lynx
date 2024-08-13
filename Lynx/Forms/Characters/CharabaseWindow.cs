@@ -173,6 +173,11 @@ namespace Lynx.Forms.Characters
             return SelectedCharabase.BaseHash.ToString("X8");
         }
 
+        private void CharabaseWindow_Shown(object sender, EventArgs e)
+        {
+            characterListBox.Focus();
+        }
+
         private void CharabaseWindow_Load(object sender, EventArgs e)
         {
             Charabases = GameOpened.GetCharabase().ToList();
@@ -376,9 +381,12 @@ namespace Lynx.Forms.Characters
             if (!string.IsNullOrEmpty(searchTextBox.Text)) return;
 
             searchTextBox.Enabled = false;
-            characterListBox.Items.Clear();
-            characterListBox.Items.AddRange(GetNames(Charabases.ToArray()).ToArray());
-            CharabasesFiltred = null;
+            if (!string.IsNullOrEmpty(searchTextBox.Text))
+            {
+                characterListBox.Items.Clear();
+                characterListBox.Items.AddRange(GetNames(Charabases.ToArray()).ToArray());
+                CharabasesFiltred = null;
+            }  
             searchTextBox.Text = "Search...";
             searchTextBox.Enabled = true;
         }

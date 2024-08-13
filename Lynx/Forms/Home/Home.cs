@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -28,21 +29,56 @@ namespace Lynx.Forms.Home
             InitializeComponent();
         }
 
+        private void LoadFile(string filename)
+        {
+            openFileDialog1.FileName = filename;
+
+            Properties.Settings.Default.OpenFileDialogHome = Path.GetDirectoryName(openFileDialog1.FileName);
+            Properties.Settings.Default.Save();
+
+            LanguageWindow languageWindow = new LanguageWindow();
+            languageWindow.ShowDialog();
+
+            GameOpened = new GO(openFileDialog1.FileName, languageWindow.SelectedLanguage);
+
+            featuresGroupBox.Enabled = true;
+            saveToolStripMenuItem.Enabled = true;
+        }
+
+        private void Home_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                string dragPath = Path.GetFullPath(files[0]);
+                string dragExt = Path.GetExtension(files[0]);
+
+                if (files.Length > 1) return;
+                if (dragExt != ".fa") return;
+
+                openFileDialog1.FileName = dragPath;
+                LoadFile(openFileDialog1.FileName);
+            }
+        }
+
+        private void Home_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+        }
+
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog1.Filter = "Supported Files (*.fa)|*.fa";
-            openFileDialog1.RestoreDirectory = true;
             openFileDialog1.FileName = null;
+
+            if (!string.IsNullOrEmpty(Properties.Settings.Default.OpenFileDialogHome))
+            {
+                openFileDialog1.InitialDirectory = Properties.Settings.Default.OpenFileDialogHome;
+            }
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                LanguageWindow languageWindow = new LanguageWindow();
-                languageWindow.ShowDialog();
-
-                GameOpened = new GO(openFileDialog1.FileName, languageWindow.SelectedLanguage);
-
-                featuresGroupBox.Enabled = true;
-                saveToolStripMenuItem.Enabled = true;
+                LoadFile(openFileDialog1.FileName);
             }
         }
 

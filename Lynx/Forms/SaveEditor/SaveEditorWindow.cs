@@ -40,19 +40,41 @@ namespace Lynx.Forms.SaveEditor
 
         private string[] GetNames(T2bþ charanames, ICharaparam[] charaparams, ICharabase[] charabases)
         {
+            var nameCounts = new Dictionary<string, int>();
+
             return charaparams
                 .Select((charaparam, index) =>
                 {
+                    string name = "";
                     var charabase = charabases.FirstOrDefault(cb => cb.BaseHash == charaparam.BaseHash);
+
                     if (charabase != null)
                     {
                         var nameHash = charabase.NameHash;
+
                         if (charanames.Nouns.TryGetValue(nameHash, out var noun) && noun.Strings.Count > 0)
                         {
-                            return noun.Strings[0].Text;
+                            name = noun.Strings[0].Text;
+                        } else
+                        {
+                            name = "Name " + index;
                         }
+                    } else
+                    {
+                        name = "Name " + index;
                     }
-                    return "Name " + index;
+
+                    if (nameCounts.ContainsKey(name))
+                    {
+                        nameCounts[name]++;
+                        name += $" ({nameCounts[name]})";
+                    }
+                    else
+                    {
+                        nameCounts[name] = 1;
+                    }
+
+                    return name;
                 })
                 .ToArray();
         }
@@ -98,6 +120,55 @@ namespace Lynx.Forms.SaveEditor
                 .ToArray();
         }
 
+        private Element GetElement(int element)
+        {
+            switch (element)
+            {
+                case 1:
+                    return Element.Wind();
+                case 2:
+                    return Element.Wood();
+                case 3:
+                    return Element.Fire();
+                case 4:
+                    return Element.Earth();
+                case 5:
+                    return Element.Void();
+                default:
+                    return new Element("Elementless");
+            }
+        }
+
+        private Position GetPosition(int position)
+        {
+            switch (position)
+            {
+                case 1:
+                    return Position.Goalkeeper();
+                case 2:
+                    return Position.Forward();
+                case 3:
+                    return Position.Midfielder();
+                case 4:
+                    return Position.Defender();
+                default:
+                    return new Position("Positionless");
+            }
+        }
+
+        private Gender GetGender(int gender)
+        {
+            switch (gender)
+            {
+                case 1:
+                    return Gender.Boy();
+                case 2:
+                    return Gender.Girl();
+                default:
+                    return new Gender("Unknown");
+            }
+        }
+
         private void InitializeSaveResource()
         {
             ICharaparam[] charaparams = GameOpened.GetCharaparams();
@@ -108,19 +179,27 @@ namespace Lynx.Forms.SaveEditor
             string[] names = GetNames(charanames, charaparams, charabases);
 
             Players = charaparams
-                .Select((x, index) => new {
-                    x.ParamHash,
-                    Player = new Level5.Save.Logic.Player(
-                        names[index],
-                        null,
-                        null,
-                        null,
-                        new List<uint>() { 0, 0, 0, 0 },
-                        new List<int>() { x.Kick },
-                        x.Freedom
-                    )
-            })
-            .ToDictionary(pair => pair.ParamHash, pair => pair.Player);
+                .GroupBy(x => x.ParamHash)
+                .Select(group => group.First())
+                .Select((x, index) =>
+                {
+                    var charabase = charabases.FirstOrDefault(y => y.BaseHash == x.BaseHash);
+
+                    return new
+                    {
+                        x.ParamHash,
+                        Player = new Level5.Save.Logic.Player(
+                            names[index],
+                            GetPosition(x.PlayerPosition),
+                            GetElement(x.Element),
+                            GetGender(charabase != null ? charabase.Gender : 0),
+                            new List<uint>() { 0, 0, 0, 0 },
+                            new List<int>() { x.Kick },
+                            x.Freedom
+                        )
+                    };
+                })
+                .ToDictionary(pair => pair.ParamHash, pair => pair.Player);
 
             playerFlatComboBox.Items.AddRange(names);
 
@@ -206,13 +285,45 @@ namespace Lynx.Forms.SaveEditor
             }
         }
 
+        private void SaveEditorWindow_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                string dragPath = Path.GetFullPath(files[0]);
+                string dragExt = Path.GetExtension(files[0]);
+
+                if (files.Length > 1) return;
+                if (dragExt != ".ie" & dragExt != ".ie4") return;
+
+                openFileDialog1.FileName = dragPath;
+                Properties.Settings.Default.OpenFileDialogSaveEditor = Path.GetDirectoryName(openFileDialog1.FileName);
+                Properties.Settings.Default.Save();
+                LoadFile(openFileDialog1.FileName);
+            }
+        }
+
+        private void SaveEditorWindow_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+        }
+
         private void OpenToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             openFileDialog1.Title = "Open Inazuma Eleven save file";
             openFileDialog1.Filter = "IEGOCS/IEGOGALAXY save file (*.ie*)|*.ie*";
+            openFileDialog1.FileName = null;
+
+            if (!string.IsNullOrEmpty(Properties.Settings.Default.OpenFileDialogSaveEditor))
+            {
+                openFileDialog1.InitialDirectory = Properties.Settings.Default.OpenFileDialogSaveEditor;
+            }
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
+                Properties.Settings.Default.OpenFileDialogSaveEditor = Path.GetDirectoryName(openFileDialog1.FileName);
+                Properties.Settings.Default.Save();
+
                 LoadFile(openFileDialog1.FileName);
             }
         }
@@ -231,6 +342,17 @@ namespace Lynx.Forms.SaveEditor
             SelectedPlayer = Save.Game.Reserve[reserveListBox.SelectedIndex];
 
             playerFlatComboBox.SelectedIndex = playerFlatComboBox.Items.IndexOf(SelectedPlayer.Name);
+            isKeyPlayerFlatCheckBox.Checked = SelectedPlayer.IsKeyPlayer;
+
+            levelFlatNumericUpDown.Value = SelectedPlayer.Level;
+            fpFlatNumericUpDown.Value = SelectedPlayer.FP;
+            tpFlatNumericUpDown.Value = SelectedPlayer.TP;
+            freedomFlatNumericUpDown.Value = SelectedPlayer.Freedom;
+
+            positionTextBox.Text = SelectedPlayer.Position.Name;
+            elementTextBox.Text = SelectedPlayer.Element.Name;
+            genderTextBox.Text = SelectedPlayer.Gender.Name;
+
             avatarFlatComboBox.SelectedIndex = avatarFlatComboBox.Items.IndexOf(SelectedPlayer.Avatar.Name);
             moveFlatComboBox1.SelectedIndex = moveFlatComboBox1.Items.IndexOf(SelectedPlayer.Moves[0].Name);
             moveFlatComboBox2.SelectedIndex = moveFlatComboBox2.Items.IndexOf(SelectedPlayer.Moves[1].Name);
@@ -238,6 +360,22 @@ namespace Lynx.Forms.SaveEditor
             moveFlatComboBox4.SelectedIndex = moveFlatComboBox4.Items.IndexOf(SelectedPlayer.Moves[3].Name);
             moveFlatComboBox5.SelectedIndex = moveFlatComboBox5.Items.IndexOf(SelectedPlayer.Moves[4].Name);
             moveFlatComboBox6.SelectedIndex = moveFlatComboBox6.Items.IndexOf(SelectedPlayer.Moves[5].Name);
+
+            avatarLevelFlatNumericUpDown.Value = SelectedPlayer.Avatar.Level;
+            moveLevelFlatNumericUpDown1.Value = SelectedPlayer.Moves[0].Level;
+            moveLevelFlatNumericUpDown2.Value = SelectedPlayer.Moves[1].Level;
+            moveLevelFlatNumericUpDown3.Value = SelectedPlayer.Moves[2].Level;
+            moveLevelFlatNumericUpDown4.Value = SelectedPlayer.Moves[3].Level;
+            moveLevelFlatNumericUpDown5.Value = SelectedPlayer.Moves[4].Level;
+            moveLevelFlatNumericUpDown6.Value = SelectedPlayer.Moves[5].Level;
+
+            unlockAvatarFlatCheckBox.Checked = SelectedPlayer.Invoke;
+            unlockFlatCheckBox1.Checked = SelectedPlayer.Moves[0].Unlock;
+            unlockFlatCheckBox2.Checked = SelectedPlayer.Moves[1].Unlock;
+            unlockFlatCheckBox3.Checked = SelectedPlayer.Moves[2].Unlock;
+            unlockFlatCheckBox4.Checked = SelectedPlayer.Moves[3].Unlock;
+            unlockFlatCheckBox5.Checked = SelectedPlayer.Moves[4].Unlock;
+            unlockFlatCheckBox6.Checked = SelectedPlayer.Moves[5].Unlock;
 
             playerGroupBox.Enabled = true;
         }
@@ -247,16 +385,45 @@ namespace Lynx.Forms.SaveEditor
             if (!playerFlatComboBox.Focused || playerFlatComboBox.SelectedIndex == -1) return;
 
             int selectedIndex = reserveListBox.SelectedIndex;
-
-            Level5.Save.Logic.Player newPlayer = Players.FirstOrDefault(x => x.Value.Name == playerFlatComboBox.SelectedItem.ToString()).Value;
             int reserveIndex = Save.Game.Reserve.IndexOf(SelectedPlayer);
-            Save.Game.Reserve[reserveIndex] = Save.Game.ChangePlayer(SelectedPlayer, newPlayer, true);
+
+            KeyValuePair<int, Level5.Save.Logic.Player> newPlayer = Players.FirstOrDefault(x => x.Value.Name == playerFlatComboBox.SelectedItem.ToString());
+            newPlayer.Value.ID = newPlayer.Key;
+            Save.Game.Reserve[reserveIndex] = Save.Game.ChangePlayer(SelectedPlayer, newPlayer.Value, true);
 
             reserveListBox.Items.Clear();
             reserveListBox.Items.AddRange(Save.Game.Reserve.Select(x => x.Name).ToArray());
             reserveListBox.SelectedIndex = selectedIndex;
 
             ReserveListBox_SelectedIndexChanged(sender, e);
+        }
+
+        private void IsKeyPlayerFlatCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!isKeyPlayerFlatCheckBox.Focused) return;
+
+            SelectedPlayer.IsKeyPlayer = isKeyPlayerFlatCheckBox.Checked;
+        }
+
+        private void LevelFlatNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (!levelFlatNumericUpDown.Focused) return;
+
+            SelectedPlayer.Level = Convert.ToInt32(levelFlatNumericUpDown.Value);
+        }
+
+        private void FpFlatNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (!fpFlatNumericUpDown.Focused) return;
+
+            SelectedPlayer.FP = Convert.ToInt32(fpFlatNumericUpDown.Value);
+        }
+
+        private void TpFlatNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (!tpFlatNumericUpDown.Focused) return;
+
+            SelectedPlayer.TP = Convert.ToInt32(tpFlatNumericUpDown.Value);
         }
 
         private void AvatarFlatComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -313,6 +480,104 @@ namespace Lynx.Forms.SaveEditor
 
             Move move = Moves.FirstOrDefault(x => x.Value.Name == moveFlatComboBox6.SelectedItem.ToString()).Value;
             SelectedPlayer.Moves[5] = new Move(move, 1, true, 1);
+        }
+
+        private void AvatarLevelFlatNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (!avatarLevelFlatNumericUpDown.Focused) return;
+
+            SelectedPlayer.Avatar.Level = Convert.ToInt32(avatarLevelFlatNumericUpDown.Value);
+        }
+
+        private void MoveLevelFlatNumericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            if (!moveLevelFlatNumericUpDown1.Focused) return;
+
+            SelectedPlayer.Moves[0].Level = Convert.ToInt32(moveLevelFlatNumericUpDown1.Value);
+        }
+
+        private void MoveLevelFlatNumericUpDown2_ValueChanged(object sender, EventArgs e)
+        {
+            if (!moveLevelFlatNumericUpDown2.Focused) return;
+
+            SelectedPlayer.Moves[1].Level = Convert.ToInt32(moveLevelFlatNumericUpDown2.Value);
+        }
+
+        private void MoveLevelFlatNumericUpDown3_ValueChanged(object sender, EventArgs e)
+        {
+            if (!moveLevelFlatNumericUpDown3.Focused) return;
+
+            SelectedPlayer.Moves[2].Level = Convert.ToInt32(moveLevelFlatNumericUpDown3.Value);
+        }
+
+        private void MoveLevelFlatNumericUpDown4_ValueChanged(object sender, EventArgs e)
+        {
+            if (!moveLevelFlatNumericUpDown4.Focused) return;
+
+            SelectedPlayer.Moves[3].Level = Convert.ToInt32(moveLevelFlatNumericUpDown4.Value);
+        }
+
+        private void MoveLevelFlatNumericUpDown5_ValueChanged(object sender, EventArgs e)
+        {
+            if (!moveLevelFlatNumericUpDown5.Focused) return;
+
+            SelectedPlayer.Moves[4].Level = Convert.ToInt32(moveLevelFlatNumericUpDown5.Value);
+        }
+
+        private void MoveLevelFlatNumericUpDown6_ValueChanged(object sender, EventArgs e)
+        {
+            if (!moveLevelFlatNumericUpDown6.Focused) return;
+
+            SelectedPlayer.Moves[5].Level = Convert.ToInt32(moveLevelFlatNumericUpDown6.Value);
+        }
+
+        private void UnlockAvatarFlatCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!unlockAvatarFlatCheckBox.Focused) return;
+
+            SelectedPlayer.Invoke = unlockAvatarFlatCheckBox.Checked;
+        }
+
+        private void UnlockFlatCheckBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!unlockFlatCheckBox1.Focused) return;
+
+            SelectedPlayer.Moves[0].Unlock = unlockFlatCheckBox1.Checked;
+        }
+
+        private void UnlockFlatCheckBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!unlockFlatCheckBox2.Focused) return;
+
+            SelectedPlayer.Moves[1].Unlock = unlockFlatCheckBox2.Checked;
+        }
+
+        private void UnlockFlatCheckBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!unlockFlatCheckBox3.Focused) return;
+
+            SelectedPlayer.Moves[2].Unlock = unlockFlatCheckBox3.Checked;
+        }
+
+        private void UnlockFlatCheckBox4_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!unlockFlatCheckBox4.Focused) return;
+
+            SelectedPlayer.Moves[3].Unlock = unlockFlatCheckBox4.Checked;
+        }
+
+        private void UnlockFlatCheckBox5_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!unlockFlatCheckBox5.Focused) return;
+
+            SelectedPlayer.Moves[4].Unlock = unlockFlatCheckBox5.Checked;
+        }
+
+        private void UnlockFlatCheckBox6_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!unlockFlatCheckBox6.Focused) return;
+
+            SelectedPlayer.Moves[5].Unlock = unlockFlatCheckBox6.Checked;
         }
     }
 }

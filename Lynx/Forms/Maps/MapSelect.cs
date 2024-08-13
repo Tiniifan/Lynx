@@ -112,7 +112,8 @@ namespace Lynx.Forms.Maps
             if (!string.IsNullOrEmpty(searchTextBox.Text)) return;
 
             searchTextBox.Enabled = false;
-            FillListBox(null);
+            if (!string.IsNullOrEmpty(searchTextBox.Text))
+                FillListBox(null);
             searchTextBox.Text = "Search...";
             searchTextBox.Enabled = true;
         }

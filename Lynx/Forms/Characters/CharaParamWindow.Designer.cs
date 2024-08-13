@@ -1344,6 +1344,7 @@ namespace Lynx.Forms.Characters
             this.Text = "CharaParamWindow";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CharaParamWindow_FormClosed);
             this.Load += new System.EventHandler(this.CharaParamWindow_Load);
+            this.Shown += new System.EventHandler(this.CharaParamWindow_Shown);
             this.characterContextMenuStrip.ResumeLayout(false);
             this.characterGroupBox.ResumeLayout(false);
             this.characterGroupBox.PerformLayout();
