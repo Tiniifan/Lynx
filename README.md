@@ -66,8 +66,8 @@ My tool couldn't have been done without the logic that I could learn by studying
 
 |Name|Region|Title ID|
 |:----------|-------------|------|
-| Inazuma Eleven Go Light |Europe|000400000017C200|
-| Inazuma Eleven Go Shadow |Europe|0004000000112F00|
+| Inazuma Eleven Go Light |Europe|0004000000112F00|
+| Inazuma Eleven Go Shadow |Europe|000400000017C200|
 
 6. Click on folder that you have created
 7. Create a new folder called romfs
