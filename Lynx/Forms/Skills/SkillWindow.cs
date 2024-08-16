@@ -438,7 +438,7 @@ namespace Lynx.Forms.Skills
         {
             if (!skillEffectFlatComboBox.Focused || skillEffectFlatComboBox.SelectedIndex == -1) return;
 
-            SelectedSkillConfig.EffectType = skillEffectFlatComboBox.SelectedIndex + 1;
+            SelectedSkillConfig.Element = skillEffectFlatComboBox.SelectedIndex + 1;
         }
 
         private void ElementFlatComboBox_SelectedIndexChanged(object sender, EventArgs e)

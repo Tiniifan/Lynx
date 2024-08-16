@@ -633,7 +633,7 @@ namespace Lynx.Level5.Save.Games.IEGOGalaxy
                 player.Moves = new List<Move>();
                 for (int i = 0; i < 4; i++)
                 {
-                    player.Moves.Add(Moves[(int)player.UInt32Moves[i]]);
+                    player.Moves.Add(Moves[(int)player.Moveset[i]]);
                 }
 
                 for (int i = 0; i < 2; i++)
@@ -689,9 +689,9 @@ namespace Lynx.Level5.Save.Games.IEGOGalaxy
                 newPlayer.Participation = selectedPlayer.Participation;
                 newPlayer.Moves = new List<Move>();
 
-                for (int i = 0; i < newPlayer.UInt32Moves.Count; i++)
+                for (int i = 0; i < newPlayer.Moveset.Count; i++)
                 {
-                    Move newMove = Moves[(int)newPlayer.UInt32Moves[i]];
+                    Move newMove = Moves[(int)newPlayer.Moveset[i]];
                     newMove.Level = 1;
                     newMove.UsedCount = newMove.EvolutionSpeed.TimeLevel[0];
 

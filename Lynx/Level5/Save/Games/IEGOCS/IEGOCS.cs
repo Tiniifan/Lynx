@@ -702,7 +702,7 @@ namespace Lynx.Level5.Save.Games.IEGOCS
                 player.Moves = new List<Move>();
                 for (int i = 0; i < 4; i++)
                 {
-                    player.Moves.Add(Moves[Convert.ToInt32(player.UInt32Moves[i])]);
+                    player.Moves.Add(Moves[Convert.ToInt32(player.Moveset[i])]);
                 }
 
                 for (int i = 0; i < 2; i++)
@@ -758,9 +758,9 @@ namespace Lynx.Level5.Save.Games.IEGOCS
                 newPlayer.Participation = selectedPlayer.Participation;
                 newPlayer.Moves = new List<Move>();
 
-                for (int i = 0; i < newPlayer.UInt32Moves.Count; i++)
+                for (int i = 0; i < newPlayer.Moveset.Count; i++)
                 {
-                    Move newMove = Moves[(int)newPlayer.UInt32Moves[i]];
+                    Move newMove = Moves[(int)newPlayer.Moveset[i]];
                     newMove.Level = 1;
                     newMove.UsedCount = newMove.EvolutionSpeed.TimeLevel[0];
 
@@ -954,7 +954,7 @@ namespace Lynx.Level5.Save.Games.IEGOCS
                 aura.Value.Index = aura.Key;
                 aura.Value.Moves = new List<Move>();
 
-                foreach (uint moveID in aura.Value.UInt32Moves)
+                foreach (uint moveID in aura.Value.Moveset)
                 {
                     aura.Value.Moves.Add(new Move(Moves[(int)moveID], 1, true, 0));
                 }
@@ -974,7 +974,7 @@ namespace Lynx.Level5.Save.Games.IEGOCS
                 aura.Value.Index = aura.Key;
                 aura.Value.Moves = new List<Move>();
 
-                foreach (uint moveID in aura.Value.UInt32Moves)
+                foreach (uint moveID in aura.Value.Moveset)
                 {
                     aura.Value.Moves.Add(new Move(Moves[(int)moveID], 1, true, 0));
                 }

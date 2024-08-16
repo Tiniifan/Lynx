@@ -23,7 +23,7 @@ namespace Lynx.Level5.Save.Logic
 
         public List<Move> Moves;
 
-        public List<UInt32> UInt32Moves;
+        public List<int> Moveset;
 
         public int Level;
 
@@ -73,7 +73,7 @@ namespace Lynx.Level5.Save.Logic
             Stat = player.Stat;
             Freedom = player.Freedom;
             Moves = player.Moves;
-            UInt32Moves = player.UInt32Moves;
+            Moveset = player.Moveset;
             Level = player.Level;
             Invoke = player.Invoke;
             Armed = player.Armed;
@@ -96,13 +96,13 @@ namespace Lynx.Level5.Save.Logic
             ID = id;
         }
 
-        public Player(string _Name, Position _Position, Element _Element, Gender _Gender, List<UInt32> _Moves, List<int> _Stat, int _Freedom)
+        public Player(string _Name, Position _Position, Element _Element, Gender _Gender, List<int> _Moves, List<int> _Stat, int _Freedom)
         {
             Name = _Name;
             Position = _Position;
             Element = _Element;
             Gender = _Gender;
-            UInt32Moves = _Moves;
+            Moveset = _Moves;
             Stat = _Stat;
             Freedom = _Freedom;
             InvestedFreedom = new List<int>(new int[8]);

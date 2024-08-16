@@ -321,13 +321,13 @@
             this.groupBox2.Controls.Add(this.moveTypeRadioButton1);
             this.groupBox2.Controls.Add(this.effectFlatComboBox);
             this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.elementFlatComboBox);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.positonFlatComboBox);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.skillEffectFlatComboBox);
             this.groupBox2.Controls.Add(this.effectFlatNumericUpDown1);
             this.groupBox2.Controls.Add(this.boostPanel);
+            this.groupBox2.Controls.Add(this.elementFlatComboBox);
             this.groupBox2.ForeColor = System.Drawing.Color.White;
             this.groupBox2.Location = new System.Drawing.Point(15, 95);
             this.groupBox2.Name = "groupBox2";

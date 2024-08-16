@@ -173,10 +173,11 @@ namespace Lynx.Forms.SaveEditor
         {
             ICharaparam[] charaparams = GameOpened.GetCharaparams();
             ICharabase[] charabases = GameOpened.GetCharabase();
+            ISkillTable[] skilltables = GameOpened.GetSkillTable();
 
             GameSupports.GameFile charaText = GameOpened.Files["chara_text"];
             T2bþ charanames = new T2bþ(charaText.File.Directory.GetFileFromFullPath(charaText.Path));
-            string[] names = GetNames(charanames, charaparams, charabases);
+            string[] names = GetNames(charanames, charaparams.GroupBy(x => x.ParamHash).Select(g => g.First()).ToArray(), charabases);
 
             Players = charaparams
                 .GroupBy(x => x.ParamHash)
@@ -193,7 +194,7 @@ namespace Lynx.Forms.SaveEditor
                             GetPosition(x.PlayerPosition),
                             GetElement(x.Element),
                             GetGender(charabase != null ? charabase.Gender : 0),
-                            new List<uint>() { 0, 0, 0, 0 },
+                            skilltables.Skip(x.SpecialMoveOffset).Take(x.SpecialMoveCount).Select( y => y.SkillHash).ToList(),
                             new List<int>() { x.Kick },
                             x.Freedom
                         )
