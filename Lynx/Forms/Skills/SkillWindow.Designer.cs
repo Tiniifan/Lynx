@@ -53,7 +53,6 @@
             this.moveTypeRadioButton1 = new System.Windows.Forms.RadioButton();
             this.effectFlatComboBox = new Lynx.UI.FlatComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.elementFlatComboBox = new Lynx.UI.FlatComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.positonFlatComboBox = new Lynx.UI.FlatComboBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -62,6 +61,7 @@
             this.boostPanel = new System.Windows.Forms.Panel();
             this.boostActiveRadioButton2 = new System.Windows.Forms.RadioButton();
             this.boostActiveRadioButton1 = new System.Windows.Forms.RadioButton();
+            this.elementFlatComboBox = new Lynx.UI.FlatComboBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.techniqueFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
             this.faultRateFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
@@ -77,6 +77,11 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.exportAsCfgbinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportAscsvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.infoGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numberFlatNumericUpDown)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -92,6 +97,7 @@
             this.groupBox4.SuspendLayout();
             this.skillGroupBox.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // skillTreeView
@@ -100,9 +106,9 @@
             this.skillTreeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.skillTreeView.ForeColor = System.Drawing.Color.White;
             this.skillTreeView.LineColor = System.Drawing.Color.White;
-            this.skillTreeView.Location = new System.Drawing.Point(12, 39);
+            this.skillTreeView.Location = new System.Drawing.Point(12, 27);
             this.skillTreeView.Name = "skillTreeView";
-            this.skillTreeView.Size = new System.Drawing.Size(243, 370);
+            this.skillTreeView.Size = new System.Drawing.Size(353, 370);
             this.skillTreeView.TabIndex = 58;
             this.skillTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.SkillTreeView_AfterSelect);
             this.skillTreeView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.SkillTreeView_MouseDown);
@@ -112,9 +118,9 @@
             this.searchTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.searchTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.searchTextBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.searchTextBox.Location = new System.Drawing.Point(12, 12);
+            this.searchTextBox.Location = new System.Drawing.Point(63, 5);
             this.searchTextBox.Name = "searchTextBox";
-            this.searchTextBox.Size = new System.Drawing.Size(243, 13);
+            this.searchTextBox.Size = new System.Drawing.Size(302, 13);
             this.searchTextBox.TabIndex = 57;
             this.searchTextBox.Text = "Search...";
             this.searchTextBox.TextChanged += new System.EventHandler(this.SearchTextBox_TextChanged);
@@ -436,25 +442,6 @@
             this.label2.TabIndex = 68;
             this.label2.Text = "Effect";
             // 
-            // elementFlatComboBox
-            // 
-            this.elementFlatComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.elementFlatComboBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.elementFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.elementFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.elementFlatComboBox.FormattingEnabled = true;
-            this.elementFlatComboBox.Items.AddRange(new object[] {
-            "Wind",
-            "Wood",
-            "Fire",
-            "Earth",
-            "Void"});
-            this.elementFlatComboBox.Location = new System.Drawing.Point(75, 73);
-            this.elementFlatComboBox.Name = "elementFlatComboBox";
-            this.elementFlatComboBox.Size = new System.Drawing.Size(139, 21);
-            this.elementFlatComboBox.TabIndex = 67;
-            this.elementFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.ElementFlatComboBox_SelectedIndexChanged);
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -625,6 +612,25 @@
             this.boostActiveRadioButton1.Text = "Self";
             this.boostActiveRadioButton1.UseVisualStyleBackColor = true;
             this.boostActiveRadioButton1.CheckedChanged += new System.EventHandler(this.BoostActiveRadioButton1_CheckedChanged);
+            // 
+            // elementFlatComboBox
+            // 
+            this.elementFlatComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.elementFlatComboBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.elementFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.elementFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.elementFlatComboBox.FormattingEnabled = true;
+            this.elementFlatComboBox.Items.AddRange(new object[] {
+            "Wind",
+            "Wood",
+            "Fire",
+            "Earth",
+            "Void"});
+            this.elementFlatComboBox.Location = new System.Drawing.Point(75, 73);
+            this.elementFlatComboBox.Name = "elementFlatComboBox";
+            this.elementFlatComboBox.Size = new System.Drawing.Size(139, 21);
+            this.elementFlatComboBox.TabIndex = 67;
+            this.elementFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.ElementFlatComboBox_SelectedIndexChanged);
             // 
             // groupBox3
             // 
@@ -809,9 +815,9 @@
             this.skillGroupBox.Controls.Add(this.groupBox3);
             this.skillGroupBox.Enabled = false;
             this.skillGroupBox.ForeColor = System.Drawing.Color.White;
-            this.skillGroupBox.Location = new System.Drawing.Point(261, 34);
+            this.skillGroupBox.Location = new System.Drawing.Point(371, 21);
             this.skillGroupBox.Name = "skillGroupBox";
-            this.skillGroupBox.Size = new System.Drawing.Size(496, 375);
+            this.skillGroupBox.Size = new System.Drawing.Size(499, 375);
             this.skillGroupBox.TabIndex = 272;
             this.skillGroupBox.TabStop = false;
             this.skillGroupBox.Text = "Skill";
@@ -842,15 +848,56 @@
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.DeleteToolStripMenuItem_Click);
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(880, 24);
+            this.menuStrip1.TabIndex = 273;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // exportToolStripMenuItem
+            // 
+            this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportAsCfgbinToolStripMenuItem,
+            this.exportAscsvToolStripMenuItem});
+            this.exportToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
+            this.exportToolStripMenuItem.Text = "Export";
+            // 
+            // exportAsCfgbinToolStripMenuItem
+            // 
+            this.exportAsCfgbinToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.exportAsCfgbinToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.exportAsCfgbinToolStripMenuItem.Name = "exportAsCfgbinToolStripMenuItem";
+            this.exportAsCfgbinToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportAsCfgbinToolStripMenuItem.Text = "Export as .cfg.bin";
+            this.exportAsCfgbinToolStripMenuItem.Click += new System.EventHandler(this.ExportAsCfgbinToolStripMenuItem_Click);
+            // 
+            // exportAscsvToolStripMenuItem
+            // 
+            this.exportAscsvToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.exportAscsvToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.exportAscsvToolStripMenuItem.Name = "exportAscsvToolStripMenuItem";
+            this.exportAscsvToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportAscsvToolStripMenuItem.Text = "Export as .xlsx";
+            this.exportAscsvToolStripMenuItem.Click += new System.EventHandler(this.ExportAscsvToolStripMenuItem_Click);
+            // 
             // SkillWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.ClientSize = new System.Drawing.Size(770, 424);
+            this.ClientSize = new System.Drawing.Size(880, 406);
             this.Controls.Add(this.skillGroupBox);
             this.Controls.Add(this.skillTreeView);
             this.Controls.Add(this.searchTextBox);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "SkillWindow";
             this.Text = "SkillWindow";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SkillWindow_FormClosed);
@@ -876,6 +923,8 @@
             this.groupBox4.PerformLayout();
             this.skillGroupBox.ResumeLayout(false);
             this.contextMenuStrip1.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -931,5 +980,10 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.ToolStripMenuItem exportAsCfgbinToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportAscsvToolStripMenuItem;
     }
 }

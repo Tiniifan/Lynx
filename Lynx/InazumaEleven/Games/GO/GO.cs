@@ -46,6 +46,7 @@ namespace Lynx.InazumaEleven.Games.GO
                 { "skill_text", new GameSupports.GameFile(Game, "/data/res/text/skill_text_" + LanguageCode + ".cfg.bin") },
                 { "kiznax_hint_text", new GameSupports.GameFile(Game, "/data/res/text/kiznax_hint_text_" + LanguageCode + ".cfg.bin") },
                 { "face", new GameSupports.GameFile(Game, "/data/bustup/face") },
+                { "faceAvatar", new GameSupports.GameFile(Game, "/data/bustup/avatar") },
                 { "modelRpgPlayer", new GameSupports.GameFile(Game, "/data/chr/model/rpg/face") },
                 { "modelWazaPlayer", new GameSupports.GameFile(Game, "/data/chr/model/waza/face") },
                 { "modelRpgNPC", new GameSupports.GameFile(Game, "/data/chr/model/rpg/npc") },
@@ -197,7 +198,7 @@ namespace Lynx.InazumaEleven.Games.GO
             Entry baseBegin = itemconfigFile.Entries.Where(x => x.GetName() == "ITEM_AVATAR_BEGIN").FirstOrDefault();
             baseBegin.Children.Clear();
 
-            // baseBegin.Variables[0].Value = avatars.Length;
+            baseBegin.Variables[0].Value = avatars.Length;
 
             for (int i = 0; i < avatars.Count(); i++)
             {
@@ -207,6 +208,38 @@ namespace Lynx.InazumaEleven.Games.GO
             }
 
             Game.Directory.GetFolderFromFullPath("/data/res/item").Files["item_config.bin"].ByteContent = itemconfigFile.Save();
+        }
+
+        public IAvatarTimeGrowth[] GetAvatarGrowthTable()
+        {
+            CfgBin itemconfigFile = new CfgBin();
+            itemconfigFile.Open(Game.Directory.GetFileFromFullPath("/data/res/item/item_config.cfg.bin"));
+
+            return itemconfigFile.Entries
+                .Where(x => x.GetName() == "ITEM_AVATAR_INDEX_BEGIN")
+                .SelectMany(x => x.Children)
+                .Select(x => x.ToClass<GOSupport.AvatarTimeGrowth>())
+                .ToArray();
+        }
+
+        public void SaveAvatarGrowthTable(IAvatarTimeGrowth[] avatars)
+        {
+            CfgBin itemconfigFile = new CfgBin();
+            itemconfigFile.Open(Game.Directory.GetFileFromFullPath("/data/res/character/item_config.cfg.bin"));
+
+            Entry baseBegin = itemconfigFile.Entries.Where(x => x.GetName() == "ITEM_AVATAR_INDEX_BEGIN").FirstOrDefault();
+            baseBegin.Children.Clear();
+
+            baseBegin.Variables[0].Value = avatars.Length;
+
+            for (int i = 0; i < avatars.Count(); i++)
+            {
+                Entry newBaseEntry = new Entry("ITEM_AVATAR_INDEX_" + i, new List<Variable>(), Encoding.UTF8);
+                newBaseEntry.SetVariablesFromClass<GOSupport.AvatarTimeGrowth>(avatars[i] as GOSupport.AvatarTimeGrowth);
+                baseBegin.Children.Add(newBaseEntry);
+            }
+
+            Game.Directory.GetFolderFromFullPath("/data/res/item").Files["item_config.cfg.bin"].ByteContent = itemconfigFile.Save();
         }
 
         public ISkillConfig[] GetSkillConfigs(bool emptySkillConfig)
@@ -246,6 +279,26 @@ namespace Lynx.InazumaEleven.Games.GO
             }
 
             Game.Directory.GetFolderFromFullPath("/data/res/skill").Files["skill_config.cfg.bin"].ByteContent = skillconfigFile.Save();
+        }
+
+        public (string, byte[]) ExportSkillConfigs(ISkillConfig[] skills)
+        {
+            CfgBin skillconfigFile = new CfgBin();
+            skillconfigFile.Open(Game.Directory.GetFileFromFullPath("/data/res/skill/skill_config.cfg.bin"));
+
+            Entry baseBegin = skillconfigFile.Entries.Where(x => x.GetName() == "SKILL_CONFIG_INFO_BEGIN").FirstOrDefault();
+            baseBegin.Children.Clear();
+
+            baseBegin.Variables[0].Value = skills.Length;
+
+            for (int i = 0; i < skills.Count(); i++)
+            {
+                Entry newBaseEntry = new Entry("SKILL_CONFIG_INFO_" + i, new List<Variable>(), Encoding.UTF8);
+                newBaseEntry.SetVariablesFromClass(skills[i] as GOSupport.SkillConfig);
+                baseBegin.Children.Add(newBaseEntry);
+            }
+
+            return ("skill_config.cfg.bin", skillconfigFile.Save());
         }
 
         public ISkillTable[] GetSkillTable()

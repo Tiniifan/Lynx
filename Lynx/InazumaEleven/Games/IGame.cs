@@ -38,6 +38,8 @@ namespace Lynx.InazumaEleven.Games
 
         void SaveSkillConfigs(ISkillConfig[] skills);
 
+        (string, byte[]) ExportSkillConfigs(ISkillConfig[] skills);
+
         ISkillTable[] GetSkillTable();
 
         void SaveSkillTable(ISkillTable[] skills);

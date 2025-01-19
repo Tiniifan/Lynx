@@ -99,6 +99,7 @@ namespace Lynx.Forms.Home
             "Charaparam",
             "Shops",
             "Skills",
+            "Fighting Spirits",
             "Scripts",
             "Map Editor",
             "Save Editor"});

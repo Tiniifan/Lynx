@@ -17,6 +17,7 @@ using Lynx.Forms.Shops;
 using Lynx.Forms.Skills;
 using Lynx.Forms.Scipts;
 using Lynx.Forms.SaveEditor;
+using Lynx.Forms.FightingSpirits;
 
 namespace Lynx.Forms.Home
 {
@@ -99,6 +100,10 @@ namespace Lynx.Forms.Home
                 case "Shops":
                     ShopWindow shopWindow = new ShopWindow(GameOpened);
                     shopWindow.ShowDialog();
+                    break;
+                case "Fighting Spirits":
+                    FightingSpiritWindow fightingSpiritWindow = new FightingSpiritWindow(GameOpened);
+                    fightingSpiritWindow.ShowDialog();
                     break;
                 case "Skills":
                     SkillWindow skillWindow = new SkillWindow(GameOpened);

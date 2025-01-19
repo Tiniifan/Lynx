@@ -169,15 +169,16 @@ namespace Lynx.Forms.Nyanko
             this.addKeyToolStripMenuItem});
             this.textTypeContextMenuStrip.Name = "contextMenuStrip1";
             this.textTypeContextMenuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.textTypeContextMenuStrip.Size = new System.Drawing.Size(121, 26);
+            this.textTypeContextMenuStrip.Size = new System.Drawing.Size(181, 48);
             // 
             // addKeyToolStripMenuItem
             // 
             this.addKeyToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.addKeyToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.addKeyToolStripMenuItem.Name = "addKeyToolStripMenuItem";
-            this.addKeyToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
+            this.addKeyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.addKeyToolStripMenuItem.Text = "Add Text";
+            this.addKeyToolStripMenuItem.Click += new System.EventHandler(this.AddKeyToolStripMenuItem_Click_1);
             // 
             // nounTypeContextMenuStrip
             // 

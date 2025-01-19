@@ -121,28 +121,28 @@ namespace Lynx.InazumaEleven.Games.GO
             public int DescriptionHash { get; set; }
             public int Unk1 { get; set; }
             public int Unk2 { get; set; }
+            public int CanBeSold { get; set; }
+            public int CanBeBought { get; set; }
+            public int SellingPrice { get; set; }
+            public int PurchasePrice { get; set; }
             public int Unk3 { get; set; }
-            public int Unk4 { get; set; }
-            public int Unk5 { get; set; }
-            public int Unk6 { get; set; }
-            public int Unk7 { get; set; }
             public int FightingSpiritPoint { get; set; }
             public int Attack { get; set; }
-            public int AttackUp { get; set; }
-            public int Unk8 { get; set; }
-            public int Unk9 { get; set; }
-            public int Unk10 { get; set; }
-            public int Unk11 { get; set; }
-            public int Unk12 { get; set; }
-            public int MoveHash { get; set; }
-            public int SkillHash { get; set; }
-            public int Unk13 { get; set; }
-            public int Unk14 { get; set; }
-            public int Unk15 { get; set; }
-            public int Unk16 { get; set; }
-            public int Unk17 { get; set; }
-            public int Unk18 { get; set; }
-            public int Unk19 { get; set; }
+            public int EvolutionStatGrow { get; set; }
+            public int Position { get; set; }
+            public int Unk4 { get; set; }
+            public int Element { get; set; }
+            public int Unk5 { get; set; }
+            public int MaxQuantity { get; set; }
+            public int SpecialMoveID { get; set; }
+            public int SkillID { get; set; }
+            public int EvolutionGrow { get; set; }
+            public int ItemPosX { get; set; }
+            public int ItemPosY { get; set; }
+            public int FusionID { get; set; }
+            public int Partner1FusionID { get; set; }
+            public int Partner2FusionID { get; set; }
+            public int Unk6 { get; set; }
         }
 
         public class TrainingUD : ITrainingUD
@@ -227,6 +227,29 @@ namespace Lynx.InazumaEleven.Games.GO
             public int ItemID { get; set; }
             public int NameID { get; set; }
             public int DescriptionID { get; set; }
+        }
+
+        public class AvatarTimeGrowth : IAvatarTimeGrowth
+        {
+            public int Level0 { get; set; }
+            public int Level1 { get; set; }
+            public int Level2 { get; set; }
+            public int Level3 { get; set; }
+            public int Level4 { get; set; }
+            public int Level5 { get; set; }
+            public int Level6 { get; set; }
+            public int Level7 { get; set; }
+            public int Level8 { get; set; }
+            public int Level9 { get; set; }
+        }
+
+        public class SkillUseTimeGrowth : ISkillUseTimeGrowth
+        {
+            public int Level0 { get; set; }
+            public int Level1 { get; set; }
+            public int Level2 { get; set; }
+            public int Level3 { get; set; }
+            public int Level4 { get; set; }
         }
     }
 }

@@ -121,6 +121,11 @@ namespace Lynx.Forms.Characters
             this.label1 = new System.Windows.Forms.Label();
             this.facePictureBox = new System.Windows.Forms.PictureBox();
             this.baseFlatComboBox = new Lynx.UI.FlatComboBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportAsCfgbinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportAscsvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.characterContextMenuStrip.SuspendLayout();
             this.characterGroupBox.SuspendLayout();
             this.charaVSTabControl.SuspendLayout();
@@ -156,6 +161,7 @@ namespace Lynx.Forms.Characters
             ((System.ComponentModel.ISupportInitialize)(this.moveLearnFlatNumericUpDown1)).BeginInit();
             this.avatarGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.facePictureBox)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // characterListBox
@@ -164,9 +170,9 @@ namespace Lynx.Forms.Characters
             this.characterListBox.ContextMenuStrip = this.characterContextMenuStrip;
             this.characterListBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.characterListBox.FormattingEnabled = true;
-            this.characterListBox.Location = new System.Drawing.Point(12, 38);
+            this.characterListBox.Location = new System.Drawing.Point(12, 27);
             this.characterListBox.Name = "characterListBox";
-            this.characterListBox.Size = new System.Drawing.Size(185, 576);
+            this.characterListBox.Size = new System.Drawing.Size(236, 576);
             this.characterListBox.TabIndex = 1;
             this.characterListBox.SelectedIndexChanged += new System.EventHandler(this.CharacterListBox_SelectedIndexChanged);
             // 
@@ -201,7 +207,7 @@ namespace Lynx.Forms.Characters
             this.searchTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.searchTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.searchTextBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.searchTextBox.Location = new System.Drawing.Point(12, 12);
+            this.searchTextBox.Location = new System.Drawing.Point(63, 5);
             this.searchTextBox.Name = "searchTextBox";
             this.searchTextBox.Size = new System.Drawing.Size(185, 13);
             this.searchTextBox.TabIndex = 2;
@@ -220,7 +226,7 @@ namespace Lynx.Forms.Characters
             this.characterGroupBox.Controls.Add(this.baseFlatComboBox);
             this.characterGroupBox.Enabled = false;
             this.characterGroupBox.ForeColor = System.Drawing.Color.White;
-            this.characterGroupBox.Location = new System.Drawing.Point(203, 32);
+            this.characterGroupBox.Location = new System.Drawing.Point(254, 21);
             this.characterGroupBox.Name = "characterGroupBox";
             this.characterGroupBox.Size = new System.Drawing.Size(417, 582);
             this.characterGroupBox.TabIndex = 5;
@@ -437,6 +443,11 @@ namespace Lynx.Forms.Characters
             this.fpFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.fpFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.fpFlatNumericUpDown.Location = new System.Drawing.Point(128, 21);
+            this.fpFlatNumericUpDown.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
             this.fpFlatNumericUpDown.Name = "fpFlatNumericUpDown";
             this.fpFlatNumericUpDown.Size = new System.Drawing.Size(66, 22);
             this.fpFlatNumericUpDown.TabIndex = 244;
@@ -652,6 +663,11 @@ namespace Lynx.Forms.Characters
             this.kickFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.kickFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.kickFlatNumericUpDown.Location = new System.Drawing.Point(128, 77);
+            this.kickFlatNumericUpDown.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
             this.kickFlatNumericUpDown.Name = "kickFlatNumericUpDown";
             this.kickFlatNumericUpDown.Size = new System.Drawing.Size(66, 22);
             this.kickFlatNumericUpDown.TabIndex = 226;
@@ -692,6 +708,11 @@ namespace Lynx.Forms.Characters
             this.dribbleFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.dribbleFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.dribbleFlatNumericUpDown.Location = new System.Drawing.Point(128, 105);
+            this.dribbleFlatNumericUpDown.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
             this.dribbleFlatNumericUpDown.Name = "dribbleFlatNumericUpDown";
             this.dribbleFlatNumericUpDown.Size = new System.Drawing.Size(66, 22);
             this.dribbleFlatNumericUpDown.TabIndex = 228;
@@ -723,6 +744,11 @@ namespace Lynx.Forms.Characters
             this.techniqueFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.techniqueFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.techniqueFlatNumericUpDown.Location = new System.Drawing.Point(128, 133);
+            this.techniqueFlatNumericUpDown.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
             this.techniqueFlatNumericUpDown.Name = "techniqueFlatNumericUpDown";
             this.techniqueFlatNumericUpDown.Size = new System.Drawing.Size(66, 22);
             this.techniqueFlatNumericUpDown.TabIndex = 230;
@@ -736,6 +762,11 @@ namespace Lynx.Forms.Characters
             this.blockFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.blockFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.blockFlatNumericUpDown.Location = new System.Drawing.Point(128, 161);
+            this.blockFlatNumericUpDown.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
             this.blockFlatNumericUpDown.Name = "blockFlatNumericUpDown";
             this.blockFlatNumericUpDown.Size = new System.Drawing.Size(66, 22);
             this.blockFlatNumericUpDown.TabIndex = 232;
@@ -749,6 +780,11 @@ namespace Lynx.Forms.Characters
             this.tpFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.tpFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.tpFlatNumericUpDown.Location = new System.Drawing.Point(128, 49);
+            this.tpFlatNumericUpDown.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
             this.tpFlatNumericUpDown.Name = "tpFlatNumericUpDown";
             this.tpFlatNumericUpDown.Size = new System.Drawing.Size(66, 22);
             this.tpFlatNumericUpDown.TabIndex = 242;
@@ -762,6 +798,11 @@ namespace Lynx.Forms.Characters
             this.speedFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.speedFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.speedFlatNumericUpDown.Location = new System.Drawing.Point(128, 189);
+            this.speedFlatNumericUpDown.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
             this.speedFlatNumericUpDown.Name = "speedFlatNumericUpDown";
             this.speedFlatNumericUpDown.Size = new System.Drawing.Size(66, 22);
             this.speedFlatNumericUpDown.TabIndex = 234;
@@ -775,6 +816,11 @@ namespace Lynx.Forms.Characters
             this.luckFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.luckFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.luckFlatNumericUpDown.Location = new System.Drawing.Point(128, 273);
+            this.luckFlatNumericUpDown.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
             this.luckFlatNumericUpDown.Name = "luckFlatNumericUpDown";
             this.luckFlatNumericUpDown.Size = new System.Drawing.Size(66, 22);
             this.luckFlatNumericUpDown.TabIndex = 240;
@@ -788,6 +834,11 @@ namespace Lynx.Forms.Characters
             this.staminaFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.staminaFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.staminaFlatNumericUpDown.Location = new System.Drawing.Point(128, 217);
+            this.staminaFlatNumericUpDown.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
             this.staminaFlatNumericUpDown.Name = "staminaFlatNumericUpDown";
             this.staminaFlatNumericUpDown.Size = new System.Drawing.Size(66, 22);
             this.staminaFlatNumericUpDown.TabIndex = 236;
@@ -801,6 +852,11 @@ namespace Lynx.Forms.Characters
             this.catchFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.catchFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.catchFlatNumericUpDown.Location = new System.Drawing.Point(128, 245);
+            this.catchFlatNumericUpDown.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
             this.catchFlatNumericUpDown.Name = "catchFlatNumericUpDown";
             this.catchFlatNumericUpDown.Size = new System.Drawing.Size(66, 22);
             this.catchFlatNumericUpDown.TabIndex = 238;
@@ -1331,15 +1387,55 @@ namespace Lynx.Forms.Characters
             this.baseFlatComboBox.TabIndex = 36;
             this.baseFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.BaseFlatComboBox_SelectedIndexChanged);
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(684, 24);
+            this.menuStrip1.TabIndex = 274;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // exportToolStripMenuItem
+            // 
+            this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportAsCfgbinToolStripMenuItem,
+            this.exportAscsvToolStripMenuItem});
+            this.exportToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
+            this.exportToolStripMenuItem.Text = "Export";
+            // 
+            // exportAsCfgbinToolStripMenuItem
+            // 
+            this.exportAsCfgbinToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.exportAsCfgbinToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.exportAsCfgbinToolStripMenuItem.Name = "exportAsCfgbinToolStripMenuItem";
+            this.exportAsCfgbinToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.exportAsCfgbinToolStripMenuItem.Text = "Export as .cfg.bin";
+            this.exportAsCfgbinToolStripMenuItem.Click += new System.EventHandler(this.ExportAsCfgbinToolStripMenuItem_Click);
+            // 
+            // exportAscsvToolStripMenuItem
+            // 
+            this.exportAscsvToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.exportAscsvToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.exportAscsvToolStripMenuItem.Name = "exportAscsvToolStripMenuItem";
+            this.exportAscsvToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.exportAscsvToolStripMenuItem.Text = "Export as .xlsx";
+            this.exportAscsvToolStripMenuItem.Click += new System.EventHandler(this.ExportAscsvToolStripMenuItem_Click);
+            // 
             // CharaParamWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.ClientSize = new System.Drawing.Size(630, 620);
+            this.ClientSize = new System.Drawing.Size(684, 614);
             this.Controls.Add(this.characterGroupBox);
             this.Controls.Add(this.searchTextBox);
             this.Controls.Add(this.characterListBox);
+            this.Controls.Add(this.menuStrip1);
             this.Name = "CharaParamWindow";
             this.Text = "CharaParamWindow";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CharaParamWindow_FormClosed);
@@ -1386,6 +1482,8 @@ namespace Lynx.Forms.Characters
             this.avatarGroupBox.ResumeLayout(false);
             this.avatarGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.facePictureBox)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1484,5 +1582,10 @@ namespace Lynx.Forms.Characters
         private System.Windows.Forms.ContextMenuStrip characterContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem insertToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportAsCfgbinToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportAscsvToolStripMenuItem;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }

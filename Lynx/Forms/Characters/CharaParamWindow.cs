@@ -12,6 +12,7 @@ using Lynx.InazumaEleven.Games;
 using Lynx.InazumaEleven.Logic;
 using Lynx.InazumaEleven.Common;
 using Lynx.InazumaEleven.Games.GO;
+using OfficeOpenXml;
 
 namespace Lynx.Forms.Characters
 {
@@ -46,6 +47,7 @@ namespace Lynx.Forms.Characters
         public CharaParamWindow(IGame game)
         {
             GameOpened = game;
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             InitializeComponent();
         }
 
@@ -229,8 +231,207 @@ namespace Lynx.Forms.Characters
         {
             if (!specialMoveNumericUpDown.Focused) return;
 
-            int specialMoveIndex = Convert.ToInt32(specialMoveNumericUpDown.Name.Replace("moveLevelFlatNumericUpDown6", "")) - 1;
+            int specialMoveIndex = Convert.ToInt32(specialMoveNumericUpDown.Name.Replace("moveLevelFlatNumericUpDown", "")) - 1;
+            Console.WriteLine(specialMoveIndex);
             SelectedPlayer.SpecialMoves[specialMoveIndex].Level = Convert.ToInt32(specialMoveNumericUpDown.Value);
+        }
+
+        private string GetText(int nameID, bool isNoun)
+        {
+            if (isNoun)
+            {
+                if (Charanames.Nouns.ContainsKey(nameID) && Charanames.Nouns[nameID].Strings[0].Text != null)
+                {
+                    return Charanames.Nouns[nameID].Strings[0].Text;
+                }
+                else
+                {
+                    return "";
+                }
+            }
+            else
+            {
+                if (Charanames.Texts.ContainsKey(nameID) && Charanames.Texts[nameID].Strings[0].Text != null)
+                {
+                    return Charanames.Texts[nameID].Strings[0].Text.Replace("\\n", Environment.NewLine);
+                }
+                else
+                {
+                    return "";
+                }
+            }
+        }
+
+        private bool SameCharacterID(string id, int tryCharacterID)
+        {
+            int crc32 = unchecked((int)Crc32.Compute(Encoding.UTF8.GetBytes(id)));
+            return tryCharacterID == crc32;
+        }
+
+        private string FindCharacterID(int id)
+        {
+            for (int i = 0; i < 10000; i++)
+            {
+                string namePlayer = "para_cp" + i.ToString().PadLeft(4, '0');
+                string nameNPC = "para_cn" + i.ToString().PadLeft(4, '0');
+                string nameNPCOther = "para_ca" + i.ToString().PadLeft(4, '0');
+
+                if (SameCharacterID(namePlayer, id))
+                {
+                    return namePlayer;
+                }
+                else if (SameCharacterID(nameNPC, id))
+                {
+                    return nameNPC;
+                }
+                else if (SameCharacterID(nameNPCOther, id))
+                {
+                    return nameNPCOther;
+                }
+            }
+
+            // Not found
+            return id.ToString("X8");
+        }
+
+        public void ExportToExcel(string filePath)
+        {
+            using (ExcelPackage package = new ExcelPackage())
+            {
+                // Create a new sheet
+                var worksheet = package.Workbook.Worksheets.Add("Players");
+
+                // Add headers
+                worksheet.Cells[1, 1].Value = "Name";
+                worksheet.Cells[1, 2].Value = "ID";
+                worksheet.Cells[1, 3].Value = "Position";
+                worksheet.Cells[1, 4].Value = "Element";
+                worksheet.Cells[1, 5].Value = "FP";
+                worksheet.Cells[1, 6].Value = "TP";
+                worksheet.Cells[1, 7].Value = "Kick";
+                worksheet.Cells[1, 8].Value = "Dribble";
+                worksheet.Cells[1, 9].Value = "Technique";
+                worksheet.Cells[1, 10].Value = "Block";
+                worksheet.Cells[1, 11].Value = "Speed";
+                worksheet.Cells[1, 12].Value = "Stamina";
+                worksheet.Cells[1, 13].Value = "Catch";
+                worksheet.Cells[1, 14].Value = "Luck";
+                worksheet.Cells[1, 15].Value = "Freedom";
+                worksheet.Cells[1, 16].Value = "Fighting Spirit";
+                worksheet.Cells[1, 17].Value = "Move 1";
+                worksheet.Cells[1, 18].Value = "Move 2";
+                worksheet.Cells[1, 19].Value = "Move 3";
+                worksheet.Cells[1, 20].Value = "Move 4";
+                worksheet.Cells[1, 21].Value = "Move 5";
+                worksheet.Cells[1, 22].Value = "Move 6";
+
+                // Fill the rows with data
+                int row = 2;
+                foreach (Player player in Players)
+                {
+                    // Get charabase
+                    ICharabase charabase = Charabases.FirstOrDefault(x => x.BaseHash == player.Charaparam.BaseHash);
+
+                    if (charabase != null)
+                    {
+                        worksheet.Cells[row, 1].Value = GetText(charabase.NameHash, true);
+                    } 
+                    else
+                    {
+                        worksheet.Cells[row, 1].Value = $"Player {row - 1}";
+                    }
+
+                    worksheet.Cells[row, 2].Value = FindCharacterID(player.Charaparam.ParamHash);
+                    worksheet.Cells[row, 3].Value = positionFlatComboBox.Items[player.Charaparam.PlayerPosition].ToString();
+                    worksheet.Cells[row, 4].Value = elementFlatComboBox.Items[player.Charaparam.Element].ToString();
+                    worksheet.Cells[row, 5].Value = player.Charaparam.FP;
+                    worksheet.Cells[row, 6].Value = player.Charaparam.TP;
+                    worksheet.Cells[row, 7].Value = player.Charaparam.Kick;
+                    worksheet.Cells[row, 8].Value = player.Charaparam.Dribble;
+                    worksheet.Cells[row, 9].Value = player.Charaparam.Technique;
+                    worksheet.Cells[row, 10].Value = player.Charaparam.Block;
+                    worksheet.Cells[row, 11].Value = player.Charaparam.Speed;
+                    worksheet.Cells[row, 12].Value = player.Charaparam.Stamina;
+                    worksheet.Cells[row, 13].Value = player.Charaparam.Catch;
+                    worksheet.Cells[row, 14].Value = player.Charaparam.Luck;
+                    worksheet.Cells[row, 15].Value = player.Charaparam.Freedom;
+
+                    if (player.Charaparam.FightingSpiritHash != 0x00)
+                    {
+                        worksheet.Cells[row, 16].Value = FightingSpiritNames[player.Charaparam.FightingSpiritHash].ToString();
+                    } else
+                    {
+                        worksheet.Cells[row, 16].Value = "";
+                    }
+
+                    for (int i = 0; i < 6; i++)
+                    {
+                        if (i < player.SpecialMoves.Count())
+                        {
+                            var skill = SkillConfigs.Find(x => x.SkillHash == player.SpecialMoves[i].SkillHash);
+
+                            if (skill != null && SkillnamesDict.ContainsKey(skill.SkillHash))
+                            {
+                                if (skill.SkillHash != 0x00)
+                                {
+                                    worksheet.Cells[row, 17 + i].Value = $"{SkillnamesDict[skill.SkillHash]} ({player.SpecialMoves[i].LevelLearned})";
+                                } else
+                                {
+                                    worksheet.Cells[row, 17 + i].Value = $"";
+                                }
+                                
+                            }
+                        }
+                        else
+                        {
+                            var defaultSkill = SkillConfigs.Find(x => x.SkillHash == 0x00);
+
+                            if (defaultSkill != null && SkillnamesDict.ContainsKey(defaultSkill.SkillHash))
+                            {
+                                worksheet.Cells[row, 17 + i].Value = $"{moveFlatComboBox1.Items.IndexOf(SkillnamesDict[defaultSkill.SkillHash])}";
+                            }
+                        }
+                    }
+
+                    // Color the row based on the element
+                    var range = worksheet.Cells[row, 4, row, 4];  // The entire row, from column 4 to 4
+
+                    switch (player.Charaparam.Element)
+                    {
+                        case 1:
+                            range.Style.Font.Color.SetColor(System.Drawing.Color.Blue);  // Blue text
+                            break;
+                        case 2:
+                            range.Style.Font.Color.SetColor(System.Drawing.Color.Green);  // Green text
+                            break;
+                        case 3:
+                            range.Style.Font.Color.SetColor(System.Drawing.Color.Red);  // Red text
+                            break;
+                        case 4:
+                            range.Style.Font.Color.SetColor(System.Drawing.Color.FromArgb(255, 204, 0));  // Dark yellow text
+                            break;
+                        case 5:
+                            range.Style.Font.Color.SetColor(System.Drawing.Color.Purple);  // Purple text
+                            break;
+                        default:
+                            range.Style.Font.Color.SetColor(System.Drawing.Color.Gray);  // Gray text
+                            break;
+                    }
+
+                    row++;
+                }
+
+                for (int col = 1; col <= 22; col++)
+                {
+                    worksheet.Column(col).AutoFit();
+                }
+
+                // Save the Excel file
+                FileInfo file = new FileInfo(filePath);
+                package.SaveAs(file);
+            }
+
+            MessageBox.Show($"Saved on {Path.GetFileName(filePath)}");
         }
 
         private void CharaParamWindow_Shown(object sender, EventArgs e)
@@ -297,6 +498,18 @@ namespace Lynx.Forms.Characters
             moveFlatComboBox4.Items.AddRange(moveFlatComboBox1.Items.Cast<Object>().ToArray());
             moveFlatComboBox5.Items.AddRange(moveFlatComboBox1.Items.Cast<Object>().ToArray());
             moveFlatComboBox6.Items.AddRange(moveFlatComboBox1.Items.Cast<Object>().ToArray());
+
+            foreach(Player player in Players.Where(x => x.Charaparam.Element == 4 && x.Charaparam.PlayerPosition == 2))
+            {
+                // Get charabase
+                ICharabase charabase = Charabases.FirstOrDefault(x => x.BaseHash == player.Charaparam.BaseHash);
+
+                if (charabase.Gender == 2)
+                {
+                    Console.WriteLine(GetText(charabase.NameHash, true));
+                }
+                
+            }
         }
 
         private void CharaParamWindow_FormClosed(object sender, FormClosedEventArgs e)
@@ -447,9 +660,11 @@ namespace Lynx.Forms.Characters
                 avatarFlatComboBox.SelectedIndex = avatarFlatComboBox.Items.IndexOf(FightingSpiritNames[0x00]);
             }
 
-            if (FightingSpiritNames.ContainsKey(SelectedPlayer.Charaparam.FightingSpiritHash))
+            if (FightingSpiritNames.ContainsKey(SelectedPlayer.Charaparam.FightingSpiritMatchkHash))
             {
                 avatarMatchFlatComboBox.SelectedIndex = avatarMatchFlatComboBox.Items.IndexOf(FightingSpiritNames[SelectedPlayer.Charaparam.FightingSpiritMatchkHash]);
+            } else
+            {
                 avatarMatchFlatComboBox.SelectedIndex = avatarMatchFlatComboBox.Items.IndexOf(FightingSpiritNames[0x00]);
             }
 
@@ -806,32 +1021,32 @@ namespace Lynx.Forms.Characters
 
         private void MoveLevelFlatNumericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-            SetSpecialMoveLevel(moveLearnFlatNumericUpDown1);
+            SetSpecialMoveLevel(moveLevelFlatNumericUpDown1);
         }
 
         private void MoveLevelFlatNumericUpDown2_ValueChanged(object sender, EventArgs e)
         {
-            SetSpecialMoveLevel(moveLearnFlatNumericUpDown2);
+            SetSpecialMoveLevel(moveLevelFlatNumericUpDown2);
         }
 
         private void MoveLevelFlatNumericUpDown3_ValueChanged(object sender, EventArgs e)
         {
-            SetSpecialMoveLevel(moveLearnFlatNumericUpDown3);
+            SetSpecialMoveLevel(moveLevelFlatNumericUpDown3);
         }
 
         private void MoveLevelFlatNumericUpDown4_ValueChanged(object sender, EventArgs e)
         {
-            SetSpecialMoveLevel(moveLearnFlatNumericUpDown4);
+            SetSpecialMoveLevel(moveLevelFlatNumericUpDown4);
         }
 
         private void MoveLevelFlatNumericUpDown5_ValueChanged(object sender, EventArgs e)
         {
-            SetSpecialMoveLevel(moveLearnFlatNumericUpDown5);
+            SetSpecialMoveLevel(moveLevelFlatNumericUpDown5);
         }
 
         private void MoveLevelFlatNumericUpDown6_ValueChanged(object sender, EventArgs e)
         {
-            SetSpecialMoveLevel(moveLearnFlatNumericUpDown6);
+            SetSpecialMoveLevel(moveLevelFlatNumericUpDown6);
         }
 
         private void DescriptionTextBox_Click(object sender, EventArgs e)
@@ -841,7 +1056,7 @@ namespace Lynx.Forms.Characters
             Charanames = nyanko.T2bþFileOpened;
 
             // Update current description
-            if (nyanko.SelectedHash > 0)
+            if (nyanko.SelectedHash != 0)
             {
                 SelectedPlayer.Charaparam.DescriptionHash = nyanko.SelectedHash;
 
@@ -917,6 +1132,30 @@ namespace Lynx.Forms.Characters
                     characterListBox.Items.Clear();
                     characterListBox.Items.AddRange(GetNames(Charabases.ToArray()).ToArray());
                 }
+            }
+        }
+
+        private void ExportAsCfgbinToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ExportAscsvToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(Properties.Settings.Default.SaveFileDialogSheet))
+            {
+                saveFileDialog1.InitialDirectory = Properties.Settings.Default.SaveFileDialogSheet;
+            }
+
+            saveFileDialog1.Filter = "XLSX Files(*.xlsx) | *.xlsx";
+            saveFileDialog1.Title = "Export your file as sheet";
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                ExportToExcel(saveFileDialog1.FileName);
+
+                Properties.Settings.Default.OpenFileDialogSaveEditor = Path.GetDirectoryName(saveFileDialog1.FileName);
+                Properties.Settings.Default.Save();
             }
         }
     }

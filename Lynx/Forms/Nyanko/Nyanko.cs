@@ -373,7 +373,6 @@ namespace Lynx.Forms.Nyanko
 
         private void NounTypeAddTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Console.WriteLine(SelectedRightClickTreeNode);
             if (SelectedRightClickTreeNode == null) return;
 
             TreeNode selectedNode = SelectedRightClickTreeNode;
@@ -396,6 +395,34 @@ namespace Lynx.Forms.Nyanko
 
             textTreeView.SelectedNode = nounValueNode;
             nounValueNode.EnsureVisible();
+
+            SelectedRightClickTreeNode = null;
+        }
+
+        private void AddKeyToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            if (SelectedRightClickTreeNode == null) return;
+
+            TreeNode selectedNode = SelectedRightClickTreeNode;
+
+            string newText = Interaction.InputBox("Enter text:");
+            int crc32 = unchecked((int)Crc32.Compute(Encoding.UTF8.GetBytes("text_" + newText)));
+
+            T2bþFileOpened.Texts.Add(crc32, new TextConfig(new List<StringLevel5>() { new StringLevel5(0, newText) }));
+
+            TreeNode textValueNode = new TreeNode(newText);
+            textValueNode.Tag = new TreeNodeTag
+            {
+                Type = "TextItem",
+                Key = crc32,
+                Number = 0
+            };
+
+            textValueNode.ContextMenuStrip = textItemContextMenuStrip;
+            selectedNode.Nodes.Add(textValueNode);
+
+            textTreeView.SelectedNode = textValueNode;
+            textValueNode.EnsureVisible();
 
             SelectedRightClickTreeNode = null;
         }

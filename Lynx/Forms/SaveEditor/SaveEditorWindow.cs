@@ -81,20 +81,39 @@ namespace Lynx.Forms.SaveEditor
 
         private string[] GetNames(T2bþ skilltext, ISkillConfig[] skillConfigs)
         {
+            var nameCounts = new Dictionary<string, int>();
+
             return skillConfigs
                 .Select((ISkillConfig, index) =>
                 {
                     var nameHash = ISkillConfig.NameHash;
 
+                    string name;
                     if (ISkillConfig.SkillHash == 0x0)
                     {
-                        return " ";
-                    } else if (skilltext.Nouns.TryGetValue(nameHash, out var noun) && noun.Strings.Count > 0)
+                        name = " ";
+                    }
+                    else if (skilltext.Nouns.TryGetValue(nameHash, out var noun) && noun.Strings.Count > 0)
                     {
-                        return noun.Strings[0].Text;
+                        name = noun.Strings[0].Text;
+                    }
+                    else
+                    {
+                        name = "Name " + index;
                     }
 
-                    return "Name " + index;
+            // Handle duplicates by appending (x) to the name
+            if (nameCounts.ContainsKey(name))
+                    {
+                        nameCounts[name]++;
+                        name += $" ({nameCounts[name]})";
+                    }
+                    else
+                    {
+                        nameCounts[name] = 0; // First occurrence
+            }
+
+                    return name;
                 })
                 .ToArray();
         }
@@ -106,7 +125,7 @@ namespace Lynx.Forms.SaveEditor
                 {
                     var nameHash = ISkillConfig.NicknameHash;
 
-                    if (ISkillConfig.SkillHash == 0x0)
+                    if (ISkillConfig.AvatarHash == 0x0)
                     {
                         return " ";
                     }

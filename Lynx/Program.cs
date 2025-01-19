@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Lynx.Forms.Home;
+using OfficeOpenXml;
 
 namespace Lynx
 {
@@ -17,6 +18,7 @@ namespace Lynx
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             Application.Run(new Home());
         }
     }

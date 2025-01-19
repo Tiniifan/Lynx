@@ -13,6 +13,8 @@ using Lynx.InazumaEleven.Games;
 using Lynx.InazumaEleven.Logic;
 using Lynx.InazumaEleven.Common;
 using Lynx.InazumaEleven.Games.GO;
+using Microsoft.WindowsAPICodePack.Dialogs;
+using OfficeOpenXml;
 
 namespace Lynx.Forms.Skills
 {
@@ -182,6 +184,32 @@ namespace Lynx.Forms.Skills
             }
         }
 
+        private string GetText(int nameID, bool isNoun)
+        {
+            if (isNoun)
+            {
+                if (Skilltext.Nouns.ContainsKey(nameID) && Skilltext.Nouns[nameID].Strings[0].Text != null)
+                {
+                    return Skilltext.Nouns[nameID].Strings[0].Text;
+                }
+                else
+                {
+                    return "";
+                }
+            }
+            else
+            {
+                if (Skilltext.Texts.ContainsKey(nameID) && Skilltext.Texts[nameID].Strings[0].Text != null)
+                {
+                   return Skilltext.Texts[nameID].Strings[0].Text.Replace("\\n", Environment.NewLine);
+                }
+                else
+                {
+                    return "";
+                }
+            }
+        }
+
         private void InitializeSkillResource()
         {
             GameSupports.GameFile skillTextGameFile = GameOpened.Files["skill_text"];
@@ -193,7 +221,142 @@ namespace Lynx.Forms.Skills
 
             FillTreeView(null);
         }
-     
+
+        public void ExportToExcel(string filePath)
+        {
+            using (ExcelPackage package = new ExcelPackage())
+            {
+                foreach (var entry in Skills)
+                {
+                    // Create a new sheet for each key in the dictionary
+                    var worksheet = package.Workbook.Worksheets.Add(entry.Key);
+
+                    // Add headers
+                    worksheet.Cells[1, 1].Value = "Name";
+                    worksheet.Cells[1, 2].Value = "ID";
+                    worksheet.Cells[1, 3].Value = "Type";
+                    worksheet.Cells[1, 4].Value = "Position";
+                    worksheet.Cells[1, 5].Value = "Element";
+                    worksheet.Cells[1, 6].Value = "Effect";
+                    worksheet.Cells[1, 7].Value = "Partner";
+                    worksheet.Cells[1, 8].Value = "TP";
+                    worksheet.Cells[1, 9].Value = "Power";
+                    worksheet.Cells[1, 10].Value = "Fault (%)";
+                    worksheet.Cells[1, 11].Value = "Technique";
+                    worksheet.Cells[1, 12].Value = "Evolution Type";
+                    worksheet.Cells[1, 13].Value = "Evolution Grow";
+
+                    // Sort skills by Power (ascending order)
+                    var sortedSkills = entry.Value.OrderBy(skill => skill.Power).ToList();
+
+                    // Fill the rows with data
+                    int row = 2;
+                    foreach (var skill in sortedSkills)
+                    {
+                        worksheet.Cells[row, 1].Value = GetText(skill.NameHash, true);
+                        worksheet.Cells[row, 2].Value = FindSkillID(skill.SkillHash, skill.SkillPosition);
+                        worksheet.Cells[row, 3].Value = skill.SkillType == 1 ? "Move" : "Fighting Spirit";
+                        worksheet.Cells[row, 4].Value = positonFlatComboBox.Items[skill.SkillPosition == 15 ? 4 : skill.SkillPosition - 1].ToString();
+
+                        if (skill.SkillPosition == 15)
+                        {
+                            worksheet.Cells[row, 5].Value = "";
+
+                            if (skill.Element - 1 != -1)
+                            {
+                                worksheet.Cells[row, 6].Value = skillEffectFlatComboBox.Items[skill.Element - 1].ToString();
+                            }
+                            else
+                            {
+                                worksheet.Cells[row, 6].Value = "";
+                            }
+                        }
+                        else
+                        {
+                            worksheet.Cells[row, 5].Value = elementFlatComboBox.Items[skill.Element - 1].ToString();
+
+                            string effect = effectFlatComboBox.Items[skill.EffectType].ToString();
+
+                            if (effect != "No Effect")
+                            {
+                                worksheet.Cells[row, 6].Value = effect;
+                            }
+                            else
+                            {
+                                worksheet.Cells[row, 6].Value = "";
+                            }
+                        }
+
+                        // Color the row based on the element
+                        var range = worksheet.Cells[row, 5, row, 5];  // The entire row, from column 1 to 14
+
+                        switch (skill.Element)
+                        {
+                            case 1:
+                                range.Style.Font.Color.SetColor(System.Drawing.Color.Blue);  // Blue text
+                                break;
+                            case 2:
+                                range.Style.Font.Color.SetColor(System.Drawing.Color.Green);  // Green text
+                                break;
+                            case 3:
+                                range.Style.Font.Color.SetColor(System.Drawing.Color.Red);  // Red text
+                                break;
+                            case 4:
+                                range.Style.Font.Color.SetColor(System.Drawing.Color.FromArgb(255, 204, 0));  // Dark yellow text
+                                break;
+                            case 5:
+                                range.Style.Font.Color.SetColor(System.Drawing.Color.Purple);  // Purple text
+                                break;
+                            default:
+                                range.Style.Font.Color.SetColor(System.Drawing.Color.Gray);  // Gray text
+                                break;
+                        }
+
+                        worksheet.Cells[row, 7].Value = skill.PartnerNumber;
+                        worksheet.Cells[row, 8].Value = skill.TPCost;
+                        worksheet.Cells[row, 9].Value = skill.Power;
+                        worksheet.Cells[row, 10].Value = skill.Fault;
+                        worksheet.Cells[row, 11].Value = skill.Technique;
+
+                        string evolution = typeFlatComboBox.Items[skill.EvolutionType].ToString();
+
+                        if (evolution != "No evolution")
+                        {
+                            worksheet.Cells[row, 12].Value = evolution;
+                        }
+                        else
+                        {
+                            worksheet.Cells[row, 12].Value = "";
+                        }
+
+                        string grow = growFlatComboBox.Items[skill.EvolutionGrow].ToString();
+
+                        if (grow != "No Grow")
+                        {
+                            worksheet.Cells[row, 13].Value = grow;
+                        }
+                        else
+                        {
+                            worksheet.Cells[row, 13].Value = "";
+                        }
+
+                        row++;
+                    }
+
+                    for (int col = 1; col <= 14; col++)
+                    {
+                        worksheet.Column(col).AutoFit();
+                    }
+                }
+
+                // Save the Excel file
+                FileInfo file = new FileInfo(filePath);
+                package.SaveAs(file);
+            }
+
+            MessageBox.Show($"Saved on {Path.GetFileName(filePath)}");
+        }
+
         private void SkillWindow_Shown(object sender, EventArgs e)
         {
             skillTreeView.Focus();
@@ -369,7 +532,7 @@ namespace Lynx.Forms.Skills
             Skilltext = nyanko.T2bþFileOpened;
 
             // Update current nickname
-            if (nyanko.SelectedHash > 0)
+            if (nyanko.SelectedHash != 0)
             {
                 SelectedSkillConfig.NameHash = nyanko.SelectedHash;
 
@@ -391,7 +554,7 @@ namespace Lynx.Forms.Skills
             Skilltext = nyanko.T2bþFileOpened;
 
             // Update current nickname
-            if (nyanko.SelectedHash > 0)
+            if (nyanko.SelectedHash != 0)
             {
                 SelectedSkillConfig.NameWazaID = nyanko.SelectedHash;
 
@@ -527,14 +690,16 @@ namespace Lynx.Forms.Skills
 
         private void DescriptionTextBox_Click(object sender, EventArgs e)
         {
-            Nyanko.Nyanko nyanko = new Nyanko.Nyanko(Path.GetFileName(GameOpened.Files["skill_text"].Path), Skilltext, true, true, SelectedSkillConfig.DescriptionHash);
+            Nyanko.Nyanko nyanko = new Nyanko.Nyanko(Path.GetFileName(GameOpened.Files["skill_text"].Path), Skilltext, true, false, SelectedSkillConfig.DescriptionHash);
             nyanko.ShowDialog();
             Skilltext = nyanko.T2bþFileOpened;
 
             // Update current nickname
-            if (nyanko.SelectedHash > 0)
+            if (nyanko.SelectedHash != 0)
             {
                 SelectedSkillConfig.DescriptionHash = nyanko.SelectedHash;
+
+                
 
                 if (Skilltext.Texts.ContainsKey(SelectedSkillConfig.DescriptionHash))
                 {
@@ -574,6 +739,39 @@ namespace Lynx.Forms.Skills
                 FillTreeView(null);
             searchTextBox.Text = "Search...";
             searchTextBox.Enabled = true;
+        }
+
+        private void ExportAsCfgbinToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.IsFolderPicker = true;
+
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                (string, byte[]) skillConfig = GameOpened.ExportSkillConfigs(Skills.SelectMany(pair => pair.Value).ToArray());
+                File.WriteAllBytes(Path.Combine(dialog.FileName, skillConfig.Item1), skillConfig.Item2);
+                Skilltext.Save(Path.Combine(dialog.FileName, Path.GetFileName(GameOpened.Files["skill_text"].Path)));
+                MessageBox.Show("Data exported!");
+            }
+        }
+
+        private void ExportAscsvToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(Properties.Settings.Default.SaveFileDialogSheet))
+            {
+                saveFileDialog1.InitialDirectory = Properties.Settings.Default.SaveFileDialogSheet;
+            }
+
+            saveFileDialog1.Filter = "XLSX Files(*.xlsx) | *.xlsx";
+            saveFileDialog1.Title = "Export your file as sheet";
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                ExportToExcel(saveFileDialog1.FileName);
+
+                Properties.Settings.Default.OpenFileDialogSaveEditor = Path.GetDirectoryName(saveFileDialog1.FileName);
+                Properties.Settings.Default.Save();
+            }
         }
     }
 }
