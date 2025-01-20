@@ -216,7 +216,7 @@ namespace Lynx.InazumaEleven.Games.GO
             itemconfigFile.Open(Game.Directory.GetFileFromFullPath("/data/res/item/item_config.cfg.bin"));
 
             return itemconfigFile.Entries
-                .Where(x => x.GetName() == "ITEM_AVATAR_INDEX_BEGIN")
+                .Where(x => x.GetName() == "AVATAR_INDEX_BEGIN")
                 .SelectMany(x => x.Children)
                 .Select(x => x.ToClass<GOSupport.AvatarTimeGrowth>())
                 .ToArray();
@@ -227,14 +227,14 @@ namespace Lynx.InazumaEleven.Games.GO
             CfgBin itemconfigFile = new CfgBin();
             itemconfigFile.Open(Game.Directory.GetFileFromFullPath("/data/res/character/item_config.cfg.bin"));
 
-            Entry baseBegin = itemconfigFile.Entries.Where(x => x.GetName() == "ITEM_AVATAR_INDEX_BEGIN").FirstOrDefault();
+            Entry baseBegin = itemconfigFile.Entries.Where(x => x.GetName() == "AVATAR_INDEX_BEGIN").FirstOrDefault();
             baseBegin.Children.Clear();
 
             baseBegin.Variables[0].Value = avatars.Length;
 
             for (int i = 0; i < avatars.Count(); i++)
             {
-                Entry newBaseEntry = new Entry("ITEM_AVATAR_INDEX_" + i, new List<Variable>(), Encoding.UTF8);
+                Entry newBaseEntry = new Entry("AVATAR_INDEX_" + i, new List<Variable>(), Encoding.UTF8);
                 newBaseEntry.SetVariablesFromClass<GOSupport.AvatarTimeGrowth>(avatars[i] as GOSupport.AvatarTimeGrowth);
                 baseBegin.Children.Add(newBaseEntry);
             }

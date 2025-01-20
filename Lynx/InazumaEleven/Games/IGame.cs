@@ -34,6 +34,10 @@ namespace Lynx.InazumaEleven.Games
 
         void SaveAvatars(IAvatar[] avatars);
 
+        IAvatarTimeGrowth[] GetAvatarGrowthTable();
+
+        void SaveAvatarGrowthTable(IAvatarTimeGrowth[] avatars);
+
         ISkillConfig[] GetSkillConfigs(bool emptySkillConfig);
 
         void SaveSkillConfigs(ISkillConfig[] skills);

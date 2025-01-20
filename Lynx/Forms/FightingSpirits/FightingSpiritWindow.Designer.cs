@@ -34,16 +34,18 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.fusionGroupBox = new System.Windows.Forms.GroupBox();
-            this.material2FlatComboBox = new Lynx.UI.FlatComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.material1FlatComboBox = new Lynx.UI.FlatComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.targetFlatComboBox = new Lynx.UI.FlatComboBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.descriptionTextBox = new System.Windows.Forms.TextBox();
-            this.descriptionGroupBox = new System.Windows.Forms.GroupBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportAsCfgbinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportAscsvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.searchTextBox = new System.Windows.Forms.TextBox();
+            this.charaVSTabControl = new Lynx.UI.VSTabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.avatarListBox = new System.Windows.Forms.ListBox();
             this.fightingSpiritGroupBox = new System.Windows.Forms.GroupBox();
             this.itemGroupBox = new System.Windows.Forms.GroupBox();
             this.label21 = new System.Windows.Forms.Label();
@@ -67,7 +69,10 @@
             this.nameTextBox = new System.Windows.Forms.TextBox();
             this.fullNameTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.descriptionGroupBox = new System.Windows.Forms.GroupBox();
+            this.descriptionTextBox = new System.Windows.Forms.TextBox();
             this.informationGroupBox = new System.Windows.Forms.GroupBox();
+            this.levelGrowthFlatComboBox = new Lynx.UI.FlatComboBox();
             this.statGrowthflatComboBox = new Lynx.UI.FlatComboBox();
             this.growthGroupBox = new System.Windows.Forms.GroupBox();
             this.label37 = new System.Windows.Forms.Label();
@@ -106,25 +111,30 @@
             this.skillFlatComboBox = new Lynx.UI.FlatComboBox();
             this.label12 = new System.Windows.Forms.Label();
             this.specialMoveFlatComboBox = new Lynx.UI.FlatComboBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.positonFlatComboBox = new Lynx.UI.FlatComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.elementFlatComboBox = new Lynx.UI.FlatComboBox();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportAsCfgbinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportAscsvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.searchTextBox = new System.Windows.Forms.TextBox();
-            this.levelGrowthTableGroupBox = new System.Windows.Forms.GroupBox();
+            this.fusionGroupBox = new System.Windows.Forms.GroupBox();
+            this.material2FlatComboBox = new Lynx.UI.FlatComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.material1FlatComboBox = new Lynx.UI.FlatComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.targetFlatComboBox = new Lynx.UI.FlatComboBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.levelGrowthTableDataGridView = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.avatarListBox = new System.Windows.Forms.ListBox();
-            this.fusionGroupBox.SuspendLayout();
-            this.descriptionGroupBox.SuspendLayout();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.contextMenuStrip1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
+            this.charaVSTabControl.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.fightingSpiritGroupBox.SuspendLayout();
             this.itemGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.xPositionFlatNumericUpDown)).BeginInit();
@@ -135,6 +145,7 @@
             this.nameGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.facePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numberFlatNumericUpDown)).BeginInit();
+            this.descriptionGroupBox.SuspendLayout();
             this.informationGroupBox.SuspendLayout();
             this.growthGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fg6FlatNumericUpDown)).BeginInit();
@@ -150,126 +161,131 @@
             ((System.ComponentModel.ISupportInitialize)(this.levelGrowthFlatNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.powerFlatNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fgFlatNumericUpDown)).BeginInit();
-            this.contextMenuStrip1.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
-            this.levelGrowthTableGroupBox.SuspendLayout();
+            this.fusionGroupBox.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.levelGrowthTableDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
-            // fusionGroupBox
+            // contextMenuStrip1
             // 
-            this.fusionGroupBox.Controls.Add(this.material2FlatComboBox);
-            this.fusionGroupBox.Controls.Add(this.label4);
-            this.fusionGroupBox.Controls.Add(this.material1FlatComboBox);
-            this.fusionGroupBox.Controls.Add(this.label3);
-            this.fusionGroupBox.Controls.Add(this.targetFlatComboBox);
-            this.fusionGroupBox.Controls.Add(this.label9);
-            this.fusionGroupBox.ForeColor = System.Drawing.Color.White;
-            this.fusionGroupBox.Location = new System.Drawing.Point(15, 519);
-            this.fusionGroupBox.Name = "fusionGroupBox";
-            this.fusionGroupBox.Size = new System.Drawing.Size(467, 80);
-            this.fusionGroupBox.TabIndex = 269;
-            this.fusionGroupBox.TabStop = false;
-            this.fusionGroupBox.Text = "Fusion";
+            this.contextMenuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addToolStripMenuItem,
+            this.deleteToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.contextMenuStrip1.Size = new System.Drawing.Size(108, 48);
             // 
-            // material2FlatComboBox
+            // addToolStripMenuItem
             // 
-            this.material2FlatComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.material2FlatComboBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.material2FlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.material2FlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.material2FlatComboBox.FormattingEnabled = true;
-            this.material2FlatComboBox.Location = new System.Drawing.Point(305, 46);
-            this.material2FlatComboBox.Name = "material2FlatComboBox";
-            this.material2FlatComboBox.Size = new System.Drawing.Size(152, 21);
-            this.material2FlatComboBox.TabIndex = 285;
+            this.addToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.addToolStripMenuItem.Text = "Add";
             // 
-            // label4
+            // deleteToolStripMenuItem
             // 
-            this.label4.AutoSize = true;
-            this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(231, 49);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 13);
-            this.label4.TabIndex = 284;
-            this.label4.Text = "Material 2";
+            this.deleteToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
             // 
-            // material1FlatComboBox
+            // menuStrip1
             // 
-            this.material1FlatComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.material1FlatComboBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.material1FlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.material1FlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.material1FlatComboBox.FormattingEnabled = true;
-            this.material1FlatComboBox.Location = new System.Drawing.Point(305, 19);
-            this.material1FlatComboBox.Name = "material1FlatComboBox";
-            this.material1FlatComboBox.Size = new System.Drawing.Size(152, 21);
-            this.material1FlatComboBox.TabIndex = 283;
+            this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(911, 24);
+            this.menuStrip1.TabIndex = 277;
+            this.menuStrip1.Text = "menuStrip1";
             // 
-            // label3
+            // exportToolStripMenuItem
             // 
-            this.label3.AutoSize = true;
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(231, 22);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 13);
-            this.label3.TabIndex = 282;
-            this.label3.Text = "Material 1";
+            this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportAsCfgbinToolStripMenuItem,
+            this.exportAscsvToolStripMenuItem});
+            this.exportToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.exportToolStripMenuItem.Text = "Export";
             // 
-            // targetFlatComboBox
+            // exportAsCfgbinToolStripMenuItem
             // 
-            this.targetFlatComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.targetFlatComboBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.targetFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.targetFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.targetFlatComboBox.FormattingEnabled = true;
-            this.targetFlatComboBox.Location = new System.Drawing.Point(61, 30);
-            this.targetFlatComboBox.Name = "targetFlatComboBox";
-            this.targetFlatComboBox.Size = new System.Drawing.Size(152, 21);
-            this.targetFlatComboBox.TabIndex = 281;
+            this.exportAsCfgbinToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.exportAsCfgbinToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.exportAsCfgbinToolStripMenuItem.Name = "exportAsCfgbinToolStripMenuItem";
+            this.exportAsCfgbinToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.exportAsCfgbinToolStripMenuItem.Text = "Export as .cfg.bin";
             // 
-            // label9
+            // exportAscsvToolStripMenuItem
             // 
-            this.label9.AutoSize = true;
-            this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(11, 33);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(38, 13);
-            this.label9.TabIndex = 64;
-            this.label9.Text = "Target";
+            this.exportAscsvToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.exportAscsvToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.exportAscsvToolStripMenuItem.Name = "exportAscsvToolStripMenuItem";
+            this.exportAscsvToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.exportAscsvToolStripMenuItem.Text = "Export as .xlsx";
             // 
-            // label6
+            // searchTextBox
             // 
-            this.label6.AutoSize = true;
-            this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(12, 53);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(45, 13);
-            this.label6.TabIndex = 66;
-            this.label6.Text = "Element";
+            this.searchTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.searchTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.searchTextBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.searchTextBox.Location = new System.Drawing.Point(63, 5);
+            this.searchTextBox.Name = "searchTextBox";
+            this.searchTextBox.Size = new System.Drawing.Size(302, 13);
+            this.searchTextBox.TabIndex = 274;
+            this.searchTextBox.Text = "Search...";
+            this.searchTextBox.TextChanged += new System.EventHandler(this.SearchTextBox_TextChanged);
+            this.searchTextBox.MouseEnter += new System.EventHandler(this.SearchTextBox_MouseEnter);
+            this.searchTextBox.MouseLeave += new System.EventHandler(this.SearchTextBox_MouseLeave);
             // 
-            // descriptionTextBox
+            // charaVSTabControl
             // 
-            this.descriptionTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.descriptionTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.descriptionTextBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.descriptionTextBox.Location = new System.Drawing.Point(22, 19);
-            this.descriptionTextBox.Multiline = true;
-            this.descriptionTextBox.Name = "descriptionTextBox";
-            this.descriptionTextBox.ReadOnly = true;
-            this.descriptionTextBox.Size = new System.Drawing.Size(429, 34);
-            this.descriptionTextBox.TabIndex = 270;
+            this.charaVSTabControl.ActiveIndicator = System.Drawing.Color.White;
+            this.charaVSTabControl.ActiveTab = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.charaVSTabControl.ActiveText = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.charaVSTabControl.Background = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.charaVSTabControl.BackgroundTab = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.charaVSTabControl.Border = System.Drawing.Color.White;
+            this.charaVSTabControl.Controls.Add(this.tabPage1);
+            this.charaVSTabControl.Controls.Add(this.tabPage2);
+            this.charaVSTabControl.Divider = System.Drawing.Color.White;
+            this.charaVSTabControl.Font = new System.Drawing.Font("Leelawadee UI", 8.25F);
+            this.charaVSTabControl.InActiveIndicator = System.Drawing.Color.White;
+            this.charaVSTabControl.InActiveTab = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.charaVSTabControl.InActiveText = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.charaVSTabControl.Location = new System.Drawing.Point(9, 34);
+            this.charaVSTabControl.Margin = new System.Windows.Forms.Padding(0);
+            this.charaVSTabControl.Name = "charaVSTabControl";
+            this.charaVSTabControl.Padding = new System.Drawing.Point(0, 0);
+            this.charaVSTabControl.SelectedIndex = 0;
+            this.charaVSTabControl.Size = new System.Drawing.Size(886, 740);
+            this.charaVSTabControl.TabIndex = 280;
             // 
-            // descriptionGroupBox
+            // tabPage1
             // 
-            this.descriptionGroupBox.Controls.Add(this.descriptionTextBox);
-            this.descriptionGroupBox.ForeColor = System.Drawing.Color.White;
-            this.descriptionGroupBox.Location = new System.Drawing.Point(15, 605);
-            this.descriptionGroupBox.Name = "descriptionGroupBox";
-            this.descriptionGroupBox.Size = new System.Drawing.Size(468, 67);
-            this.descriptionGroupBox.TabIndex = 271;
-            this.descriptionGroupBox.TabStop = false;
-            this.descriptionGroupBox.Text = "Description";
+            this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.tabPage1.Controls.Add(this.avatarListBox);
+            this.tabPage1.Controls.Add(this.fightingSpiritGroupBox);
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(878, 711);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Fighting Spirits";
+            // 
+            // avatarListBox
+            // 
+            this.avatarListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.avatarListBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.avatarListBox.FormattingEnabled = true;
+            this.avatarListBox.Location = new System.Drawing.Point(6, 12);
+            this.avatarListBox.Name = "avatarListBox";
+            this.avatarListBox.Size = new System.Drawing.Size(353, 693);
+            this.avatarListBox.TabIndex = 279;
+            this.avatarListBox.SelectedIndexChanged += new System.EventHandler(this.AvatarListBox_SelectedIndexChanged);
             // 
             // fightingSpiritGroupBox
             // 
@@ -280,9 +296,9 @@
             this.fightingSpiritGroupBox.Controls.Add(this.fusionGroupBox);
             this.fightingSpiritGroupBox.Enabled = false;
             this.fightingSpiritGroupBox.ForeColor = System.Drawing.Color.White;
-            this.fightingSpiritGroupBox.Location = new System.Drawing.Point(371, 21);
+            this.fightingSpiritGroupBox.Location = new System.Drawing.Point(365, 6);
             this.fightingSpiritGroupBox.Name = "fightingSpiritGroupBox";
-            this.fightingSpiritGroupBox.Size = new System.Drawing.Size(499, 695);
+            this.fightingSpiritGroupBox.Size = new System.Drawing.Size(499, 699);
             this.fightingSpiritGroupBox.TabIndex = 276;
             this.fightingSpiritGroupBox.TabStop = false;
             this.fightingSpiritGroupBox.Text = "Fighting Spirit";
@@ -314,7 +330,7 @@
             this.label21.ForeColor = System.Drawing.Color.White;
             this.label21.Location = new System.Drawing.Point(307, 46);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(14, 13);
+            this.label21.Size = new System.Drawing.Size(13, 13);
             this.label21.TabIndex = 289;
             this.label21.Text = "X";
             // 
@@ -337,8 +353,9 @@
             0,
             -2147483648});
             this.xPositionFlatNumericUpDown.Name = "xPositionFlatNumericUpDown";
-            this.xPositionFlatNumericUpDown.Size = new System.Drawing.Size(53, 20);
+            this.xPositionFlatNumericUpDown.Size = new System.Drawing.Size(53, 22);
             this.xPositionFlatNumericUpDown.TabIndex = 288;
+            this.xPositionFlatNumericUpDown.ValueChanged += new System.EventHandler(this.XPositionFlatNumericUpDown_ValueChanged);
             // 
             // label17
             // 
@@ -346,7 +363,7 @@
             this.label17.ForeColor = System.Drawing.Color.White;
             this.label17.Location = new System.Drawing.Point(386, 46);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(14, 13);
+            this.label17.Size = new System.Drawing.Size(12, 13);
             this.label17.TabIndex = 287;
             this.label17.Text = "Y";
             // 
@@ -369,8 +386,9 @@
             0,
             -2147483648});
             this.yPositionFlatNumericUpDown.Name = "yPositionFlatNumericUpDown";
-            this.yPositionFlatNumericUpDown.Size = new System.Drawing.Size(53, 20);
+            this.yPositionFlatNumericUpDown.Size = new System.Drawing.Size(53, 22);
             this.yPositionFlatNumericUpDown.TabIndex = 286;
+            this.yPositionFlatNumericUpDown.ValueChanged += new System.EventHandler(this.YPositionFlatNumericUpDown_ValueChanged);
             // 
             // label16
             // 
@@ -378,7 +396,7 @@
             this.label16.ForeColor = System.Drawing.Color.White;
             this.label16.Location = new System.Drawing.Point(232, 46);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(44, 13);
+            this.label16.Size = new System.Drawing.Size(49, 13);
             this.label16.TabIndex = 285;
             this.label16.Text = "Position";
             // 
@@ -401,8 +419,9 @@
             0,
             -2147483648});
             this.boughtPriceFlatNumericUpDown.Name = "boughtPriceFlatNumericUpDown";
-            this.boughtPriceFlatNumericUpDown.Size = new System.Drawing.Size(98, 20);
+            this.boughtPriceFlatNumericUpDown.Size = new System.Drawing.Size(98, 22);
             this.boughtPriceFlatNumericUpDown.TabIndex = 284;
+            this.boughtPriceFlatNumericUpDown.ValueChanged += new System.EventHandler(this.BoughtPriceFlatNumericUpDown_ValueChanged);
             // 
             // soldPriceFlatNumericUpDown
             // 
@@ -423,15 +442,16 @@
             0,
             -2147483648});
             this.soldPriceFlatNumericUpDown.Name = "soldPriceFlatNumericUpDown";
-            this.soldPriceFlatNumericUpDown.Size = new System.Drawing.Size(98, 20);
+            this.soldPriceFlatNumericUpDown.Size = new System.Drawing.Size(98, 22);
             this.soldPriceFlatNumericUpDown.TabIndex = 283;
+            this.soldPriceFlatNumericUpDown.ValueChanged += new System.EventHandler(this.SoldPriceFlatNumericUpDown_ValueChanged);
             // 
             // canBeBoughtCheckBox
             // 
             this.canBeBoughtCheckBox.AutoSize = true;
             this.canBeBoughtCheckBox.Location = new System.Drawing.Point(14, 45);
             this.canBeBoughtCheckBox.Name = "canBeBoughtCheckBox";
-            this.canBeBoughtCheckBox.Size = new System.Drawing.Size(96, 17);
+            this.canBeBoughtCheckBox.Size = new System.Drawing.Size(104, 17);
             this.canBeBoughtCheckBox.TabIndex = 282;
             this.canBeBoughtCheckBox.Text = "Can be bought";
             this.canBeBoughtCheckBox.UseVisualStyleBackColor = true;
@@ -442,7 +462,7 @@
             this.canBeSoldCheckBox.AutoSize = true;
             this.canBeSoldCheckBox.Location = new System.Drawing.Point(14, 20);
             this.canBeSoldCheckBox.Name = "canBeSoldCheckBox";
-            this.canBeSoldCheckBox.Size = new System.Drawing.Size(82, 17);
+            this.canBeSoldCheckBox.Size = new System.Drawing.Size(87, 17);
             this.canBeSoldCheckBox.TabIndex = 281;
             this.canBeSoldCheckBox.Text = "Can be sold";
             this.canBeSoldCheckBox.UseVisualStyleBackColor = true;
@@ -467,8 +487,9 @@
             0,
             -2147483648});
             this.maxQuantityFlatNumericUpDown.Name = "maxQuantityFlatNumericUpDown";
-            this.maxQuantityFlatNumericUpDown.Size = new System.Drawing.Size(132, 20);
+            this.maxQuantityFlatNumericUpDown.Size = new System.Drawing.Size(132, 22);
             this.maxQuantityFlatNumericUpDown.TabIndex = 271;
+            this.maxQuantityFlatNumericUpDown.ValueChanged += new System.EventHandler(this.MaxQuantityFlatNumericUpDown_ValueChanged);
             // 
             // label18
             // 
@@ -476,7 +497,7 @@
             this.label18.ForeColor = System.Drawing.Color.White;
             this.label18.Location = new System.Drawing.Point(232, 20);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(67, 13);
+            this.label18.Size = new System.Drawing.Size(74, 13);
             this.label18.TabIndex = 68;
             this.label18.Text = "Max quantity";
             // 
@@ -526,7 +547,7 @@
             0,
             -2147483648});
             this.numberFlatNumericUpDown.Name = "numberFlatNumericUpDown";
-            this.numberFlatNumericUpDown.Size = new System.Drawing.Size(63, 20);
+            this.numberFlatNumericUpDown.Size = new System.Drawing.Size(63, 22);
             this.numberFlatNumericUpDown.TabIndex = 273;
             this.numberFlatNumericUpDown.ValueChanged += new System.EventHandler(this.NumberFlatNumericUpDown_ValueChanged);
             // 
@@ -536,7 +557,7 @@
             this.label14.ForeColor = System.Drawing.Color.White;
             this.label14.Location = new System.Drawing.Point(339, 23);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(44, 13);
+            this.label14.Size = new System.Drawing.Size(48, 13);
             this.label14.TabIndex = 272;
             this.label14.Text = "Number";
             // 
@@ -559,7 +580,7 @@
             this.idTextBox.Location = new System.Drawing.Point(143, 23);
             this.idTextBox.Name = "idTextBox";
             this.idTextBox.ReadOnly = true;
-            this.idTextBox.Size = new System.Drawing.Size(192, 13);
+            this.idTextBox.Size = new System.Drawing.Size(192, 15);
             this.idTextBox.TabIndex = 62;
             // 
             // label5
@@ -568,7 +589,7 @@
             this.label5.ForeColor = System.Drawing.Color.White;
             this.label5.Location = new System.Drawing.Point(87, 44);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(35, 13);
+            this.label5.Size = new System.Drawing.Size(36, 13);
             this.label5.TabIndex = 57;
             this.label5.Text = "Name";
             // 
@@ -580,8 +601,9 @@
             this.nameTextBox.Location = new System.Drawing.Point(143, 44);
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.ReadOnly = true;
-            this.nameTextBox.Size = new System.Drawing.Size(308, 13);
+            this.nameTextBox.Size = new System.Drawing.Size(308, 15);
             this.nameTextBox.TabIndex = 58;
+            this.nameTextBox.Click += new System.EventHandler(this.NameTextBox_Click);
             // 
             // fullNameTextBox
             // 
@@ -591,8 +613,9 @@
             this.fullNameTextBox.Location = new System.Drawing.Point(143, 63);
             this.fullNameTextBox.Name = "fullNameTextBox";
             this.fullNameTextBox.ReadOnly = true;
-            this.fullNameTextBox.Size = new System.Drawing.Size(308, 13);
+            this.fullNameTextBox.Size = new System.Drawing.Size(308, 15);
             this.fullNameTextBox.TabIndex = 60;
+            this.fullNameTextBox.Click += new System.EventHandler(this.FullNameTextBox_Click);
             // 
             // label1
             // 
@@ -600,12 +623,37 @@
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(87, 63);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(49, 13);
+            this.label1.Size = new System.Drawing.Size(54, 13);
             this.label1.TabIndex = 59;
             this.label1.Text = "Fullname";
             // 
+            // descriptionGroupBox
+            // 
+            this.descriptionGroupBox.Controls.Add(this.descriptionTextBox);
+            this.descriptionGroupBox.ForeColor = System.Drawing.Color.White;
+            this.descriptionGroupBox.Location = new System.Drawing.Point(15, 605);
+            this.descriptionGroupBox.Name = "descriptionGroupBox";
+            this.descriptionGroupBox.Size = new System.Drawing.Size(468, 67);
+            this.descriptionGroupBox.TabIndex = 271;
+            this.descriptionGroupBox.TabStop = false;
+            this.descriptionGroupBox.Text = "Description";
+            // 
+            // descriptionTextBox
+            // 
+            this.descriptionTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.descriptionTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.descriptionTextBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.descriptionTextBox.Location = new System.Drawing.Point(22, 19);
+            this.descriptionTextBox.Multiline = true;
+            this.descriptionTextBox.Name = "descriptionTextBox";
+            this.descriptionTextBox.ReadOnly = true;
+            this.descriptionTextBox.Size = new System.Drawing.Size(429, 34);
+            this.descriptionTextBox.TabIndex = 270;
+            this.descriptionTextBox.Click += new System.EventHandler(this.DescriptionTextBox_Click);
+            // 
             // informationGroupBox
             // 
+            this.informationGroupBox.Controls.Add(this.levelGrowthFlatComboBox);
             this.informationGroupBox.Controls.Add(this.statGrowthflatComboBox);
             this.informationGroupBox.Controls.Add(this.growthGroupBox);
             this.informationGroupBox.Controls.Add(this.levelGrowthFlatNumericUpDown);
@@ -631,6 +679,19 @@
             this.informationGroupBox.TabStop = false;
             this.informationGroupBox.Text = "Information";
             // 
+            // levelGrowthFlatComboBox
+            // 
+            this.levelGrowthFlatComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.levelGrowthFlatComboBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.levelGrowthFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.levelGrowthFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.levelGrowthFlatComboBox.FormattingEnabled = true;
+            this.levelGrowthFlatComboBox.Location = new System.Drawing.Point(307, 81);
+            this.levelGrowthFlatComboBox.Name = "levelGrowthFlatComboBox";
+            this.levelGrowthFlatComboBox.Size = new System.Drawing.Size(73, 21);
+            this.levelGrowthFlatComboBox.TabIndex = 297;
+            this.levelGrowthFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.LevelGrowthFlatComboBox_SelectedIndexChanged);
+            // 
             // statGrowthflatComboBox
             // 
             this.statGrowthflatComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
@@ -651,6 +712,7 @@
             this.statGrowthflatComboBox.Name = "statGrowthflatComboBox";
             this.statGrowthflatComboBox.Size = new System.Drawing.Size(152, 21);
             this.statGrowthflatComboBox.TabIndex = 296;
+            this.statGrowthflatComboBox.SelectedIndexChanged += new System.EventHandler(this.StatGrowthflatComboBox_SelectedIndexChanged);
             // 
             // growthGroupBox
             // 
@@ -692,7 +754,7 @@
             this.label37.AutoSize = true;
             this.label37.Location = new System.Drawing.Point(18, 133);
             this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(45, 13);
+            this.label37.Size = new System.Drawing.Size(44, 13);
             this.label37.TabIndex = 310;
             this.label37.Text = "Level Ω";
             // 
@@ -702,7 +764,7 @@
             this.label38.ForeColor = System.Drawing.Color.White;
             this.label38.Location = new System.Drawing.Point(254, 135);
             this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(37, 13);
+            this.label38.Size = new System.Drawing.Size(39, 13);
             this.label38.TabIndex = 314;
             this.label38.Text = "Power";
             // 
@@ -727,7 +789,7 @@
             -2147483648});
             this.fg6FlatNumericUpDown.Name = "fg6FlatNumericUpDown";
             this.fg6FlatNumericUpDown.ReadOnly = true;
-            this.fg6FlatNumericUpDown.Size = new System.Drawing.Size(140, 20);
+            this.fg6FlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.fg6FlatNumericUpDown.TabIndex = 311;
             // 
             // power6FlatNumericUpDown
@@ -751,25 +813,25 @@
             -2147483648});
             this.power6FlatNumericUpDown.Name = "power6FlatNumericUpDown";
             this.power6FlatNumericUpDown.ReadOnly = true;
-            this.power6FlatNumericUpDown.Size = new System.Drawing.Size(140, 20);
+            this.power6FlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.power6FlatNumericUpDown.TabIndex = 313;
             // 
             // label39
             // 
             this.label39.AutoSize = true;
             this.label39.ForeColor = System.Drawing.Color.White;
-            this.label39.Location = new System.Drawing.Point(74, 133);
+            this.label39.Location = new System.Drawing.Point(70, 133);
             this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(21, 13);
+            this.label39.Size = new System.Drawing.Size(25, 13);
             this.label39.TabIndex = 312;
-            this.label39.Text = "FG";
+            this.label39.Text = "FSP";
             // 
             // label34
             // 
             this.label34.AutoSize = true;
             this.label34.Location = new System.Drawing.Point(18, 107);
             this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(42, 13);
+            this.label34.Size = new System.Drawing.Size(41, 13);
             this.label34.TabIndex = 305;
             this.label34.Text = "Level 5";
             // 
@@ -779,7 +841,7 @@
             this.label35.ForeColor = System.Drawing.Color.White;
             this.label35.Location = new System.Drawing.Point(254, 109);
             this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(37, 13);
+            this.label35.Size = new System.Drawing.Size(39, 13);
             this.label35.TabIndex = 309;
             this.label35.Text = "Power";
             // 
@@ -804,7 +866,7 @@
             -2147483648});
             this.fg5FlatNumericUpDown.Name = "fg5FlatNumericUpDown";
             this.fg5FlatNumericUpDown.ReadOnly = true;
-            this.fg5FlatNumericUpDown.Size = new System.Drawing.Size(140, 20);
+            this.fg5FlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.fg5FlatNumericUpDown.TabIndex = 306;
             // 
             // power5FlatNumericUpDown
@@ -828,25 +890,25 @@
             -2147483648});
             this.power5FlatNumericUpDown.Name = "power5FlatNumericUpDown";
             this.power5FlatNumericUpDown.ReadOnly = true;
-            this.power5FlatNumericUpDown.Size = new System.Drawing.Size(140, 20);
+            this.power5FlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.power5FlatNumericUpDown.TabIndex = 308;
             // 
             // label36
             // 
             this.label36.AutoSize = true;
             this.label36.ForeColor = System.Drawing.Color.White;
-            this.label36.Location = new System.Drawing.Point(74, 107);
+            this.label36.Location = new System.Drawing.Point(70, 109);
             this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(21, 13);
+            this.label36.Size = new System.Drawing.Size(25, 13);
             this.label36.TabIndex = 307;
-            this.label36.Text = "FG";
+            this.label36.Text = "FSP";
             // 
             // label31
             // 
             this.label31.AutoSize = true;
             this.label31.Location = new System.Drawing.Point(18, 81);
             this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(42, 13);
+            this.label31.Size = new System.Drawing.Size(41, 13);
             this.label31.TabIndex = 300;
             this.label31.Text = "Level 4";
             // 
@@ -856,7 +918,7 @@
             this.label32.ForeColor = System.Drawing.Color.White;
             this.label32.Location = new System.Drawing.Point(254, 83);
             this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(37, 13);
+            this.label32.Size = new System.Drawing.Size(39, 13);
             this.label32.TabIndex = 304;
             this.label32.Text = "Power";
             // 
@@ -881,7 +943,7 @@
             -2147483648});
             this.fg4FlatNumericUpDown.Name = "fg4FlatNumericUpDown";
             this.fg4FlatNumericUpDown.ReadOnly = true;
-            this.fg4FlatNumericUpDown.Size = new System.Drawing.Size(140, 20);
+            this.fg4FlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.fg4FlatNumericUpDown.TabIndex = 301;
             // 
             // power4FlatNumericUpDown
@@ -905,25 +967,25 @@
             -2147483648});
             this.power4FlatNumericUpDown.Name = "power4FlatNumericUpDown";
             this.power4FlatNumericUpDown.ReadOnly = true;
-            this.power4FlatNumericUpDown.Size = new System.Drawing.Size(140, 20);
+            this.power4FlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.power4FlatNumericUpDown.TabIndex = 303;
             // 
             // label33
             // 
             this.label33.AutoSize = true;
             this.label33.ForeColor = System.Drawing.Color.White;
-            this.label33.Location = new System.Drawing.Point(74, 81);
+            this.label33.Location = new System.Drawing.Point(70, 81);
             this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(21, 13);
+            this.label33.Size = new System.Drawing.Size(25, 13);
             this.label33.TabIndex = 302;
-            this.label33.Text = "FG";
+            this.label33.Text = "FSP";
             // 
             // label28
             // 
             this.label28.AutoSize = true;
             this.label28.Location = new System.Drawing.Point(18, 55);
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(42, 13);
+            this.label28.Size = new System.Drawing.Size(41, 13);
             this.label28.TabIndex = 295;
             this.label28.Text = "Level 3";
             // 
@@ -933,7 +995,7 @@
             this.label29.ForeColor = System.Drawing.Color.White;
             this.label29.Location = new System.Drawing.Point(254, 57);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(37, 13);
+            this.label29.Size = new System.Drawing.Size(39, 13);
             this.label29.TabIndex = 299;
             this.label29.Text = "Power";
             // 
@@ -958,7 +1020,7 @@
             -2147483648});
             this.fg3FlatNumericUpDown.Name = "fg3FlatNumericUpDown";
             this.fg3FlatNumericUpDown.ReadOnly = true;
-            this.fg3FlatNumericUpDown.Size = new System.Drawing.Size(140, 20);
+            this.fg3FlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.fg3FlatNumericUpDown.TabIndex = 296;
             // 
             // power3FlatNumericUpDown
@@ -982,25 +1044,25 @@
             -2147483648});
             this.power3FlatNumericUpDown.Name = "power3FlatNumericUpDown";
             this.power3FlatNumericUpDown.ReadOnly = true;
-            this.power3FlatNumericUpDown.Size = new System.Drawing.Size(140, 20);
+            this.power3FlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.power3FlatNumericUpDown.TabIndex = 298;
             // 
             // label30
             // 
             this.label30.AutoSize = true;
             this.label30.ForeColor = System.Drawing.Color.White;
-            this.label30.Location = new System.Drawing.Point(74, 55);
+            this.label30.Location = new System.Drawing.Point(70, 55);
             this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(21, 13);
+            this.label30.Size = new System.Drawing.Size(25, 13);
             this.label30.TabIndex = 297;
-            this.label30.Text = "FG";
+            this.label30.Text = "FSP";
             // 
             // label25
             // 
             this.label25.AutoSize = true;
             this.label25.Location = new System.Drawing.Point(18, 29);
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(42, 13);
+            this.label25.Size = new System.Drawing.Size(41, 13);
             this.label25.TabIndex = 290;
             this.label25.Text = "Level 2";
             // 
@@ -1010,7 +1072,7 @@
             this.label27.ForeColor = System.Drawing.Color.White;
             this.label27.Location = new System.Drawing.Point(254, 31);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(37, 13);
+            this.label27.Size = new System.Drawing.Size(39, 13);
             this.label27.TabIndex = 294;
             this.label27.Text = "Power";
             // 
@@ -1035,7 +1097,7 @@
             -2147483648});
             this.fg2FlatNumericUpDown.Name = "fg2FlatNumericUpDown";
             this.fg2FlatNumericUpDown.ReadOnly = true;
-            this.fg2FlatNumericUpDown.Size = new System.Drawing.Size(140, 20);
+            this.fg2FlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.fg2FlatNumericUpDown.TabIndex = 291;
             // 
             // power2FlatNumericUpDown
@@ -1059,18 +1121,18 @@
             -2147483648});
             this.power2FlatNumericUpDown.Name = "power2FlatNumericUpDown";
             this.power2FlatNumericUpDown.ReadOnly = true;
-            this.power2FlatNumericUpDown.Size = new System.Drawing.Size(140, 20);
+            this.power2FlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.power2FlatNumericUpDown.TabIndex = 293;
             // 
             // label26
             // 
             this.label26.AutoSize = true;
             this.label26.ForeColor = System.Drawing.Color.White;
-            this.label26.Location = new System.Drawing.Point(74, 29);
+            this.label26.Location = new System.Drawing.Point(70, 29);
             this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(21, 13);
+            this.label26.Size = new System.Drawing.Size(25, 13);
             this.label26.TabIndex = 292;
-            this.label26.Text = "FG";
+            this.label26.Text = "FSP";
             // 
             // levelGrowthFlatNumericUpDown
             // 
@@ -1079,7 +1141,7 @@
             this.levelGrowthFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.levelGrowthFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.levelGrowthFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.levelGrowthFlatNumericUpDown.Location = new System.Drawing.Point(307, 82);
+            this.levelGrowthFlatNumericUpDown.Location = new System.Drawing.Point(386, 82);
             this.levelGrowthFlatNumericUpDown.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -1091,8 +1153,9 @@
             0,
             -2147483648});
             this.levelGrowthFlatNumericUpDown.Name = "levelGrowthFlatNumericUpDown";
-            this.levelGrowthFlatNumericUpDown.Size = new System.Drawing.Size(151, 20);
+            this.levelGrowthFlatNumericUpDown.Size = new System.Drawing.Size(73, 22);
             this.levelGrowthFlatNumericUpDown.TabIndex = 288;
+            this.levelGrowthFlatNumericUpDown.ValueChanged += new System.EventHandler(this.LevelGrowthFlatNumericUpDown_ValueChanged);
             // 
             // label23
             // 
@@ -1100,7 +1163,7 @@
             this.label23.ForeColor = System.Drawing.Color.White;
             this.label23.Location = new System.Drawing.Point(232, 112);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(63, 13);
+            this.label23.Size = new System.Drawing.Size(69, 13);
             this.label23.TabIndex = 287;
             this.label23.Text = "Stat Growth";
             // 
@@ -1110,7 +1173,7 @@
             this.label24.ForeColor = System.Drawing.Color.White;
             this.label24.Location = new System.Drawing.Point(232, 84);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(70, 13);
+            this.label24.Size = new System.Drawing.Size(74, 13);
             this.label24.TabIndex = 286;
             this.label24.Text = "Level Growth";
             // 
@@ -1133,8 +1196,9 @@
             0,
             -2147483648});
             this.powerFlatNumericUpDown.Name = "powerFlatNumericUpDown";
-            this.powerFlatNumericUpDown.Size = new System.Drawing.Size(151, 20);
+            this.powerFlatNumericUpDown.Size = new System.Drawing.Size(151, 22);
             this.powerFlatNumericUpDown.TabIndex = 285;
+            this.powerFlatNumericUpDown.ValueChanged += new System.EventHandler(this.PowerFlatNumericUpDown_ValueChanged);
             // 
             // fgFlatNumericUpDown
             // 
@@ -1155,8 +1219,9 @@
             0,
             -2147483648});
             this.fgFlatNumericUpDown.Name = "fgFlatNumericUpDown";
-            this.fgFlatNumericUpDown.Size = new System.Drawing.Size(151, 20);
+            this.fgFlatNumericUpDown.Size = new System.Drawing.Size(151, 22);
             this.fgFlatNumericUpDown.TabIndex = 284;
+            this.fgFlatNumericUpDown.ValueChanged += new System.EventHandler(this.FgFlatNumericUpDown_ValueChanged);
             // 
             // label15
             // 
@@ -1164,7 +1229,7 @@
             this.label15.ForeColor = System.Drawing.Color.White;
             this.label15.Location = new System.Drawing.Point(10, 112);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(38, 13);
+            this.label15.Size = new System.Drawing.Size(39, 13);
             this.label15.TabIndex = 283;
             this.label15.Text = "Attack";
             // 
@@ -1174,9 +1239,9 @@
             this.label22.ForeColor = System.Drawing.Color.White;
             this.label22.Location = new System.Drawing.Point(12, 84);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(21, 13);
+            this.label22.Size = new System.Drawing.Size(25, 13);
             this.label22.TabIndex = 281;
-            this.label22.Text = "FG";
+            this.label22.Text = "FSP";
             // 
             // label2
             // 
@@ -1184,7 +1249,7 @@
             this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(232, 53);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(72, 13);
+            this.label2.Size = new System.Drawing.Size(74, 13);
             this.label2.TabIndex = 278;
             this.label2.Text = "Special Move";
             // 
@@ -1195,16 +1260,11 @@
             this.skillFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.skillFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.skillFlatComboBox.FormattingEnabled = true;
-            this.skillFlatComboBox.Items.AddRange(new object[] {
-            "Shoot",
-            "Dribble",
-            "Block",
-            "Save",
-            "Skill"});
             this.skillFlatComboBox.Location = new System.Drawing.Point(307, 22);
             this.skillFlatComboBox.Name = "skillFlatComboBox";
             this.skillFlatComboBox.Size = new System.Drawing.Size(152, 21);
             this.skillFlatComboBox.TabIndex = 277;
+            this.skillFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.SkillFlatComboBox_SelectedIndexChanged);
             // 
             // label12
             // 
@@ -1212,7 +1272,7 @@
             this.label12.ForeColor = System.Drawing.Color.White;
             this.label12.Location = new System.Drawing.Point(232, 26);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(26, 13);
+            this.label12.Size = new System.Drawing.Size(28, 13);
             this.label12.TabIndex = 276;
             this.label12.Text = "Skill";
             // 
@@ -1223,73 +1283,21 @@
             this.specialMoveFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.specialMoveFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.specialMoveFlatComboBox.FormattingEnabled = true;
-            this.specialMoveFlatComboBox.Items.AddRange(new object[] {
-            "Catch Boost",
-            "Block Boost",
-            "Dribble Boost",
-            "Kick Boost",
-            "Speed Boost",
-            "Luck Boost",
-            "Technique Boost",
-            "Effect 8",
-            "TP Boost",
-            "FP Boost",
-            "Economy!",
-            "Big Move!",
-            "Put Your Back Into It!",
-            "Critical",
-            "Jinx",
-            "Recovery",
-            "Study",
-            "Slack Off",
-            "Friendship",
-            "Prestige",
-            "Power Element",
-            "Null Element",
-            "Charm Up!",
-            "Cool Up!",
-            "Trickery!",
-            "Fair Play",
-            "Helping Hand!",
-            "Burning Force",
-            "Destructive Aura",
-            "Veil of Protection",
-            "Goddess\'s Grace",
-            "Warrior\'s Cry",
-            "Feet Be Nimble",
-            "Stage Presence",
-            "Never Give Up",
-            "Everyone Move It!",
-            "Cheerleader Backup",
-            "Anti-Slip",
-            "Anti-Cyclone",
-            "Effect 40",
-            "Technician",
-            "Swiftest Wings",
-            "Sacred Blade",
-            "Close Them Down!",
-            "Effect 45",
-            "Effect 46",
-            "Effect 47",
-            "Block Force",
-            "Dribble Force",
-            "Kick Force",
-            "Speed Force",
-            "Luck Force",
-            "Technique Force",
-            "Stamina Force",
-            "Effect 55",
-            "Burning Force (2)",
-            "Effect 57",
-            "Wind\'s Call",
-            "Wood\'s Call",
-            "Fire\'s Call",
-            "Earth\'s Call",
-            "Nobody\'s Call"});
             this.specialMoveFlatComboBox.Location = new System.Drawing.Point(307, 49);
             this.specialMoveFlatComboBox.Name = "specialMoveFlatComboBox";
             this.specialMoveFlatComboBox.Size = new System.Drawing.Size(152, 21);
             this.specialMoveFlatComboBox.TabIndex = 280;
+            this.specialMoveFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.SpecialMoveFlatComboBox_SelectedIndexChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.ForeColor = System.Drawing.Color.White;
+            this.label6.Location = new System.Drawing.Point(12, 53);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(48, 13);
+            this.label6.TabIndex = 66;
+            this.label6.Text = "Element";
             // 
             // positonFlatComboBox
             // 
@@ -1302,6 +1310,7 @@
             this.positonFlatComboBox.Name = "positonFlatComboBox";
             this.positonFlatComboBox.Size = new System.Drawing.Size(152, 21);
             this.positonFlatComboBox.TabIndex = 65;
+            this.positonFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.PositonFlatComboBox_SelectedIndexChanged);
             // 
             // label7
             // 
@@ -1309,7 +1318,7 @@
             this.label7.ForeColor = System.Drawing.Color.White;
             this.label7.Location = new System.Drawing.Point(12, 26);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(44, 13);
+            this.label7.Size = new System.Drawing.Size(49, 13);
             this.label7.TabIndex = 64;
             this.label7.Text = "Position";
             // 
@@ -1324,97 +1333,110 @@
             this.elementFlatComboBox.Name = "elementFlatComboBox";
             this.elementFlatComboBox.Size = new System.Drawing.Size(152, 21);
             this.elementFlatComboBox.TabIndex = 275;
+            this.elementFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.ElementFlatComboBox_SelectedIndexChanged);
             // 
-            // contextMenuStrip1
+            // fusionGroupBox
             // 
-            this.contextMenuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addToolStripMenuItem,
-            this.deleteToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(108, 48);
+            this.fusionGroupBox.Controls.Add(this.material2FlatComboBox);
+            this.fusionGroupBox.Controls.Add(this.label4);
+            this.fusionGroupBox.Controls.Add(this.material1FlatComboBox);
+            this.fusionGroupBox.Controls.Add(this.label3);
+            this.fusionGroupBox.Controls.Add(this.targetFlatComboBox);
+            this.fusionGroupBox.Controls.Add(this.label9);
+            this.fusionGroupBox.ForeColor = System.Drawing.Color.White;
+            this.fusionGroupBox.Location = new System.Drawing.Point(15, 519);
+            this.fusionGroupBox.Name = "fusionGroupBox";
+            this.fusionGroupBox.Size = new System.Drawing.Size(467, 80);
+            this.fusionGroupBox.TabIndex = 269;
+            this.fusionGroupBox.TabStop = false;
+            this.fusionGroupBox.Text = "Fusion";
             // 
-            // addToolStripMenuItem
+            // material2FlatComboBox
             // 
-            this.addToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
-            this.addToolStripMenuItem.Text = "Add";
+            this.material2FlatComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.material2FlatComboBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.material2FlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.material2FlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.material2FlatComboBox.FormattingEnabled = true;
+            this.material2FlatComboBox.Location = new System.Drawing.Point(305, 46);
+            this.material2FlatComboBox.Name = "material2FlatComboBox";
+            this.material2FlatComboBox.Size = new System.Drawing.Size(152, 21);
+            this.material2FlatComboBox.TabIndex = 285;
+            this.material2FlatComboBox.SelectedIndexChanged += new System.EventHandler(this.Material2FlatComboBox_SelectedIndexChanged);
             // 
-            // deleteToolStripMenuItem
+            // label4
             // 
-            this.deleteToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
-            this.deleteToolStripMenuItem.Text = "Delete";
+            this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.Color.White;
+            this.label4.Location = new System.Drawing.Point(231, 49);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(58, 13);
+            this.label4.TabIndex = 284;
+            this.label4.Text = "Material 2";
             // 
-            // menuStrip1
+            // material1FlatComboBox
             // 
-            this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.exportToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(881, 24);
-            this.menuStrip1.TabIndex = 277;
-            this.menuStrip1.Text = "menuStrip1";
+            this.material1FlatComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.material1FlatComboBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.material1FlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.material1FlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.material1FlatComboBox.FormattingEnabled = true;
+            this.material1FlatComboBox.Location = new System.Drawing.Point(305, 19);
+            this.material1FlatComboBox.Name = "material1FlatComboBox";
+            this.material1FlatComboBox.Size = new System.Drawing.Size(152, 21);
+            this.material1FlatComboBox.TabIndex = 283;
+            this.material1FlatComboBox.SelectedIndexChanged += new System.EventHandler(this.Material1FlatComboBox_SelectedIndexChanged);
             // 
-            // exportToolStripMenuItem
+            // label3
             // 
-            this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.exportAsCfgbinToolStripMenuItem,
-            this.exportAscsvToolStripMenuItem});
-            this.exportToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.exportToolStripMenuItem.Text = "Export";
+            this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(231, 22);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(58, 13);
+            this.label3.TabIndex = 282;
+            this.label3.Text = "Material 1";
             // 
-            // exportAsCfgbinToolStripMenuItem
+            // targetFlatComboBox
             // 
-            this.exportAsCfgbinToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.exportAsCfgbinToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.exportAsCfgbinToolStripMenuItem.Name = "exportAsCfgbinToolStripMenuItem";
-            this.exportAsCfgbinToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.exportAsCfgbinToolStripMenuItem.Text = "Export as .cfg.bin";
+            this.targetFlatComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.targetFlatComboBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.targetFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.targetFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.targetFlatComboBox.FormattingEnabled = true;
+            this.targetFlatComboBox.Location = new System.Drawing.Point(61, 30);
+            this.targetFlatComboBox.Name = "targetFlatComboBox";
+            this.targetFlatComboBox.Size = new System.Drawing.Size(152, 21);
+            this.targetFlatComboBox.TabIndex = 281;
+            this.targetFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.TargetFlatComboBox_SelectedIndexChanged);
             // 
-            // exportAscsvToolStripMenuItem
+            // label9
             // 
-            this.exportAscsvToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.exportAscsvToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.exportAscsvToolStripMenuItem.Name = "exportAscsvToolStripMenuItem";
-            this.exportAscsvToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.exportAscsvToolStripMenuItem.Text = "Export as .xlsx";
+            this.label9.AutoSize = true;
+            this.label9.ForeColor = System.Drawing.Color.White;
+            this.label9.Location = new System.Drawing.Point(11, 33);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(39, 13);
+            this.label9.TabIndex = 64;
+            this.label9.Text = "Target";
             // 
-            // searchTextBox
+            // tabPage2
             // 
-            this.searchTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.searchTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.searchTextBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.searchTextBox.Location = new System.Drawing.Point(63, 5);
-            this.searchTextBox.Name = "searchTextBox";
-            this.searchTextBox.Size = new System.Drawing.Size(302, 13);
-            this.searchTextBox.TabIndex = 274;
-            this.searchTextBox.Text = "Search...";
-            // 
-            // levelGrowthTableGroupBox
-            // 
-            this.levelGrowthTableGroupBox.Controls.Add(this.levelGrowthTableDataGridView);
-            this.levelGrowthTableGroupBox.ForeColor = System.Drawing.Color.White;
-            this.levelGrowthTableGroupBox.Location = new System.Drawing.Point(12, 526);
-            this.levelGrowthTableGroupBox.Name = "levelGrowthTableGroupBox";
-            this.levelGrowthTableGroupBox.Size = new System.Drawing.Size(353, 190);
-            this.levelGrowthTableGroupBox.TabIndex = 278;
-            this.levelGrowthTableGroupBox.TabStop = false;
-            this.levelGrowthTableGroupBox.Text = "Level Growth Table";
+            this.tabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.tabPage2.Controls.Add(this.levelGrowthTableDataGridView);
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(878, 711);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Use Time Growth Table";
             // 
             // levelGrowthTableDataGridView
             // 
-            this.levelGrowthTableDataGridView.AllowUserToAddRows = false;
             this.levelGrowthTableDataGridView.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Leelawadee UI", 8.25F);
             dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -1423,10 +1445,15 @@
             this.levelGrowthTableDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.levelGrowthTableDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
-            this.Column2});
+            this.Column7,
+            this.Column2,
+            this.Column3,
+            this.Column4,
+            this.Column5,
+            this.Column6});
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Leelawadee UI", 8.25F);
             dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -1434,11 +1461,11 @@
             this.levelGrowthTableDataGridView.DefaultCellStyle = dataGridViewCellStyle3;
             this.levelGrowthTableDataGridView.EnableHeadersVisualStyles = false;
             this.levelGrowthTableDataGridView.GridColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.levelGrowthTableDataGridView.Location = new System.Drawing.Point(6, 15);
+            this.levelGrowthTableDataGridView.Location = new System.Drawing.Point(8, 6);
             this.levelGrowthTableDataGridView.Name = "levelGrowthTableDataGridView";
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Leelawadee UI", 8.25F);
             dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -1447,51 +1474,65 @@
             this.levelGrowthTableDataGridView.RowHeadersVisible = false;
             dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.levelGrowthTableDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle5;
-            this.levelGrowthTableDataGridView.Size = new System.Drawing.Size(341, 169);
+            this.levelGrowthTableDataGridView.Size = new System.Drawing.Size(864, 699);
             this.levelGrowthTableDataGridView.TabIndex = 6;
             // 
             // Column1
             // 
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.Column1.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Column1.HeaderText = "Level";
+            this.Column1.HeaderText = "Number";
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
             // 
+            // Column7
+            // 
+            this.Column7.HeaderText = "Level 1";
+            this.Column7.Name = "Column7";
+            // 
             // Column2
             // 
-            this.Column2.HeaderText = "Use time";
+            this.Column2.HeaderText = "Level 2";
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
             // 
-            // avatarListBox
+            // Column3
             // 
-            this.avatarListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.avatarListBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.avatarListBox.FormattingEnabled = true;
-            this.avatarListBox.Location = new System.Drawing.Point(12, 27);
-            this.avatarListBox.Name = "avatarListBox";
-            this.avatarListBox.Size = new System.Drawing.Size(353, 485);
-            this.avatarListBox.TabIndex = 279;
-            this.avatarListBox.SelectedIndexChanged += new System.EventHandler(this.AvatarListBox_SelectedIndexChanged);
+            this.Column3.HeaderText = "Level 3";
+            this.Column3.Name = "Column3";
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Level 4";
+            this.Column4.Name = "Column4";
+            // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "Level 5";
+            this.Column5.Name = "Column5";
+            // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "Level Ω";
+            this.Column6.Name = "Column6";
             // 
             // FightingSpiritWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.ClientSize = new System.Drawing.Size(881, 726);
-            this.Controls.Add(this.avatarListBox);
-            this.Controls.Add(this.levelGrowthTableGroupBox);
+            this.ClientSize = new System.Drawing.Size(911, 786);
+            this.Controls.Add(this.charaVSTabControl);
             this.Controls.Add(this.searchTextBox);
-            this.Controls.Add(this.fightingSpiritGroupBox);
             this.Controls.Add(this.menuStrip1);
             this.Name = "FightingSpiritWindow";
             this.Text = "FightingSpiritWindow";
-            this.fusionGroupBox.ResumeLayout(false);
-            this.fusionGroupBox.PerformLayout();
-            this.descriptionGroupBox.ResumeLayout(false);
-            this.descriptionGroupBox.PerformLayout();
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FightingSpiritWindow_FormClosed);
+            this.contextMenuStrip1.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
+            this.charaVSTabControl.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
             this.fightingSpiritGroupBox.ResumeLayout(false);
             this.itemGroupBox.ResumeLayout(false);
             this.itemGroupBox.PerformLayout();
@@ -1504,6 +1545,8 @@
             this.nameGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.facePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numberFlatNumericUpDown)).EndInit();
+            this.descriptionGroupBox.ResumeLayout(false);
+            this.descriptionGroupBox.PerformLayout();
             this.informationGroupBox.ResumeLayout(false);
             this.informationGroupBox.PerformLayout();
             this.growthGroupBox.ResumeLayout(false);
@@ -1521,10 +1564,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.levelGrowthFlatNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.powerFlatNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fgFlatNumericUpDown)).EndInit();
-            this.contextMenuStrip1.ResumeLayout(false);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
-            this.levelGrowthTableGroupBox.ResumeLayout(false);
+            this.fusionGroupBox.ResumeLayout(false);
+            this.fusionGroupBox.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.levelGrowthTableDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -1615,11 +1657,19 @@
         private UI.FlatNumericUpDown fg3FlatNumericUpDown;
         private UI.FlatNumericUpDown power3FlatNumericUpDown;
         private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.GroupBox levelGrowthTableGroupBox;
         private System.Windows.Forms.DataGridView levelGrowthTableDataGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.PictureBox facePictureBox;
         private System.Windows.Forms.ListBox avatarListBox;
+        private UI.FlatComboBox levelGrowthFlatComboBox;
+        private UI.VSTabControl charaVSTabControl;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
     }
 }

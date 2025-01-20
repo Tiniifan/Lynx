@@ -231,7 +231,6 @@ namespace Lynx.InazumaEleven.Games.GO
 
         public class AvatarTimeGrowth : IAvatarTimeGrowth
         {
-            public int Level0 { get; set; }
             public int Level1 { get; set; }
             public int Level2 { get; set; }
             public int Level3 { get; set; }
@@ -241,6 +240,7 @@ namespace Lynx.InazumaEleven.Games.GO
             public int Level7 { get; set; }
             public int Level8 { get; set; }
             public int Level9 { get; set; }
+            public int Level10 { get; set; }
         }
 
         public class SkillUseTimeGrowth : ISkillUseTimeGrowth

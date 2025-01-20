@@ -233,6 +233,8 @@
     <Compile Include="Forms\Soccers\SoccersWindow.Designer.cs">
       <DependentUpon>SoccersWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="InazumaEleven\Common\AvatarGrowthStats.cs" />
+    <Compile Include="InazumaEleven\Common\GrowingTimes.cs" />
     <Compile Include="InazumaEleven\Common\GrowStats.cs" />
     <Compile Include="InazumaEleven\Common\Bodies.cs" />
     <Compile Include="InazumaEleven\Common\CharaTypes.cs" />
@@ -247,6 +249,7 @@
     <Compile Include="InazumaEleven\Games\GO\GO.cs" />
     <Compile Include="InazumaEleven\Games\GO\GOSupport.cs" />
     <Compile Include="InazumaEleven\Games\IGame.cs" />
+    <Compile Include="InazumaEleven\Logic\AvatarGrowthStat.cs" />
     <Compile Include="InazumaEleven\Logic\UseTimeGrowth.cs" />
     <Compile Include="InazumaEleven\Logic\ICommunityInfo.cs" />
     <Compile Include="InazumaEleven\Logic\IShopConfig.cs" />
