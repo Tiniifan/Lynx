@@ -202,12 +202,12 @@ namespace Lynx.InazumaEleven.Games.GO
 
             for (int i = 0; i < avatars.Count(); i++)
             {
-                Entry newBaseEntry = new Entry("ITEM_AVATAR_INFO_" + i, new List<Variable>(), Encoding.UTF8);
+                Entry newBaseEntry = new Entry("ITEM_AVATAR_" + i, new List<Variable>(), Encoding.UTF8);
                 newBaseEntry.SetVariablesFromClass(avatars[i] as GOSupport.Avatar);
                 baseBegin.Children.Add(newBaseEntry);
             }
 
-            Game.Directory.GetFolderFromFullPath("/data/res/item").Files["item_config.bin"].ByteContent = itemconfigFile.Save();
+            Game.Directory.GetFolderFromFullPath("/data/res/item").Files["item_config.cfg.bin"].ByteContent = itemconfigFile.Save();
         }
 
         public IAvatarTimeGrowth[] GetAvatarGrowthTable()

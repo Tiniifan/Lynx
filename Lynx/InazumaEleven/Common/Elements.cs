@@ -21,6 +21,6 @@ namespace Lynx.InazumaEleven.Common
         Earth = 4,
 
         [Description("Void")]
-        Void = 4,
+        Void = 5,
     }
 }
