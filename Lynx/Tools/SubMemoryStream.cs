@@ -4,18 +4,40 @@ using System.Drawing;
 
 namespace Lynx.Tools
 {
+    /// <summary>
+    /// Represents a sub-memory stream with an offset and size.
+    /// </summary>
     public class SubMemoryStream
     {
+        /// <summary>
+        /// The offset of the sub-memory stream.
+        /// </summary>
         public long Offset;
 
+        /// <summary>
+        /// The size of the sub-memory stream.
+        /// </summary>
         public long Size;
 
+        /// <summary>
+        /// The byte content of the sub-memory stream.
+        /// </summary>
         public byte[] ByteContent;
 
+        /// <summary>
+        /// The base stream of the sub-memory stream.
+        /// </summary>
         public Stream BaseStream;
 
+        /// <summary>
+        /// The color associated with the sub-memory stream.
+        /// </summary>
         public Color Color = Color.Black;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SubMemoryStream"/> class with byte data.
+        /// </summary>
+        /// <param name="data">The byte data to initialize the sub-memory stream.</param>
         public SubMemoryStream(byte[] data)
         {
             Offset = 0;
@@ -23,6 +45,12 @@ namespace Lynx.Tools
             ByteContent = data;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SubMemoryStream"/> class with a base stream, offset, and size.
+        /// </summary>
+        /// <param name="baseStream">The base stream to initialize the sub-memory stream.</param>
+        /// <param name="offset">The offset of the sub-memory stream.</param>
+        /// <param name="size">The size of the sub-memory stream.</param>
         public SubMemoryStream(Stream baseStream, long offset, long size)
         {
             Offset = offset;
@@ -30,6 +58,9 @@ namespace Lynx.Tools
             BaseStream = baseStream;
         }
 
+        /// <summary>
+        /// Reads the byte content from the base stream.
+        /// </summary>
         public void Read()
         {
             ByteContent = new byte[Size];
@@ -37,11 +68,21 @@ namespace Lynx.Tools
             BaseStream.Read(ByteContent, 0, ByteContent.Length);
         }
 
+        /// <summary>
+        /// Seeks to the offset in the base stream.
+        /// </summary>
         public void Seek()
         {
             BaseStream.Seek(Offset, SeekOrigin.Begin);
         }
 
+        /// <summary>
+        /// Reads bytes from the base stream into a buffer.
+        /// </summary>
+        /// <param name="buffer">The buffer to read bytes into.</param>
+        /// <param name="offset">The offset in the buffer to start writing bytes.</param>
+        /// <param name="count">The maximum number of bytes to read.</param>
+        /// <returns>The number of bytes read.</returns>
         public int Read(byte[] buffer, int offset, int count)
         {
             // Adjust count to read within the available range
@@ -57,6 +98,10 @@ namespace Lynx.Tools
             return bytesRead;
         }
 
+        /// <summary>
+        /// Copies the content of the sub-memory stream to another stream.
+        /// </summary>
+        /// <param name="destination">The destination stream to copy the content to.</param>
         public void CopyTo(Stream destination)
         {
             if (destination == null)

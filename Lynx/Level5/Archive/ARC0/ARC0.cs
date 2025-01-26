@@ -9,33 +9,63 @@ using Lynx.Level5.Compression.NoCompression;
 
 namespace Lynx.Level5.Archive.ARC0
 {
+    /// <summary>
+    /// Represents an ARC0 archive.
+    /// </summary>
     public class ARC0 : IArchive
     {
+        /// <summary>
+        /// Gets the name of the archive.
+        /// </summary>
         public string Name => "ARC0";
 
+        /// <summary>
+        /// Gets or sets the virtual directory of the archive.
+        /// </summary>
         public VirtualDirectory Directory { get; set; }
 
+        /// <summary>
+        /// The base stream of the archive.
+        /// </summary>
         public Stream BaseStream;
 
+        /// <summary>
+        /// The header of the ARC0 archive.
+        /// </summary>
         public ARC0Support.Header Header;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ARC0"/> class.
+        /// </summary>
         public ARC0()
         {
             Directory = new VirtualDirectory("/");
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ARC0"/> class with a stream.
+        /// </summary>
+        /// <param name="stream">The stream to initialize the archive.</param>
         public ARC0(Stream stream)
         {
             BaseStream = stream;
             Directory = Open();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ARC0"/> class with a byte array.
+        /// </summary>
+        /// <param name="fileByteArray">The byte array to initialize the archive.</param>
         public ARC0(byte[] fileByteArray)
         {
             BaseStream = new MemoryStream(fileByteArray);
             Directory = Open();
         }
 
+        /// <summary>
+        /// Opens the ARC0 archive and reads its contents into a virtual directory.
+        /// </summary>
+        /// <returns>The virtual directory representing the contents of the archive.</returns>
         public VirtualDirectory Open()
         {
             VirtualDirectory folder = new VirtualDirectory();
@@ -96,6 +126,10 @@ namespace Lynx.Level5.Archive.ARC0
             return folder;
         }
 
+        /// <summary>
+        /// Saves the ARC0 archive to the specified file.
+        /// </summary>
+        /// <param name="fileName">The file name to save the archive to.</param>
         public void Save(string fileName)
         {
             using (FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
@@ -243,6 +277,10 @@ namespace Lynx.Level5.Archive.ARC0
             }
         }
 
+        /// <summary>
+        /// Saves the ARC0 archive and returns the byte array representation.
+        /// </summary>
+        /// <returns>The byte array representation of the saved archive.</returns>
         public byte[] Save()
         {
             using (MemoryStream memoryStream = new MemoryStream())
@@ -391,18 +429,38 @@ namespace Lynx.Level5.Archive.ARC0
             }
         }
 
+        /// <summary>
+        /// Decompresses a block of data to the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type to decompress the data to.</typeparam>
+        /// <param name="data">The compressed data.</param>
+        /// <param name="count">The number of elements to decompress.</param>
+        /// <returns>An array of decompressed elements.</returns>
         private T[] DecompressBlockTo<T>(byte[] data, int count)
         {
             BinaryDataReader tableDecomp = new BinaryDataReader(Compressor.Decompress(data));
             return tableDecomp.ReadMultipleStruct<T>(count);
         }
 
+        /// <summary>
+        /// Compresses a block of data using the specified compression method.
+        /// </summary>
+        /// <typeparam name="T">The type of data to compress.</typeparam>
+        /// <param name="data">The data to compress.</param>
+        /// <param name="compression">The compression method to use.</param>
+        /// <returns>A byte array containing the compressed data.</returns>
         private byte[] CompressBlockTo<T>(T[] data, ICompression compression)
         {
             byte[] serializedData = SerializeData<T>(data);
             return compression.Compress(serializedData);
         }
 
+        /// <summary>
+        /// Serializes an array of data to a byte array.
+        /// </summary>
+        /// <typeparam name="T">The type of data to serialize.</typeparam>
+        /// <param name="data">The data to serialize.</param>
+        /// <returns>A byte array containing the serialized data.</returns>
         private byte[] SerializeData<T>(T[] data)
         {
             MemoryStream stream = new MemoryStream();
@@ -414,6 +472,10 @@ namespace Lynx.Level5.Archive.ARC0
             return stream.ToArray();
         }
 
+        /// <summary>
+        /// Closes the ARC0 archive and releases any resources associated with it.
+        /// </summary>
+        /// <returns>The closed archive.</returns>
         public IArchive Close()
         {
             BaseStream?.Dispose();

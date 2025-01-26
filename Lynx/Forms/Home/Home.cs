@@ -43,6 +43,12 @@ namespace Lynx.Forms.Home
             GameOpened = new GO(openFileDialog1.FileName, languageWindow.SelectedLanguage);
 
             featuresGroupBox.Enabled = true;
+            characterGroupBox.Enabled = true;
+            movesGroupBox.Enabled = true;
+            itemsGroupBox.Enabled = true;
+            shopsGroupBox.Enabled = true;
+            eventGroupBox.Enabled = true;
+            debugGroupBox.Enabled = true;
             saveToolStripMenuItem.Enabled = true;
         }
 
@@ -90,37 +96,28 @@ namespace Lynx.Forms.Home
             switch (featuresListBox.SelectedItem.ToString())
             {
                 case "Charabase":
-                    CharabaseWindow charabaseWindow = new CharabaseWindow(GameOpened);
-                    charabaseWindow.ShowDialog();
+                    CharabaseButton_Click(sender, e);
                     break;
                 case "Charaparam":
-                    CharaParamWindow charaparamWindow = new CharaParamWindow(GameOpened);
-                    charaparamWindow.ShowDialog();
+                    CharaparamButton_Click(sender, e);
                     break;
                 case "Shops":
-                    ShopWindow shopWindow = new ShopWindow(GameOpened);
-                    shopWindow.ShowDialog();
+                    ShopsButton_Click(sender, e);
                     break;
                 case "Fighting Spirits":
-                    FightingSpiritWindow fightingSpiritWindow = new FightingSpiritWindow(GameOpened);
-                    fightingSpiritWindow.ShowDialog();
+                    FightingSpiritsButton_Click(sender, e);
                     break;
                 case "Skills":
-                    SkillWindow skillWindow = new SkillWindow(GameOpened);
-                    skillWindow.ShowDialog();
+                    SkillsButton_Click(sender, e);
                     break;
                 case "Scripts":
-                    ScriptSelect scriptSelect = new ScriptSelect(GameOpened);
-                    scriptSelect.ShowDialog();
+                    ScriptButton_Click(sender, e);
                     break;
                 case "Map Editor":
-                    MessageBox.Show("Please note that the map editor is not available, you can only view the maps.");
-                    MapSelect mapSelectWindow = new MapSelect(GameOpened);
-                    mapSelectWindow.ShowDialog();
+                    MapEditorButton_Click(sender, e);
                     break;
                 case "Save Editor":
-                    SaveEditorWindow saveEditorWindow = new SaveEditorWindow(GameOpened);
-                    saveEditorWindow.ShowDialog();
+                    SaveEditorButton_Click(sender, e);
                     break;
             }
         }
@@ -129,6 +126,54 @@ namespace Lynx.Forms.Home
         {
             GameOpened.Save();
             MessageBox.Show("Saved!");
+        }
+
+        private void CharabaseButton_Click(object sender, EventArgs e)
+        {
+            CharabaseWindow charabaseWindow = new CharabaseWindow(GameOpened);
+            charabaseWindow.ShowDialog();
+        }
+
+        private void CharaparamButton_Click(object sender, EventArgs e)
+        {
+            CharaParamWindow charaparamWindow = new CharaParamWindow(GameOpened);
+            charaparamWindow.ShowDialog();
+        }
+
+        private void SkillsButton_Click(object sender, EventArgs e)
+        {
+            SkillWindow skillWindow = new SkillWindow(GameOpened);
+            skillWindow.ShowDialog();
+        }
+
+        private void FightingSpiritsButton_Click(object sender, EventArgs e)
+        {
+            FightingSpiritWindow fightingSpiritWindow = new FightingSpiritWindow(GameOpened);
+            fightingSpiritWindow.ShowDialog();
+        }
+
+        private void ShopsButton_Click(object sender, EventArgs e)
+        {
+            ShopWindow shopWindow = new ShopWindow(GameOpened);
+            shopWindow.ShowDialog();
+        }
+
+        private void MapEditorButton_Click(object sender, EventArgs e)
+        {
+            MapSelect mapSelectWindow = new MapSelect(GameOpened);
+            mapSelectWindow.ShowDialog();
+        }
+
+        private void ScriptButton_Click(object sender, EventArgs e)
+        {
+            ScriptSelect scriptSelect = new ScriptSelect(GameOpened);
+            scriptSelect.ShowDialog();
+        }
+
+        private void SaveEditorButton_Click(object sender, EventArgs e)
+        {
+            SaveEditorWindow saveEditorWindow = new SaveEditorWindow(GameOpened);
+            saveEditorWindow.ShowDialog();
         }
     }
 }

@@ -6,22 +6,44 @@ using System.Collections.Generic;
 
 namespace Lynx.Tools
 {
+    /// <summary>
+    /// Represents a virtual directory with folders and files.
+    /// </summary>
     public class VirtualDirectory
     {
+        /// <summary>
+        /// The name of the virtual directory.
+        /// </summary>
         public string Name;
 
+        /// <summary>
+        /// The list of subfolders in the virtual directory.
+        /// </summary>
         public List<VirtualDirectory> Folders;
 
+        /// <summary>
+        /// The dictionary of files in the virtual directory.
+        /// </summary>
         public Dictionary<string, SubMemoryStream> Files;
 
+        /// <summary>
+        /// The color associated with the virtual directory.
+        /// </summary>
         public Color Color = Color.Black;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VirtualDirectory"/> class.
+        /// </summary>
         public VirtualDirectory()
         {
             Folders = new List<VirtualDirectory>();
             Files = new Dictionary<string, SubMemoryStream>();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VirtualDirectory"/> class with a specified name.
+        /// </summary>
+        /// <param name="name">The name of the virtual directory.</param>
         public VirtualDirectory(string name)
         {
             Name = name;
@@ -29,11 +51,21 @@ namespace Lynx.Tools
             Files = new Dictionary<string, SubMemoryStream>();
         }
 
+        /// <summary>
+        /// Gets a subfolder by name.
+        /// </summary>
+        /// <param name="name">The name of the subfolder.</param>
+        /// <returns>The subfolder with the specified name.</returns>
         public VirtualDirectory GetFolder(string name)
         {
             return Folders.FirstOrDefault(folder => folder.Name == name);
         }
 
+        /// <summary>
+        /// Gets a subfolder from a full path.
+        /// </summary>
+        /// <param name="path">The full path of the subfolder.</param>
+        /// <returns>The subfolder at the specified path.</returns>
         public VirtualDirectory GetFolderFromFullPath(string path)
         {
             var pathSplit = path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
@@ -53,6 +85,11 @@ namespace Lynx.Tools
             return current;
         }
 
+        /// <summary>
+        /// Checks if a folder exists at the specified path.
+        /// </summary>
+        /// <param name="path">The path of the folder.</param>
+        /// <returns>True if the folder exists, otherwise false.</returns>
         public bool IsFolderExists(string path)
         {
             var pathSplit = path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
@@ -72,6 +109,11 @@ namespace Lynx.Tools
             return true;
         }
 
+        /// <summary>
+        /// Checks if a file exists at the specified full path.
+        /// </summary>
+        /// <param name="path">The full path of the file.</param>
+        /// <returns>True if the file exists, otherwise false.</returns>
         public bool IsFullPathExists(string path)
         {
             var pathSplit = path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
@@ -92,6 +134,10 @@ namespace Lynx.Tools
             return current.Files.ContainsKey(fileName);
         }
 
+        /// <summary>
+        /// Gets all subfolders in the virtual directory.
+        /// </summary>
+        /// <returns>A list of all subfolders.</returns>
         public List<VirtualDirectory> GetAllFolders()
         {
             List<VirtualDirectory> allFolders = new List<VirtualDirectory>();
@@ -104,6 +150,10 @@ namespace Lynx.Tools
             return allFolders;
         }
 
+        /// <summary>
+        /// Gets all subfolders as a dictionary.
+        /// </summary>
+        /// <returns>A dictionary of all subfolders.</returns>
         public Dictionary<string, VirtualDirectory> GetAllFoldersAsDictionnary()
         {
             var directories = new Dictionary<string, VirtualDirectory> { { Name + "/", this } };
@@ -122,6 +172,11 @@ namespace Lynx.Tools
             return directories;
         }
 
+        /// <summary>
+        /// Gets a file from the specified full path.
+        /// </summary>
+        /// <param name="path">The full path of the file.</param>
+        /// <returns>The file as a byte array.</returns>
         public byte[] GetFileFromFullPath(string path)
         {
             var pathSplit = path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
@@ -157,6 +212,10 @@ namespace Lynx.Tools
             }
         }
 
+        /// <summary>
+        /// Gets all files in the virtual directory.
+        /// </summary>
+        /// <returns>A dictionary of all files.</returns>
         public Dictionary<string, SubMemoryStream> GetAllFiles()
         {
             Dictionary<string, SubMemoryStream> allFiles = new Dictionary<string, SubMemoryStream>();
@@ -178,21 +237,38 @@ namespace Lynx.Tools
             return allFiles;
         }
 
+        /// <summary>
+        /// Adds a file to the virtual directory.
+        /// </summary>
+        /// <param name="name">The name of the file.</param>
+        /// <param name="data">The file data as a SubMemoryStream.</param>
         public void AddFile(string name, SubMemoryStream data)
         {
             Files.Add(name, data);
         }
 
+        /// <summary>
+        /// Adds a subfolder to the virtual directory.
+        /// </summary>
+        /// <param name="name">The name of the subfolder.</param>
         public void AddFolder(string name)
         {
             Folders.Add(new VirtualDirectory(name));
         }
 
+        /// <summary>
+        /// Adds a subfolder to the virtual directory.
+        /// </summary>
+        /// <param name="folder">The subfolder to add.</param>
         public void AddFolder(VirtualDirectory folder)
         {
             Folders.Add(folder);
         }
 
+        /// <summary>
+        /// Gets the total size of the virtual directory.
+        /// </summary>
+        /// <returns>The total size in bytes.</returns>
         public long GetSize()
         {
             long size = 0;
@@ -217,6 +293,9 @@ namespace Lynx.Tools
             return size;
         }
 
+        /// <summary>
+        /// Reorganizes the virtual directory.
+        /// </summary>
         public void Reorganize()
         {
             // Retrieve all folders and order them by name
@@ -278,6 +357,9 @@ namespace Lynx.Tools
             Folders = result.Folders;
         }
 
+        /// <summary>
+        /// Sorts the folders and files in the virtual directory alphabetically.
+        /// </summary>
         public void SortAlphabetically()
         {
             Folders.Sort((x, y) => x.Name.CompareTo(y.Name));
@@ -291,11 +373,19 @@ namespace Lynx.Tools
             Files = sortedFiles;
         }
 
+        /// <summary>
+        /// Prints the structure of the virtual directory.
+        /// </summary>
         public void Print()
         {
             Print(this);
         }
 
+        /// <summary>
+        /// Prints the structure of the specified virtual directory.
+        /// </summary>
+        /// <param name="directory">The virtual directory to print.</param>
+        /// <param name="level">The indentation level for printing.</param>
         public void Print(VirtualDirectory directory, int level = 0)
         {
             string indentation = new string('\t', level);

@@ -55,7 +55,9 @@
             this.mapListBox.Name = "mapListBox";
             this.mapListBox.Size = new System.Drawing.Size(185, 394);
             this.mapListBox.TabIndex = 5;
+            this.mapListBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MapListBox_MouseClick);
             this.mapListBox.SelectedIndexChanged += new System.EventHandler(this.MapListBox_SelectedIndexChanged);
+            this.mapListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MapListBox_KeyDown);
             // 
             // MapSelect
             // 

@@ -55,6 +55,9 @@ namespace Lynx.InazumaEleven.Games.GO
                 { "eventScript", new GameSupports.GameFile(Game, "/data/script/event") },
                 { "script", new GameSupports.GameFile(Game, "/data/script/") },
                 { "shop", new GameSupports.GameFile(Game, "/data/res/shop") },
+                { "modelRPGShoes", new GameSupports.GameFile(Game, "/data/chr/model/rpg/shoes") },
+                { "modelRPGBody", new GameSupports.GameFile(Game, "/data/chr/model/rpg/body") },
+                { "modelRPGGloves", new GameSupports.GameFile(Game, "/data/chr/model/rpg/glove") },
             };
         }
 

@@ -15,6 +15,8 @@ namespace Lynx.Forms.Maps
 
         private Dictionary<string, string> MapName;
 
+        private bool CanOpenEditor = false;
+
         public MapSelect(IGame game)
         {
             GameOpened = game;
@@ -84,9 +86,28 @@ namespace Lynx.Forms.Maps
             }
         }
 
+        private void OpenMapEditor()
+        {
+            if (mapListBox.SelectedIndex == -1) return;
+
+            string mapName = mapListBox.SelectedItem.ToString();
+            string mapID = MapName.FirstOrDefault(x => x.Value == mapName).Key;
+
+            if (mapID != null)
+            {
+                MapEditor mapEditorWindow = new MapEditor(mapID, GameOpened);
+                mapEditorWindow.Text = $"MapEditor - {mapName}";
+                mapEditorWindow.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Can't open map");
+            }
+        }
+
         private void MapSelect_Shown(object sender, System.EventArgs e)
         {
-            mapListBox.Focus();
+            searchTextBox.Focus();
         }
 
         private void SearchTextBox_TextChanged(object sender, System.EventArgs e)
@@ -120,18 +141,30 @@ namespace Lynx.Forms.Maps
 
         private void MapListBox_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-            string mapName = mapListBox.SelectedItem.ToString();
-            string mapID = MapName.FirstOrDefault(x => x.Value == mapName).Key;
-
-            if (mapID != null)
+            if (CanOpenEditor)
             {
-                MapEditor mapEditorWindow = new MapEditor(mapID, GameOpened);
-                mapEditorWindow.Text = $"MapEditor - {mapName}";
-                mapEditorWindow.ShowDialog();
-            } else
-            {
-                MessageBox.Show("Can't open map");
+                OpenMapEditor();
             }
-        }   
+        }
+
+        private void MapListBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                OpenMapEditor();
+            }
+        }
+
+        private void MapListBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                CanOpenEditor = true;
+            }
+            else
+            {
+                CanOpenEditor = false;
+            }
+        }
     }
 }

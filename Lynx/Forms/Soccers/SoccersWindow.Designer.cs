@@ -33,60 +33,97 @@ namespace Lynx.Forms.Soccers
             this.searchTextBox = new System.Windows.Forms.TextBox();
             this.skillGroupBox = new System.Windows.Forms.GroupBox();
             this.infoGroupBox = new System.Windows.Forms.GroupBox();
-            this.numberFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.idTextBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.nameTextBox = new System.Windows.Forms.TextBox();
             this.nameWazaTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.descriptionTextBox = new System.Windows.Forms.TextBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.moveTypeRadioButton2 = new System.Windows.Forms.RadioButton();
-            this.partnerFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
-            this.label12 = new System.Windows.Forms.Label();
-            this.moveTypeRadioButton1 = new System.Windows.Forms.RadioButton();
-            this.effectFlatComboBox = new Lynx.UI.FlatComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.positonFlatComboBox = new Lynx.UI.FlatComboBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.skillEffectFlatComboBox = new Lynx.UI.FlatComboBox();
-            this.effectFlatNumericUpDown1 = new Lynx.UI.FlatNumericUpDown();
-            this.boostPanel = new System.Windows.Forms.Panel();
-            this.boostActiveRadioButton2 = new System.Windows.Forms.RadioButton();
-            this.boostActiveRadioButton1 = new System.Windows.Forms.RadioButton();
-            this.elementFlatComboBox = new Lynx.UI.FlatComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.growFlatComboBox = new Lynx.UI.FlatComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.typeFlatComboBox = new Lynx.UI.FlatComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.techniqueFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
-            this.faultRateFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.powerFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
-            this.tpCostFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
+            this.charaVSTabControl = new Lynx.UI.VSTabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.flatComboBox1 = new Lynx.UI.FlatComboBox();
+            this.flatComboBox2 = new Lynx.UI.FlatComboBox();
+            this.flatComboBox3 = new Lynx.UI.FlatComboBox();
+            this.flatComboBox4 = new Lynx.UI.FlatComboBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.flatComboBox5 = new Lynx.UI.FlatComboBox();
+            this.flatComboBox6 = new Lynx.UI.FlatComboBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.flatNumericUpDown1 = new Lynx.UI.FlatNumericUpDown();
+            this.flatNumericUpDown2 = new Lynx.UI.FlatNumericUpDown();
+            this.flatNumericUpDown3 = new Lynx.UI.FlatNumericUpDown();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.flatNumericUpDown4 = new Lynx.UI.FlatNumericUpDown();
+            this.label24 = new System.Windows.Forms.Label();
+            this.flatNumericUpDown5 = new Lynx.UI.FlatNumericUpDown();
+            this.label25 = new System.Windows.Forms.Label();
+            this.flatNumericUpDown6 = new Lynx.UI.FlatNumericUpDown();
+            this.flatComboBox7 = new Lynx.UI.FlatComboBox();
+            this.flatComboBox8 = new Lynx.UI.FlatComboBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.flatNumericUpDown8 = new Lynx.UI.FlatNumericUpDown();
+            this.flatComboBox10 = new Lynx.UI.FlatComboBox();
+            this.label30 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.flatNumericUpDown7 = new Lynx.UI.FlatNumericUpDown();
+            this.flatComboBox9 = new Lynx.UI.FlatComboBox();
+            this.label31 = new System.Windows.Forms.Label();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.flatComboBox11 = new Lynx.UI.FlatComboBox();
+            this.flatComboBox12 = new Lynx.UI.FlatComboBox();
+            this.label32 = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
+            this.flatComboBox13 = new Lynx.UI.FlatComboBox();
+            this.flatComboBox14 = new Lynx.UI.FlatComboBox();
+            this.label34 = new System.Windows.Forms.Label();
+            this.label35 = new System.Windows.Forms.Label();
+            this.canBeSoldCheckBox = new System.Windows.Forms.CheckBox();
+            this.charabaseButton = new System.Windows.Forms.Button();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.label36 = new System.Windows.Forms.Label();
+            this.label37 = new System.Windows.Forms.Label();
+            this.flatNumericUpDown9 = new Lynx.UI.FlatNumericUpDown();
+            this.flatNumericUpDown10 = new Lynx.UI.FlatNumericUpDown();
+            this.flatNumericUpDown11 = new Lynx.UI.FlatNumericUpDown();
+            this.flatNumericUpDown12 = new Lynx.UI.FlatNumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.skillGroupBox.SuspendLayout();
             this.infoGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numberFlatNumericUpDown)).BeginInit();
-            this.groupBox4.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.partnerFlatNumericUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.effectFlatNumericUpDown1)).BeginInit();
-            this.boostPanel.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.techniqueFlatNumericUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.faultRateFlatNumericUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.powerFlatNumericUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tpCostFlatNumericUpDown)).BeginInit();
+            this.charaVSTabControl.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.flatNumericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flatNumericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flatNumericUpDown3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flatNumericUpDown4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flatNumericUpDown5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flatNumericUpDown6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flatNumericUpDown8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flatNumericUpDown7)).BeginInit();
+            this.groupBox7.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.flatNumericUpDown9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flatNumericUpDown10)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flatNumericUpDown11)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flatNumericUpDown12)).BeginInit();
             this.SuspendLayout();
             // 
             // soccerTreeView
@@ -97,7 +134,7 @@ namespace Lynx.Forms.Soccers
             this.soccerTreeView.LineColor = System.Drawing.Color.White;
             this.soccerTreeView.Location = new System.Drawing.Point(12, 39);
             this.soccerTreeView.Name = "soccerTreeView";
-            this.soccerTreeView.Size = new System.Drawing.Size(302, 370);
+            this.soccerTreeView.Size = new System.Drawing.Size(302, 647);
             this.soccerTreeView.TabIndex = 60;
             // 
             // searchTextBox
@@ -113,86 +150,29 @@ namespace Lynx.Forms.Soccers
             // 
             // skillGroupBox
             // 
+            this.skillGroupBox.Controls.Add(this.charaVSTabControl);
             this.skillGroupBox.Enabled = false;
             this.skillGroupBox.ForeColor = System.Drawing.Color.White;
             this.skillGroupBox.Location = new System.Drawing.Point(320, 33);
             this.skillGroupBox.Name = "skillGroupBox";
-            this.skillGroupBox.Size = new System.Drawing.Size(499, 375);
+            this.skillGroupBox.Size = new System.Drawing.Size(553, 653);
             this.skillGroupBox.TabIndex = 273;
             this.skillGroupBox.TabStop = false;
             this.skillGroupBox.Text = "Soccer";
             // 
             // infoGroupBox
             // 
-            this.infoGroupBox.Controls.Add(this.numberFlatNumericUpDown);
-            this.infoGroupBox.Controls.Add(this.label14);
-            this.infoGroupBox.Controls.Add(this.label13);
-            this.infoGroupBox.Controls.Add(this.idTextBox);
             this.infoGroupBox.Controls.Add(this.label5);
             this.infoGroupBox.Controls.Add(this.nameTextBox);
             this.infoGroupBox.Controls.Add(this.nameWazaTextBox);
             this.infoGroupBox.Controls.Add(this.label1);
             this.infoGroupBox.ForeColor = System.Drawing.Color.White;
-            this.infoGroupBox.Location = new System.Drawing.Point(857, 50);
+            this.infoGroupBox.Location = new System.Drawing.Point(6, 6);
             this.infoGroupBox.Name = "infoGroupBox";
-            this.infoGroupBox.Size = new System.Drawing.Size(468, 70);
+            this.infoGroupBox.Size = new System.Drawing.Size(502, 45);
             this.infoGroupBox.TabIndex = 266;
             this.infoGroupBox.TabStop = false;
             this.infoGroupBox.Text = "Name";
-            // 
-            // numberFlatNumericUpDown
-            // 
-            this.numberFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.numberFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.numberFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.numberFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.numberFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.numberFlatNumericUpDown.Location = new System.Drawing.Point(307, 38);
-            this.numberFlatNumericUpDown.Maximum = new decimal(new int[] {
-            2147483647,
-            0,
-            0,
-            0});
-            this.numberFlatNumericUpDown.Minimum = new decimal(new int[] {
-            2147483647,
-            0,
-            0,
-            -2147483648});
-            this.numberFlatNumericUpDown.Name = "numberFlatNumericUpDown";
-            this.numberFlatNumericUpDown.Size = new System.Drawing.Size(152, 20);
-            this.numberFlatNumericUpDown.TabIndex = 273;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.ForeColor = System.Drawing.Color.White;
-            this.label14.Location = new System.Drawing.Point(232, 43);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(44, 13);
-            this.label14.TabIndex = 272;
-            this.label14.Text = "Number";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.ForeColor = System.Drawing.Color.White;
-            this.label13.Location = new System.Drawing.Point(12, 43);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(18, 13);
-            this.label13.TabIndex = 61;
-            this.label13.Text = "ID";
-            // 
-            // idTextBox
-            // 
-            this.idTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.idTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.idTextBox.Enabled = false;
-            this.idTextBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.idTextBox.Location = new System.Drawing.Point(62, 45);
-            this.idTextBox.Name = "idTextBox";
-            this.idTextBox.ReadOnly = true;
-            this.idTextBox.Size = new System.Drawing.Size(152, 13);
-            this.idTextBox.TabIndex = 62;
             // 
             // label5
             // 
@@ -200,7 +180,7 @@ namespace Lynx.Forms.Soccers
             this.label5.ForeColor = System.Drawing.Color.White;
             this.label5.Location = new System.Drawing.Point(12, 19);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(35, 13);
+            this.label5.Size = new System.Drawing.Size(36, 13);
             this.label5.TabIndex = 57;
             this.label5.Text = "Name";
             // 
@@ -209,10 +189,10 @@ namespace Lynx.Forms.Soccers
             this.nameTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.nameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.nameTextBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.nameTextBox.Location = new System.Drawing.Point(62, 19);
+            this.nameTextBox.Location = new System.Drawing.Point(90, 19);
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.ReadOnly = true;
-            this.nameTextBox.Size = new System.Drawing.Size(152, 13);
+            this.nameTextBox.Size = new System.Drawing.Size(152, 15);
             this.nameTextBox.TabIndex = 58;
             // 
             // nameWazaTextBox
@@ -220,348 +200,21 @@ namespace Lynx.Forms.Soccers
             this.nameWazaTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.nameWazaTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.nameWazaTextBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.nameWazaTextBox.Location = new System.Drawing.Point(307, 19);
+            this.nameWazaTextBox.Location = new System.Drawing.Point(335, 19);
             this.nameWazaTextBox.Name = "nameWazaTextBox";
             this.nameWazaTextBox.ReadOnly = true;
-            this.nameWazaTextBox.Size = new System.Drawing.Size(152, 13);
+            this.nameWazaTextBox.Size = new System.Drawing.Size(152, 15);
             this.nameWazaTextBox.TabIndex = 60;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(232, 19);
+            this.label1.Location = new System.Drawing.Point(260, 19);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(69, 13);
+            this.label1.Size = new System.Drawing.Size(18, 13);
             this.label1.TabIndex = 59;
-            this.label1.Text = "Name (waza)";
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.descriptionTextBox);
-            this.groupBox4.ForeColor = System.Drawing.Color.White;
-            this.groupBox4.Location = new System.Drawing.Point(857, 323);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(468, 67);
-            this.groupBox4.TabIndex = 271;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Description";
-            // 
-            // descriptionTextBox
-            // 
-            this.descriptionTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.descriptionTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.descriptionTextBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.descriptionTextBox.Location = new System.Drawing.Point(22, 19);
-            this.descriptionTextBox.Multiline = true;
-            this.descriptionTextBox.Name = "descriptionTextBox";
-            this.descriptionTextBox.ReadOnly = true;
-            this.descriptionTextBox.Size = new System.Drawing.Size(429, 34);
-            this.descriptionTextBox.TabIndex = 270;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.label15);
-            this.groupBox2.Controls.Add(this.moveTypeRadioButton2);
-            this.groupBox2.Controls.Add(this.partnerFlatNumericUpDown);
-            this.groupBox2.Controls.Add(this.label12);
-            this.groupBox2.Controls.Add(this.moveTypeRadioButton1);
-            this.groupBox2.Controls.Add(this.effectFlatComboBox);
-            this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Controls.Add(this.positonFlatComboBox);
-            this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Controls.Add(this.skillEffectFlatComboBox);
-            this.groupBox2.Controls.Add(this.effectFlatNumericUpDown1);
-            this.groupBox2.Controls.Add(this.boostPanel);
-            this.groupBox2.Controls.Add(this.elementFlatComboBox);
-            this.groupBox2.ForeColor = System.Drawing.Color.White;
-            this.groupBox2.Location = new System.Drawing.Point(857, 126);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(468, 105);
-            this.groupBox2.TabIndex = 268;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Information";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.ForeColor = System.Drawing.Color.White;
-            this.label15.Location = new System.Drawing.Point(25, 21);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(31, 13);
-            this.label15.TabIndex = 274;
-            this.label15.Text = "Type";
-            // 
-            // moveTypeRadioButton2
-            // 
-            this.moveTypeRadioButton2.AutoSize = true;
-            this.moveTypeRadioButton2.Location = new System.Drawing.Point(133, 19);
-            this.moveTypeRadioButton2.Name = "moveTypeRadioButton2";
-            this.moveTypeRadioButton2.Size = new System.Drawing.Size(88, 17);
-            this.moveTypeRadioButton2.TabIndex = 273;
-            this.moveTypeRadioButton2.TabStop = true;
-            this.moveTypeRadioButton2.Text = "Fighting Spirit";
-            this.moveTypeRadioButton2.UseVisualStyleBackColor = true;
-            // 
-            // partnerFlatNumericUpDown
-            // 
-            this.partnerFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.partnerFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.partnerFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.partnerFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.partnerFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.partnerFlatNumericUpDown.Location = new System.Drawing.Point(314, 73);
-            this.partnerFlatNumericUpDown.Maximum = new decimal(new int[] {
-            2147483647,
-            0,
-            0,
-            0});
-            this.partnerFlatNumericUpDown.Minimum = new decimal(new int[] {
-            2147483647,
-            0,
-            0,
-            -2147483648});
-            this.partnerFlatNumericUpDown.Name = "partnerFlatNumericUpDown";
-            this.partnerFlatNumericUpDown.Size = new System.Drawing.Size(130, 20);
-            this.partnerFlatNumericUpDown.TabIndex = 271;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.ForeColor = System.Drawing.Color.White;
-            this.label12.Location = new System.Drawing.Point(264, 76);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(41, 13);
-            this.label12.TabIndex = 270;
-            this.label12.Text = "Partner";
-            // 
-            // moveTypeRadioButton1
-            // 
-            this.moveTypeRadioButton1.AutoSize = true;
-            this.moveTypeRadioButton1.Location = new System.Drawing.Point(75, 19);
-            this.moveTypeRadioButton1.Name = "moveTypeRadioButton1";
-            this.moveTypeRadioButton1.Size = new System.Drawing.Size(52, 17);
-            this.moveTypeRadioButton1.TabIndex = 272;
-            this.moveTypeRadioButton1.TabStop = true;
-            this.moveTypeRadioButton1.Text = "Move";
-            this.moveTypeRadioButton1.UseVisualStyleBackColor = true;
-            // 
-            // effectFlatComboBox
-            // 
-            this.effectFlatComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.effectFlatComboBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.effectFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.effectFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.effectFlatComboBox.FormattingEnabled = true;
-            this.effectFlatComboBox.Items.AddRange(new object[] {
-            "No Effect",
-            "Save",
-            "Punch",
-            "Punch +",
-            "Long Shoot",
-            "Shoot Chain",
-            "Shoot Block",
-            "Unused",
-            "Punch ++"});
-            this.effectFlatComboBox.Location = new System.Drawing.Point(314, 40);
-            this.effectFlatComboBox.Name = "effectFlatComboBox";
-            this.effectFlatComboBox.Size = new System.Drawing.Size(130, 21);
-            this.effectFlatComboBox.TabIndex = 69;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(264, 43);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
-            this.label2.TabIndex = 68;
-            this.label2.Text = "Effect";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(25, 76);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(45, 13);
-            this.label6.TabIndex = 66;
-            this.label6.Text = "Element";
-            // 
-            // positonFlatComboBox
-            // 
-            this.positonFlatComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.positonFlatComboBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.positonFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.positonFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.positonFlatComboBox.FormattingEnabled = true;
-            this.positonFlatComboBox.Items.AddRange(new object[] {
-            "Shoot",
-            "Dribble",
-            "Block",
-            "Save",
-            "Skill"});
-            this.positonFlatComboBox.Location = new System.Drawing.Point(75, 46);
-            this.positonFlatComboBox.Name = "positonFlatComboBox";
-            this.positonFlatComboBox.Size = new System.Drawing.Size(139, 21);
-            this.positonFlatComboBox.TabIndex = 65;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(25, 49);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(44, 13);
-            this.label7.TabIndex = 64;
-            this.label7.Text = "Position";
-            // 
-            // skillEffectFlatComboBox
-            // 
-            this.skillEffectFlatComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.skillEffectFlatComboBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.skillEffectFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.skillEffectFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.skillEffectFlatComboBox.FormattingEnabled = true;
-            this.skillEffectFlatComboBox.Items.AddRange(new object[] {
-            "Catch Boost",
-            "Block Boost",
-            "Dribble Boost",
-            "Kick Boost",
-            "Speed Boost",
-            "Luck Boost",
-            "Technique Boost",
-            "Effect 8",
-            "TP Boost",
-            "FP Boost",
-            "Economy!",
-            "Big Move!",
-            "Put Your Back Into It!",
-            "Critical",
-            "Jinx",
-            "Recovery",
-            "Study",
-            "Slack Off",
-            "Friendship",
-            "Prestige",
-            "Power Element",
-            "Null Element",
-            "Charm Up!",
-            "Cool Up!",
-            "Trickery!",
-            "Fair Play",
-            "Helping Hand!",
-            "Burning Force",
-            "Destructive Aura",
-            "Veil of Protection",
-            "Goddess\'s Grace",
-            "Warrior\'s Cry",
-            "Feet Be Nimble",
-            "Stage Presence",
-            "Never Give Up",
-            "Everyone Move It!",
-            "Cheerleader Backup",
-            "Anti-Slip",
-            "Anti-Cyclone",
-            "Effect 40",
-            "Technician",
-            "Swiftest Wings",
-            "Sacred Blade",
-            "Close Them Down!",
-            "Effect 45",
-            "Effect 46",
-            "Effect 47",
-            "Block Force",
-            "Dribble Force",
-            "Kick Force",
-            "Speed Force",
-            "Luck Force",
-            "Technique Force",
-            "Stamina Force",
-            "Effect 55",
-            "Burning Force (2)",
-            "Effect 57",
-            "Wind\'s Call",
-            "Wood\'s Call",
-            "Fire\'s Call",
-            "Earth\'s Call",
-            "Nobody\'s Call"});
-            this.skillEffectFlatComboBox.Location = new System.Drawing.Point(75, 72);
-            this.skillEffectFlatComboBox.Name = "skillEffectFlatComboBox";
-            this.skillEffectFlatComboBox.Size = new System.Drawing.Size(139, 21);
-            this.skillEffectFlatComboBox.TabIndex = 275;
-            // 
-            // effectFlatNumericUpDown1
-            // 
-            this.effectFlatNumericUpDown1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.effectFlatNumericUpDown1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.effectFlatNumericUpDown1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.effectFlatNumericUpDown1.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.effectFlatNumericUpDown1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.effectFlatNumericUpDown1.Location = new System.Drawing.Point(314, 41);
-            this.effectFlatNumericUpDown1.Maximum = new decimal(new int[] {
-            2147483647,
-            0,
-            0,
-            0});
-            this.effectFlatNumericUpDown1.Minimum = new decimal(new int[] {
-            2147483647,
-            0,
-            0,
-            -2147483648});
-            this.effectFlatNumericUpDown1.Name = "effectFlatNumericUpDown1";
-            this.effectFlatNumericUpDown1.Size = new System.Drawing.Size(130, 20);
-            this.effectFlatNumericUpDown1.TabIndex = 276;
-            // 
-            // boostPanel
-            // 
-            this.boostPanel.Controls.Add(this.boostActiveRadioButton2);
-            this.boostPanel.Controls.Add(this.boostActiveRadioButton1);
-            this.boostPanel.Location = new System.Drawing.Point(314, 71);
-            this.boostPanel.Name = "boostPanel";
-            this.boostPanel.Size = new System.Drawing.Size(130, 29);
-            this.boostPanel.TabIndex = 279;
-            // 
-            // boostActiveRadioButton2
-            // 
-            this.boostActiveRadioButton2.AutoSize = true;
-            this.boostActiveRadioButton2.Location = new System.Drawing.Point(64, 3);
-            this.boostActiveRadioButton2.Name = "boostActiveRadioButton2";
-            this.boostActiveRadioButton2.Size = new System.Drawing.Size(52, 17);
-            this.boostActiveRadioButton2.TabIndex = 278;
-            this.boostActiveRadioButton2.TabStop = true;
-            this.boostActiveRadioButton2.Text = "Team";
-            this.boostActiveRadioButton2.UseVisualStyleBackColor = true;
-            // 
-            // boostActiveRadioButton1
-            // 
-            this.boostActiveRadioButton1.AutoSize = true;
-            this.boostActiveRadioButton1.Location = new System.Drawing.Point(6, 3);
-            this.boostActiveRadioButton1.Name = "boostActiveRadioButton1";
-            this.boostActiveRadioButton1.Size = new System.Drawing.Size(43, 17);
-            this.boostActiveRadioButton1.TabIndex = 277;
-            this.boostActiveRadioButton1.TabStop = true;
-            this.boostActiveRadioButton1.Text = "Self";
-            this.boostActiveRadioButton1.UseVisualStyleBackColor = true;
-            // 
-            // elementFlatComboBox
-            // 
-            this.elementFlatComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.elementFlatComboBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.elementFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.elementFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.elementFlatComboBox.FormattingEnabled = true;
-            this.elementFlatComboBox.Items.AddRange(new object[] {
-            "Wind",
-            "Wood",
-            "Fire",
-            "Earth",
-            "Void"});
-            this.elementFlatComboBox.Location = new System.Drawing.Point(75, 73);
-            this.elementFlatComboBox.Name = "elementFlatComboBox";
-            this.elementFlatComboBox.Size = new System.Drawing.Size(139, 21);
-            this.elementFlatComboBox.TabIndex = 67;
+            this.label1.Text = "ID";
             // 
             // groupBox1
             // 
@@ -635,187 +288,983 @@ namespace Lynx.Forms.Soccers
             this.label3.TabIndex = 64;
             this.label3.Text = "Type";
             // 
-            // groupBox3
+            // charaVSTabControl
             // 
-            this.groupBox3.Controls.Add(this.techniqueFlatNumericUpDown);
-            this.groupBox3.Controls.Add(this.faultRateFlatNumericUpDown);
-            this.groupBox3.Controls.Add(this.label10);
-            this.groupBox3.Controls.Add(this.label11);
-            this.groupBox3.Controls.Add(this.powerFlatNumericUpDown);
-            this.groupBox3.Controls.Add(this.tpCostFlatNumericUpDown);
-            this.groupBox3.Controls.Add(this.label8);
-            this.groupBox3.Controls.Add(this.label9);
-            this.groupBox3.ForeColor = System.Drawing.Color.White;
-            this.groupBox3.Location = new System.Drawing.Point(857, 237);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(280, 80);
-            this.groupBox3.TabIndex = 269;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Stats";
+            this.charaVSTabControl.ActiveIndicator = System.Drawing.Color.White;
+            this.charaVSTabControl.ActiveTab = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.charaVSTabControl.ActiveText = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.charaVSTabControl.Background = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.charaVSTabControl.BackgroundTab = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.charaVSTabControl.Border = System.Drawing.Color.White;
+            this.charaVSTabControl.Controls.Add(this.tabPage1);
+            this.charaVSTabControl.Controls.Add(this.tabPage2);
+            this.charaVSTabControl.Divider = System.Drawing.Color.White;
+            this.charaVSTabControl.Font = new System.Drawing.Font("Leelawadee UI", 8.25F);
+            this.charaVSTabControl.InActiveIndicator = System.Drawing.Color.White;
+            this.charaVSTabControl.InActiveTab = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.charaVSTabControl.InActiveText = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.charaVSTabControl.Location = new System.Drawing.Point(12, 17);
+            this.charaVSTabControl.Margin = new System.Windows.Forms.Padding(0);
+            this.charaVSTabControl.Name = "charaVSTabControl";
+            this.charaVSTabControl.Padding = new System.Drawing.Point(0, 0);
+            this.charaVSTabControl.SelectedIndex = 0;
+            this.charaVSTabControl.Size = new System.Drawing.Size(530, 607);
+            this.charaVSTabControl.TabIndex = 281;
             // 
-            // techniqueFlatNumericUpDown
+            // tabPage1
             // 
-            this.techniqueFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.techniqueFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.techniqueFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.techniqueFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.techniqueFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.techniqueFlatNumericUpDown.Location = new System.Drawing.Point(202, 47);
-            this.techniqueFlatNumericUpDown.Maximum = new decimal(new int[] {
+            this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.tabPage1.Controls.Add(this.groupBox7);
+            this.tabPage1.Controls.Add(this.groupBox8);
+            this.tabPage1.Controls.Add(this.groupBox6);
+            this.tabPage1.Controls.Add(this.groupBox5);
+            this.tabPage1.Controls.Add(this.infoGroupBox);
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(522, 578);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Information";
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(574, 502);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Players";
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.flatComboBox3);
+            this.groupBox5.Controls.Add(this.flatComboBox4);
+            this.groupBox5.Controls.Add(this.label16);
+            this.groupBox5.Controls.Add(this.label17);
+            this.groupBox5.Controls.Add(this.flatComboBox2);
+            this.groupBox5.Controls.Add(this.flatComboBox1);
+            this.groupBox5.Controls.Add(this.label13);
+            this.groupBox5.Controls.Add(this.label14);
+            this.groupBox5.ForeColor = System.Drawing.Color.White;
+            this.groupBox5.Location = new System.Drawing.Point(6, 115);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(502, 77);
+            this.groupBox5.TabIndex = 267;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Equipments";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.ForeColor = System.Drawing.Color.White;
+            this.label13.Location = new System.Drawing.Point(12, 19);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(37, 13);
+            this.label13.TabIndex = 57;
+            this.label13.Text = "Boots";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.ForeColor = System.Drawing.Color.White;
+            this.label14.Location = new System.Drawing.Point(260, 19);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(41, 13);
+            this.label14.TabIndex = 59;
+            this.label14.Text = "Gloves";
+            // 
+            // flatComboBox1
+            // 
+            this.flatComboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.flatComboBox1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.flatComboBox1.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.flatComboBox1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.flatComboBox1.FormattingEnabled = true;
+            this.flatComboBox1.Items.AddRange(new object[] {
+            "Shoot",
+            "Dribble",
+            "Block",
+            "Save",
+            "Skill"});
+            this.flatComboBox1.Location = new System.Drawing.Point(90, 16);
+            this.flatComboBox1.Name = "flatComboBox1";
+            this.flatComboBox1.Size = new System.Drawing.Size(152, 21);
+            this.flatComboBox1.TabIndex = 66;
+            // 
+            // flatComboBox2
+            // 
+            this.flatComboBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.flatComboBox2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.flatComboBox2.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.flatComboBox2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.flatComboBox2.FormattingEnabled = true;
+            this.flatComboBox2.Items.AddRange(new object[] {
+            "Shoot",
+            "Dribble",
+            "Block",
+            "Save",
+            "Skill"});
+            this.flatComboBox2.Location = new System.Drawing.Point(335, 16);
+            this.flatComboBox2.Name = "flatComboBox2";
+            this.flatComboBox2.Size = new System.Drawing.Size(152, 21);
+            this.flatComboBox2.TabIndex = 67;
+            // 
+            // flatComboBox3
+            // 
+            this.flatComboBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.flatComboBox3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.flatComboBox3.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.flatComboBox3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.flatComboBox3.FormattingEnabled = true;
+            this.flatComboBox3.Items.AddRange(new object[] {
+            "Shoot",
+            "Dribble",
+            "Block",
+            "Save",
+            "Skill"});
+            this.flatComboBox3.Location = new System.Drawing.Point(335, 43);
+            this.flatComboBox3.Name = "flatComboBox3";
+            this.flatComboBox3.Size = new System.Drawing.Size(152, 21);
+            this.flatComboBox3.TabIndex = 71;
+            // 
+            // flatComboBox4
+            // 
+            this.flatComboBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.flatComboBox4.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.flatComboBox4.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.flatComboBox4.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.flatComboBox4.FormattingEnabled = true;
+            this.flatComboBox4.Items.AddRange(new object[] {
+            "Shoot",
+            "Dribble",
+            "Block",
+            "Save",
+            "Skill"});
+            this.flatComboBox4.Location = new System.Drawing.Point(90, 43);
+            this.flatComboBox4.Name = "flatComboBox4";
+            this.flatComboBox4.Size = new System.Drawing.Size(152, 21);
+            this.flatComboBox4.TabIndex = 70;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.ForeColor = System.Drawing.Color.White;
+            this.label16.Location = new System.Drawing.Point(12, 46);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(48, 13);
+            this.label16.TabIndex = 68;
+            this.label16.Text = "Bracelet";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.ForeColor = System.Drawing.Color.White;
+            this.label17.Location = new System.Drawing.Point(260, 46);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(50, 13);
+            this.label17.TabIndex = 69;
+            this.label17.Text = "Pendant";
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.flatNumericUpDown11);
+            this.groupBox6.Controls.Add(this.flatNumericUpDown12);
+            this.groupBox6.Controls.Add(this.label2);
+            this.groupBox6.Controls.Add(this.label6);
+            this.groupBox6.Controls.Add(this.label28);
+            this.groupBox6.Controls.Add(this.flatNumericUpDown7);
+            this.groupBox6.Controls.Add(this.flatComboBox9);
+            this.groupBox6.Controls.Add(this.label31);
+            this.groupBox6.Controls.Add(this.label29);
+            this.groupBox6.Controls.Add(this.flatNumericUpDown8);
+            this.groupBox6.Controls.Add(this.flatComboBox10);
+            this.groupBox6.Controls.Add(this.label30);
+            this.groupBox6.Controls.Add(this.label24);
+            this.groupBox6.Controls.Add(this.flatNumericUpDown5);
+            this.groupBox6.Controls.Add(this.label25);
+            this.groupBox6.Controls.Add(this.flatNumericUpDown6);
+            this.groupBox6.Controls.Add(this.flatComboBox7);
+            this.groupBox6.Controls.Add(this.flatComboBox8);
+            this.groupBox6.Controls.Add(this.label26);
+            this.groupBox6.Controls.Add(this.label27);
+            this.groupBox6.Controls.Add(this.label23);
+            this.groupBox6.Controls.Add(this.flatNumericUpDown4);
+            this.groupBox6.Controls.Add(this.label22);
+            this.groupBox6.Controls.Add(this.flatNumericUpDown3);
+            this.groupBox6.Controls.Add(this.flatNumericUpDown2);
+            this.groupBox6.Controls.Add(this.flatNumericUpDown1);
+            this.groupBox6.Controls.Add(this.flatComboBox5);
+            this.groupBox6.Controls.Add(this.flatComboBox6);
+            this.groupBox6.Controls.Add(this.label18);
+            this.groupBox6.Controls.Add(this.label19);
+            this.groupBox6.Controls.Add(this.label20);
+            this.groupBox6.Controls.Add(this.label21);
+            this.groupBox6.ForeColor = System.Drawing.Color.White;
+            this.groupBox6.Location = new System.Drawing.Point(6, 303);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(502, 264);
+            this.groupBox6.TabIndex = 268;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Drops";
+            // 
+            // flatComboBox5
+            // 
+            this.flatComboBox5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.flatComboBox5.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.flatComboBox5.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.flatComboBox5.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.flatComboBox5.FormattingEnabled = true;
+            this.flatComboBox5.Items.AddRange(new object[] {
+            "Shoot",
+            "Dribble",
+            "Block",
+            "Save",
+            "Skill"});
+            this.flatComboBox5.Location = new System.Drawing.Point(335, 73);
+            this.flatComboBox5.Name = "flatComboBox5";
+            this.flatComboBox5.Size = new System.Drawing.Size(152, 21);
+            this.flatComboBox5.TabIndex = 71;
+            // 
+            // flatComboBox6
+            // 
+            this.flatComboBox6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.flatComboBox6.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.flatComboBox6.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.flatComboBox6.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.flatComboBox6.FormattingEnabled = true;
+            this.flatComboBox6.Items.AddRange(new object[] {
+            "Shoot",
+            "Dribble",
+            "Block",
+            "Save",
+            "Skill"});
+            this.flatComboBox6.Location = new System.Drawing.Point(90, 73);
+            this.flatComboBox6.Name = "flatComboBox6";
+            this.flatComboBox6.Size = new System.Drawing.Size(152, 21);
+            this.flatComboBox6.TabIndex = 70;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.ForeColor = System.Drawing.Color.White;
+            this.label18.Location = new System.Drawing.Point(12, 74);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(42, 13);
+            this.label18.TabIndex = 68;
+            this.label18.Text = "Drop 1";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.ForeColor = System.Drawing.Color.White;
+            this.label19.Location = new System.Drawing.Point(260, 76);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(42, 13);
+            this.label19.TabIndex = 69;
+            this.label19.Text = "Drop 2";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.ForeColor = System.Drawing.Color.White;
+            this.label20.Location = new System.Drawing.Point(12, 19);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(48, 13);
+            this.label20.TabIndex = 57;
+            this.label20.Text = "Prestige";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.ForeColor = System.Drawing.Color.White;
+            this.label21.Location = new System.Drawing.Point(260, 21);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(62, 13);
+            this.label21.TabIndex = 59;
+            this.label21.Text = "Friendship";
+            // 
+            // flatNumericUpDown1
+            // 
+            this.flatNumericUpDown1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.flatNumericUpDown1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.flatNumericUpDown1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.flatNumericUpDown1.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.flatNumericUpDown1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.flatNumericUpDown1.Location = new System.Drawing.Point(90, 17);
+            this.flatNumericUpDown1.Maximum = new decimal(new int[] {
             2147483647,
             0,
             0,
             0});
-            this.techniqueFlatNumericUpDown.Minimum = new decimal(new int[] {
+            this.flatNumericUpDown1.Minimum = new decimal(new int[] {
             2147483647,
             0,
             0,
             -2147483648});
-            this.techniqueFlatNumericUpDown.Name = "techniqueFlatNumericUpDown";
-            this.techniqueFlatNumericUpDown.Size = new System.Drawing.Size(66, 20);
-            this.techniqueFlatNumericUpDown.TabIndex = 270;
+            this.flatNumericUpDown1.Name = "flatNumericUpDown1";
+            this.flatNumericUpDown1.Size = new System.Drawing.Size(152, 22);
+            this.flatNumericUpDown1.TabIndex = 266;
             // 
-            // faultRateFlatNumericUpDown
+            // flatNumericUpDown2
             // 
-            this.faultRateFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.faultRateFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.faultRateFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.faultRateFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.faultRateFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.faultRateFlatNumericUpDown.Location = new System.Drawing.Point(202, 19);
-            this.faultRateFlatNumericUpDown.Maximum = new decimal(new int[] {
+            this.flatNumericUpDown2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.flatNumericUpDown2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.flatNumericUpDown2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.flatNumericUpDown2.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.flatNumericUpDown2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.flatNumericUpDown2.Location = new System.Drawing.Point(335, 17);
+            this.flatNumericUpDown2.Maximum = new decimal(new int[] {
             2147483647,
             0,
             0,
             0});
-            this.faultRateFlatNumericUpDown.Minimum = new decimal(new int[] {
+            this.flatNumericUpDown2.Minimum = new decimal(new int[] {
             2147483647,
             0,
             0,
             -2147483648});
-            this.faultRateFlatNumericUpDown.Name = "faultRateFlatNumericUpDown";
-            this.faultRateFlatNumericUpDown.Size = new System.Drawing.Size(66, 20);
-            this.faultRateFlatNumericUpDown.TabIndex = 269;
+            this.flatNumericUpDown2.Name = "flatNumericUpDown2";
+            this.flatNumericUpDown2.Size = new System.Drawing.Size(152, 22);
+            this.flatNumericUpDown2.TabIndex = 267;
             // 
-            // label10
+            // flatNumericUpDown3
             // 
-            this.label10.AutoSize = true;
-            this.label10.ForeColor = System.Drawing.Color.White;
-            this.label10.Location = new System.Drawing.Point(139, 50);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(58, 13);
-            this.label10.TabIndex = 268;
-            this.label10.Text = "Technique";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(139, 21);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(30, 13);
-            this.label11.TabIndex = 267;
-            this.label11.Text = "Fault";
-            // 
-            // powerFlatNumericUpDown
-            // 
-            this.powerFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.powerFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.powerFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.powerFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.powerFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.powerFlatNumericUpDown.Location = new System.Drawing.Point(61, 47);
-            this.powerFlatNumericUpDown.Maximum = new decimal(new int[] {
+            this.flatNumericUpDown3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.flatNumericUpDown3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.flatNumericUpDown3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.flatNumericUpDown3.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.flatNumericUpDown3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.flatNumericUpDown3.Location = new System.Drawing.Point(151, 100);
+            this.flatNumericUpDown3.Maximum = new decimal(new int[] {
             2147483647,
             0,
             0,
             0});
-            this.powerFlatNumericUpDown.Minimum = new decimal(new int[] {
+            this.flatNumericUpDown3.Minimum = new decimal(new int[] {
             2147483647,
             0,
             0,
             -2147483648});
-            this.powerFlatNumericUpDown.Name = "powerFlatNumericUpDown";
-            this.powerFlatNumericUpDown.Size = new System.Drawing.Size(66, 20);
-            this.powerFlatNumericUpDown.TabIndex = 266;
+            this.flatNumericUpDown3.Name = "flatNumericUpDown3";
+            this.flatNumericUpDown3.Size = new System.Drawing.Size(91, 22);
+            this.flatNumericUpDown3.TabIndex = 268;
             // 
-            // tpCostFlatNumericUpDown
+            // label22
             // 
-            this.tpCostFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.tpCostFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.tpCostFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tpCostFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.tpCostFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.tpCostFlatNumericUpDown.Location = new System.Drawing.Point(61, 20);
-            this.tpCostFlatNumericUpDown.Maximum = new decimal(new int[] {
+            this.label22.AutoSize = true;
+            this.label22.ForeColor = System.Drawing.Color.White;
+            this.label22.Location = new System.Drawing.Point(94, 102);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(48, 13);
+            this.label22.TabIndex = 269;
+            this.label22.Text = "Rate (%)";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.ForeColor = System.Drawing.Color.White;
+            this.label23.Location = new System.Drawing.Point(339, 102);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(48, 13);
+            this.label23.TabIndex = 271;
+            this.label23.Text = "Rate (%)";
+            // 
+            // flatNumericUpDown4
+            // 
+            this.flatNumericUpDown4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.flatNumericUpDown4.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.flatNumericUpDown4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.flatNumericUpDown4.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.flatNumericUpDown4.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.flatNumericUpDown4.Location = new System.Drawing.Point(396, 100);
+            this.flatNumericUpDown4.Maximum = new decimal(new int[] {
             2147483647,
             0,
             0,
             0});
-            this.tpCostFlatNumericUpDown.Minimum = new decimal(new int[] {
+            this.flatNumericUpDown4.Minimum = new decimal(new int[] {
             2147483647,
             0,
             0,
             -2147483648});
-            this.tpCostFlatNumericUpDown.Name = "tpCostFlatNumericUpDown";
-            this.tpCostFlatNumericUpDown.Size = new System.Drawing.Size(66, 20);
-            this.tpCostFlatNumericUpDown.TabIndex = 265;
+            this.flatNumericUpDown4.Name = "flatNumericUpDown4";
+            this.flatNumericUpDown4.Size = new System.Drawing.Size(91, 22);
+            this.flatNumericUpDown4.TabIndex = 270;
             // 
-            // label8
+            // label24
             // 
-            this.label8.AutoSize = true;
-            this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.Location = new System.Drawing.Point(11, 50);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(37, 13);
-            this.label8.TabIndex = 66;
-            this.label8.Text = "Power";
+            this.label24.AutoSize = true;
+            this.label24.ForeColor = System.Drawing.Color.White;
+            this.label24.Location = new System.Drawing.Point(339, 166);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(48, 13);
+            this.label24.TabIndex = 279;
+            this.label24.Text = "Rate (%)";
             // 
-            // label9
+            // flatNumericUpDown5
             // 
-            this.label9.AutoSize = true;
-            this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(11, 23);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(21, 13);
-            this.label9.TabIndex = 64;
-            this.label9.Text = "TP";
+            this.flatNumericUpDown5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.flatNumericUpDown5.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.flatNumericUpDown5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.flatNumericUpDown5.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.flatNumericUpDown5.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.flatNumericUpDown5.Location = new System.Drawing.Point(396, 164);
+            this.flatNumericUpDown5.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.flatNumericUpDown5.Minimum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            -2147483648});
+            this.flatNumericUpDown5.Name = "flatNumericUpDown5";
+            this.flatNumericUpDown5.Size = new System.Drawing.Size(91, 22);
+            this.flatNumericUpDown5.TabIndex = 278;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.ForeColor = System.Drawing.Color.White;
+            this.label25.Location = new System.Drawing.Point(94, 166);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(48, 13);
+            this.label25.TabIndex = 277;
+            this.label25.Text = "Rate (%)";
+            // 
+            // flatNumericUpDown6
+            // 
+            this.flatNumericUpDown6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.flatNumericUpDown6.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.flatNumericUpDown6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.flatNumericUpDown6.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.flatNumericUpDown6.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.flatNumericUpDown6.Location = new System.Drawing.Point(151, 164);
+            this.flatNumericUpDown6.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.flatNumericUpDown6.Minimum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            -2147483648});
+            this.flatNumericUpDown6.Name = "flatNumericUpDown6";
+            this.flatNumericUpDown6.Size = new System.Drawing.Size(91, 22);
+            this.flatNumericUpDown6.TabIndex = 276;
+            // 
+            // flatComboBox7
+            // 
+            this.flatComboBox7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.flatComboBox7.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.flatComboBox7.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.flatComboBox7.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.flatComboBox7.FormattingEnabled = true;
+            this.flatComboBox7.Items.AddRange(new object[] {
+            "Shoot",
+            "Dribble",
+            "Block",
+            "Save",
+            "Skill"});
+            this.flatComboBox7.Location = new System.Drawing.Point(335, 137);
+            this.flatComboBox7.Name = "flatComboBox7";
+            this.flatComboBox7.Size = new System.Drawing.Size(152, 21);
+            this.flatComboBox7.TabIndex = 275;
+            // 
+            // flatComboBox8
+            // 
+            this.flatComboBox8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.flatComboBox8.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.flatComboBox8.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.flatComboBox8.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.flatComboBox8.FormattingEnabled = true;
+            this.flatComboBox8.Items.AddRange(new object[] {
+            "Shoot",
+            "Dribble",
+            "Block",
+            "Save",
+            "Skill"});
+            this.flatComboBox8.Location = new System.Drawing.Point(90, 137);
+            this.flatComboBox8.Name = "flatComboBox8";
+            this.flatComboBox8.Size = new System.Drawing.Size(152, 21);
+            this.flatComboBox8.TabIndex = 274;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.ForeColor = System.Drawing.Color.White;
+            this.label26.Location = new System.Drawing.Point(12, 138);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(42, 13);
+            this.label26.TabIndex = 272;
+            this.label26.Text = "Drop 3";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.ForeColor = System.Drawing.Color.White;
+            this.label27.Location = new System.Drawing.Point(260, 140);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(42, 13);
+            this.label27.TabIndex = 273;
+            this.label27.Text = "Drop 4";
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.ForeColor = System.Drawing.Color.White;
+            this.label29.Location = new System.Drawing.Point(94, 229);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(48, 13);
+            this.label29.TabIndex = 285;
+            this.label29.Text = "Rate (%)";
+            // 
+            // flatNumericUpDown8
+            // 
+            this.flatNumericUpDown8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.flatNumericUpDown8.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.flatNumericUpDown8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.flatNumericUpDown8.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.flatNumericUpDown8.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.flatNumericUpDown8.Location = new System.Drawing.Point(151, 227);
+            this.flatNumericUpDown8.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.flatNumericUpDown8.Minimum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            -2147483648});
+            this.flatNumericUpDown8.Name = "flatNumericUpDown8";
+            this.flatNumericUpDown8.Size = new System.Drawing.Size(91, 22);
+            this.flatNumericUpDown8.TabIndex = 284;
+            // 
+            // flatComboBox10
+            // 
+            this.flatComboBox10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.flatComboBox10.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.flatComboBox10.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.flatComboBox10.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.flatComboBox10.FormattingEnabled = true;
+            this.flatComboBox10.Items.AddRange(new object[] {
+            "Shoot",
+            "Dribble",
+            "Block",
+            "Save",
+            "Skill"});
+            this.flatComboBox10.Location = new System.Drawing.Point(90, 200);
+            this.flatComboBox10.Name = "flatComboBox10";
+            this.flatComboBox10.Size = new System.Drawing.Size(152, 21);
+            this.flatComboBox10.TabIndex = 282;
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.ForeColor = System.Drawing.Color.White;
+            this.label30.Location = new System.Drawing.Point(12, 201);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(42, 13);
+            this.label30.TabIndex = 280;
+            this.label30.Text = "Drop 5";
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.ForeColor = System.Drawing.Color.White;
+            this.label28.Location = new System.Drawing.Point(339, 229);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(48, 13);
+            this.label28.TabIndex = 289;
+            this.label28.Text = "Rate (%)";
+            // 
+            // flatNumericUpDown7
+            // 
+            this.flatNumericUpDown7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.flatNumericUpDown7.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.flatNumericUpDown7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.flatNumericUpDown7.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.flatNumericUpDown7.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.flatNumericUpDown7.Location = new System.Drawing.Point(396, 227);
+            this.flatNumericUpDown7.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.flatNumericUpDown7.Minimum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            -2147483648});
+            this.flatNumericUpDown7.Name = "flatNumericUpDown7";
+            this.flatNumericUpDown7.Size = new System.Drawing.Size(91, 22);
+            this.flatNumericUpDown7.TabIndex = 288;
+            // 
+            // flatComboBox9
+            // 
+            this.flatComboBox9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.flatComboBox9.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.flatComboBox9.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.flatComboBox9.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.flatComboBox9.FormattingEnabled = true;
+            this.flatComboBox9.Items.AddRange(new object[] {
+            "Shoot",
+            "Dribble",
+            "Block",
+            "Save",
+            "Skill"});
+            this.flatComboBox9.Location = new System.Drawing.Point(335, 200);
+            this.flatComboBox9.Name = "flatComboBox9";
+            this.flatComboBox9.Size = new System.Drawing.Size(152, 21);
+            this.flatComboBox9.TabIndex = 287;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.ForeColor = System.Drawing.Color.White;
+            this.label31.Location = new System.Drawing.Point(260, 203);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(42, 13);
+            this.label31.TabIndex = 286;
+            this.label31.Text = "Drop 6";
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.charabaseButton);
+            this.groupBox7.Controls.Add(this.canBeSoldCheckBox);
+            this.groupBox7.Controls.Add(this.flatComboBox11);
+            this.groupBox7.Controls.Add(this.flatComboBox12);
+            this.groupBox7.Controls.Add(this.label32);
+            this.groupBox7.Controls.Add(this.label33);
+            this.groupBox7.Controls.Add(this.flatComboBox13);
+            this.groupBox7.Controls.Add(this.flatComboBox14);
+            this.groupBox7.Controls.Add(this.label34);
+            this.groupBox7.Controls.Add(this.label35);
+            this.groupBox7.ForeColor = System.Drawing.Color.White;
+            this.groupBox7.Location = new System.Drawing.Point(6, 194);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(502, 103);
+            this.groupBox7.TabIndex = 269;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Strategy";
+            // 
+            // flatComboBox11
+            // 
+            this.flatComboBox11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.flatComboBox11.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.flatComboBox11.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.flatComboBox11.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.flatComboBox11.FormattingEnabled = true;
+            this.flatComboBox11.Items.AddRange(new object[] {
+            "Shoot",
+            "Dribble",
+            "Block",
+            "Save",
+            "Skill"});
+            this.flatComboBox11.Location = new System.Drawing.Point(335, 43);
+            this.flatComboBox11.Name = "flatComboBox11";
+            this.flatComboBox11.Size = new System.Drawing.Size(152, 21);
+            this.flatComboBox11.TabIndex = 71;
+            // 
+            // flatComboBox12
+            // 
+            this.flatComboBox12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.flatComboBox12.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.flatComboBox12.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.flatComboBox12.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.flatComboBox12.FormattingEnabled = true;
+            this.flatComboBox12.Items.AddRange(new object[] {
+            "Shoot",
+            "Dribble",
+            "Block",
+            "Save",
+            "Skill"});
+            this.flatComboBox12.Location = new System.Drawing.Point(90, 43);
+            this.flatComboBox12.Name = "flatComboBox12";
+            this.flatComboBox12.Size = new System.Drawing.Size(152, 21);
+            this.flatComboBox12.TabIndex = 70;
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.ForeColor = System.Drawing.Color.White;
+            this.label32.Location = new System.Drawing.Point(12, 46);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(20, 13);
+            this.label32.TabIndex = 68;
+            this.label32.Text = "Kit";
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.ForeColor = System.Drawing.Color.White;
+            this.label33.Location = new System.Drawing.Point(260, 46);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(60, 13);
+            this.label33.TabIndex = 69;
+            this.label33.Text = "Formation";
+            // 
+            // flatComboBox13
+            // 
+            this.flatComboBox13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.flatComboBox13.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.flatComboBox13.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.flatComboBox13.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.flatComboBox13.FormattingEnabled = true;
+            this.flatComboBox13.Items.AddRange(new object[] {
+            "Shoot",
+            "Dribble",
+            "Block",
+            "Save",
+            "Skill"});
+            this.flatComboBox13.Location = new System.Drawing.Point(335, 16);
+            this.flatComboBox13.Name = "flatComboBox13";
+            this.flatComboBox13.Size = new System.Drawing.Size(152, 21);
+            this.flatComboBox13.TabIndex = 67;
+            // 
+            // flatComboBox14
+            // 
+            this.flatComboBox14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.flatComboBox14.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.flatComboBox14.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.flatComboBox14.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.flatComboBox14.FormattingEnabled = true;
+            this.flatComboBox14.Items.AddRange(new object[] {
+            "Shoot",
+            "Dribble",
+            "Block",
+            "Save",
+            "Skill"});
+            this.flatComboBox14.Location = new System.Drawing.Point(90, 16);
+            this.flatComboBox14.Name = "flatComboBox14";
+            this.flatComboBox14.Size = new System.Drawing.Size(152, 21);
+            this.flatComboBox14.TabIndex = 66;
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.ForeColor = System.Drawing.Color.White;
+            this.label34.Location = new System.Drawing.Point(12, 19);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(39, 13);
+            this.label34.TabIndex = 57;
+            this.label34.Text = "Coach";
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.ForeColor = System.Drawing.Color.White;
+            this.label35.Location = new System.Drawing.Point(260, 19);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(35, 13);
+            this.label35.TabIndex = 59;
+            this.label35.Text = "Tactic";
+            // 
+            // canBeSoldCheckBox
+            // 
+            this.canBeSoldCheckBox.AutoSize = true;
+            this.canBeSoldCheckBox.Location = new System.Drawing.Point(90, 70);
+            this.canBeSoldCheckBox.Name = "canBeSoldCheckBox";
+            this.canBeSoldCheckBox.Size = new System.Drawing.Size(96, 17);
+            this.canBeSoldCheckBox.TabIndex = 282;
+            this.canBeSoldCheckBox.Text = "Away Colours";
+            this.canBeSoldCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // charabaseButton
+            // 
+            this.charabaseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.charabaseButton.Location = new System.Drawing.Point(335, 70);
+            this.charabaseButton.Name = "charabaseButton";
+            this.charabaseButton.Size = new System.Drawing.Size(152, 23);
+            this.charabaseButton.TabIndex = 283;
+            this.charabaseButton.Text = "View";
+            this.charabaseButton.UseVisualStyleBackColor = true;
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.flatNumericUpDown10);
+            this.groupBox8.Controls.Add(this.flatNumericUpDown9);
+            this.groupBox8.Controls.Add(this.label36);
+            this.groupBox8.Controls.Add(this.label37);
+            this.groupBox8.ForeColor = System.Drawing.Color.White;
+            this.groupBox8.Location = new System.Drawing.Point(6, 57);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(502, 50);
+            this.groupBox8.TabIndex = 269;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Level";
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.ForeColor = System.Drawing.Color.White;
+            this.label36.Location = new System.Drawing.Point(12, 19);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(37, 13);
+            this.label36.TabIndex = 57;
+            this.label36.Text = "Player";
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.ForeColor = System.Drawing.Color.White;
+            this.label37.Location = new System.Drawing.Point(260, 19);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(17, 13);
+            this.label37.TabIndex = 59;
+            this.label37.Text = "AI";
+            // 
+            // flatNumericUpDown9
+            // 
+            this.flatNumericUpDown9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.flatNumericUpDown9.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.flatNumericUpDown9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.flatNumericUpDown9.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.flatNumericUpDown9.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.flatNumericUpDown9.Location = new System.Drawing.Point(90, 17);
+            this.flatNumericUpDown9.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.flatNumericUpDown9.Minimum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            -2147483648});
+            this.flatNumericUpDown9.Name = "flatNumericUpDown9";
+            this.flatNumericUpDown9.Size = new System.Drawing.Size(152, 22);
+            this.flatNumericUpDown9.TabIndex = 266;
+            // 
+            // flatNumericUpDown10
+            // 
+            this.flatNumericUpDown10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.flatNumericUpDown10.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.flatNumericUpDown10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.flatNumericUpDown10.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.flatNumericUpDown10.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.flatNumericUpDown10.Location = new System.Drawing.Point(335, 17);
+            this.flatNumericUpDown10.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.flatNumericUpDown10.Minimum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            -2147483648});
+            this.flatNumericUpDown10.Name = "flatNumericUpDown10";
+            this.flatNumericUpDown10.Size = new System.Drawing.Size(152, 22);
+            this.flatNumericUpDown10.TabIndex = 267;
+            // 
+            // flatNumericUpDown11
+            // 
+            this.flatNumericUpDown11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.flatNumericUpDown11.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.flatNumericUpDown11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.flatNumericUpDown11.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.flatNumericUpDown11.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.flatNumericUpDown11.Location = new System.Drawing.Point(335, 45);
+            this.flatNumericUpDown11.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.flatNumericUpDown11.Minimum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            -2147483648});
+            this.flatNumericUpDown11.Name = "flatNumericUpDown11";
+            this.flatNumericUpDown11.Size = new System.Drawing.Size(152, 22);
+            this.flatNumericUpDown11.TabIndex = 293;
+            // 
+            // flatNumericUpDown12
+            // 
+            this.flatNumericUpDown12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.flatNumericUpDown12.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.flatNumericUpDown12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.flatNumericUpDown12.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.flatNumericUpDown12.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.flatNumericUpDown12.Location = new System.Drawing.Point(90, 45);
+            this.flatNumericUpDown12.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.flatNumericUpDown12.Minimum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            -2147483648});
+            this.flatNumericUpDown12.Name = "flatNumericUpDown12";
+            this.flatNumericUpDown12.Size = new System.Drawing.Size(152, 22);
+            this.flatNumericUpDown12.TabIndex = 292;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(12, 47);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(72, 13);
+            this.label2.TabIndex = 290;
+            this.label2.Text = "Victory Point";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.ForeColor = System.Drawing.Color.White;
+            this.label6.Location = new System.Drawing.Point(260, 49);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(52, 13);
+            this.label6.TabIndex = 291;
+            this.label6.Text = "Nice Play";
             // 
             // SoccersWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.ClientSize = new System.Drawing.Size(985, 574);
-            this.Controls.Add(this.infoGroupBox);
-            this.Controls.Add(this.groupBox4);
+            this.ClientSize = new System.Drawing.Size(883, 797);
             this.Controls.Add(this.skillGroupBox);
-            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.soccerTreeView);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.searchTextBox);
-            this.Controls.Add(this.groupBox3);
             this.Name = "SoccersWindow";
             this.Text = "SoccersWindow";
+            this.skillGroupBox.ResumeLayout(false);
             this.infoGroupBox.ResumeLayout(false);
             this.infoGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numberFlatNumericUpDown)).EndInit();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.partnerFlatNumericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.effectFlatNumericUpDown1)).EndInit();
-            this.boostPanel.ResumeLayout(false);
-            this.boostPanel.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.techniqueFlatNumericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.faultRateFlatNumericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.powerFlatNumericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tpCostFlatNumericUpDown)).EndInit();
+            this.charaVSTabControl.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.flatNumericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flatNumericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flatNumericUpDown3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flatNumericUpDown4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flatNumericUpDown5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flatNumericUpDown6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flatNumericUpDown8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flatNumericUpDown7)).EndInit();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.flatNumericUpDown9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flatNumericUpDown10)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flatNumericUpDown11)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flatNumericUpDown12)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -827,46 +1276,75 @@ namespace Lynx.Forms.Soccers
         private System.Windows.Forms.TextBox searchTextBox;
         private System.Windows.Forms.GroupBox skillGroupBox;
         private System.Windows.Forms.GroupBox infoGroupBox;
-        private UI.FlatNumericUpDown numberFlatNumericUpDown;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox idTextBox;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox nameTextBox;
         private System.Windows.Forms.TextBox nameWazaTextBox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.TextBox descriptionTextBox;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.RadioButton moveTypeRadioButton2;
-        private UI.FlatNumericUpDown partnerFlatNumericUpDown;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.RadioButton moveTypeRadioButton1;
-        private UI.FlatComboBox effectFlatComboBox;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label6;
-        private UI.FlatComboBox positonFlatComboBox;
-        private System.Windows.Forms.Label label7;
-        private UI.FlatComboBox skillEffectFlatComboBox;
-        private UI.FlatNumericUpDown effectFlatNumericUpDown1;
-        private System.Windows.Forms.Panel boostPanel;
-        private System.Windows.Forms.RadioButton boostActiveRadioButton2;
-        private System.Windows.Forms.RadioButton boostActiveRadioButton1;
-        private UI.FlatComboBox elementFlatComboBox;
         private System.Windows.Forms.GroupBox groupBox1;
         private UI.FlatComboBox growFlatComboBox;
         private System.Windows.Forms.Label label4;
         private UI.FlatComboBox typeFlatComboBox;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private UI.FlatNumericUpDown techniqueFlatNumericUpDown;
-        private UI.FlatNumericUpDown faultRateFlatNumericUpDown;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
-        private UI.FlatNumericUpDown powerFlatNumericUpDown;
-        private UI.FlatNumericUpDown tpCostFlatNumericUpDown;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
+        private UI.VSTabControl charaVSTabControl;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private UI.FlatComboBox flatComboBox2;
+        private UI.FlatComboBox flatComboBox1;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
+        private UI.FlatComboBox flatComboBox3;
+        private UI.FlatComboBox flatComboBox4;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Label label22;
+        private UI.FlatNumericUpDown flatNumericUpDown3;
+        private UI.FlatNumericUpDown flatNumericUpDown2;
+        private UI.FlatNumericUpDown flatNumericUpDown1;
+        private UI.FlatComboBox flatComboBox5;
+        private UI.FlatComboBox flatComboBox6;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private UI.FlatComboBox flatComboBox11;
+        private UI.FlatComboBox flatComboBox12;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.Label label33;
+        private UI.FlatComboBox flatComboBox13;
+        private UI.FlatComboBox flatComboBox14;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.Label label28;
+        private UI.FlatNumericUpDown flatNumericUpDown7;
+        private UI.FlatComboBox flatComboBox9;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.Label label29;
+        private UI.FlatNumericUpDown flatNumericUpDown8;
+        private UI.FlatComboBox flatComboBox10;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label label24;
+        private UI.FlatNumericUpDown flatNumericUpDown5;
+        private System.Windows.Forms.Label label25;
+        private UI.FlatNumericUpDown flatNumericUpDown6;
+        private UI.FlatComboBox flatComboBox7;
+        private UI.FlatComboBox flatComboBox8;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Label label23;
+        private UI.FlatNumericUpDown flatNumericUpDown4;
+        private System.Windows.Forms.CheckBox canBeSoldCheckBox;
+        private System.Windows.Forms.Button charabaseButton;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private UI.FlatNumericUpDown flatNumericUpDown10;
+        private UI.FlatNumericUpDown flatNumericUpDown9;
+        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.Label label37;
+        private UI.FlatNumericUpDown flatNumericUpDown11;
+        private UI.FlatNumericUpDown flatNumericUpDown12;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label6;
     }
 }

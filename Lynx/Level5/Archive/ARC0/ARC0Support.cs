@@ -2,8 +2,14 @@
 
 namespace Lynx.Level5.Archive.ARC0
 {
+    /// <summary>
+    /// Provides support structures for ARC0 archives.
+    /// </summary>
     public static class ARC0Support
     {
+        /// <summary>
+        /// Represents the header of an ARC0 archive.
+        /// </summary>
         public struct Header
         {
             public UInt32 Magic;
@@ -30,6 +36,9 @@ namespace Lynx.Level5.Archive.ARC0
             public int Zero2;
         }
 
+        /// <summary>
+        /// Represents a directory entry in an ARC0 archive.
+        /// </summary>
         public struct DirectoryEntry
         {
             public uint Crc32;
@@ -41,6 +50,9 @@ namespace Lynx.Level5.Archive.ARC0
             public int DirectoryNameStartOffset;
         }
 
+        /// <summary>
+        /// Represents a file entry in an ARC0 archive.
+        /// </summary>
         public struct FileEntry
         {
             public uint Crc32;
