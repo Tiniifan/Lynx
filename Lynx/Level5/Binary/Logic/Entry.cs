@@ -76,6 +76,35 @@ namespace Lynx.Level5.Binary.Logic
             return textDictionary;
         }
 
+        public List<string> GetStringsAsList()
+        {
+            List<string> output = new List<string>();
+
+            // Add the text of this entry (if it has string type variables)
+            foreach (Variable variable in Variables)
+            {
+                if (variable.Type == Type.String)
+                {
+                    if (variable.Value is string stringValue)
+                    {
+                        output.Add(stringValue);
+                    }
+                    else if (variable.Value is OffsetTextPair offsetTextPair)
+                    {
+                        output.Add(offsetTextPair.Text);
+                    }
+                }
+            }
+
+            // Recursively traverse children and add their text
+            foreach (Entry childEntry in Children)
+            {
+                output.AddRange(childEntry.GetStringsAsList());
+            }
+
+            return output;
+        }
+
         public string GetName()
         {
             return string.Join("_", Name.Split('_').Reverse().Skip(1).Reverse());
@@ -526,6 +555,36 @@ namespace Lynx.Level5.Binary.Logic
             foreach (Entry childEntry in Children)
             {
                 childEntry.UpdateOffsetsRecursive(newOffsets);
+            }
+        }
+
+        public void UpdateOffsetsRecursive(Dictionary<int, string> strings)
+        {
+            foreach (Variable variable in Variables)
+            {
+                if (variable.Type == Type.String)
+                {
+                    if (variable.Value is string stringValue)
+                    {
+                        if (strings.ContainsValue(stringValue))
+                        {
+                            int offset = strings.FirstOrDefault(x => x.Value == stringValue).Key;
+                            variable.Value = new OffsetTextPair(offset, stringValue);
+                        }
+                    }
+                    else if (variable.Value is OffsetTextPair offsetTextPair)
+                    {
+                        if (strings.ContainsValue(offsetTextPair.Text))
+                        {
+                            offsetTextPair.Offset = strings.FirstOrDefault(x => x.Value == offsetTextPair.Text).Key;
+                        }
+                    }                    
+                }
+            }
+
+            foreach (Entry childEntry in Children)
+            {
+                childEntry.UpdateOffsetsRecursive(strings);
             }
         }
 

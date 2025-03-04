@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Lynx.Tools;
 
@@ -53,7 +54,7 @@ namespace Lynx.Level5.Base64
                     {
                         tabCount--;
                         output.Append($"{new string('\t', tabCount)}}}{Environment.NewLine}");
-                        reader.Skip(0x08);
+                        //reader.Skip(0x08);
                     }
                     else if (flag == 0x6E)
                     {
@@ -67,12 +68,17 @@ namespace Lynx.Level5.Base64
                         tabCount--;
                         break;
                     }
+                    else if (flag == 0x71)
+                    {
+                        output.Append($"{new string('\t', tabCount)}return;{Environment.NewLine}}}{Environment.NewLine}");
+                        tabCount--;
+                        break;
+                    }
                 }
 
                 return output.ToString();
             }
         }
-
 
         /// <summary>
         /// Converts a readable string to a Base64 string.
@@ -81,51 +87,89 @@ namespace Lynx.Level5.Base64
         /// <returns>A Base64 string representing the conditions.</returns>
         public static string ToBase64String(string input)
         {
-            StringBuilder output = new StringBuilder();
-            byte[] byteArray;
-
-            using (MemoryStream memoryStream = new MemoryStream())
-            using (var writer = new BinaryDataWriter(memoryStream))
+            using (var stream = new MemoryStream())
+            using (var writer = new BinaryDataWriter(stream))
             {
+                int subCount = 0;
+
                 writer.BigEndian = true;
 
-                string[] lines = input.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-                foreach (string line in lines)
+                writer.Write((int)0);
+
+                int lengthPos = (int)writer.Position;
+
+                writer.Skip(0x02);
+
+                var lines = input.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                int tabCount = 0;
+
+                foreach (var line in lines)
                 {
-                    if (line.StartsWith("if (phase >= "))
+                    int currentTabs = line.TakeWhile(c => c == '\t').Count();
+                    string trimmedLine = line.Trim();
+
+                    // Adjust tab count based on current context
+                    if (currentTabs < tabCount)
                     {
-                        writer.Write((byte)0x32);
-                        int phase = int.Parse(line.Substring(13, line.IndexOf(')') - 13));
+                        for (int i = 0; i < (tabCount - currentTabs); i++)
+                        {
+                            writer.Write((byte)0x6F); // End block
+                            //writer.Write(new byte[8]); // Padding
+                            subCount += 1;
+                        }
+                        tabCount = currentTabs;
+                    }
+
+                    if (trimmedLine.StartsWith("if (phase >= "))
+                    {
+                        writer.Write((byte)0x32); // Start block
+                        int phase = int.Parse(trimmedLine.Substring(13).Split(')')[0]);
                         writer.Write(phase);
+                        tabCount++;
+                        subCount += 2;
                     }
-                    else if (line.Contains("SetPhase("))
+                    else if (trimmedLine.StartsWith("SetPhase("))
                     {
-                        writer.Write((byte)0x35);
-                        int setCond = int.Parse(line.Substring(line.IndexOf('(') + 1, line.IndexOf(',') - line.IndexOf('(') - 1));
+                        string[] parts = trimmedLine.Substring(9).Split(new[] { ',', ')' }, StringSplitOptions.RemoveEmptyEntries);
+                        int setCond = int.Parse(parts[0]);
+                        bool isEnabled = parts[1].Trim() == "true";
+
+                        writer.Write((byte)0x35); // Set phase
                         writer.WriteInt24(setCond);
-                        writer.Write((short)(line.Contains("true") ? 0x0100 : 0x0000));
+                        writer.Write((short)0x4700); // Reserved bytes
+                        writer.Write((short)(isEnabled ? 0x0100 : 0x0000)); // Enabled flag
+                        subCount += 2;
                     }
-                    else if (line.Contains("EXIT();"))
+                    else if (trimmedLine == "EXIT();")
                     {
-                        writer.Write((byte)0x6E);
-                        writer.Write(new byte[8]);
+                        writer.Write((byte)0x6E); // Exit
+                        //writer.Write(new byte[8]); // Padding
+                        subCount += 1;
                     }
-                    else if (line.Contains("return;"))
+                    else if (trimmedLine == "return;")
                     {
-                        writer.Write((byte)0x78);
-                        writer.Write(new byte[8]);
-                    }
-                    else if (line.Contains("}"))
-                    {
-                        writer.Write((byte)0x6F);
-                        writer.Write(new byte[8]);
+                        writer.Write((byte)0x78); // Return
+                        //writer.Write(new byte[8]); // Padding
+                        subCount += 1;
                     }
                 }
 
-                byteArray = memoryStream.ToArray();
-            }
+                // Handle remaining tabs (close open blocks)
+                while (tabCount > 0)
+                {
+                    writer.Write((byte)0x6F); // End block
+                    //writer.Write(new byte[8]); // Padding
+                    tabCount--;
+                    subCount += 1;
+                }
 
-            return Convert.ToBase64String(byteArray);
+                writer.Seek((uint)lengthPos);
+                writer.Write((byte) (writer.Length - 5));
+                writer.Write((byte)(subCount));
+
+                // Convert stream to Base64
+                return Convert.ToBase64String(stream.ToArray());
+            }
         }
     }
 }

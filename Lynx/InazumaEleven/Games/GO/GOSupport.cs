@@ -174,6 +174,18 @@ namespace Lynx.InazumaEleven.Games.GO
             public int NPCID { get; set; }
             public int Index { get; set; }
             public int Count { get; set; }
+
+            public NPCPreset()
+            {
+
+            }
+
+            public NPCPreset(int nPCID, int index, int count)
+            {
+                NPCID = nPCID;
+                Index = index;
+                Count = count;
+            }
         }
 
         public class NPCAppear : INPCAppear
@@ -185,7 +197,7 @@ namespace Lynx.InazumaEleven.Games.GO
             public int Unk2 { get; set; }
             public float Rotation { get; set; }
             public string StandAnimation { get; set; }
-            public int Unk3 { get; set; }
+            public int LookAtThePlayer { get; set; }
             public string TalkAnimation { get; set; }
             public string UnkAnimation { get; set; }
             public int Unk4 { get; set; }
@@ -198,6 +210,18 @@ namespace Lynx.InazumaEleven.Games.GO
             public int TalkID { get; set; }
             public int TalkOffset { get; set; }
             public int TalkCount { get; set; }
+
+            public TalkInfo()
+            {
+
+            }
+
+            public TalkInfo(int talkID, int talkOffset, int talkCount)
+            {
+                TalkID = talkID;
+                TalkOffset = talkOffset;
+                TalkCount = talkCount;
+            }
         }
 
         public class TalkConfig : ITalkConfig

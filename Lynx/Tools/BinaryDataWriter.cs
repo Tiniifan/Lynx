@@ -93,6 +93,11 @@ namespace Lynx.Tools
         /// <param name="data">The byte array to write.</param>
         public void Write(byte[] data)
         {
+            if (BigEndian && data.Length > 1)
+            {
+                Array.Reverse(data);
+            }
+
             _stream.Write(data, 0, data.Length);
         }
 

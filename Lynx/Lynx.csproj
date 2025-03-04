@@ -119,6 +119,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\ChallengeRoute\ChallengeRouteWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ChallengeRoute\ChallengeRouteWindow.Designer.cs">
+      <DependentUpon>ChallengeRouteWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Characters\CharabaseWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -178,6 +184,12 @@
     </Compile>
     <Compile Include="Forms\Maps\MapSelect.Designer.cs">
       <DependentUpon>MapSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Maps\NewNPCWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Maps\NewNPCWindow.Designer.cs">
+      <DependentUpon>NewNPCWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Nyanko\Nyanko.cs">
       <SubType>Form</SubType>
@@ -355,6 +367,9 @@
     <Compile Include="UI\VSTabControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <EmbeddedResource Include="Forms\ChallengeRoute\ChallengeRouteWindow.resx">
+      <DependentUpon>ChallengeRouteWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Characters\CharabaseWindow.resx">
       <DependentUpon>CharabaseWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -384,6 +399,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Maps\MapSelect.resx">
       <DependentUpon>MapSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Maps\NewNPCWindow.resx">
+      <DependentUpon>NewNPCWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Nyanko\Nyanko.resx">
       <DependentUpon>Nyanko.cs</DependentUpon>

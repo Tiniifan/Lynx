@@ -28,12 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewNPCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.focusNPCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.previewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.npcTreeView = new System.Windows.Forms.TreeView();
+            this.dialogVSTabControlContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.npcsContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addNewNPCGroupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupNpcContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addNewItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.itemNpcContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.deleteItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mapVSTabControl = new Lynx.UI.VSTabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.appearanceGroupBox = new System.Windows.Forms.GroupBox();
@@ -50,6 +59,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.appearGroupBox = new System.Windows.Forms.GroupBox();
+            this.lookAtPlayerCheckBox = new System.Windows.Forms.CheckBox();
             this.rotationNumericUpDown = new Lynx.UI.FlatNumericUpDown();
             this.label9 = new System.Windows.Forms.Label();
             this.locationZNumericUpDown = new Lynx.UI.FlatNumericUpDown();
@@ -60,7 +70,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.compileButton = new System.Windows.Forms.Button();
-            this.positionCondTextBox = new System.Windows.Forms.TextBox();
+            this.positionCondLineNumberRTB = new Lynx.UI.LineNumberRTB();
             this.animationGroupBox1 = new System.Windows.Forms.GroupBox();
             this.unkAnimationTextBox = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -70,15 +80,28 @@
             this.label7 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.configurationGroupBox = new System.Windows.Forms.GroupBox();
+            this.talkFlatComboBox = new Lynx.UI.FlatComboBox();
+            this.dialogVsTabControl = new Lynx.UI.VSTabControl();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.dialogTextBox = new System.Windows.Forms.TextBox();
+            this.addTabPage = new System.Windows.Forms.TabPage();
+            this.eventCompileButton = new System.Windows.Forms.Button();
             this.scriptButton = new System.Windows.Forms.Button();
             this.valueFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
             this.eventTypeFlatComboBox = new Lynx.UI.FlatComboBox();
-            this.label15 = new System.Windows.Forms.Label();
+            this.valueLabel = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.eventCondTextBox = new System.Windows.Forms.TextBox();
+            this.eventConditionGroupBox = new System.Windows.Forms.GroupBox();
+            this.eventCondLineNumberRTB = new Lynx.UI.LineNumberRTB();
             this.eventListBox = new System.Windows.Forms.ListBox();
+            this.eventContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
+            this.dialogVSTabControlContextMenuStrip.SuspendLayout();
+            this.npcsContextMenuStrip.SuspendLayout();
+            this.groupNpcContextMenuStrip.SuspendLayout();
+            this.itemNpcContextMenuStrip.SuspendLayout();
             this.mapVSTabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.appearanceGroupBox.SuspendLayout();
@@ -91,8 +114,11 @@
             this.animationGroupBox1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.configurationGroupBox.SuspendLayout();
+            this.dialogVsTabControl.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.valueFlatNumericUpDown)).BeginInit();
-            this.groupBox2.SuspendLayout();
+            this.eventConditionGroupBox.SuspendLayout();
+            this.eventContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -103,7 +129,7 @@
             this.previewToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(848, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(852, 24);
             this.menuStrip1.TabIndex = 8;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -148,6 +174,70 @@
             this.npcTreeView.Size = new System.Drawing.Size(245, 422);
             this.npcTreeView.TabIndex = 51;
             this.npcTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.NpcTreeView_AfterSelect);
+            // 
+            // dialogVSTabControlContextMenuStrip
+            // 
+            this.dialogVSTabControlContextMenuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.dialogVSTabControlContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteToolStripMenuItem});
+            this.dialogVSTabControlContextMenuStrip.Name = "dialogVSTabControlContextMenuStrip";
+            this.dialogVSTabControlContextMenuStrip.Size = new System.Drawing.Size(108, 26);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.DeleteToolStripMenuItem_Click);
+            // 
+            // npcsContextMenuStrip
+            // 
+            this.npcsContextMenuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.npcsContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addNewNPCGroupToolStripMenuItem});
+            this.npcsContextMenuStrip.Name = "npcsContextMenuStrip";
+            this.npcsContextMenuStrip.Size = new System.Drawing.Size(184, 26);
+            // 
+            // addNewNPCGroupToolStripMenuItem
+            // 
+            this.addNewNPCGroupToolStripMenuItem.BackColor = System.Drawing.Color.White;
+            this.addNewNPCGroupToolStripMenuItem.Name = "addNewNPCGroupToolStripMenuItem";
+            this.addNewNPCGroupToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.addNewNPCGroupToolStripMenuItem.Text = "Add new NPC group";
+            this.addNewNPCGroupToolStripMenuItem.Click += new System.EventHandler(this.AddNewNPCGroupToolStripMenuItem_Click);
+            // 
+            // groupNpcContextMenuStrip
+            // 
+            this.groupNpcContextMenuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.groupNpcContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addNewItemToolStripMenuItem});
+            this.groupNpcContextMenuStrip.Name = "groupNpcContextMenuStrip";
+            this.groupNpcContextMenuStrip.Size = new System.Drawing.Size(149, 26);
+            // 
+            // addNewItemToolStripMenuItem
+            // 
+            this.addNewItemToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.addNewItemToolStripMenuItem.Name = "addNewItemToolStripMenuItem";
+            this.addNewItemToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.addNewItemToolStripMenuItem.Text = "Add new item";
+            this.addNewItemToolStripMenuItem.Click += new System.EventHandler(this.AddNewItemToolStripMenuItem_Click);
+            // 
+            // itemNpcContextMenuStrip
+            // 
+            this.itemNpcContextMenuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.itemNpcContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteItemToolStripMenuItem});
+            this.itemNpcContextMenuStrip.Name = "itemNpcContextMenuStrip";
+            this.itemNpcContextMenuStrip.Size = new System.Drawing.Size(135, 26);
+            // 
+            // deleteItemToolStripMenuItem
+            // 
+            this.deleteItemToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.deleteItemToolStripMenuItem.Name = "deleteItemToolStripMenuItem";
+            this.deleteItemToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.deleteItemToolStripMenuItem.Text = "Delete item";
+            this.deleteItemToolStripMenuItem.Click += new System.EventHandler(this.DeleteItemToolStripMenuItem_Click);
             // 
             // mapVSTabControl
             // 
@@ -358,6 +448,7 @@
             // 
             // appearGroupBox
             // 
+            this.appearGroupBox.Controls.Add(this.lookAtPlayerCheckBox);
             this.appearGroupBox.Controls.Add(this.rotationNumericUpDown);
             this.appearGroupBox.Controls.Add(this.label9);
             this.appearGroupBox.Controls.Add(this.locationZNumericUpDown);
@@ -374,6 +465,17 @@
             this.appearGroupBox.TabStop = false;
             this.appearGroupBox.Text = "Position";
             // 
+            // lookAtPlayerCheckBox
+            // 
+            this.lookAtPlayerCheckBox.AutoSize = true;
+            this.lookAtPlayerCheckBox.Location = new System.Drawing.Point(9, 63);
+            this.lookAtPlayerCheckBox.Name = "lookAtPlayerCheckBox";
+            this.lookAtPlayerCheckBox.Size = new System.Drawing.Size(118, 17);
+            this.lookAtPlayerCheckBox.TabIndex = 282;
+            this.lookAtPlayerCheckBox.Text = "Look at the player";
+            this.lookAtPlayerCheckBox.UseVisualStyleBackColor = true;
+            this.lookAtPlayerCheckBox.CheckedChanged += new System.EventHandler(this.LookAtPlayerCheckBox_CheckedChanged);
+            // 
             // rotationNumericUpDown
             // 
             this.rotationNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
@@ -381,7 +483,7 @@
             this.rotationNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rotationNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.rotationNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.rotationNumericUpDown.Location = new System.Drawing.Point(198, 51);
+            this.rotationNumericUpDown.Location = new System.Drawing.Point(198, 37);
             this.rotationNumericUpDown.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -400,7 +502,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(140, 54);
+            this.label9.Location = new System.Drawing.Point(140, 39);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(52, 13);
             this.label9.TabIndex = 269;
@@ -419,7 +521,7 @@
             0,
             0,
             65536});
-            this.locationZNumericUpDown.Location = new System.Drawing.Point(39, 51);
+            this.locationZNumericUpDown.Location = new System.Drawing.Point(39, 37);
             this.locationZNumericUpDown.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -438,7 +540,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(6, 54);
+            this.label11.Location = new System.Drawing.Point(6, 39);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(13, 13);
             this.label11.TabIndex = 267;
@@ -517,7 +619,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.compileButton);
-            this.groupBox1.Controls.Add(this.positionCondTextBox);
+            this.groupBox1.Controls.Add(this.positionCondLineNumberRTB);
             this.groupBox1.ForeColor = System.Drawing.Color.White;
             this.groupBox1.Location = new System.Drawing.Point(6, 196);
             this.groupBox1.Name = "groupBox1";
@@ -538,16 +640,17 @@
             this.compileButton.UseVisualStyleBackColor = true;
             this.compileButton.Click += new System.EventHandler(this.CompileButton_Click);
             // 
-            // positionCondTextBox
+            // positionCondLineNumberRTB
             // 
-            this.positionCondTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.positionCondTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.positionCondTextBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.positionCondTextBox.Location = new System.Drawing.Point(9, 17);
-            this.positionCondTextBox.Multiline = true;
-            this.positionCondTextBox.Name = "positionCondTextBox";
-            this.positionCondTextBox.Size = new System.Drawing.Size(538, 139);
-            this.positionCondTextBox.TabIndex = 271;
+            this.positionCondLineNumberRTB.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.positionCondLineNumberRTB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.positionCondLineNumberRTB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.positionCondLineNumberRTB.Location = new System.Drawing.Point(9, 21);
+            this.positionCondLineNumberRTB.Name = "positionCondLineNumberRTB";
+            this.positionCondLineNumberRTB.Size = new System.Drawing.Size(538, 133);
+            this.positionCondLineNumberRTB.TabIndex = 269;
             // 
             // animationGroupBox1
             // 
@@ -572,7 +675,6 @@
             this.unkAnimationTextBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.unkAnimationTextBox.Location = new System.Drawing.Point(52, 60);
             this.unkAnimationTextBox.Name = "unkAnimationTextBox";
-            this.unkAnimationTextBox.ReadOnly = true;
             this.unkAnimationTextBox.Size = new System.Drawing.Size(210, 15);
             this.unkAnimationTextBox.TabIndex = 274;
             this.unkAnimationTextBox.TextChanged += new System.EventHandler(this.UnkAnimationTextBox_TextChanged);
@@ -593,7 +695,6 @@
             this.talkAnimationTextBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.talkAnimationTextBox.Location = new System.Drawing.Point(52, 39);
             this.talkAnimationTextBox.Name = "talkAnimationTextBox";
-            this.talkAnimationTextBox.ReadOnly = true;
             this.talkAnimationTextBox.Size = new System.Drawing.Size(210, 15);
             this.talkAnimationTextBox.TabIndex = 272;
             this.talkAnimationTextBox.TextChanged += new System.EventHandler(this.TalkAnimationTextBox_TextChanged);
@@ -614,7 +715,6 @@
             this.restAnimationTextBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.restAnimationTextBox.Location = new System.Drawing.Point(52, 18);
             this.restAnimationTextBox.Name = "restAnimationTextBox";
-            this.restAnimationTextBox.ReadOnly = true;
             this.restAnimationTextBox.Size = new System.Drawing.Size(210, 15);
             this.restAnimationTextBox.TabIndex = 271;
             this.restAnimationTextBox.TextChanged += new System.EventHandler(this.RestAnimationTextBox_TextChanged);
@@ -642,12 +742,15 @@
             // 
             // configurationGroupBox
             // 
+            this.configurationGroupBox.Controls.Add(this.talkFlatComboBox);
+            this.configurationGroupBox.Controls.Add(this.dialogVsTabControl);
+            this.configurationGroupBox.Controls.Add(this.eventCompileButton);
             this.configurationGroupBox.Controls.Add(this.scriptButton);
             this.configurationGroupBox.Controls.Add(this.valueFlatNumericUpDown);
             this.configurationGroupBox.Controls.Add(this.eventTypeFlatComboBox);
-            this.configurationGroupBox.Controls.Add(this.label15);
+            this.configurationGroupBox.Controls.Add(this.valueLabel);
             this.configurationGroupBox.Controls.Add(this.label13);
-            this.configurationGroupBox.Controls.Add(this.groupBox2);
+            this.configurationGroupBox.Controls.Add(this.eventConditionGroupBox);
             this.configurationGroupBox.Enabled = false;
             this.configurationGroupBox.ForeColor = System.Drawing.Color.White;
             this.configurationGroupBox.Location = new System.Drawing.Point(147, 7);
@@ -656,6 +759,89 @@
             this.configurationGroupBox.TabIndex = 271;
             this.configurationGroupBox.TabStop = false;
             this.configurationGroupBox.Text = "Configuration";
+            // 
+            // talkFlatComboBox
+            // 
+            this.talkFlatComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.talkFlatComboBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.talkFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.talkFlatComboBox.ForeColor = System.Drawing.Color.White;
+            this.talkFlatComboBox.FormattingEnabled = true;
+            this.talkFlatComboBox.Location = new System.Drawing.Point(267, 16);
+            this.talkFlatComboBox.Name = "talkFlatComboBox";
+            this.talkFlatComboBox.Size = new System.Drawing.Size(142, 21);
+            this.talkFlatComboBox.TabIndex = 276;
+            // 
+            // dialogVsTabControl
+            // 
+            this.dialogVsTabControl.ActiveIndicator = System.Drawing.Color.White;
+            this.dialogVsTabControl.ActiveTab = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.dialogVsTabControl.ActiveText = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.dialogVsTabControl.Background = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.dialogVsTabControl.BackgroundTab = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.dialogVsTabControl.Border = System.Drawing.Color.White;
+            this.dialogVsTabControl.ContextMenuStrip = this.dialogVSTabControlContextMenuStrip;
+            this.dialogVsTabControl.Controls.Add(this.tabPage3);
+            this.dialogVsTabControl.Controls.Add(this.addTabPage);
+            this.dialogVsTabControl.Divider = System.Drawing.Color.White;
+            this.dialogVsTabControl.Font = new System.Drawing.Font("Leelawadee UI", 8.25F);
+            this.dialogVsTabControl.InActiveIndicator = System.Drawing.Color.White;
+            this.dialogVsTabControl.InActiveTab = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.dialogVsTabControl.InActiveText = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.dialogVsTabControl.Location = new System.Drawing.Point(16, 48);
+            this.dialogVsTabControl.Margin = new System.Windows.Forms.Padding(0);
+            this.dialogVsTabControl.Name = "dialogVsTabControl";
+            this.dialogVsTabControl.Padding = new System.Drawing.Point(0, 0);
+            this.dialogVsTabControl.SelectedIndex = 0;
+            this.dialogVsTabControl.Size = new System.Drawing.Size(391, 123);
+            this.dialogVsTabControl.TabIndex = 52;
+            this.dialogVsTabControl.SelectedIndexChanged += new System.EventHandler(this.DialogVsTabControl_SelectedIndexChanged);
+            this.dialogVsTabControl.TabIndexChanged += new System.EventHandler(this.DialogVsTabControl_TabIndexChanged);
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.tabPage3.Controls.Add(this.dialogTextBox);
+            this.tabPage3.Location = new System.Drawing.Point(4, 25);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(383, 94);
+            this.tabPage3.TabIndex = 0;
+            this.tabPage3.Text = "Text 1";
+            // 
+            // dialogTextBox
+            // 
+            this.dialogTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.dialogTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dialogTextBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.dialogTextBox.Location = new System.Drawing.Point(6, 6);
+            this.dialogTextBox.Multiline = true;
+            this.dialogTextBox.Name = "dialogTextBox";
+            this.dialogTextBox.Size = new System.Drawing.Size(371, 82);
+            this.dialogTextBox.TabIndex = 277;
+            this.dialogTextBox.TextChanged += new System.EventHandler(this.DialogTextBox_TextChanged);
+            // 
+            // addTabPage
+            // 
+            this.addTabPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.addTabPage.Location = new System.Drawing.Point(4, 25);
+            this.addTabPage.Name = "addTabPage";
+            this.addTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.addTabPage.Size = new System.Drawing.Size(383, 94);
+            this.addTabPage.TabIndex = 1;
+            this.addTabPage.Text = "+";
+            // 
+            // eventCompileButton
+            // 
+            this.eventCompileButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.eventCompileButton.ForeColor = System.Drawing.Color.White;
+            this.eventCompileButton.Location = new System.Drawing.Point(16, 348);
+            this.eventCompileButton.Name = "eventCompileButton";
+            this.eventCompileButton.Size = new System.Drawing.Size(391, 23);
+            this.eventCompileButton.TabIndex = 275;
+            this.eventCompileButton.Text = "Compile";
+            this.eventCompileButton.UseVisualStyleBackColor = true;
+            this.eventCompileButton.Click += new System.EventHandler(this.eventCompileButton_Click);
             // 
             // scriptButton
             // 
@@ -691,6 +877,7 @@
             this.valueFlatNumericUpDown.Name = "valueFlatNumericUpDown";
             this.valueFlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.valueFlatNumericUpDown.TabIndex = 272;
+            this.valueFlatNumericUpDown.ValueChanged += new System.EventHandler(this.ValueFlatNumericUpDown_ValueChanged);
             // 
             // eventTypeFlatComboBox
             // 
@@ -707,22 +894,23 @@
             "Talk (4)",
             "Talk (5)",
             "Event (6)",
-            "Talk (7)",
+            "Competitive Route (7)",
             "Shop (8)"});
             this.eventTypeFlatComboBox.Location = new System.Drawing.Point(53, 16);
             this.eventTypeFlatComboBox.Name = "eventTypeFlatComboBox";
             this.eventTypeFlatComboBox.Size = new System.Drawing.Size(140, 21);
             this.eventTypeFlatComboBox.TabIndex = 57;
+            this.eventTypeFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.EventTypeFlatComboBox_SelectedIndexChanged);
             // 
-            // label15
+            // valueLabel
             // 
-            this.label15.AutoSize = true;
-            this.label15.ForeColor = System.Drawing.Color.White;
-            this.label15.Location = new System.Drawing.Point(225, 19);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(36, 13);
-            this.label15.TabIndex = 271;
-            this.label15.Text = "Value";
+            this.valueLabel.AutoSize = true;
+            this.valueLabel.ForeColor = System.Drawing.Color.White;
+            this.valueLabel.Location = new System.Drawing.Point(225, 19);
+            this.valueLabel.Name = "valueLabel";
+            this.valueLabel.Size = new System.Drawing.Size(36, 13);
+            this.valueLabel.TabIndex = 271;
+            this.valueLabel.Text = "Value";
             // 
             // label13
             // 
@@ -734,33 +922,34 @@
             this.label13.TabIndex = 58;
             this.label13.Text = "Type";
             // 
-            // groupBox2
+            // eventConditionGroupBox
             // 
-            this.groupBox2.Controls.Add(this.eventCondTextBox);
-            this.groupBox2.ForeColor = System.Drawing.Color.White;
-            this.groupBox2.Location = new System.Drawing.Point(16, 85);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(391, 278);
-            this.groupBox2.TabIndex = 270;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Condition";
+            this.eventConditionGroupBox.Controls.Add(this.eventCondLineNumberRTB);
+            this.eventConditionGroupBox.ForeColor = System.Drawing.Color.White;
+            this.eventConditionGroupBox.Location = new System.Drawing.Point(16, 184);
+            this.eventConditionGroupBox.Name = "eventConditionGroupBox";
+            this.eventConditionGroupBox.Size = new System.Drawing.Size(391, 158);
+            this.eventConditionGroupBox.TabIndex = 270;
+            this.eventConditionGroupBox.TabStop = false;
+            this.eventConditionGroupBox.Text = "Condition";
             // 
-            // eventCondTextBox
+            // eventCondLineNumberRTB
             // 
-            this.eventCondTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.eventCondTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.eventCondTextBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.eventCondTextBox.Location = new System.Drawing.Point(6, 18);
-            this.eventCondTextBox.Multiline = true;
-            this.eventCondTextBox.Name = "eventCondTextBox";
-            this.eventCondTextBox.ReadOnly = true;
-            this.eventCondTextBox.Size = new System.Drawing.Size(379, 254);
-            this.eventCondTextBox.TabIndex = 271;
+            this.eventCondLineNumberRTB.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.eventCondLineNumberRTB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.eventCondLineNumberRTB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.eventCondLineNumberRTB.Location = new System.Drawing.Point(10, 19);
+            this.eventCondLineNumberRTB.Name = "eventCondLineNumberRTB";
+            this.eventCondLineNumberRTB.Size = new System.Drawing.Size(371, 133);
+            this.eventCondLineNumberRTB.TabIndex = 276;
             // 
             // eventListBox
             // 
             this.eventListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
             this.eventListBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.eventListBox.ContextMenuStrip = this.eventContextMenuStrip;
             this.eventListBox.ForeColor = System.Drawing.Color.White;
             this.eventListBox.FormattingEnabled = true;
             this.eventListBox.Location = new System.Drawing.Point(6, 7);
@@ -769,12 +958,37 @@
             this.eventListBox.TabIndex = 52;
             this.eventListBox.SelectedIndexChanged += new System.EventHandler(this.EventListBox_SelectedIndexChanged);
             // 
+            // eventContextMenuStrip
+            // 
+            this.eventContextMenuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.eventContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addToolStripMenuItem,
+            this.deleteToolStripMenuItem1});
+            this.eventContextMenuStrip.Name = "eventContextMenuStrip";
+            this.eventContextMenuStrip.Size = new System.Drawing.Size(108, 48);
+            // 
+            // addToolStripMenuItem
+            // 
+            this.addToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.addToolStripMenuItem.Text = "Add";
+            this.addToolStripMenuItem.Click += new System.EventHandler(this.AddToolStripMenuItem_Click);
+            // 
+            // deleteToolStripMenuItem1
+            // 
+            this.deleteToolStripMenuItem1.ForeColor = System.Drawing.Color.White;
+            this.deleteToolStripMenuItem1.Name = "deleteToolStripMenuItem1";
+            this.deleteToolStripMenuItem1.Size = new System.Drawing.Size(107, 22);
+            this.deleteToolStripMenuItem1.Text = "Delete";
+            this.deleteToolStripMenuItem1.Click += new System.EventHandler(this.DeleteToolStripMenuItem1_Click);
+            // 
             // MapEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.ClientSize = new System.Drawing.Size(848, 457);
+            this.ClientSize = new System.Drawing.Size(852, 457);
             this.Controls.Add(this.mapVSTabControl);
             this.Controls.Add(this.npcTreeView);
             this.Controls.Add(this.menuStrip1);
@@ -785,6 +999,10 @@
             this.Shown += new System.EventHandler(this.MapEditor_Shown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.dialogVSTabControlContextMenuStrip.ResumeLayout(false);
+            this.npcsContextMenuStrip.ResumeLayout(false);
+            this.groupNpcContextMenuStrip.ResumeLayout(false);
+            this.itemNpcContextMenuStrip.ResumeLayout(false);
             this.mapVSTabControl.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.appearanceGroupBox.ResumeLayout(false);
@@ -796,15 +1014,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.locationYNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.locationXFlatNumericUpDown)).EndInit();
             this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.animationGroupBox1.ResumeLayout(false);
             this.animationGroupBox1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.configurationGroupBox.ResumeLayout(false);
             this.configurationGroupBox.PerformLayout();
+            this.dialogVsTabControl.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.valueFlatNumericUpDown)).EndInit();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.eventConditionGroupBox.ResumeLayout(false);
+            this.eventContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -845,13 +1065,11 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox restAnimationTextBox;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox positionCondTextBox;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Button scriptButton;
         private UI.FlatNumericUpDown valueFlatNumericUpDown;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.TextBox eventCondTextBox;
+        private System.Windows.Forms.Label valueLabel;
+        private System.Windows.Forms.GroupBox eventConditionGroupBox;
         private System.Windows.Forms.Label label13;
         private UI.FlatComboBox eventTypeFlatComboBox;
         private System.Windows.Forms.TreeView npcTreeView;
@@ -861,5 +1079,25 @@
         private System.Windows.Forms.GroupBox configurationGroupBox;
         private System.Windows.Forms.ToolStripMenuItem previewToolStripMenuItem;
         private System.Windows.Forms.Button compileButton;
+        private System.Windows.Forms.Button eventCompileButton;
+        private UI.VSTabControl dialogVsTabControl;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage addTabPage;
+        private System.Windows.Forms.TextBox dialogTextBox;
+        private System.Windows.Forms.ContextMenuStrip dialogVSTabControlContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private UI.LineNumberRTB positionCondLineNumberRTB;
+        private UI.LineNumberRTB eventCondLineNumberRTB;
+        private System.Windows.Forms.ContextMenuStrip npcsContextMenuStrip;
+        private System.Windows.Forms.ContextMenuStrip groupNpcContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem addNewItemToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip itemNpcContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem deleteItemToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addNewNPCGroupToolStripMenuItem;
+        private System.Windows.Forms.CheckBox lookAtPlayerCheckBox;
+        private System.Windows.Forms.ContextMenuStrip eventContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem1;
+        private UI.FlatComboBox talkFlatComboBox;
     }
 }

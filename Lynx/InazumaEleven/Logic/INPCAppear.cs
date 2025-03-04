@@ -6,6 +6,8 @@
         float LocationZ { get; set; }
         float LocationY { get; set; }
         float Rotation { get; set; }
+
+        int LookAtThePlayer { get; set; }
         string StandAnimation { get; set; }
         string TalkAnimation { get; set; }
         string UnkAnimation { get; set; }

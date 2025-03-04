@@ -139,11 +139,26 @@ namespace Lynx.InazumaEleven.Games
         Dictionary<INPCBase, List<INPCAppear>> GetNPCs(string mapID);
 
         /// <summary>
+        /// Saves a list of NPCs along with their appearances for a specific map.
+        /// </summary>
+        /// <param name="npcs">
+        /// A dictionary mapping NPC base data (<see cref="INPCBase"/>) to a list of their appearances (<see cref="INPCAppear"/>).
+        /// </param>
+        /// <param name="mapID">
+        /// The unique identifier of the map where the NPCs should be saved.
+        /// </param>
+        void SaveNPCs(Dictionary<INPCBase, List<INPCAppear>> npcs, string mapID);
+
+        /// <summary>
         /// Gets the events for the specified map ID.
         /// </summary>
         /// <param name="mapID">The map ID to get the events for.</param>
         /// <returns>A dictionary of events and their configurations.</returns>
         Dictionary<ITalkInfo, List<ITalkConfig>> GetEvents(string mapID);
+
+        void SaveEvents(Dictionary<ITalkInfo, List<ITalkConfig>> events, string mapID);
+
+        void SaveMapText(T2bþ fileData, Dictionary<ITalkInfo, List<ITalkConfig>> events, string mapID);
 
         /// <summary>
         /// Gets the shop configurations for the specified shop ID.
@@ -186,10 +201,18 @@ namespace Lynx.InazumaEleven.Games
         CfgBin GetMapenv(string mapID);
 
         /// <summary>
+        /// Gets the map map text for the specified map ID.
+        /// </summary>
+        /// <param name="mapID">The map ID to get the text for.</param>
+        /// <param name="isIEGO">A value indicating if the text file is to be treated as an IEGO file.</param>
+        /// <returns>The map environment configuration.</returns>
+        T2bþ GetMapText(string mapID);
+
+        /// <summary>
         /// Saves the text file with the specified file name and data.
         /// </summary>
         /// <param name="fileName">The file name to save the text file as.</param>
-        /// <param name="fileData">The data to save in the text file.</param>
+        /// <param name="fileData">A value indicating whether to get empty skill configurations.</param>
         void SaveTextFile(GameSupports.GameFile fileName, T2bþ fileData);
 
         /// <summary>

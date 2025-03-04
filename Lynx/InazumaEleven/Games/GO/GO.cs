@@ -12,6 +12,9 @@ using Lynx.Level5.Text;
 using Lynx.Level5.Text.Logic;
 using Lynx.InazumaEleven.Games;
 using Lynx.Level5.Binary.Logic;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using DocumentFormat.OpenXml.Spreadsheet;
+using static Lynx.InazumaEleven.Games.GO.GOSupport;
 
 namespace Lynx.InazumaEleven.Games.GO
 {
@@ -383,6 +386,102 @@ namespace Lynx.InazumaEleven.Games.GO
             }
         }
 
+        public void SaveNPCs(Dictionary<INPCBase, List<INPCAppear>> npcs, string mapID)
+        {
+            string folderPath = $"/data/map/{mapID}";
+            string fileName = $"{mapID}.npc.bin";
+            string filePath = $"{folderPath}/{fileName}";
+
+            CfgBin npcFile = new CfgBin();
+
+            // Set encoding
+            Encoding shiftJIS = Encoding.GetEncoding("SHIFT-JIS");
+            npcFile.Encoding = shiftJIS;
+
+            // Open the npc file if it exist
+            if (Game.Directory.IsFullPathExists(filePath))
+            {
+                npcFile.Open(Game.Directory.GetFileFromFullPath(filePath));
+            }
+
+            // Get NPCBase
+            Entry npcBaseBegin = npcFile.Entries.Where(x => x.GetName() == "NPC_BASE_BEGIN").FirstOrDefault();
+            if (npcBaseBegin != null)
+            {
+                // resets items if it already exists
+                npcBaseBegin.Children.Clear();
+                npcBaseBegin.Variables[0].Value = npcs.Count;
+            }
+            else
+            {
+                // adds the entry to the npc file if it doesn't exists
+                npcBaseBegin = new Entry("NPC_BASE_BEGIN_0", new List<Variable>() { new Variable(Level5.Binary.Logic.Type.Int, npcs.Count) }, Encoding.UTF8, true);
+                npcFile.Entries.Add(npcBaseBegin);
+            }
+
+            // Get NPCPreset
+            Entry npcPresetBegin = npcFile.Entries.Where(x => x.GetName() == "NPC_PRESET_BEGIN").FirstOrDefault();
+            if (npcPresetBegin != null)
+            {
+                // resets items if it already exists
+                npcPresetBegin.Children.Clear();
+                npcPresetBegin.Variables[0].Value = npcs.Count;
+            }
+            else
+            {
+                // adds the entry to the npc file if it doesn't exists
+                npcPresetBegin = new Entry("NPC_PRESET_BEGIN_0", new List<Variable>() { new Variable(Level5.Binary.Logic.Type.Int, npcs.Count) }, Encoding.UTF8, true);
+                npcFile.Entries.Add(npcPresetBegin);
+            }
+
+            // Get NPCAppear
+            Entry npcAppearBegin = npcFile.Entries.Where(x => x.GetName() == "NPC_APPEAR_BEGIN").FirstOrDefault();
+            if (npcAppearBegin != null)
+            {
+                // resets items if it already exists
+                npcAppearBegin.Children.Clear();
+                npcAppearBegin.Variables[0].Value = npcs.Values.Sum(list => list.Count);
+            }
+            else
+            {
+                // adds the entry to the npc file if it doesn't exists
+                npcAppearBegin = new Entry("NPC_APPEAR_BEGIN_0", new List<Variable>() { new Variable(Level5.Binary.Logic.Type.Int, npcs.Values.Sum(list => list.Count)) }, Encoding.UTF8, true);
+                npcFile.Entries.Add(npcAppearBegin);
+            }
+
+            int npcIndex = 0;
+            int npcCount = 0;
+
+            // Loop on each npc data
+            foreach (KeyValuePair<INPCBase, List<INPCAppear>> npc in npcs)
+            {
+                // Add new item on NPCBase entry
+                Entry newNPCBaseEntry = new Entry("NPC_BASE_" + npcIndex, new List<Variable>(), shiftJIS);
+                newNPCBaseEntry.SetVariablesFromClass(npc.Key as GOSupport.NPCBase);
+                npcBaseBegin.Children.Add(newNPCBaseEntry);
+
+                // Add an NPCPreset based on NPCID and NPCAppear
+                NPCPreset newNPCPreset = new NPCPreset(npc.Key.NPCID, npcCount, npc.Value.Count);
+                Entry newNPresetEntry = new Entry("NPC_PRESET_" + npcIndex, new List<Variable>(), shiftJIS);
+                newNPresetEntry.SetVariablesFromClass(newNPCPreset as GOSupport.NPCPreset);
+                npcPresetBegin.Children.Add(newNPresetEntry);
+
+                // Add all NPCAppear items linked to this NPCBase
+                for (int i = 0; i < npc.Value.Count; i++)
+                {
+                    Entry newNPCAppearEntry = new Entry("NPC_APPEAR_" + npcCount, new List<Variable>(), shiftJIS);
+                    newNPCAppearEntry.SetVariablesFromClass(npc.Value[i] as GOSupport.NPCAppear);
+                    npcAppearBegin.Children.Add(newNPCAppearEntry);
+                    npcCount++;
+                }
+
+                npcIndex++;
+            }
+
+            // Save the file
+            Game.Directory.GetFolderFromFullPath(folderPath).Files[fileName].ByteContent = npcFile.SaveWithStrings();
+        }
+
         public Dictionary<ITalkInfo, List<ITalkConfig>> GetEvents(string mapID)
         {
             CfgBin npcFile = new CfgBin();
@@ -410,6 +509,105 @@ namespace Lynx.InazumaEleven.Games.GO
             {
                 return new Dictionary<ITalkInfo, List<ITalkConfig>>();
             }
+        }
+
+        public void SaveEvents(Dictionary<ITalkInfo, List<ITalkConfig>> events, string mapID)
+        {
+            string folderPath = $"/data/map/{mapID}";
+            string fileName = $"{mapID}.talk.bin";
+            string filePath = $"{folderPath}/{fileName}";
+
+            CfgBin npcFile = new CfgBin();
+
+            // Set encoding
+            Encoding shiftJIS = Encoding.GetEncoding("SHIFT-JIS");
+            npcFile.Encoding = shiftJIS;
+
+            // Open the npc file if it exist
+            if (Game.Directory.IsFullPathExists(filePath))
+            {
+                npcFile.Open(Game.Directory.GetFileFromFullPath(filePath));
+            }
+
+            // Get TalkInfo
+            Entry talkInfoBegin = npcFile.Entries.Where(x => x.GetName() == "TALK_INFO_BEGIN").FirstOrDefault();
+            if (talkInfoBegin != null)
+            {
+                // resets items if it already exists
+                talkInfoBegin.Children.Clear();
+                talkInfoBegin.Variables[0].Value = events.Count;
+            }
+            else
+            {
+                // adds the entry to the npc file if it doesn't exists
+                talkInfoBegin = new Entry("TALK_INFO_BEGIN_0", new List<Variable>() { new Variable(Level5.Binary.Logic.Type.Int, events.Count) }, Encoding.UTF8, true);
+                npcFile.Entries.Add(talkInfoBegin);
+            }
+
+            // Get TalkConfig
+            Entry talkConfigBegin = npcFile.Entries.Where(x => x.GetName() == "TALK_CONFIG_BEGIN").FirstOrDefault();
+            if (talkConfigBegin != null)
+            {
+                // resets items if it already exists
+                talkConfigBegin.Children.Clear();
+                talkConfigBegin.Variables[0].Value = events.Values.Sum(list => list.Count);
+            }
+            else
+            {
+                // adds the entry to the npc file if it doesn't exists
+                talkConfigBegin = new Entry("TALK_CONFIG_BEGIN_0", new List<Variable>() { new Variable(Level5.Binary.Logic.Type.Int, events.Values.Sum(list => list.Count)) }, Encoding.UTF8, true);
+                npcFile.Entries.Add(talkConfigBegin);
+            }
+
+            int eventIndex = 0;
+            int eventCount = 0;
+
+            // Loop on each npc data
+            foreach (KeyValuePair<ITalkInfo, List<ITalkConfig>> myEvent in events)
+            {
+                // Add a TalkInfo based on TalkConfig
+                TalkInfo newTalkInfo = new TalkInfo(myEvent.Key.TalkID, eventCount, myEvent.Value.Count);
+                Entry newTalkInfoEntry = new Entry("TALK_INFO_" + eventIndex, new List<Variable>(), shiftJIS);
+                newTalkInfoEntry.SetVariablesFromClass(newTalkInfo as GOSupport.TalkInfo);
+                talkInfoBegin.Children.Add(newTalkInfoEntry);
+
+                // Add all TalkConfig items linked to this TalkInfo
+                for (int i = 0; i < myEvent.Value.Count; i++)
+                {
+                    Entry newNPCTalkConfigEntry = new Entry("TALK_CONFIG_" + eventCount, new List<Variable>(), shiftJIS);
+                    newNPCTalkConfigEntry.SetVariablesFromClass(myEvent.Value[i] as GOSupport.TalkConfig);
+                    talkConfigBegin.Children.Add(newNPCTalkConfigEntry);
+                    eventCount++;
+                }
+
+                eventIndex++;
+            }
+
+            // Save the file
+            Game.Directory.GetFolderFromFullPath(folderPath).Files[fileName].ByteContent = npcFile.SaveWithStrings();
+        }
+
+        public void SaveMapText(T2bþ fileData, Dictionary<ITalkInfo, List<ITalkConfig>> events, string mapID)
+        {
+            List<ITalkConfig> allTalkConfigs = events.Values.SelectMany(configList => configList).ToList();
+
+            for (int i = 0; i < fileData.Texts.Count; i++)
+            {
+                int textID = fileData.Texts.ElementAt(i).Key;
+
+                // Remove unused key
+                if (!allTalkConfigs.Any(x => x.TalkValue == textID))
+                {
+                    fileData.Texts.Remove(textID);
+                }
+            }
+
+            string folderPath = $"/data/map/{mapID}";
+            string fileName = $"{mapID}_{LanguageCode}.cfg.bin";
+            string filePath = $"{folderPath}/{fileName}";
+
+            // Save the file
+            Game.Directory.GetFolderFromFullPath(folderPath).Files[fileName].ByteContent = fileData.Save(true);
         }
 
         public IShopConfig[] GetShop(string shopID)
@@ -560,6 +758,20 @@ namespace Lynx.InazumaEleven.Games.GO
             {
                 npcFile.Open(Game.Directory.GetFileFromFullPath($"/data/map/{mapID}/{mapID}_mapenv.bin"));
                 return npcFile;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public T2bþ GetMapText(string mapID)
+        {
+            string filePath = $"/data/map/{mapID}/{mapID}_{LanguageCode}.cfg.bin";
+
+            if (Game.Directory.IsFullPathExists(filePath))
+            {
+                return new T2bþ(Game.Directory.GetFileFromFullPath(filePath));
             }
             else
             {

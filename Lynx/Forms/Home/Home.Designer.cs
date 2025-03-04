@@ -122,7 +122,8 @@ namespace Lynx.Forms.Home
             "Fighting Spirits",
             "Scripts",
             "Map Editor",
-            "Save Editor"});
+            "Save Editor",
+            "Challenge Route"});
             this.featuresListBox.Location = new System.Drawing.Point(6, 19);
             this.featuresListBox.Name = "featuresListBox";
             this.featuresListBox.Size = new System.Drawing.Size(188, 381);

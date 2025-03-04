@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Lynx.Tools;
 using Lynx.Level5.Binary.Logic;
+using DocumentFormat.OpenXml.Bibliography;
 
 namespace Lynx.Level5.Binary
 {
@@ -165,6 +166,75 @@ namespace Lynx.Level5.Binary
             }
         }
 
+        public byte[] SaveWithStrings()
+        {
+            // Clear Strings
+            Strings.Clear();
+
+            int currentOffset = 0;
+
+            // Regenerate the string table
+            foreach (Entry entry in Entries)
+            {
+                List<string> stringsFromTheEntry = entry.GetStringsAsList();
+
+                foreach(string myString in stringsFromTheEntry)
+                {
+                    if (!Strings.ContainsValue(myString))
+                    {
+                        Strings[currentOffset] = myString;
+                        currentOffset += Encoding.GetByteCount(myString) + 1;
+                    }
+                }
+
+                entry.UpdateOffsetsRecursive(Strings);
+            }
+
+            using (MemoryStream stream = new MemoryStream())
+            {
+                BinaryDataWriter writer = new BinaryDataWriter(stream);
+
+                CfgBinSupport.Header header;
+                header.EntriesCount = Count(Entries);
+                header.StringTableOffset = 0;
+                header.StringTableLength = 0;
+                header.StringTableCount = Strings.Count;
+
+                writer.Seek(0x10);
+
+                foreach (Entry entry in Entries)
+                {
+                    writer.Write(entry.EncodeEntry());
+                }
+
+                writer.WriteAlignment(0x10, 0xFF);
+                header.StringTableOffset = (int)writer.Position;
+
+                if (Strings.Count > 0)
+                {
+                    writer.Write(EncodeStrings(Strings));
+                    header.StringTableLength = (int)writer.Position - header.StringTableOffset;
+                    writer.WriteAlignment(0x10, 0xFF);
+                }
+
+                List<string> uniqueKeysList = Entries
+                    .SelectMany(entry => entry.GetUniqueKeys())
+                    .Distinct()
+                    .ToList();
+
+                writer.Write(EncodeKeyTable(uniqueKeysList));
+
+                writer.Write(new byte[5] { 0x01, 0x74, 0x32, 0x62, 0xFE });
+                writer.Write(new byte[4] { 0x01, GetEncoding(), 0x00, 0x01 });
+                writer.WriteAlignment();
+
+                writer.Seek(0);
+                writer.WriteStruct(header);
+
+                return stream.ToArray();      
+            }
+        }
+
         public void ReplaceEntry(string entryName, Entry newEntry)
         {
             int entryIndex = Entries.FindIndex(x => x.GetName() == entryName);
@@ -306,7 +376,13 @@ namespace Lynx.Level5.Binary
 
                             if (offset != -1)
                             {
-                                text = Strings[offset];
+                                if (Strings.ContainsKey(offset))
+                                {
+                                    text = Strings[offset];
+                                } else
+                                {
+                                    text = "";
+                                }       
                             }
 
                             variables.Add(new Variable(Logic.Type.String, new OffsetTextPair(offset, text)));

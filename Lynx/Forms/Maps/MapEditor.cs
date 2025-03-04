@@ -25,6 +25,8 @@ using static Lynx.InazumaEleven.Games.GO.GOSupport;
 using System.Xml.Linq;
 using Lynx.Level5.Save.Logic;
 using DocumentFormat.OpenXml.Spreadsheet;
+using Lynx.Level5.Text.Logic;
+using Lynx.Forms.Characters;
 
 namespace Lynx.Forms.Maps
 {
@@ -58,6 +60,8 @@ namespace Lynx.Forms.Maps
 
         private CfgBin Mapenv;
 
+        private T2bþ MapText;
+
         private int[] BounderBox = new int[4];
 
         private Thread mapPreviewThread;
@@ -68,6 +72,21 @@ namespace Lynx.Forms.Maps
             MapID = mapID;
             GameOpened = game;
             InitializeComponent();
+
+            // Design 
+            positionCondLineNumberRTB.RichTextBox.BackColor = System.Drawing.Color.FromArgb(35, 35, 35);
+            positionCondLineNumberRTB.RichTextBox.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            positionCondLineNumberRTB.Strip.BackColor = System.Drawing.Color.FromArgb(35, 35, 35);
+            positionCondLineNumberRTB.Strip.BoxedLineColor = System.Drawing.Color.FromArgb(35, 35, 35);
+            positionCondLineNumberRTB.Strip.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            positionCondLineNumberRTB.RichTextBox.AcceptsTab = true;
+
+            eventCondLineNumberRTB.RichTextBox.BackColor = System.Drawing.Color.FromArgb(35, 35, 35);
+            eventCondLineNumberRTB.RichTextBox.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            eventCondLineNumberRTB.Strip.BackColor = System.Drawing.Color.FromArgb(35, 35, 35);
+            eventCondLineNumberRTB.Strip.BoxedLineColor = System.Drawing.Color.FromArgb(35, 35, 35);
+            eventCondLineNumberRTB.Strip.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            eventCondLineNumberRTB.RichTextBox.AcceptsTab = true;
         }
 
         private void MapEditor_Shown(object sender, EventArgs e)
@@ -78,6 +97,7 @@ namespace Lynx.Forms.Maps
 
         private void MapEditor_FormClosed(object sender, FormClosedEventArgs e)
         {
+            // Force to close MapPreview window
             if (mapPreviewThread != null && mapPreviewThread.IsAlive)
             {
                 mapPreviewInstance.Invoke((Action)(() =>
@@ -87,6 +107,11 @@ namespace Lynx.Forms.Maps
 
                 mapPreviewThread.Join();
             }
+
+            // Save
+            GameOpened.SaveNPCs(NPCs, MapID);
+            GameOpened.SaveEvents(NPCEvents, MapID);
+            GameOpened.SaveMapText(MapText, NPCEvents, MapID);
         }
 
         private void OpenMapPreview()
@@ -177,6 +202,8 @@ namespace Lynx.Forms.Maps
             npcSorted = npcSorted.OrderBy(x => x.Key).ToDictionary(x => x.Key, y => y.Value);
 
             TreeNode root = new TreeNode("NPC");
+            root.ContextMenuStrip = npcsContextMenuStrip;
+
             foreach (var myNPC in npcSorted)
             {
                 KeyValuePair<INPCBase, List<INPCAppear>> npc = new KeyValuePair<INPCBase, List<INPCAppear>>(myNPC.Value, NPCs[myNPC.Value]);
@@ -184,26 +211,89 @@ namespace Lynx.Forms.Maps
                 // Find charabase
                 ICharabase charabase = Charabases.Keys.FirstOrDefault(x => x.CharaBaseType == npc.Key.Type && x.ModelNumber == npc.Key.HeadID);
 
+                string name = npc.Key.HeadID.ToString();
+
                 if (charabase != null)
                 {
-                    string charaname = Charabases[charabase];
-
-                    TreeNode charaGroupNode = new TreeNode(myNPC.Key);
-                    charaGroupNode.Tag = npc.Key;
-
-                    for (int i = 0; i < npc.Value.Count; i++)
-                    {
-                        TreeNode charaNode = new TreeNode($"{charaname}_{i}");
-                        charaNode.Tag = "Character";
-                        charaGroupNode.Nodes.Add(charaNode);
-                    }
-
-                    root.Nodes.Add(charaGroupNode);
+                    name = Charabases[charabase];
                 }
+
+                TreeNode charaGroupNode = new TreeNode(myNPC.Key);
+                charaGroupNode.Tag = npc.Key;
+
+                for (int i = 0; i < npc.Value.Count; i++)
+                {
+                    TreeNode charaNode = new TreeNode($"{name}_{i}");
+                    charaNode.Tag = "Character";
+                    charaGroupNode.Nodes.Add(charaNode);
+                }
+
+                root.Nodes.Add(charaGroupNode);
             }
 
             root.ExpandAll();
             npcTreeView.Nodes.Add(root);
+        }
+
+        private void FillEventTreeView(string conditionText)
+        {
+            // Clear event
+            eventListBox.Items.Clear();
+
+            // Reset selected index
+            eventListBox.SelectedIndex = -1;
+
+            if (Events != null && NPCEvents.Any(x => x.Key.TalkID == SelectedNPCBase.NPCID))
+            {
+                List<ITalkConfig> matchTalkConfigs = new List<ITalkConfig>();
+
+                if (conditionText == "")
+                {
+                    ITalkInfo talkInfo = NPCEvents.FirstOrDefault(x => x.Key.TalkID == SelectedNPCBase.NPCID).Key;
+                    List<ITalkConfig> talkConfigs = NPCEvents[talkInfo];
+
+                    for (int i = 0; i < talkConfigs.Count(); i++)
+                    {
+                        matchTalkConfigs.Add(talkConfigs[i]);
+                    }
+                }
+                else
+                {
+                    int locationPhaseStart = GetPhaseNumber(conditionText, true);
+                    int locationPhaseEnd = GetPhaseNumber(conditionText, false);
+
+                    ITalkInfo talkInfo = NPCEvents.FirstOrDefault(x => x.Key.TalkID == SelectedNPCBase.NPCID).Key;
+                    List<ITalkConfig> talkConfigs = NPCEvents[talkInfo];
+
+                    for (int i = 0; i < talkConfigs.Count(); i++)
+                    {
+                        string talkConditionText = (talkConfigs[i].PhaseAppear == "0") ? "" : Condition.ToString(talkConfigs[i].PhaseAppear);
+                        int talkPhaseEnd = GetPhaseNumber(talkConditionText, false);
+
+                        if (talkPhaseEnd != -1
+                            && (talkPhaseEnd >= locationPhaseStart && talkPhaseEnd < locationPhaseEnd
+                            || talkPhaseEnd == locationPhaseStart && talkPhaseEnd == locationPhaseEnd)
+                        )
+                        {
+                            matchTalkConfigs.Add(talkConfigs[i]);
+                        }
+                    }
+                }
+
+                configurationGroupBox.Enabled = false;
+
+                eventListBox.Items.AddRange(matchTalkConfigs.Select((x, index) => $"{eventTypeFlatComboBox.Items[x.TalkType]}").ToArray());
+
+                if (eventListBox.Items.Count > 0)
+                {
+                    eventListBox.SelectedIndex = 0;
+                }
+                else
+                {
+                    dialogTextBox.Clear();
+                    eventCondLineNumberRTB.RichTextBox.Clear();
+                }
+            }
         }
 
         private void InitializeMapResource()
@@ -212,6 +302,9 @@ namespace Lynx.Forms.Maps
             GameSupports.GameFile charaText = GameOpened.Files["chara_text"];
             T2bþ charanames = new T2bþ(charaText.File.Directory.GetFileFromFullPath(charaText.Path));
             Charabases = GetCharabaseDict(GameOpened.GetCharabase(), charanames);
+
+            // Add none character
+            Charabases.Add(new CharaBase(), "None");
 
             // Fill head combobox
             headFlatComboBox.Items.AddRange(Charabases.Values.ToArray());
@@ -236,6 +329,9 @@ namespace Lynx.Forms.Maps
 
             // Get mapenv
             Mapenv = GameOpened.GetMapenv(MapID);
+
+            // Get Maptext
+            MapText = GameOpened.GetMapText(MapID);
 
             // Get bounder box
             BounderBox = new int[4];
@@ -554,6 +650,75 @@ namespace Lynx.Forms.Maps
             return npcBase.NPCID.ToString("X8");
         }
 
+        private void ReorganizeTabNames()
+        {
+            int tabIndex = 1;
+
+            foreach (TabPage tabPage in dialogVsTabControl.TabPages)
+            {
+                if (tabPage == addTabPage)
+                    continue;
+
+                tabPage.Text = $"Text {tabIndex}";
+                tabIndex++;
+            }
+        }
+
+        private void SetText(int textNumber)
+        {
+            if (MapText == null) return;
+
+            if (SelectedTalkConfig != null && SelectedTalkConfig.TalkType == 1)
+            {
+                // Get Text ID
+                TextConfig text = MapText.Texts.FirstOrDefault(x => x.Key == SelectedTalkConfig.TalkValue).Value;
+
+                if (text != null)
+                {
+                    // Replace "/n" with an actual line break
+                    string modifiedText = text.Strings[textNumber].Text.Replace("\\n", "\r\n");
+                    dialogTextBox.Text = modifiedText;
+                    return;
+                }
+            }
+
+            dialogTextBox.Clear();
+        }
+
+        private int CreateTextEntry()
+        {
+            if (MapText != null)
+            {
+                string npcName = npcTreeView.SelectedNode.Text;
+                int washaID = 0;
+
+                // Find charabase
+                ICharabase charabase = Charabases.Keys.FirstOrDefault(x => x.CharaBaseType == SelectedNPCBase.Type && x.ModelNumber == SelectedNPCBase.HeadID);
+
+                if (charabase != null)
+                {
+                    washaID = charabase.BaseHash;
+                }
+
+                string textID = $"text_" + npcName;
+                int textIDCRC32 = unchecked((int)Crc32.Compute(Encoding.UTF8.GetBytes(textID)));
+
+                if (MapText.Texts.ContainsKey(textIDCRC32))
+                {
+                    MapText.Texts.Remove(textIDCRC32);
+                }
+
+                MapText.Texts.Add(textIDCRC32, new TextConfig(new List<StringLevel5>() { new StringLevel5(0, "")}, washaID));
+
+                Console.WriteLine(MapText.Texts.FirstOrDefault(x => x.Key == textIDCRC32).Value.Strings.Count);
+
+                return textIDCRC32;
+            } else
+            {
+                return 0;
+            }
+        }
+
         private void NpcTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (e.Node.Tag != null)
@@ -579,52 +744,16 @@ namespace Lynx.Forms.Maps
                     locationYNumericUpDown.Value = Convert.ToDecimal(SelectedNPCAppear.LocationY);
                     locationZNumericUpDown.Value = Convert.ToDecimal(SelectedNPCAppear.LocationZ);
                     rotationNumericUpDown.Value = Convert.ToDecimal(SelectedNPCAppear.Rotation);
+                    lookAtPlayerCheckBox.Checked = (SelectedNPCAppear.LookAtThePlayer == 2);
                     restAnimationTextBox.Text = SelectedNPCAppear.StandAnimation;
                     talkAnimationTextBox.Text = SelectedNPCAppear.TalkAnimation;
                     unkAnimationTextBox.Text = SelectedNPCAppear.UnkAnimation;
                     string conditionText = (SelectedNPCAppear.PhaseAppear == "0") ? "" : Condition.ToString(SelectedNPCAppear.PhaseAppear);
-                    positionCondTextBox.Text = conditionText;
+                    positionCondLineNumberRTB.RichTextBox.Text = conditionText;
 
                     // Event
-                    if (Events != null && NPCEvents.Any(x => x.Key.TalkID == SelectedNPCBase.NPCID))
-                    {
-                        eventListBox.Items.Clear();
-                        List<ITalkConfig> matchTalkConfigs = new List<ITalkConfig>();
+                    FillEventTreeView(conditionText);
 
-                        if (conditionText == "")
-                        {
-                            ITalkInfo talkInfo = NPCEvents.FirstOrDefault(x => x.Key.TalkID == SelectedNPCBase.NPCID).Key;
-                            List<ITalkConfig> talkConfigs = NPCEvents[talkInfo];
-
-                            for (int i = 0; i < talkConfigs.Count(); i++)
-                            {
-                                matchTalkConfigs.Add(talkConfigs[i]);
-                            }
-                        } else
-                        {
-                            int locationPhaseStart = GetPhaseNumber(conditionText, true);
-                            int locationPhaseEnd = GetPhaseNumber(conditionText, false);
-
-                            ITalkInfo talkInfo = NPCEvents.FirstOrDefault(x => x.Key.TalkID == SelectedNPCBase.NPCID).Key;
-                            List<ITalkConfig> talkConfigs = NPCEvents[talkInfo];
-
-                            for (int i = 0; i < talkConfigs.Count(); i++)
-                            {
-                                string talkConditionText = (talkConfigs[i].PhaseAppear == "0") ? "" : Condition.ToString(talkConfigs[i].PhaseAppear);
-                                int talkPhaseEnd = GetPhaseNumber(talkConditionText, false);
-
-                                if (talkPhaseEnd != -1
-                                    && (talkPhaseEnd >= locationPhaseStart && talkPhaseEnd < locationPhaseEnd
-                                    || talkPhaseEnd == locationPhaseStart && talkPhaseEnd == locationPhaseEnd)
-                                )
-                                {
-                                    matchTalkConfigs.Add(talkConfigs[i]);
-                                }
-                            }
-                        }
-
-                        eventListBox.Items.AddRange(matchTalkConfigs.Select((x, index) => $"{eventTypeFlatComboBox.Items[x.TalkType]}").ToArray());
-                    }
 
                     UpdateSelectedNpcImage(DrawNPC(MiniMapImage, SelectedNPCAppear));
 
@@ -654,19 +783,13 @@ namespace Lynx.Forms.Maps
                 locationPhaseEnd = GetPhaseNumber(conditionText, false);
             }
 
-            ITalkInfo talkInfo = NPCEvents.FirstOrDefault(x => x.Key.TalkID == selectedNPCBase.NPCID).Key;
-            List<ITalkConfig> talkConfigs = NPCEvents[talkInfo];
+            SelectedTalkInfo = NPCEvents.FirstOrDefault(x => x.Key.TalkID == selectedNPCBase.NPCID).Key;
+            List<ITalkConfig> talkConfigs = NPCEvents[SelectedTalkInfo];
 
             for (int i = 0; i < talkConfigs.Count(); i++)
             {
                 string talkConditionText = (talkConfigs[i].PhaseAppear == "0") ? "" : Condition.ToString(talkConfigs[i].PhaseAppear);
                 int talkPhaseEnd = GetPhaseNumber(talkConditionText, false);
-
-                Console.WriteLine("i: " + i);
-                Console.WriteLine("talkConditionText: " + talkConditionText);
-                Console.WriteLine("locationPhaseStart: " + locationPhaseStart);
-                Console.WriteLine("locationPhaseEnd: " + locationPhaseEnd);
-                Console.WriteLine("talkPhaseEnd: " + talkPhaseEnd);
 
                 if (talkConditionText == "")
                 {
@@ -681,22 +804,12 @@ namespace Lynx.Forms.Maps
                         matchTalkConfigs.Add(talkConfigs[i]);
                     }
                 }
-
-
             }
 
-            ITalkConfig selectedTalkConfig = matchTalkConfigs[eventListBox.SelectedIndex];
-            eventTypeFlatComboBox.SelectedIndex = selectedTalkConfig.TalkType;
-            valueFlatNumericUpDown.Value = selectedTalkConfig.TalkValue;
-            eventCondTextBox.Text = (selectedTalkConfig.PhaseAppear == "0") ? "" : Condition.ToString(selectedTalkConfig.PhaseAppear);
-
-            if (selectedTalkConfig.TalkType == 3)
-            {
-                scriptButton.Enabled = true;
-            } else
-            {
-                scriptButton.Enabled = false;
-            }
+            SelectedTalkConfig = matchTalkConfigs[eventListBox.SelectedIndex];
+            eventTypeFlatComboBox.SelectedIndex = SelectedTalkConfig.TalkType;
+            valueFlatNumericUpDown.Value = SelectedTalkConfig.TalkValue;
+            eventCondLineNumberRTB.RichTextBox.Text = (SelectedTalkConfig.PhaseAppear == "0") ? "" : Condition.ToString(SelectedTalkConfig.PhaseAppear);
 
             configurationGroupBox.Enabled = true;
         }
@@ -830,6 +943,19 @@ namespace Lynx.Forms.Maps
             SelectedNPCAppear.Rotation = Convert.ToSingle(rotationNumericUpDown.Value);
         }
 
+        private void LookAtPlayerCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!lookAtPlayerCheckBox.Focused) return;
+
+            if (lookAtPlayerCheckBox.Checked)
+            {
+                SelectedNPCAppear.LookAtThePlayer = 2;
+            } else
+            {
+                SelectedNPCAppear.LookAtThePlayer = 1;
+            }
+        }
+
         private void RestAnimationTextBox_TextChanged(object sender, EventArgs e)
         {
             if (!restAnimationTextBox.Focused) return;
@@ -853,13 +979,14 @@ namespace Lynx.Forms.Maps
 
         private void CompileButton_Click(object sender, EventArgs e)
         {
-            string condPhaseAppear = "";
+            string condPhaseAppear = "0";
 
-            if (positionCondTextBox.Text != "")
+            if (positionCondLineNumberRTB.Text != "" || positionCondLineNumberRTB.Text != " " || positionCondLineNumberRTB.Text != "0")
             {
                 try
                 {
-                    condPhaseAppear = Condition.ToBase64String(positionCondTextBox.Text);
+                    condPhaseAppear = Condition.ToBase64String(positionCondLineNumberRTB.Text);
+                    Console.WriteLine(condPhaseAppear);
                 }
                 catch
                 {
@@ -868,12 +995,267 @@ namespace Lynx.Forms.Maps
                 }
             }
 
-            Console.WriteLine("before " + SelectedNPCAppear.PhaseAppear);
-            Console.WriteLine("after " + condPhaseAppear);
-
-
             SelectedNPCAppear.PhaseAppear = condPhaseAppear;
             MessageBox.Show("Compiled!");
+        }
+
+        private void DialogTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (!dialogTextBox.Focused) return;
+
+            if (MapText != null && SelectedTalkConfig != null)
+            {
+                int textID = SelectedTalkConfig.TalkValue;
+                TextConfig textConfig = MapText.Texts.FirstOrDefault(x => x.Key  == textID).Value;
+
+                if (textConfig != null)
+                {
+                   if (dialogVsTabControl.SelectedIndex >= textConfig.Strings.Count)
+                   {
+                        textConfig.Strings.Add(new StringLevel5());
+                   }
+                }
+
+                textConfig.Strings[dialogVsTabControl.SelectedIndex].Text = dialogTextBox.Text;
+
+                // Reorganise variance
+                for (int i = 0; i < textConfig.Strings.Count; i++)
+                {
+                    textConfig.Strings[i].Variance = i;
+                }
+            }
+        }
+
+        private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dialogVsTabControl.TabPages.Count <= 2)
+            {
+                MessageBox.Show("You must have at least two tabs remaining.");
+                return;
+            }
+
+            if (dialogVsTabControl.SelectedTab != null)
+            {
+                if (dialogVsTabControl.SelectedTab == addTabPage)
+                {
+                    MessageBox.Show("Cannot delete the add tab page.");
+                    return;
+                }
+
+                dialogVsTabControl.TabPages.Remove(dialogVsTabControl.SelectedTab);
+
+                ReorganizeTabNames();
+
+                dialogVsTabControl.SelectedIndex = dialogVsTabControl.TabCount - 2;
+            }
+        }
+
+        private void DialogVsTabControl_TabIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DialogVsTabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (dialogVsTabControl.SelectedTab != null)
+            {
+                if (dialogVsTabControl.SelectedTab == addTabPage)
+                {
+                    TabPage newTab = new TabPage($"Text {dialogVsTabControl.TabPages.Count}");
+                    newTab.BackColor = System.Drawing.Color.FromArgb(54, 54, 54);
+
+                    dialogVsTabControl.TabPages.Add(newTab);
+
+                    // Move AddTabPage to the end
+                    if (dialogVsTabControl.TabPages.Contains(addTabPage))
+                    {
+                        dialogVsTabControl.TabPages.Remove(addTabPage);
+                        dialogVsTabControl.TabPages.Add(addTabPage);
+                    }
+
+                    dialogVsTabControl.SelectedIndex = dialogVsTabControl.TabCount - 2;
+                }
+                else
+                {
+                    if (dialogTextBox.Parent != dialogVsTabControl.SelectedTab)
+                    {
+                        dialogTextBox.Parent = dialogVsTabControl.SelectedTab;
+                        dialogTextBox.Location = new Point(6, 6);
+                        SetText(dialogVsTabControl.SelectedIndex);
+                    }
+                }
+
+                // Draw again
+                dialogVsTabControl.Invalidate();
+            } 
+        }
+
+        private void EventTypeFlatComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (eventTypeFlatComboBox.Focused)
+            {
+                SelectedTalkConfig.TalkType = eventTypeFlatComboBox.SelectedIndex;
+            }
+
+            if (SelectedTalkConfig.TalkType == 1)
+            {
+                valueLabel.Visible = false;
+                valueFlatNumericUpDown.Visible = false;
+                scriptButton.Visible = false;
+                dialogVsTabControl.Visible = true;
+                eventConditionGroupBox.Size = new Size(391, 158);
+                eventConditionGroupBox.Location = new Point(16, 184);
+                eventCondLineNumberRTB.Size = new Size(379, 134);
+                SetText(0);
+            }
+            else
+            {
+                valueLabel.Visible = true;
+                valueFlatNumericUpDown.Visible = true;
+                scriptButton.Visible = true;
+                dialogVsTabControl.Visible = false;
+                eventConditionGroupBox.Size = new Size(391, 265);
+                eventConditionGroupBox.Location = new Point(16, 77);
+                eventCondLineNumberRTB.Size = new Size(379, 241);
+                dialogTextBox.Clear();
+            }
+
+            if (SelectedTalkConfig.TalkType == 3)
+            {
+                scriptButton.Enabled = true;
+            }
+            else
+            {
+                scriptButton.Enabled = false;
+            }
+        }
+
+        private void ValueFlatNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (!valueFlatNumericUpDown.Focused) return;
+
+            SelectedTalkConfig.TalkValue = Convert.ToInt32(valueFlatNumericUpDown.Value);
+        }
+
+        private void eventCompileButton_Click(object sender, EventArgs e)
+        {
+            string eventPhaseAppear = "0";
+
+            if (eventCondLineNumberRTB.Text != "" && eventCondLineNumberRTB.Text != "0")
+            {
+                try
+                {
+                    eventPhaseAppear = Condition.ToBase64String(eventCondLineNumberRTB.Text);
+                }
+                catch
+                {
+                    MessageBox.Show("Failed to compile.");
+                    return;
+                }
+            }
+
+            SelectedTalkConfig.PhaseAppear = eventPhaseAppear;
+            MessageBox.Show("Compiled!");
+        }
+
+        private void AddNewNPCGroupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NewNPCWindow newNPCWindow = new NewNPCWindow(NPCs.Keys.Select(x => x.NPCID).Distinct().ToList());
+            newNPCWindow.ShowDialog();
+
+            if (newNPCWindow.SelectedNPCHash != 0)
+            {
+                int insertIndex = NPCs.Count;
+
+                INPCBase newNPCBase = GameOpened.GetEmptyObject<INPCBase>();
+                INPCAppear newNPCAppear = GameOpened.GetEmptyObject<INPCAppear>();
+
+                if (GameOpened.Name == "Inazuma Eleven Go")
+                {
+                    newNPCBase = new NPCBase();
+                    newNPCAppear = new NPCAppear();
+                }
+
+                newNPCBase.NPCID = newNPCWindow.SelectedNPCHash;
+                newNPCAppear.PhaseAppear = "0";
+
+                NPCs.Add(newNPCBase, new List<INPCAppear>() { newNPCAppear });
+
+                FillNPCTreeView();
+            }
+        }
+
+        private void AddNewItemToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DeleteItemToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AddToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (SelectedNPCBase == null) return;
+
+            // Get talk info of the npc
+            ITalkInfo npcTalk = NPCEvents.FirstOrDefault(x => x.Key.TalkID == SelectedNPCBase.NPCID).Key;
+            List<ITalkConfig> npcTalkConfigs = new List<ITalkConfig>();
+        
+            if (npcTalk != null)
+            {
+                // Get talk config from the talk info
+                npcTalkConfigs = NPCEvents[npcTalk];
+            }
+            else
+            {
+                // Create NPC Talk
+                npcTalk = GameOpened.GetEmptyObject<ITalkInfo>();
+
+                if (GameOpened.Name == "Inazuma Eleven Go")
+                {
+                    npcTalk = new TalkInfo();
+                }
+
+                npcTalk.TalkID = SelectedNPCBase.NPCID;
+            }
+
+            // Insert new TalkConfig
+            ITalkConfig newITalkConfig = GameOpened.GetEmptyObject<ITalkConfig>();
+            if (GameOpened.Name == "Inazuma Eleven Go")
+            {
+                newITalkConfig = new TalkConfig();
+            }
+
+            // Set property of TalkConfig
+            newITalkConfig.TalkType = 1;
+            newITalkConfig.PhaseAppear = "0";
+
+            // Create text entry
+            int npcTextID = CreateTextEntry();
+            if (npcTextID != 0)
+            {
+                newITalkConfig.TalkValue = npcTextID;
+            }
+
+            // Add element
+            npcTalkConfigs.Add(newITalkConfig);
+
+            // add new npc event in the dictionary
+            if (!NPCEvents.ContainsKey(npcTalk))
+            {
+                NPCEvents.Add(npcTalk, npcTalkConfigs);
+            }
+
+            // Update event list box
+            string conditionText = (SelectedNPCAppear.PhaseAppear == "0") ? "" : Condition.ToString(SelectedNPCAppear.PhaseAppear);
+            FillEventTreeView(conditionText);
+        }
+
+        private void DeleteToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

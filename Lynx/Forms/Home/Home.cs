@@ -18,6 +18,7 @@ using Lynx.Forms.Skills;
 using Lynx.Forms.Scipts;
 using Lynx.Forms.SaveEditor;
 using Lynx.Forms.FightingSpirits;
+using Lynx.Forms.ChallengeRoute;
 
 namespace Lynx.Forms.Home
 {
@@ -118,6 +119,10 @@ namespace Lynx.Forms.Home
                     break;
                 case "Save Editor":
                     SaveEditorButton_Click(sender, e);
+                    break;
+                case "Challenge Route":
+                    ChallengeRouteWindow challengeRouteWindow = new ChallengeRouteWindow(GameOpened);
+                    challengeRouteWindow.ShowDialog();
                     break;
             }
         }
