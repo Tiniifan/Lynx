@@ -689,6 +689,38 @@ namespace Lynx.InazumaEleven.Games.GO
             Game.Directory.GetFolderFromFullPath("/data/res/shop").Files["community_config.cfg.bin"].ByteContent = communityFile.Save();
         }
 
+        public IRouteConfig[] GetRoutes()
+        {
+            CfgBin communityFile = new CfgBin();
+            communityFile.Open(Game.Directory.GetFileFromFullPath("/data/res/shop/community_config.cfg.bin"));
+
+            return communityFile.Entries
+                .Where(x => x.GetName() == "ROUTE_CONFIG_BEGIN")
+                .SelectMany(x => x.Children)
+                .Select(x => x.ToClass<GOSupport.RouteConfig>())
+                .ToArray();
+        }
+
+        public void SaveRoutes(ICommunityInfo[] communities)
+        {
+            CfgBin communityFile = new CfgBin();
+            communityFile.Open(Game.Directory.GetFileFromFullPath("/data/res/shop/community_config.cfg.bin"));
+
+            Entry baseBegin = communityFile.Entries.Where(x => x.GetName() == "COMMUNITY_INFO_BEGIN").FirstOrDefault();
+            baseBegin.Children.Clear();
+
+            baseBegin.Variables[0].Value = communities.Length;
+
+            for (int i = 0; i < communities.Count(); i++)
+            {
+                Entry newBaseEntry = new Entry("COMMUNITY_INFO_" + i, new List<Variable>(), Encoding.UTF8);
+                newBaseEntry.SetVariablesFromClass(communities[i] as GOSupport.CommunityInfo);
+                baseBegin.Children.Add(newBaseEntry);
+            }
+
+            Game.Directory.GetFolderFromFullPath("/data/res/shop").Files["community_config.cfg.bin"].ByteContent = communityFile.Save();
+        }
+
         public IItemConfig[] GetItems(string itemType)
         {
             CfgBin itemconfigFile = new CfgBin();

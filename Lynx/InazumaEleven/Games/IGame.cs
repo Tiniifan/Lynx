@@ -187,6 +187,18 @@ namespace Lynx.InazumaEleven.Games
         void SaveCommunities(ICommunityInfo[] communities);
 
         /// <summary>
+        /// Gets the challenge route information.
+        /// </summary>
+        /// <returns>An array of challenge route information.</returns>
+        IRouteConfig[] GetRoutes();
+
+        /// <summary>
+        /// Saves the challenge route information.
+        /// </summary>
+        /// <param name="communities">The challenge route information to save.</param>
+        void SaveRoutes(IRouteConfig[] communities);
+
+        /// <summary>
         /// Gets the item configurations for the specified item type.
         /// </summary>
         /// <param name="itemType">The item type to get the configurations for.</param>

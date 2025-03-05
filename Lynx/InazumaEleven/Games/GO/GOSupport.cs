@@ -275,5 +275,21 @@ namespace Lynx.InazumaEleven.Games.GO
             public int Level3 { get; set; }
             public int Level4 { get; set; }
         }
+
+        public class RouteConfig : IRouteConfig
+        {
+            public int Flag { get; set; }
+            public int CellType { get; set; }
+            public int ContentID { get; set; }
+            public int MatchRestriction { get; set; }
+            public int CellNum { get; set; }
+            public int CellLink1 { get; set; }
+            public int CellLink2 { get; set; }
+            public int CellLink3 { get; set; }
+            public string PhaseAppear { get; set; }
+            public string Map { get; set; }
+            public int Unk10 { get; set; }
+            public string MatchTextLock { get; set; }
+        }
     }
 }
