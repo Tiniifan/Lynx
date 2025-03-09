@@ -15,6 +15,8 @@ using Lynx.Level5.Binary.Logic;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using DocumentFormat.OpenXml.Spreadsheet;
 using static Lynx.InazumaEleven.Games.GO.GOSupport;
+using static Microsoft.IO.RecyclableMemoryStreamManager;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace Lynx.InazumaEleven.Games.GO
 {
@@ -48,6 +50,8 @@ namespace Lynx.InazumaEleven.Games.GO
                 { "item_text", new GameSupports.GameFile(Game, "/data/res/text/item_text_" + LanguageCode + ".cfg.bin") },
                 { "skill_text", new GameSupports.GameFile(Game, "/data/res/text/skill_text_" + LanguageCode + ".cfg.bin") },
                 { "kiznax_hint_text", new GameSupports.GameFile(Game, "/data/res/text/kiznax_hint_text_" + LanguageCode + ".cfg.bin") },
+                { "team_text", new GameSupports.GameFile(Game, "/data/res/text/team_text_" + LanguageCode + ".cfg.bin") },
+                { "troute_text", new GameSupports.GameFile(Game, "/data/res/text/troute_text_" + LanguageCode + ".cfg.bin") },
                 { "face", new GameSupports.GameFile(Game, "/data/bustup/face") },
                 { "faceAvatar", new GameSupports.GameFile(Game, "/data/bustup/avatar") },
                 { "modelRpgPlayer", new GameSupports.GameFile(Game, "/data/chr/model/rpg/face") },
@@ -61,6 +65,8 @@ namespace Lynx.InazumaEleven.Games.GO
                 { "modelRPGShoes", new GameSupports.GameFile(Game, "/data/chr/model/rpg/shoes") },
                 { "modelRPGBody", new GameSupports.GameFile(Game, "/data/chr/model/rpg/body") },
                 { "modelRPGGloves", new GameSupports.GameFile(Game, "/data/chr/model/rpg/glove") },
+                { "soccer", new GameSupports.GameFile(Game, "/data/res/soccer/") },
+                { "emblem", new GameSupports.GameFile(Game, "/data/emblem/") },
             };
         }
 
@@ -689,36 +695,176 @@ namespace Lynx.InazumaEleven.Games.GO
             Game.Directory.GetFolderFromFullPath("/data/res/shop").Files["community_config.cfg.bin"].ByteContent = communityFile.Save();
         }
 
-        public IRouteConfig[] GetRoutes()
+        public (IRouteConfig[], int) GetRoutes(string filename)
         {
-            CfgBin communityFile = new CfgBin();
-            communityFile.Open(Game.Directory.GetFileFromFullPath("/data/res/shop/community_config.cfg.bin"));
+            CfgBin routeFile = new CfgBin();
+            routeFile.Open(Game.Directory.GetFileFromFullPath($"/data/res/soccer/{filename}"));
 
-            return communityFile.Entries
+            var routes = routeFile.Entries
                 .Where(x => x.GetName() == "ROUTE_CONFIG_BEGIN")
                 .SelectMany(x => x.Children)
                 .Select(x => x.ToClass<GOSupport.RouteConfig>())
                 .ToArray();
+
+            int nameID = Convert.ToInt32(routeFile.Entries[0].Variables[1].Value);
+
+            return (routes, nameID);
         }
 
-        public void SaveRoutes(ICommunityInfo[] communities)
+        public void SaveRoutes(string filename, int nameCRC32, IRouteConfig[] routes)
         {
-            CfgBin communityFile = new CfgBin();
-            communityFile.Open(Game.Directory.GetFileFromFullPath("/data/res/shop/community_config.cfg.bin"));
+            CfgBin routeFile = new CfgBin();
 
-            Entry baseBegin = communityFile.Entries.Where(x => x.GetName() == "COMMUNITY_INFO_BEGIN").FirstOrDefault();
+            // Open the route file if it exist
+            if (Game.Directory.IsFullPathExists($"/data/res/soccer/{filename}"))
+            {
+                routeFile.Open(Game.Directory.GetFileFromFullPath($"/data/res/soccer/{filename}"));
+            } else
+            {
+                // Create the entry
+                Entry communityHeader = new Entry("ROUTE_CONFIG_BEGIN_0", 
+                    new List<Variable>() { 
+                        new Variable(Level5.Binary.Logic.Type.Int, routes.Count()),
+                        new Variable(Level5.Binary.Logic.Type.Int, nameCRC32)
+                    }, Encoding.UTF8, true);
+                
+                // Insert
+                routeFile.Entries.Add(communityHeader);
+            }
+            
+            Entry baseBegin = routeFile.Entries.Where(x => x.GetName() == "ROUTE_CONFIG_BEGIN").FirstOrDefault();
             baseBegin.Children.Clear();
 
-            baseBegin.Variables[0].Value = communities.Length;
+            baseBegin.Variables[0].Value = routes.Length;
 
-            for (int i = 0; i < communities.Count(); i++)
+            for (int i = 0; i < routes.Count(); i++)
             {
-                Entry newBaseEntry = new Entry("COMMUNITY_INFO_" + i, new List<Variable>(), Encoding.UTF8);
-                newBaseEntry.SetVariablesFromClass(communities[i] as GOSupport.CommunityInfo);
+                Entry newBaseEntry = new Entry("ROUTE_CONFIG_" + i, new List<Variable>(), Encoding.UTF8);
+                newBaseEntry.SetVariablesFromClass(routes[i] as GOSupport.RouteConfig);
                 baseBegin.Children.Add(newBaseEntry);
             }
 
-            Game.Directory.GetFolderFromFullPath("/data/res/shop").Files["community_config.cfg.bin"].ByteContent = communityFile.Save();
+            Game.Directory.GetFolderFromFullPath("/data/res/soccer").Files[filename].ByteContent = routeFile.Save();
+        }
+
+        public ISoccerInfo[] GetSoccers()
+        {
+            CfgBin soccerFile = new CfgBin();
+            soccerFile.Open(Game.Directory.GetFileFromFullPath($"/data/res/soccer/soccer_config.cfg.bin"));
+
+            return soccerFile.Entries
+                .Where(x => x.GetName() == "SOCCER_INFO_BEGIN")
+                .SelectMany(x => x.Children)
+                .Select(x => x.ToClass<GOSupport.SoccerInfo>())
+                .ToArray();
+        }
+
+        public void SaveSoccers(ISoccerInfo[] soccers)
+        {
+            CfgBin soccerFile = new CfgBin();
+            soccerFile.Open(Game.Directory.GetFileFromFullPath($"/data/res/soccer/soccer_config.cfg.bin"));
+
+            Entry baseBegin = soccerFile.Entries.Where(x => x.GetName() == "SOCCER_INFO_BEGIN").FirstOrDefault();
+            baseBegin.Children.Clear();
+
+            baseBegin.Variables[0].Value = soccers.Length;
+
+            for (int i = 0; i < soccers.Count(); i++)
+            {
+                Entry newBaseEntry = new Entry("SOCCER_INFO_" + i, new List<Variable>(), Encoding.UTF8);
+                newBaseEntry.SetVariablesFromClass(soccers[i] as GOSupport.SoccerInfo);
+                baseBegin.Children.Add(newBaseEntry);
+            }
+
+            Game.Directory.GetFolderFromFullPath("/data/res/soccer").Files["soccer_config.cfg.bin"].ByteContent = soccerFile.Save();
+        }
+
+        public ITeamParamInfo[] GetTeamParams()
+        {
+            CfgBin teamParamFile = new CfgBin();
+            teamParamFile.Open(Game.Directory.GetFileFromFullPath($"/data/res/team/team_param.cfg.bin"));
+
+            return teamParamFile.Entries
+                .Where(x => x.GetName() == "TEAM_PARAM_INFO_BEGIN")
+                .SelectMany(x => x.Children)
+                .Select(x => x.ToClass<GOSupport.TeamParamInfo>())
+                .ToArray();
+        }
+
+        public void SaveTeamParams(ITeamParamInfo[] teams)
+        {
+            CfgBin teamParamFile = new CfgBin();
+            teamParamFile.Open(Game.Directory.GetFileFromFullPath($"/data/res/team/team_param.cfg.bin"));
+
+            Entry baseBegin = teamParamFile.Entries.Where(x => x.GetName() == "TEAM_PARAM_INFO_BEGIN").FirstOrDefault();
+            baseBegin.Children.Clear();
+
+            baseBegin.Variables[0].Value = teams.Length;
+
+            for (int i = 0; i < teams.Count(); i++)
+            {
+                Entry newBaseEntry = new Entry("TEAM_PARAM_INFO_" + i, new List<Variable>(), Encoding.UTF8);
+                newBaseEntry.SetVariablesFromClass(teams[i] as GOSupport.TeamParamInfo);
+                baseBegin.Children.Add(newBaseEntry);
+            }
+
+            Game.Directory.GetFolderFromFullPath("/data/res/team").Files["team_param.cfg.bin"].ByteContent = teamParamFile.Save();
+        }
+
+        public IStoryTeamInfo[] GetStoryTeams()
+        {
+            CfgBin teamConfigFile = new CfgBin();
+            teamConfigFile.Open(Game.Directory.GetFileFromFullPath($"/data/res/team/team_config.cfg.bin"));
+
+            return teamConfigFile.Entries
+                .Where(x => x.GetName() == "STORY_TEAM_INFO_BEGIN")
+                .SelectMany(x => x.Children)
+                .Select(x => x.ToClass<GOSupport.StoryTeamInfo>())
+                .ToArray();
+        }
+
+        public IEncountTeamInfo[] GetEncounterTeams()
+        {
+            CfgBin teamConfigFile = new CfgBin();
+            teamConfigFile.Open(Game.Directory.GetFileFromFullPath($"/data/res/team/team_config.cfg.bin"));
+
+            return teamConfigFile.Entries
+                .Where(x => x.GetName() == "ENCOUNT_TEAM_INFO_BEGIN")
+                .SelectMany(x => x.Children)
+                .Select(x => x.ToClass<GOSupport.EncountTeamInfo>())
+                .ToArray();
+        }
+
+        public void SaveTeamConfig(IStoryTeamInfo[] storyTeams, IEncountTeamInfo[] encounterTeams)
+        {
+            CfgBin teamConfigFile = new CfgBin();
+            teamConfigFile.Open(Game.Directory.GetFileFromFullPath($"/data/res/team/team_config.cfg.bin"));
+
+            Entry storyBaseBegin = teamConfigFile.Entries.Where(x => x.GetName() == "STORY_TEAM_INFO_BEGIN").FirstOrDefault();
+            storyBaseBegin.Children.Clear();
+
+            storyBaseBegin.Variables[0].Value = storyTeams.Length;
+
+            for (int i = 0; i < storyTeams.Count(); i++)
+            {
+                Entry newBaseEntry = new Entry("STORY_TEAM_INFO_" + i, new List<Variable>(), Encoding.UTF8);
+                newBaseEntry.SetVariablesFromClass(storyTeams[i] as GOSupport.StoryTeamInfo);
+                storyBaseBegin.Children.Add(newBaseEntry);
+            }
+
+            Entry encountBaseBegin = teamConfigFile.Entries.Where(x => x.GetName() == "ENCOUNT_TEAM_INFO_BEGIN").FirstOrDefault();
+            encountBaseBegin.Children.Clear();
+
+            encountBaseBegin.Variables[0].Value = encounterTeams.Length;
+
+            for (int i = 0; i < encounterTeams.Count(); i++)
+            {
+                Entry newBaseEntry = new Entry("ENCOUNT_TEAM_INFO_" + i, new List<Variable>(), Encoding.UTF8);
+                newBaseEntry.SetVariablesFromClass(encounterTeams[i] as GOSupport.EncountTeamInfo);
+                encountBaseBegin.Children.Add(newBaseEntry);
+            }
+
+            Game.Directory.GetFolderFromFullPath("/data/res/team").Files["team_config.cfg.bin"].ByteContent = teamConfigFile.Save();
         }
 
         public IItemConfig[] GetItems(string itemType)

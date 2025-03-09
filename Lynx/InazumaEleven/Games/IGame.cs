@@ -3,6 +3,7 @@ using Lynx.Level5.Archive.ARC0;
 using Lynx.InazumaEleven.Logic;
 using Lynx.Level5.Text;
 using Lynx.Level5.Binary;
+using System.Runtime.Serialization.Formatters;
 
 namespace Lynx.InazumaEleven.Games
 {
@@ -187,16 +188,62 @@ namespace Lynx.InazumaEleven.Games
         void SaveCommunities(ICommunityInfo[] communities);
 
         /// <summary>
+        /// Gets the soccer player information.
+        /// </summary>
+        /// <returns>An array of soccer player information.</returns>
+        ISoccerInfo[] GetSoccers();
+
+        /// <summary>
+        /// Saves the soccer player information.
+        /// </summary>
+        /// <param name="soccers">The soccer player information to save.</param>
+        void SaveSoccers(ISoccerInfo[] soccers);
+
+        /// <summary>
+        /// Gets the team parameter information.
+        /// </summary>
+        /// <returns>An array of team parameter information.</returns>
+        ITeamParamInfo[] GetTeamParams();
+
+        /// <summary>
+        /// Saves the team parameter information.
+        /// </summary>
+        /// <param name="teams">The team parameter information to save.</param>
+        void SaveTeamParams(ITeamParamInfo[] teams);
+
+        /// <summary>
+        /// Gets the story team information.
+        /// </summary>
+        /// <returns>An array of story team information.</returns>
+        IStoryTeamInfo[] GetStoryTeams();
+
+        /// <summary>
+        /// Gets the encounter team information.
+        /// </summary>
+        /// <returns>An array of encounter team information.</returns>
+        IEncountTeamInfo[] GetEncounterTeams();
+
+        /// <summary>
+        /// Saves the story and encounter team configurations.
+        /// </summary>
+        /// <param name="storyTeams">The story team information to save.</param>
+        /// <param name="encounterTeams">The encounter team information to save.</param>
+        void SaveTeamConfig(IStoryTeamInfo[] storyTeams, IEncountTeamInfo[] encounterTeams);
+
+        /// <summary>
         /// Gets the challenge route information.
         /// </summary>
+        /// <param name="filename">The challenge route file to get the configuration for.</param>
         /// <returns>An array of challenge route information.</returns>
-        IRouteConfig[] GetRoutes();
+        (IRouteConfig[], int) GetRoutes(string filename);
 
         /// <summary>
         /// Saves the challenge route information.
         /// </summary>
+        /// <param name="filename">The challenge route file to save the configuration for.</param>
+        /// /// <param name="nameCRC32">The name of the challenge route.</param>
         /// <param name="communities">The challenge route information to save.</param>
-        void SaveRoutes(IRouteConfig[] communities);
+        void SaveRoutes(string filename, int nameCRC32, IRouteConfig[] communities);
 
         /// <summary>
         /// Gets the item configurations for the specified item type.

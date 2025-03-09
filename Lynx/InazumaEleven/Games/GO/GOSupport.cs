@@ -291,5 +291,132 @@ namespace Lynx.InazumaEleven.Games.GO
             public int Unk10 { get; set; }
             public string MatchTextLock { get; set; }
         }
+
+        public class SoccerInfo : ISoccerInfo
+        {
+            public int SoccerID { get; set; }
+            public int TeamParamID { get; set; }
+            public int SoccerMode { get; set; }
+            public int Unk3 { get; set; }
+            public int Unk4 { get; set; }
+            public string Sound { get; set; }
+            public int VictoryCondition { get; set; }
+            public int Script { get; set; }
+            public int Time { get; set; }
+            public int NextScript { get; set; }
+        }
+
+        public class TeamParamInfo : ITeamParamInfo
+        {
+            public int TeamParamID { get; set; }
+            public int TeamConfigID { get; set; }
+            public int Friendship { get; set; }
+            public int Prestige { get; set; }
+            public int VictoryPoints { get; set; }
+            public int BootsID { get; set; }
+            public int GlovesID { get; set; }
+            public int BraceletID { get; set; }
+            public int PendantID { get; set; }
+            public int DropID1 { get; set; }
+            public int DropID2 { get; set; }
+            public int DropID3 { get; set; }
+            public int DropID4 { get; set; }
+            public int DropID5 { get; set; }
+            public int Uniform { get; set; }
+            public int DropRate1 { get; set; }
+            public int DropRate2 { get; set; }
+            public int DropRate3 { get; set; }
+            public int DropRate4 { get; set; }
+            public int DropRate5 { get; set; }
+            public int FormationID { get; set; }
+            public int Level { get; set; }
+            public int DropID6 { get; set; }
+            public int DropRate6 { get; set; }
+            public int NicePlayBonus { get; set; }
+            public int CoachID { get; set; }
+            public int TacticID { get; set; }
+            public int AILevel { get; set; }
+        }
+
+        public class StoryTeamInfo : IStoryTeamInfo
+        {
+            public int TeamConfigID { get; set; }
+            public int NameID { get; set; }
+            public int Player1 { get; set; }
+            public int NumberPlayer1 { get; set; }
+            public int Player2 { get; set; }
+            public int NumberPlayer2 { get; set; }
+            public int Player3 { get; set; }
+            public int NumberPlayer3 { get; set; }
+            public int Player4 { get; set; }
+            public int NumberPlayer4 { get; set; }
+            public int Player5 { get; set; }
+            public int NumberPlayer5 { get; set; }
+            public int Player6 { get; set; }
+            public int NumberPlayer6 { get; set; }
+            public int Player7 { get; set; }
+            public int NumberPlayer7 { get; set; }
+            public int Player8 { get; set; }
+            public int NumberPlayer8 { get; set; }
+            public int Player9 { get; set; }
+            public int NumberPlayer9 { get; set; }
+            public int Player10 { get; set; }
+            public int NumberPlayer10 { get; set; }
+            public int Player11 { get; set; }
+            public int NumberPlayer11 { get; set; }
+            public int Player12 { get; set; }
+            public int NumberPlayer12 { get; set; }
+            public int Player13 { get; set; }
+            public int NumberPlayer13 { get; set; }
+            public int Player14 { get; set; }
+            public int NumberPlayer14 { get; set; }
+            public int Player15 { get; set; }
+            public int NumberPlayer15 { get; set; }
+            public int Player16 { get; set; }
+            public int NumberPlayer16 { get; set; }
+            public int Emblem1 { get; set; }
+            public int Emblem2 { get; set; }
+            public int Emblem3 { get; set; }
+            public int DifferenceLevelPlayer1 { get; set; }
+            public int DifferenceLevelPlayer2 { get; set; }
+            public int DifferenceLevelPlayer3 { get; set; }
+            public int DifferenceLevelPlayer4 { get; set; }
+            public int DifferenceLevelPlayer5 { get; set; }
+            public int DifferenceLevelPlayer6 { get; set; }
+            public int DifferenceLevelPlayer7 { get; set; }
+            public int DifferenceLevelPlayer8 { get; set; }
+            public int DifferenceLevelPlayer9 { get; set; }
+            public int DifferenceLevelPlayer10 { get; set; }
+            public int DifferenceLevelPlayer11 { get; set; }
+            public int DifferenceLevelPlayer12 { get; set; }
+            public int DifferenceLevelPlayer13 { get; set; }
+            public int DifferenceLevelPlayer14 { get; set; }
+            public int DifferenceLevelPlayer15 { get; set; }
+            public int DifferenceLevelPlayer16 { get; set; }
+        }
+
+        public class EncountTeamInfo : IEncountTeamInfo
+        {
+            public int TeamConfigID { get; set; }
+            public int NameID { get; set; }
+            public int Player1 { get; set; }
+            public int NumberPlayer1 { get; set; }
+            public int Player2 { get; set; }
+            public int NumberPlayer2 { get; set; }
+            public int Player3 { get; set; }
+            public int NumberPlayer3 { get; set; }
+            public int Player4 { get; set; }
+            public int NumberPlayer4 { get; set; }
+            public int Player5 { get; set; }
+            public int NumberPlayer5 { get; set; }
+            public int Emblem1 { get; set; }
+            public int Emblem2 { get; set; }
+            public int Emblem3 { get; set; }
+            public int DifferenceLevelPlayer1 { get; set; }
+            public int DifferenceLevelPlayer2 { get; set; }
+            public int DifferenceLevelPlayer3 { get; set; }
+            public int DifferenceLevelPlayer4 { get; set; }
+            public int DifferenceLevelPlayer5 { get; set; }
+        }
     }
 }

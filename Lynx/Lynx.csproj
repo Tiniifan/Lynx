@@ -257,6 +257,7 @@
     <Compile Include="InazumaEleven\Common\Bodies.cs" />
     <Compile Include="InazumaEleven\Common\CharaTypes.cs" />
     <Compile Include="InazumaEleven\Common\ExperienceCurve.cs" />
+    <Compile Include="InazumaEleven\Common\MatchRestrictions.cs" />
     <Compile Include="InazumaEleven\Common\MovePositions.cs" />
     <Compile Include="InazumaEleven\Common\PlayerPositions.cs" />
     <Compile Include="InazumaEleven\Common\Genders.cs" />
@@ -269,6 +270,10 @@
     <Compile Include="InazumaEleven\Games\IGame.cs" />
     <Compile Include="InazumaEleven\Logic\AvatarGrowthStat.cs" />
     <Compile Include="InazumaEleven\Logic\IRouteConfig.cs" />
+    <Compile Include="InazumaEleven\Logic\ISoccerInfo.cs" />
+    <Compile Include="InazumaEleven\Logic\ITeamConfigInfo.cs" />
+    <Compile Include="InazumaEleven\Logic\ITeamParamInfo.cs" />
+    <Compile Include="InazumaEleven\Logic\Team.cs" />
     <Compile Include="InazumaEleven\Logic\UseTimeGrowth.cs" />
     <Compile Include="InazumaEleven\Logic\ICommunityInfo.cs" />
     <Compile Include="InazumaEleven\Logic\IShopConfig.cs" />
