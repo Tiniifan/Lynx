@@ -269,6 +269,7 @@
     <Compile Include="InazumaEleven\Games\GO\GOSupport.cs" />
     <Compile Include="InazumaEleven\Games\IGame.cs" />
     <Compile Include="InazumaEleven\Logic\AvatarGrowthStat.cs" />
+    <Compile Include="InazumaEleven\Logic\ChallengeRoute.cs" />
     <Compile Include="InazumaEleven\Logic\IRouteConfig.cs" />
     <Compile Include="InazumaEleven\Logic\ISoccerInfo.cs" />
     <Compile Include="InazumaEleven\Logic\ITeamConfigInfo.cs" />

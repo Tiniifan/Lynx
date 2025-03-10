@@ -21,6 +21,8 @@ using DocumentFormat.OpenXml.Drawing.Charts;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Font = System.Drawing.Font;
 using Color = System.Drawing.Color;
+using ChallengeRouteClass = Lynx.InazumaEleven.Logic.ChallengeRoute;
+using System.Text.RegularExpressions;
 
 namespace Lynx.Forms.ChallengeRoute
 {
@@ -32,15 +34,13 @@ namespace Lynx.Forms.ChallengeRoute
 
         private const int Columns = 10;
 
-        private Dictionary<string, List<IRouteConfig>> ChallengeRoutes;
+        private List<ChallengeRouteClass> ChallengeRoutes;
 
-        private Dictionary<string, int> ChallengeRoutesNamesDict;
+        ChallengeRouteClass SelectedChallengeRoutes;
 
-        List<IRouteConfig> SelectedChallengeRoutes;
+        IRouteConfig SelectedCell;
 
         private List<Team> Teams;
-
-        private Dictionary<int, Team> TeamsNameDict;
 
         private List<IItemConfig> ItemsConfigs;
 
@@ -60,6 +60,30 @@ namespace Lynx.Forms.ChallengeRoute
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             InitializeComponent();
             InitializeChallengeRouteResource();
+        }
+
+        private bool SameSkillID(int id, string name)
+        {
+            int crc32 = unchecked((int)Crc32.Compute(Encoding.UTF8.GetBytes(name)));
+            return id == crc32;
+        }
+
+        private string FindSoccerID(int soccerID)
+        {
+            for (int i = 0; i < 10000; i++)
+            {
+                string prefix = "";
+
+                string trySoccerID = $"btl{prefix}{i.ToString().PadLeft(4, '0')}";
+
+                if (SameSkillID(soccerID, trySoccerID))
+                {
+                    return trySoccerID;
+                }
+            }
+
+            // Not found
+            return "btl0000";
         }
 
         private Dictionary<int, string> GetNames(IItemConfig[] items)
@@ -89,18 +113,15 @@ namespace Lynx.Forms.ChallengeRoute
                 }
 
                 // Add the name to the output dictionary with the SkillHash as the key
-                output[item.NameID] = name;
+                output[item.ItemID] = name;
                 index++;
             }
 
             return output;
         }
 
-        private Dictionary<int, Team> GetNames(Team[] teams)
+        private void GetNames(Team[] teams)
         {
-            Dictionary<int, Team> output = new Dictionary<int, Team>();
-            Dictionary<string, int> nameCounts = new Dictionary<string, int>();
-
             int index = 0;
             foreach (var team in teams)
             {
@@ -109,25 +130,12 @@ namespace Lynx.Forms.ChallengeRoute
                     ? " "
                     : TeamText.Nouns.TryGetValue(team.NameID, out var noun) && noun.Strings.Count > 0
                         ? noun.Strings[0].Text
-                        : $"Item {index}";
+                        : $"Team {index}";
 
-                // If the name already exists in the dictionary, increment the counter and add the suffix
-                if (nameCounts.ContainsKey(name))
-                {
-                    nameCounts[name]++;
-                    name += $" ({nameCounts[name]})";
-                }
-                else
-                {
-                    nameCounts[name] = 1;
-                }
 
-                team.Name = name;
-                output[team.ID] = team;
+                team.Name = $"{name} ({FindSoccerID(team.ID)})";
                 index++;
             }
-
-            return output;
         }
 
         private void InitializeChallengeRouteResource()
@@ -160,27 +168,26 @@ namespace Lynx.Forms.ChallengeRoute
                     var storyTeam = storyTeams.FirstOrDefault(st => st.TeamConfigID == teamParam.TeamConfigID);
                     if (storyTeam != null)
                     {
-                        return new Team(soccer.SoccerID, storyTeam.Emblem2, storyTeam.NameID);
+                        return new Team(soccer.SoccerID, storyTeam.Emblem2, storyTeam.NameID, teamParam.Level);
                     }
 
                     // Chercher TeamConfigID dans EncountTeams
                     var encountTeam = encountTeams.FirstOrDefault(et => et.TeamConfigID == teamParam.TeamConfigID);
                     if (encountTeam != null)
                     {
-                        return new Team(soccer.SoccerID, encountTeam.Emblem2, encountTeam.NameID);
+                        return new Team(soccer.SoccerID, encountTeam.Emblem2, encountTeam.NameID, teamParam.Level);
                     }
                 }
 
                 // Si aucune correspondance trouvée, Emblem = -1
-                return new Team(soccer.SoccerID, -1, 0);
+                return new Team(soccer.SoccerID, -1, 0, 0);
 
             }).ToList();
-            TeamsNameDict = GetNames(Teams.ToArray());
+            GetNames(Teams.ToArray());
 
             // initialise data
             routeListBox.Items.Clear();
-            ChallengeRoutes = new Dictionary<string, List<IRouteConfig>>();
-            ChallengeRoutesNamesDict = new Dictionary<string, int>();
+            ChallengeRoutes = new List<ChallengeRouteClass>();
 
             // Get all routes files
             GameSupports.GameFile soccerFolder = GameOpened.Files["soccer"];
@@ -202,8 +209,7 @@ namespace Lynx.Forms.ChallengeRoute
 
                     index++;
 
-                    ChallengeRoutes[file] = route.Item1.ToList();
-                    ChallengeRoutesNamesDict[file] = route.Item2;
+                    ChallengeRoutes.Add(new ChallengeRouteClass(file, route.Item2, route.Item1.ToList()));
 
                     routeListBox.Items.Add(name);
                 }
@@ -212,7 +218,7 @@ namespace Lynx.Forms.ChallengeRoute
 
         private void DrawCell(int cellnum, Graphics g, Font font, Brush textBrush, StringFormat format, int col, int row, int xOffset, int yOffset, int rowOffset, int colWidth, int HexSize, List<(int, int)> cellPositions)
         {
-            IRouteConfig cell = SelectedChallengeRoutes.FirstOrDefault(route => route.CellNum == cellnum);
+            IRouteConfig cell = SelectedChallengeRoutes.Cells.FirstOrDefault(route => route.CellNum == cellnum);
 
             int x = col * colWidth + 10 + xOffset;
             int y = row * 2 * rowOffset + ((col % 2 == 0) ? rowOffset : 0) + 10 + yOffset;
@@ -304,7 +310,52 @@ namespace Lynx.Forms.ChallengeRoute
             }
         }
 
-        private void previewPictureBox_Paint(object sender, PaintEventArgs e)
+        private void FillCellFlatComboBox()
+        {
+            // Clear existing items
+            cellFlatComboBox.Items.Clear();
+
+            // Trier les cellules par CellNum croissant
+            var sortedCells = SelectedChallengeRoutes.Cells.OrderBy(cell => cell.CellNum);
+
+            // Iterate over sorted challenge route cells
+            foreach (var cell in sortedCells)
+            {
+                string cellname = $"Cell {cell.CellNum} - ";
+
+                switch (cell.CellType)
+                {
+                    case 1:
+                        cellname += "Start";
+                        break;
+                    case 2:
+                        var team = Teams.FirstOrDefault(x => x.ID == cell.ContentID);
+                        cellname += team != null
+                            ? $"VS {team.Name}"
+                            : "VS Unknown Team";
+                        break;
+                    case 3:
+                    case 4:
+                        cellname += ItemsNamesDict.ContainsKey(cell.ContentID)
+                            ? $"Get {ItemsNamesDict[cell.ContentID]}"
+                            : "VS Unknown Item";
+                        break;
+                    default:
+                        cellname += "None";
+                        break;
+                }
+
+                cellFlatComboBox.Items.Add(cellname);
+            }
+        }
+
+        public static int GetCellNumber(string input)
+        {
+            Match match = Regex.Match(input, @"\bCell\s+(\d+)\b", RegexOptions.IgnoreCase);
+            return match.Success ? int.Parse(match.Groups[1].Value) : -1;
+        }
+
+        private void PreviewPictureBox_Paint(object sender, PaintEventArgs e)
         {
             if (routeListBox.SelectedIndex == -1)
                 return;
@@ -369,7 +420,7 @@ namespace Lynx.Forms.ChallengeRoute
             }
 
             // Draw lines between cells based on the links in SelectedChallengeRoutes
-            foreach (var route in SelectedChallengeRoutes)
+            foreach (var route in SelectedChallengeRoutes.Cells)
             {
                 (int, int) cellPosition = cellPositions[route.CellNum];
 
@@ -387,12 +438,56 @@ namespace Lynx.Forms.ChallengeRoute
             }
         }
 
-        private void routeListBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void RouteListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (routeListBox.SelectedIndex != -1)
+            if (routeListBox.SelectedIndex == -1) return;
+
+            informationGroupBox.Enabled = false;
+            linkGroupBox.Enabled = false;
+            restrictionGroupBox.Enabled = false;
+            conditionGroupBox.Enabled = false;
+
+            SelectedChallengeRoutes = ChallengeRoutes[routeListBox.SelectedIndex];
+            previewPictureBox.Invalidate();
+
+            nameTextBox.Text = routeListBox.SelectedItem.ToString();
+
+            // fill element in cell flat combobox
+            FillCellFlatComboBox();
+
+            if (cellFlatComboBox.Items.Count > 0)
             {
-                SelectedChallengeRoutes = ChallengeRoutes.ElementAt(routeListBox.SelectedIndex).Value;
-                previewPictureBox.Invalidate();
+                cellFlatComboBox.SelectedIndex = 0;
+            }
+
+            challengeRouteGroupBox.Enabled = true;
+        }
+
+        private void CellFlatComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cellFlatComboBox.SelectedIndex == -1) return;
+
+            int cellNumber = GetCellNumber(cellFlatComboBox.SelectedItem.ToString());
+
+            if (cellNumber != -1)
+            {
+                SelectedCell = SelectedChallengeRoutes.Cells.FirstOrDefault(x => x.CellNum == cellNumber);
+
+                if (SelectedCell != null)
+                {
+                    cellNumberFlatNumericUpDown.Value = SelectedCell.CellNum;
+                    cellFlagFlatNumericUpDown.Value = SelectedCell.Flag;
+                    cellTypeFlatComboBox.SelectedIndex = SelectedCell.CellType;
+                    matchFlatComboBox.SelectedIndex = SelectedCell.MatchRestriction;
+                    textLockTextBox.Text = SelectedCell.MatchTextLock;
+                    mapTextBox.Text = SelectedCell.Map;
+
+                    informationGroupBox.Enabled = true;
+                    linkGroupBox.Enabled = true;
+                    restrictionGroupBox.Enabled = true;
+                    conditionGroupBox.Enabled = true;
+                    conditionGroupBox.Enabled = true;
+                }
             }
         }
     }

@@ -908,7 +908,7 @@ namespace Lynx.InazumaEleven.Games.GO
                     return itemconfigFile.Entries
                         .Where(x => x.GetName() == "ITEM_AVATAR_BEGIN")
                         .SelectMany(x => x.Children)
-                        .Select(x => x.ToClass<GOSupport.ItemConfig>())
+                        .Select(x => x.ToClass<GOSupport.ItemConfigAvatar>())
                         .ToArray();
                 case "director":
                     return itemconfigFile.Entries
@@ -917,12 +917,24 @@ namespace Lynx.InazumaEleven.Games.GO
                         .Select(x => x.ToClass<GOSupport.ItemConfig>())
                         .ToArray();
                 case "all":
-                    string[] itemTypes = { "ITEM_EQUIPMENT_BEGIN", "ITEM_CONSUME_BEGIN", "ITEM_IMPORTANT_BEGIN", "ITEM_UNIFORM_BEGIN", "ITEM_KIZUNAX_BEGIN", "ITEM_AVATAR_BEGIN", "ITEM_DIRECTOR_BEGIN" };
-                    return itemconfigFile.Entries
-                        .Where(x => itemTypes.Contains(x.GetName()))
+                    string[] itemTypesAvatar = { "ITEM_AVATAR_BEGIN" };
+                    string[] itemTypesOther = { "ITEM_EQUIPMENT_BEGIN", "ITEM_CONSUME_BEGIN", "ITEM_IMPORTANT_BEGIN", "ITEM_UNIFORM_BEGIN", "ITEM_KIZUNAX_BEGIN", "ITEM_DIRECTOR_BEGIN" };
+
+                    var avatarItems = itemconfigFile.Entries
+                        .Where(x => itemTypesAvatar.Contains(x.GetName()))
+                        .SelectMany(x => x.Children)
+                        .Select(x => x.ToClass<GOSupport.ItemConfigAvatar>())
+                        .ToList();
+
+                    var otherItems = itemconfigFile.Entries
+                        .Where(x => itemTypesOther.Contains(x.GetName()))
                         .SelectMany(x => x.Children)
                         .Select(x => x.ToClass<GOSupport.ItemConfig>())
-                        .ToArray();
+                        .ToList();
+
+                    otherItems.AddRange(avatarItems.Select(x => x.ToItemConfig()));
+
+                    return otherItems.ToArray();
                 default:
                     return new GOSupport.ItemConfig[] { };
             }

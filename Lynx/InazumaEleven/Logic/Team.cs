@@ -12,14 +12,16 @@ namespace Lynx.InazumaEleven.Logic
         public int Emblem { get; set; }
         public int NameID { get; set; }
         public string Name { get; set; }
+        public int Level { get; set; }
 
         public Team() { }
 
-        public Team(int id, int emblem, int nameID)
+        public Team(int id, int emblem, int nameID, int level)
         {
             ID = id;
             Emblem = emblem;
             NameID = nameID;
+            Level = level;
         }
     }
 }

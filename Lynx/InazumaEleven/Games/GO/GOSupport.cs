@@ -253,6 +253,25 @@ namespace Lynx.InazumaEleven.Games.GO
             public int DescriptionID { get; set; }
         }
 
+        public class ItemConfigAvatar : IItemConfig
+        {
+            public int ItemID { get; set; }
+            public int ItemNumber { get; set; }
+            public int NameID { get; set; }
+            public int DescriptionID { get; set; }
+
+            // Méthode pour convertir explicitement en ItemConfig
+            public ItemConfig ToItemConfig()
+            {
+                return new ItemConfig
+                {
+                    ItemID = this.ItemID,
+                    NameID = this.NameID,
+                    DescriptionID = this.DescriptionID
+                };
+            }
+        }
+
         public class AvatarTimeGrowth : IAvatarTimeGrowth
         {
             public int Level1 { get; set; }

@@ -29,31 +29,31 @@
         private void InitializeComponent()
         {
             this.previewPictureBox = new System.Windows.Forms.PictureBox();
-            this.fightingSpiritGroupBox = new System.Windows.Forms.GroupBox();
+            this.challengeRouteGroupBox = new System.Windows.Forms.GroupBox();
             this.nameTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.itemGroupBox = new System.Windows.Forms.GroupBox();
             this.deleteButton = new System.Windows.Forms.Button();
             this.addButton = new System.Windows.Forms.Button();
             this.cellFlatComboBox = new Lynx.UI.FlatComboBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.conditionGroupBox = new System.Windows.Forms.GroupBox();
             this.button2 = new System.Windows.Forms.Button();
             this.positionCondLineNumberRTB = new Lynx.UI.LineNumberRTB();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.restrictionGroupBox = new System.Windows.Forms.GroupBox();
             this.mapTextBox = new System.Windows.Forms.TextBox();
             this.textLockTextBox = new System.Windows.Forms.TextBox();
             this.matchFlatComboBox = new Lynx.UI.FlatComboBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.linkGroupBox = new System.Windows.Forms.GroupBox();
             this.cellLinkFlatComboBox2 = new Lynx.UI.FlatComboBox();
             this.cellLinkFlatComboBox1 = new Lynx.UI.FlatComboBox();
             this.cellLinkFlatComboBo3 = new Lynx.UI.FlatComboBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.informationGroupBox = new System.Windows.Forms.GroupBox();
             this.cellContentFlatComboBox = new Lynx.UI.FlatComboBox();
             this.cellTypeFlatComboBox = new Lynx.UI.FlatComboBox();
             this.label18 = new System.Windows.Forms.Label();
@@ -64,12 +64,12 @@
             this.label7 = new System.Windows.Forms.Label();
             this.routeListBox = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.previewPictureBox)).BeginInit();
-            this.fightingSpiritGroupBox.SuspendLayout();
+            this.challengeRouteGroupBox.SuspendLayout();
             this.itemGroupBox.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.conditionGroupBox.SuspendLayout();
+            this.restrictionGroupBox.SuspendLayout();
+            this.linkGroupBox.SuspendLayout();
+            this.informationGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cellNumberFlatNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cellFlagFlatNumericUpDown)).BeginInit();
             this.SuspendLayout();
@@ -82,21 +82,21 @@
             this.previewPictureBox.Size = new System.Drawing.Size(496, 200);
             this.previewPictureBox.TabIndex = 0;
             this.previewPictureBox.TabStop = false;
-            this.previewPictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.previewPictureBox_Paint);
+            this.previewPictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.PreviewPictureBox_Paint);
             // 
-            // fightingSpiritGroupBox
+            // challengeRouteGroupBox
             // 
-            this.fightingSpiritGroupBox.Controls.Add(this.nameTextBox);
-            this.fightingSpiritGroupBox.Controls.Add(this.label1);
-            this.fightingSpiritGroupBox.Controls.Add(this.itemGroupBox);
-            this.fightingSpiritGroupBox.Enabled = false;
-            this.fightingSpiritGroupBox.ForeColor = System.Drawing.Color.White;
-            this.fightingSpiritGroupBox.Location = new System.Drawing.Point(514, 7);
-            this.fightingSpiritGroupBox.Name = "fightingSpiritGroupBox";
-            this.fightingSpiritGroupBox.Size = new System.Drawing.Size(565, 586);
-            this.fightingSpiritGroupBox.TabIndex = 277;
-            this.fightingSpiritGroupBox.TabStop = false;
-            this.fightingSpiritGroupBox.Text = "Challenge Route";
+            this.challengeRouteGroupBox.Controls.Add(this.nameTextBox);
+            this.challengeRouteGroupBox.Controls.Add(this.label1);
+            this.challengeRouteGroupBox.Controls.Add(this.itemGroupBox);
+            this.challengeRouteGroupBox.Enabled = false;
+            this.challengeRouteGroupBox.ForeColor = System.Drawing.Color.White;
+            this.challengeRouteGroupBox.Location = new System.Drawing.Point(514, 7);
+            this.challengeRouteGroupBox.Name = "challengeRouteGroupBox";
+            this.challengeRouteGroupBox.Size = new System.Drawing.Size(565, 586);
+            this.challengeRouteGroupBox.TabIndex = 277;
+            this.challengeRouteGroupBox.TabStop = false;
+            this.challengeRouteGroupBox.Text = "Challenge Route";
             // 
             // nameTextBox
             // 
@@ -105,6 +105,7 @@
             this.nameTextBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.nameTextBox.Location = new System.Drawing.Point(53, 25);
             this.nameTextBox.Name = "nameTextBox";
+            this.nameTextBox.ReadOnly = true;
             this.nameTextBox.Size = new System.Drawing.Size(499, 13);
             this.nameTextBox.TabIndex = 301;
             // 
@@ -123,10 +124,10 @@
             this.itemGroupBox.Controls.Add(this.deleteButton);
             this.itemGroupBox.Controls.Add(this.addButton);
             this.itemGroupBox.Controls.Add(this.cellFlatComboBox);
-            this.itemGroupBox.Controls.Add(this.groupBox4);
-            this.itemGroupBox.Controls.Add(this.groupBox3);
-            this.itemGroupBox.Controls.Add(this.groupBox2);
-            this.itemGroupBox.Controls.Add(this.groupBox1);
+            this.itemGroupBox.Controls.Add(this.conditionGroupBox);
+            this.itemGroupBox.Controls.Add(this.restrictionGroupBox);
+            this.itemGroupBox.Controls.Add(this.linkGroupBox);
+            this.itemGroupBox.Controls.Add(this.informationGroupBox);
             this.itemGroupBox.ForeColor = System.Drawing.Color.White;
             this.itemGroupBox.Location = new System.Drawing.Point(15, 50);
             this.itemGroupBox.Name = "itemGroupBox";
@@ -168,18 +169,19 @@
             this.cellFlatComboBox.Name = "cellFlatComboBox";
             this.cellFlatComboBox.Size = new System.Drawing.Size(254, 21);
             this.cellFlatComboBox.TabIndex = 300;
+            this.cellFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.CellFlatComboBox_SelectedIndexChanged);
             // 
-            // groupBox4
+            // conditionGroupBox
             // 
-            this.groupBox4.Controls.Add(this.button2);
-            this.groupBox4.Controls.Add(this.positionCondLineNumberRTB);
-            this.groupBox4.ForeColor = System.Drawing.Color.White;
-            this.groupBox4.Location = new System.Drawing.Point(6, 329);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(522, 191);
-            this.groupBox4.TabIndex = 298;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Condition";
+            this.conditionGroupBox.Controls.Add(this.button2);
+            this.conditionGroupBox.Controls.Add(this.positionCondLineNumberRTB);
+            this.conditionGroupBox.ForeColor = System.Drawing.Color.White;
+            this.conditionGroupBox.Location = new System.Drawing.Point(6, 329);
+            this.conditionGroupBox.Name = "conditionGroupBox";
+            this.conditionGroupBox.Size = new System.Drawing.Size(522, 191);
+            this.conditionGroupBox.TabIndex = 298;
+            this.conditionGroupBox.TabStop = false;
+            this.conditionGroupBox.Text = "Condition";
             // 
             // button2
             // 
@@ -204,21 +206,21 @@
             this.positionCondLineNumberRTB.Size = new System.Drawing.Size(503, 133);
             this.positionCondLineNumberRTB.TabIndex = 269;
             // 
-            // groupBox3
+            // restrictionGroupBox
             // 
-            this.groupBox3.Controls.Add(this.mapTextBox);
-            this.groupBox3.Controls.Add(this.textLockTextBox);
-            this.groupBox3.Controls.Add(this.matchFlatComboBox);
-            this.groupBox3.Controls.Add(this.label15);
-            this.groupBox3.Controls.Add(this.label19);
-            this.groupBox3.Controls.Add(this.label20);
-            this.groupBox3.ForeColor = System.Drawing.Color.White;
-            this.groupBox3.Location = new System.Drawing.Point(6, 237);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(522, 86);
-            this.groupBox3.TabIndex = 297;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Restriction";
+            this.restrictionGroupBox.Controls.Add(this.mapTextBox);
+            this.restrictionGroupBox.Controls.Add(this.textLockTextBox);
+            this.restrictionGroupBox.Controls.Add(this.matchFlatComboBox);
+            this.restrictionGroupBox.Controls.Add(this.label15);
+            this.restrictionGroupBox.Controls.Add(this.label19);
+            this.restrictionGroupBox.Controls.Add(this.label20);
+            this.restrictionGroupBox.ForeColor = System.Drawing.Color.White;
+            this.restrictionGroupBox.Location = new System.Drawing.Point(6, 237);
+            this.restrictionGroupBox.Name = "restrictionGroupBox";
+            this.restrictionGroupBox.Size = new System.Drawing.Size(522, 86);
+            this.restrictionGroupBox.TabIndex = 297;
+            this.restrictionGroupBox.TabStop = false;
+            this.restrictionGroupBox.Text = "Restriction";
             // 
             // mapTextBox
             // 
@@ -282,21 +284,21 @@
             this.label20.TabIndex = 291;
             this.label20.Text = "Text lock";
             // 
-            // groupBox2
+            // linkGroupBox
             // 
-            this.groupBox2.Controls.Add(this.cellLinkFlatComboBox2);
-            this.groupBox2.Controls.Add(this.cellLinkFlatComboBox1);
-            this.groupBox2.Controls.Add(this.cellLinkFlatComboBo3);
-            this.groupBox2.Controls.Add(this.label12);
-            this.groupBox2.Controls.Add(this.label16);
-            this.groupBox2.Controls.Add(this.label17);
-            this.groupBox2.ForeColor = System.Drawing.Color.White;
-            this.groupBox2.Location = new System.Drawing.Point(6, 145);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(522, 86);
-            this.groupBox2.TabIndex = 296;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Link";
+            this.linkGroupBox.Controls.Add(this.cellLinkFlatComboBox2);
+            this.linkGroupBox.Controls.Add(this.cellLinkFlatComboBox1);
+            this.linkGroupBox.Controls.Add(this.cellLinkFlatComboBo3);
+            this.linkGroupBox.Controls.Add(this.label12);
+            this.linkGroupBox.Controls.Add(this.label16);
+            this.linkGroupBox.Controls.Add(this.label17);
+            this.linkGroupBox.ForeColor = System.Drawing.Color.White;
+            this.linkGroupBox.Location = new System.Drawing.Point(6, 145);
+            this.linkGroupBox.Name = "linkGroupBox";
+            this.linkGroupBox.Size = new System.Drawing.Size(522, 86);
+            this.linkGroupBox.TabIndex = 296;
+            this.linkGroupBox.TabStop = false;
+            this.linkGroupBox.Text = "Link";
             // 
             // cellLinkFlatComboBox2
             // 
@@ -364,23 +366,23 @@
             this.label17.TabIndex = 291;
             this.label17.Text = "Cell Link 2";
             // 
-            // groupBox1
+            // informationGroupBox
             // 
-            this.groupBox1.Controls.Add(this.cellContentFlatComboBox);
-            this.groupBox1.Controls.Add(this.cellTypeFlatComboBox);
-            this.groupBox1.Controls.Add(this.label18);
-            this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.cellNumberFlatNumericUpDown);
-            this.groupBox1.Controls.Add(this.cellFlagFlatNumericUpDown);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.ForeColor = System.Drawing.Color.White;
-            this.groupBox1.Location = new System.Drawing.Point(6, 53);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(522, 86);
-            this.groupBox1.TabIndex = 295;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Information";
+            this.informationGroupBox.Controls.Add(this.cellContentFlatComboBox);
+            this.informationGroupBox.Controls.Add(this.cellTypeFlatComboBox);
+            this.informationGroupBox.Controls.Add(this.label18);
+            this.informationGroupBox.Controls.Add(this.label6);
+            this.informationGroupBox.Controls.Add(this.cellNumberFlatNumericUpDown);
+            this.informationGroupBox.Controls.Add(this.cellFlagFlatNumericUpDown);
+            this.informationGroupBox.Controls.Add(this.label2);
+            this.informationGroupBox.Controls.Add(this.label7);
+            this.informationGroupBox.ForeColor = System.Drawing.Color.White;
+            this.informationGroupBox.Location = new System.Drawing.Point(6, 53);
+            this.informationGroupBox.Name = "informationGroupBox";
+            this.informationGroupBox.Size = new System.Drawing.Size(522, 86);
+            this.informationGroupBox.TabIndex = 295;
+            this.informationGroupBox.TabStop = false;
+            this.informationGroupBox.Text = "Information";
             // 
             // cellContentFlatComboBox
             // 
@@ -505,7 +507,7 @@
             this.routeListBox.Name = "routeListBox";
             this.routeListBox.Size = new System.Drawing.Size(496, 368);
             this.routeListBox.TabIndex = 280;
-            this.routeListBox.SelectedIndexChanged += new System.EventHandler(this.routeListBox_SelectedIndexChanged);
+            this.routeListBox.SelectedIndexChanged += new System.EventHandler(this.RouteListBox_SelectedIndexChanged);
             // 
             // ChallengeRouteWindow
             // 
@@ -514,21 +516,21 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
             this.ClientSize = new System.Drawing.Size(1094, 604);
             this.Controls.Add(this.routeListBox);
-            this.Controls.Add(this.fightingSpiritGroupBox);
+            this.Controls.Add(this.challengeRouteGroupBox);
             this.Controls.Add(this.previewPictureBox);
             this.Name = "ChallengeRouteWindow";
             this.Text = "ChallengeRouteWindow";
             ((System.ComponentModel.ISupportInitialize)(this.previewPictureBox)).EndInit();
-            this.fightingSpiritGroupBox.ResumeLayout(false);
-            this.fightingSpiritGroupBox.PerformLayout();
+            this.challengeRouteGroupBox.ResumeLayout(false);
+            this.challengeRouteGroupBox.PerformLayout();
             this.itemGroupBox.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.conditionGroupBox.ResumeLayout(false);
+            this.restrictionGroupBox.ResumeLayout(false);
+            this.restrictionGroupBox.PerformLayout();
+            this.linkGroupBox.ResumeLayout(false);
+            this.linkGroupBox.PerformLayout();
+            this.informationGroupBox.ResumeLayout(false);
+            this.informationGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cellNumberFlatNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cellFlagFlatNumericUpDown)).EndInit();
             this.ResumeLayout(false);
@@ -538,7 +540,7 @@
         #endregion
 
         private System.Windows.Forms.PictureBox previewPictureBox;
-        private System.Windows.Forms.GroupBox fightingSpiritGroupBox;
+        private System.Windows.Forms.GroupBox challengeRouteGroupBox;
         private System.Windows.Forms.GroupBox itemGroupBox;
         private UI.FlatNumericUpDown cellNumberFlatNumericUpDown;
         private System.Windows.Forms.Label label18;
@@ -546,13 +548,13 @@
         private System.Windows.Forms.Label label6;
         private UI.FlatNumericUpDown cellFlagFlatNumericUpDown;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox informationGroupBox;
         private UI.FlatComboBox cellTypeFlatComboBox;
-        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox restrictionGroupBox;
         private UI.FlatComboBox matchFlatComboBox;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox linkGroupBox;
         private UI.FlatComboBox cellLinkFlatComboBox2;
         private UI.FlatComboBox cellLinkFlatComboBox1;
         private UI.FlatComboBox cellLinkFlatComboBo3;
@@ -562,7 +564,7 @@
         private UI.FlatComboBox cellContentFlatComboBox;
         private System.Windows.Forms.TextBox textLockTextBox;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.GroupBox conditionGroupBox;
         private System.Windows.Forms.Button button2;
         private UI.LineNumberRTB positionCondLineNumberRTB;
         private System.Windows.Forms.TextBox mapTextBox;
