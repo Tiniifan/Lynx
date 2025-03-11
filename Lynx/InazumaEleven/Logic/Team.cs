@@ -23,5 +23,10 @@ namespace Lynx.InazumaEleven.Logic
             NameID = nameID;
             Level = level;
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

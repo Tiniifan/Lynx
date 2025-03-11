@@ -23,6 +23,7 @@ using Font = System.Drawing.Font;
 using Color = System.Drawing.Color;
 using ChallengeRouteClass = Lynx.InazumaEleven.Logic.ChallengeRoute;
 using System.Text.RegularExpressions;
+using Lynx.Level5.Save.Logic.Competition_Route;
 
 namespace Lynx.Forms.ChallengeRoute
 {
@@ -239,10 +240,18 @@ namespace Lynx.Forms.ChallengeRoute
 
             if (cell != null)
             {
+                // Draw hex border
+                if (SelectedCell != null && cellnum == SelectedCell.CellNum)
+                {
+                    g.DrawPolygon(Pens.Red, points);
+                } else
+                {
+                    g.DrawPolygon(Pens.White, points);
+                }
+
+
                 if (cell.CellType == 0x01)
                 {
-                    // Dessiner l'hexagone en rouge avec le texte "Start"
-                    g.DrawPolygon(Pens.White, points);   // Contour blanc
                     g.DrawString("Start", font, Brushes.Red, x, y, format); // Texte en blanc
                 }
                 else if (cell.CellType == 0x02)
@@ -273,12 +282,11 @@ namespace Lynx.Forms.ChallengeRoute
                         if (emblemPicture != null)
                         {
                             g.DrawImage(emblemPicture, x - HexSize / 2, y - HexSize / 2, HexSize, HexSize);
-                            g.DrawPolygon(Pens.White, points);  // Contour blanc
+                            
                         }
                         else
                         {
                             // Sinon, dessiner l'hexagone en vert avec le texte "Team"
-                            g.DrawPolygon(Pens.White, points);  // Contour blanc
                             g.DrawString("Team", font, Brushes.Green, x, y, format);  // Texte en blanc
                         }
                     }
@@ -286,19 +294,16 @@ namespace Lynx.Forms.ChallengeRoute
                 else if (cell.CellType == 0x03)
                 {
                     // Dessiner l'hexagone en bleu avec le texte "Chest"
-                    g.DrawPolygon(Pens.White, points);  // Contour blanc
                     g.DrawString("Chest", font, Brushes.Blue, x, y, format);  // Texte en blanc
                 }
                 else if (cell.CellType == 0x04)
                 {
                     // Dessiner l'hexagone en jaune avec le texte "Chest"
-                    g.DrawPolygon(Pens.White, points);  // Contour blanc
                     g.DrawString("Chest", font, Brushes.Yellow, x, y, format);  // Texte en blanc
                 }
                 else
                 {
                     // Dessiner l'hexagone de base sans background, juste le texte en blanc
-                    g.DrawPolygon(Pens.White, points);  // Contour blanc
                     g.DrawString(cellnum.ToString(), font, Brushes.White, x, y, format);  // Texte en blanc
                 }
             }
@@ -314,6 +319,9 @@ namespace Lynx.Forms.ChallengeRoute
         {
             // Clear existing items
             cellFlatComboBox.Items.Clear();
+            cellLinkFlatComboBox1.Items.Clear();
+            cellLinkFlatComboBox2.Items.Clear();
+            cellLinkFlatComboBox3.Items.Clear();
 
             // Trier les cellules par CellNum croissant
             var sortedCells = SelectedChallengeRoutes.Cells.OrderBy(cell => cell.CellNum);
@@ -347,12 +355,37 @@ namespace Lynx.Forms.ChallengeRoute
 
                 cellFlatComboBox.Items.Add(cellname);
             }
+
+            cellLinkFlatComboBox1.Items.AddRange(cellFlatComboBox.Items.Cast<Object>().ToArray());
+            cellLinkFlatComboBox2.Items.AddRange(cellFlatComboBox.Items.Cast<Object>().ToArray());
+            cellLinkFlatComboBox3.Items.AddRange(cellFlatComboBox.Items.Cast<Object>().ToArray());
         }
 
         public static int GetCellNumber(string input)
         {
             Match match = Regex.Match(input, @"\bCell\s+(\d+)\b", RegexOptions.IgnoreCase);
             return match.Success ? int.Parse(match.Groups[1].Value) : -1;
+        }
+
+        private void SelectCellByNumber(ComboBox comboBox, int cellnum)
+        {
+            // Recherche de l'index de l'élément contenant "Cell X -"
+            int index = -1;
+            for (int i = 0; i < comboBox.Items.Count; i++)
+            {
+                if (comboBox.Items[i].ToString().StartsWith($"Cell {cellnum} -"))
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            // Sélection de l'élément trouvé, sinon désélectionner
+            comboBox.SelectedIndex = index;
+            if (index == -1)
+            {
+                comboBox.Text = "";
+            }
         }
 
         private void PreviewPictureBox_Paint(object sender, PaintEventArgs e)
@@ -482,11 +515,61 @@ namespace Lynx.Forms.ChallengeRoute
                     textLockTextBox.Text = SelectedCell.MatchTextLock;
                     mapTextBox.Text = SelectedCell.Map;
 
+                    // Clear cell content
+                    cellContentFlatComboBox.Items.Clear();
+                    cellContentFlatComboBox.Enabled = true;
+
+                    if (SelectedCell.CellType == 2)
+                    {
+                        // team
+                        cellContentFlatComboBox.Items.AddRange(Teams.ToArray());
+
+                        var team = Teams.FirstOrDefault(x => x.ID == SelectedCell.ContentID);
+
+                        if (team != null)
+                        {
+                            cellContentFlatComboBox.SelectedItem = team;
+                        } else
+                        {
+
+                        }
+                    } 
+                    else if (SelectedCell.CellNum == 3 || SelectedCell.CellNum == 4)
+                    {
+                        // item
+                        cellContentFlatComboBox.Items.AddRange(ItemsNamesDict.Values.ToArray());
+
+                        var item = ItemsConfigs.FirstOrDefault(x => x.ItemID == SelectedCell.ContentID);
+
+                        if (item != null)
+                        {
+                            cellContentFlatComboBox.SelectedIndex = ItemsConfigs.IndexOf(item);
+                        }
+                        else
+                        {
+
+                        }
+                    } 
+                    else
+                    {
+                        SelectedCell.ContentID = 0x0;
+                        cellContentFlatComboBox.SelectedIndex = -1;
+                        cellContentFlatComboBox.Text = "";
+                        cellContentFlatComboBox.Enabled = false;
+                    }
+
+                    // links
+                    SelectCellByNumber(cellLinkFlatComboBox1, SelectedCell.CellLink1);
+                    SelectCellByNumber(cellLinkFlatComboBox2, SelectedCell.CellLink2);
+                    SelectCellByNumber(cellLinkFlatComboBox3, SelectedCell.CellLink3);
+
                     informationGroupBox.Enabled = true;
                     linkGroupBox.Enabled = true;
                     restrictionGroupBox.Enabled = true;
                     conditionGroupBox.Enabled = true;
                     conditionGroupBox.Enabled = true;
+
+                    previewPictureBox.Invalidate();
                 }
             }
         }

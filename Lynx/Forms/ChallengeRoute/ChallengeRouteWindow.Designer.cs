@@ -49,7 +49,7 @@
             this.linkGroupBox = new System.Windows.Forms.GroupBox();
             this.cellLinkFlatComboBox2 = new Lynx.UI.FlatComboBox();
             this.cellLinkFlatComboBox1 = new Lynx.UI.FlatComboBox();
-            this.cellLinkFlatComboBo3 = new Lynx.UI.FlatComboBox();
+            this.cellLinkFlatComboBox3 = new Lynx.UI.FlatComboBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
@@ -288,7 +288,7 @@
             // 
             this.linkGroupBox.Controls.Add(this.cellLinkFlatComboBox2);
             this.linkGroupBox.Controls.Add(this.cellLinkFlatComboBox1);
-            this.linkGroupBox.Controls.Add(this.cellLinkFlatComboBo3);
+            this.linkGroupBox.Controls.Add(this.cellLinkFlatComboBox3);
             this.linkGroupBox.Controls.Add(this.label12);
             this.linkGroupBox.Controls.Add(this.label16);
             this.linkGroupBox.Controls.Add(this.label17);
@@ -324,17 +324,17 @@
             this.cellLinkFlatComboBox1.Size = new System.Drawing.Size(152, 21);
             this.cellLinkFlatComboBox1.TabIndex = 298;
             // 
-            // cellLinkFlatComboBo3
+            // cellLinkFlatComboBox3
             // 
-            this.cellLinkFlatComboBo3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.cellLinkFlatComboBo3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.cellLinkFlatComboBo3.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.cellLinkFlatComboBo3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.cellLinkFlatComboBo3.FormattingEnabled = true;
-            this.cellLinkFlatComboBo3.Location = new System.Drawing.Point(102, 51);
-            this.cellLinkFlatComboBo3.Name = "cellLinkFlatComboBo3";
-            this.cellLinkFlatComboBo3.Size = new System.Drawing.Size(152, 21);
-            this.cellLinkFlatComboBo3.TabIndex = 296;
+            this.cellLinkFlatComboBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.cellLinkFlatComboBox3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.cellLinkFlatComboBox3.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.cellLinkFlatComboBox3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.cellLinkFlatComboBox3.FormattingEnabled = true;
+            this.cellLinkFlatComboBox3.Location = new System.Drawing.Point(102, 51);
+            this.cellLinkFlatComboBox3.Name = "cellLinkFlatComboBox3";
+            this.cellLinkFlatComboBox3.Size = new System.Drawing.Size(152, 21);
+            this.cellLinkFlatComboBox3.TabIndex = 296;
             // 
             // label12
             // 
@@ -557,7 +557,7 @@
         private System.Windows.Forms.GroupBox linkGroupBox;
         private UI.FlatComboBox cellLinkFlatComboBox2;
         private UI.FlatComboBox cellLinkFlatComboBox1;
-        private UI.FlatComboBox cellLinkFlatComboBo3;
+        private UI.FlatComboBox cellLinkFlatComboBox3;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
