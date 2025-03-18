@@ -119,6 +119,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\ChallengeRoute\AddCellWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ChallengeRoute\AddCellWindow.Designer.cs">
+      <DependentUpon>AddCellWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ChallengeRoute\ChallengeRouteWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -257,6 +263,7 @@
     <Compile Include="InazumaEleven\Common\Bodies.cs" />
     <Compile Include="InazumaEleven\Common\CharaTypes.cs" />
     <Compile Include="InazumaEleven\Common\ExperienceCurve.cs" />
+    <Compile Include="InazumaEleven\Common\ItemTypes.cs" />
     <Compile Include="InazumaEleven\Common\MatchRestrictions.cs" />
     <Compile Include="InazumaEleven\Common\MovePositions.cs" />
     <Compile Include="InazumaEleven\Common\PlayerPositions.cs" />
@@ -374,6 +381,9 @@
     <Compile Include="UI\VSTabControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <EmbeddedResource Include="Forms\ChallengeRoute\AddCellWindow.resx">
+      <DependentUpon>AddCellWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ChallengeRoute\ChallengeRouteWindow.resx">
       <DependentUpon>ChallengeRouteWindow.cs</DependentUpon>
     </EmbeddedResource>

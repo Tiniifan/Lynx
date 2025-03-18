@@ -84,6 +84,8 @@ namespace Lynx.InazumaEleven.Games.GO
                     return new GOSupport.CommunityInfo() as T;
                 case System.Type t when t == typeof(ISkillConfig):
                     return new GOSupport.SkillConfig() as T;
+                case System.Type t when t == typeof(IRouteConfig):
+                    return new GOSupport.RouteConfig() as T;
                 default:
                     return null;
             }
@@ -715,6 +717,10 @@ namespace Lynx.InazumaEleven.Games.GO
         {
             CfgBin routeFile = new CfgBin();
 
+            // Set encoding
+            Encoding shiftJIS = Encoding.GetEncoding("SHIFT-JIS");
+            routeFile.Encoding = shiftJIS;
+
             // Open the route file if it exist
             if (Game.Directory.IsFullPathExists($"/data/res/soccer/{filename}"))
             {
@@ -726,7 +732,7 @@ namespace Lynx.InazumaEleven.Games.GO
                     new List<Variable>() { 
                         new Variable(Level5.Binary.Logic.Type.Int, routes.Count()),
                         new Variable(Level5.Binary.Logic.Type.Int, nameCRC32)
-                    }, Encoding.UTF8, true);
+                    }, shiftJIS, true);
                 
                 // Insert
                 routeFile.Entries.Add(communityHeader);
@@ -739,12 +745,13 @@ namespace Lynx.InazumaEleven.Games.GO
 
             for (int i = 0; i < routes.Count(); i++)
             {
-                Entry newBaseEntry = new Entry("ROUTE_CONFIG_" + i, new List<Variable>(), Encoding.UTF8);
+                Entry newBaseEntry = new Entry("ROUTE_CONFIG_" + i, new List<Variable>(), shiftJIS);
                 newBaseEntry.SetVariablesFromClass(routes[i] as GOSupport.RouteConfig);
                 baseBegin.Children.Add(newBaseEntry);
             }
 
-            Game.Directory.GetFolderFromFullPath("/data/res/soccer").Files[filename].ByteContent = routeFile.Save();
+            Game.Directory.GetFolderFromFullPath("/data/res/soccer").Files[filename].ByteContent = routeFile.SaveWithStrings();
+            // Console.WriteLine(BitConverter.ToString(Game.Directory.GetFolderFromFullPath("/data/res/soccer").Files[filename].ByteContent).Replace("-", ""));
         }
 
         public ISoccerInfo[] GetSoccers()
@@ -896,7 +903,7 @@ namespace Lynx.InazumaEleven.Games.GO
                     return itemconfigFile.Entries
                         .Where(x => x.GetName() == "ITEM_UNIFORM_BEGIN")
                         .SelectMany(x => x.Children)
-                        .Select(x => x.ToClass<GOSupport.ItemConfig>())
+                        .Select(x => x.ToClass<GOSupport.ItemConfigUniform>())
                         .ToArray();
                 case "kizunax":
                     return itemconfigFile.Entries
@@ -914,16 +921,30 @@ namespace Lynx.InazumaEleven.Games.GO
                     return itemconfigFile.Entries
                         .Where(x => x.GetName() == "ITEM_DIRECTOR_BEGIN")
                         .SelectMany(x => x.Children)
-                        .Select(x => x.ToClass<GOSupport.ItemConfig>())
+                        .Select(x => x.ToClass<GOSupport.ItemConfigDirector>())
                         .ToArray();
                 case "all":
                     string[] itemTypesAvatar = { "ITEM_AVATAR_BEGIN" };
-                    string[] itemTypesOther = { "ITEM_EQUIPMENT_BEGIN", "ITEM_CONSUME_BEGIN", "ITEM_IMPORTANT_BEGIN", "ITEM_UNIFORM_BEGIN", "ITEM_KIZUNAX_BEGIN", "ITEM_DIRECTOR_BEGIN" };
+                    string[] itemTypesUniform = { "ITEM_UNIFORM_BEGIN" };
+                    string[] itemTypesDirector = { "ITEM_DIRECTOR_BEGIN" };
+                    string[] itemTypesOther = { "ITEM_EQUIPMENT_BEGIN", "ITEM_CONSUME_BEGIN", "ITEM_IMPORTANT_BEGIN", "ITEM_KIZUNAX_BEGIN"};
 
                     var avatarItems = itemconfigFile.Entries
                         .Where(x => itemTypesAvatar.Contains(x.GetName()))
                         .SelectMany(x => x.Children)
                         .Select(x => x.ToClass<GOSupport.ItemConfigAvatar>())
+                        .ToList();
+
+                    var directorItems = itemconfigFile.Entries
+                        .Where(x => itemTypesDirector.Contains(x.GetName()))
+                        .SelectMany(x => x.Children)
+                        .Select(x => x.ToClass<GOSupport.ItemConfigDirector>())
+                        .ToList();
+
+                    var uniformItems = itemconfigFile.Entries
+                        .Where(x => itemTypesUniform.Contains(x.GetName()))
+                        .SelectMany(x => x.Children)
+                        .Select(x => x.ToClass<GOSupport.ItemConfigUniform>())
                         .ToList();
 
                     var otherItems = itemconfigFile.Entries
@@ -933,6 +954,8 @@ namespace Lynx.InazumaEleven.Games.GO
                         .ToList();
 
                     otherItems.AddRange(avatarItems.Select(x => x.ToItemConfig()));
+                    otherItems.AddRange(directorItems.Select(x => x.ToItemConfig()));
+                    otherItems.AddRange(uniformItems.Select(x => x.ToItemConfig()));
 
                     return otherItems.ToArray();
                 default:

@@ -123,7 +123,8 @@ namespace Lynx.Forms.Home
             "Scripts",
             "Map Editor",
             "Save Editor",
-            "Challenge Route"});
+            "Challenge Route",
+            "Teams"});
             this.featuresListBox.Location = new System.Drawing.Point(6, 19);
             this.featuresListBox.Name = "featuresListBox";
             this.featuresListBox.Size = new System.Drawing.Size(188, 381);

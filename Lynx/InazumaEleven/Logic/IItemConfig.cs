@@ -5,5 +5,7 @@
         int ItemID { get; set; }
         int NameID { get; set; }
         int DescriptionID { get; set; }
+
+        int ItemCategory { get; set; }
     }
 }

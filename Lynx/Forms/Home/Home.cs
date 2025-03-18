@@ -19,6 +19,7 @@ using Lynx.Forms.Scipts;
 using Lynx.Forms.SaveEditor;
 using Lynx.Forms.FightingSpirits;
 using Lynx.Forms.ChallengeRoute;
+using Lynx.Forms.Soccers;
 
 namespace Lynx.Forms.Home
 {
@@ -123,6 +124,10 @@ namespace Lynx.Forms.Home
                 case "Challenge Route":
                     ChallengeRouteWindow challengeRouteWindow = new ChallengeRouteWindow(GameOpened);
                     challengeRouteWindow.ShowDialog();
+                    break;
+                case "Teams":
+                    SoccersWindow soccerWindow = new SoccersWindow(GameOpened);
+                    soccerWindow.ShowDialog();
                     break;
             }
         }

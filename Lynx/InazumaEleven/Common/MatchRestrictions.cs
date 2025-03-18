@@ -9,7 +9,8 @@ namespace Lynx.InazumaEleven.Common
         public static readonly ReadOnlyCollection<string> IEGO = new ReadOnlyCollection<string>(
             new List<string>
             {
-                "No condition",
+                "No condition (Other)",
+                "No condition (Match)",
                 "Win with wind team",
                 "Win with wood team",
                 "Win with fire team",

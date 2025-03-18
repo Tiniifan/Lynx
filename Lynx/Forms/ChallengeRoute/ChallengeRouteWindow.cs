@@ -21,9 +21,17 @@ using DocumentFormat.OpenXml.Drawing.Charts;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Font = System.Drawing.Font;
 using Color = System.Drawing.Color;
+using Control = System.Windows.Forms.Control;
 using ChallengeRouteClass = Lynx.InazumaEleven.Logic.ChallengeRoute;
+using Team = Lynx.InazumaEleven.Logic.Team;
 using System.Text.RegularExpressions;
 using Lynx.Level5.Save.Logic.Competition_Route;
+using Lynx.Level5.Base64;
+using DocumentFormat.OpenXml.Wordprocessing;
+using Lynx.UI;
+using System.Reflection;
+using Lynx.Forms.Characters;
+using Lynx.Level5.Save.Logic;
 
 namespace Lynx.Forms.ChallengeRoute
 {
@@ -34,6 +42,8 @@ namespace Lynx.Forms.ChallengeRoute
         private const int HexSize = 25;
 
         private const int Columns = 10;
+
+        private List<PointF[]> HexPoints = new List<PointF[]>();
 
         private List<ChallengeRouteClass> ChallengeRoutes;
 
@@ -55,12 +65,35 @@ namespace Lynx.Forms.ChallengeRoute
 
         private TreeNode RightClickNode;
 
+        private int DraggingCell = -1;
+
+        private bool IsDragging = false;
+
+        private Point DraggingOffset;
+
         public ChallengeRouteWindow(IGame game)
         {
             GameOpened = game;
+
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
             InitializeComponent();
             InitializeChallengeRouteResource();
+
+            // Design 
+            conditionLineNumberRTB.RichTextBox.BackColor = System.Drawing.Color.FromArgb(35, 35, 35);
+            conditionLineNumberRTB.RichTextBox.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            conditionLineNumberRTB.Strip.BackColor = System.Drawing.Color.FromArgb(35, 35, 35);
+            conditionLineNumberRTB.Strip.BoxedLineColor = System.Drawing.Color.FromArgb(35, 35, 35);
+            conditionLineNumberRTB.Strip.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            conditionLineNumberRTB.RichTextBox.AcceptsTab = true;
+
+            conditionLineNumberRTB.RichTextBox.BackColor = System.Drawing.Color.FromArgb(35, 35, 35);
+            conditionLineNumberRTB.RichTextBox.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            conditionLineNumberRTB.Strip.BackColor = System.Drawing.Color.FromArgb(35, 35, 35);
+            conditionLineNumberRTB.Strip.BoxedLineColor = System.Drawing.Color.FromArgb(35, 35, 35);
+            conditionLineNumberRTB.Strip.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            conditionLineNumberRTB.RichTextBox.AcceptsTab = true;
         }
 
         private bool SameSkillID(int id, string name)
@@ -201,6 +234,19 @@ namespace Lynx.Forms.ChallengeRoute
                 {
                     (IRouteConfig[], int) route = GameOpened.GetRoutes(file);
 
+                    foreach(IRouteConfig cell in route.Item1)
+                    {
+                        if (cell.Map == null)
+                        {
+                            cell.Map = "";
+                        }
+
+                        if (cell.MatchTextLock == null)
+                        {
+                            cell.MatchTextLock = "";
+                        }
+                    }
+
                     // Determine the route name
                     string name = route.Item2 == 0x00
                         ? " "
@@ -224,6 +270,12 @@ namespace Lynx.Forms.ChallengeRoute
             int x = col * colWidth + 10 + xOffset;
             int y = row * 2 * rowOffset + ((col % 2 == 0) ? rowOffset : 0) + 10 + yOffset;
 
+            if (IsDragging && cellnum == DraggingCell)
+            {
+                x = DraggingOffset.X;
+                y = DraggingOffset.Y;
+            }
+
             // Calcul des points de l'hexagone
             PointF[] points = new PointF[6];
             for (int i = 0; i < 6; i++)
@@ -237,6 +289,9 @@ namespace Lynx.Forms.ChallengeRoute
 
             // Add the position (x, y) to the list
             cellPositions.Add((x, y));
+
+            // add the point
+            HexPoints.Add(points);
 
             if (cell != null)
             {
@@ -367,24 +422,192 @@ namespace Lynx.Forms.ChallengeRoute
             return match.Success ? int.Parse(match.Groups[1].Value) : -1;
         }
 
-        private void SelectCellByNumber(ComboBox comboBox, int cellnum)
+        private bool SelectCellByNumber(ComboBox comboBox, int cellnum)
         {
-            // Recherche de l'index de l'élément contenant "Cell X -"
-            int index = -1;
             for (int i = 0; i < comboBox.Items.Count; i++)
             {
                 if (comboBox.Items[i].ToString().StartsWith($"Cell {cellnum} -"))
                 {
-                    index = i;
-                    break;
+                    comboBox.SelectedIndex = i;
+                    return true;
                 }
             }
 
-            // Sélection de l'élément trouvé, sinon désélectionner
-            comboBox.SelectedIndex = index;
-            if (index == -1)
+            comboBox.SelectedIndex = -1;
+            comboBox.Text = "";
+
+            return false;
+        }
+
+        private int GetCellUnderCursor(PointF point)
+        {
+            for (int hexIndex = 0; hexIndex < HexPoints.Count; hexIndex++)
             {
-                comboBox.Text = "";
+                if (hexIndex != DraggingCell)
+                {
+                    PointF[] polygon = HexPoints[hexIndex];
+                    int j = polygon.Length - 1;
+                    bool inside = false;
+
+                    for (int i = 0; i < polygon.Length; i++)
+                    {
+                        if (((polygon[i].Y > point.Y) != (polygon[j].Y > point.Y)) &&
+                            (point.X < (polygon[j].X - polygon[i].X) * (point.Y - polygon[i].Y) /
+                            (polygon[j].Y - polygon[i].Y) + polygon[i].X))
+                        {
+                            inside = !inside;
+                        }
+                        j = i;
+                    }
+
+                    if (inside)
+                    {
+                        return hexIndex;
+                    }
+                }
+            }
+            return -1; // Aucune cellule trouvée
+        }
+
+        private void SwapCells(int oldCellNum, int newCellNum)
+        {
+            if (SelectedCell == null) return;
+
+            // Check if the new cell number is already assigned to another cell
+            IRouteConfig conflictRoute = SelectedChallengeRoutes.Cells.FirstOrDefault(x => x.CellNum == newCellNum);
+
+            if (conflictRoute != null)
+            {
+                // Swap cell numbers to avoid conflicts
+                conflictRoute.CellNum = oldCellNum;
+            }
+
+            // Assign the new cell number
+            SelectedCell.CellNum = newCellNum;
+
+            // Refresh the UI to reflect the changes
+            RouteListBox_SelectedIndexChanged(routeListBox, EventArgs.Empty);
+            SelectCellByNumber(cellFlatComboBox, newCellNum);
+        }
+
+        private void DeleteSelectedCell()
+        {
+            if (SelectedChallengeRoutes != null & SelectedCell != null)
+            {
+                if (cellFlatComboBox.SelectedItem != null)
+                {
+                    string selectedCell = cellFlatComboBox.SelectedItem.ToString();
+                    DialogResult result = MessageBox.Show(
+                        $"Are you sure you want to delete {selectedCell}?",
+                        "Confirmation",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning
+                    );
+
+                    if (result == DialogResult.Yes)
+                    {
+                        SelectedChallengeRoutes.Cells.RemoveAll(x => x.CellNum == SelectedCell.CellNum);
+
+                        SelectedCell = null;
+                        informationGroupBox.Enabled = false;
+                        linkGroupBox.Enabled = false;
+                        conditionGroupBox.Enabled = false;
+                        deleteButton.Enabled = false;
+
+                        previewPictureBox.Invalidate();
+
+                        MessageBox.Show($"{selectedCell} removed!");
+
+                        // Refresh the UI to reflect the changes
+                        RouteListBox_SelectedIndexChanged(routeListBox, EventArgs.Empty);
+                    }
+                }
+            }
+        }
+
+        private void AddCell(int cellNum)
+        {
+            // The cell does not exist, so prompt the user to create it
+            DialogResult result = MessageBox.Show(
+                $"Cell {cellNum} is not assigned, do you want to create this cell?",
+                "Cell Not Found",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            if (result == DialogResult.Yes)
+            {
+                IRouteConfig newCell = GameOpened.GetEmptyObject<IRouteConfig>();
+
+                newCell.CellNum = cellNum;
+                newCell.CellLink1 = -1;
+                newCell.CellLink2 = -1;
+                newCell.CellLink3 = -1;
+                newCell.PhaseAppear = "";
+                newCell.Map = "";
+                newCell.MatchTextLock = "";
+
+                SelectedChallengeRoutes.Cells.Add(newCell);
+
+                // Refresh the UI to reflect the changes
+                RouteListBox_SelectedIndexChanged(routeListBox, EventArgs.Empty);
+                SelectCellByNumber(cellFlatComboBox, cellNum);
+            }
+        }
+
+        private void ChangeCellLink(FlatComboBox comboBox, int linkNum)
+        {
+            // Ensure the control is focused, a valid index is selected, and a cell is available
+            if (!comboBox.Focused || comboBox.SelectedIndex == -1 || SelectedChallengeRoutes == null || SelectedCell == null) return;
+
+            int cellNum = GetCellNumber(comboBox.SelectedItem.ToString());
+
+            switch (linkNum)
+            {
+                case 1:
+                    SelectedCell.CellLink1 = cellNum;
+                    break;
+                case 2:
+                    SelectedCell.CellLink2 = cellNum;
+                    break;
+                case 3:
+                    SelectedCell.CellLink3 = cellNum;
+                    break;
+            }
+
+            // Refresh the UI to reflect the changes
+            RouteListBox_SelectedIndexChanged(routeListBox, EventArgs.Empty);
+            SelectCellByNumber(cellFlatComboBox, SelectedCell.CellNum);
+        }
+
+        private void UnlinkCell(int linkNum)
+        {
+            // Ensure that the cell is available
+            if (SelectedChallengeRoutes == null || SelectedCell == null) return;
+
+            switch (linkNum)
+            {
+                case 1:
+                    SelectedCell.CellLink1 = -1;
+                    break;
+                case 2:
+                    SelectedCell.CellLink2 = -1;
+                    break;
+                case 3:
+                    SelectedCell.CellLink3 = -1;
+                    break;
+            }
+
+            // Refresh the UI to reflect the changes
+            RouteListBox_SelectedIndexChanged(routeListBox, EventArgs.Empty);
+            SelectCellByNumber(cellFlatComboBox, SelectedCell.CellNum);
+        }
+
+        private void ChallengeRouteWindow_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            foreach(ChallengeRouteClass challengeRoute in ChallengeRoutes)
+            {
+                GameOpened.SaveRoutes(challengeRoute.Filename, challengeRoute.NameID, challengeRoute.Cells.ToArray());
             }
         }
 
@@ -393,14 +616,16 @@ namespace Lynx.Forms.ChallengeRoute
             if (routeListBox.SelectedIndex == -1)
                 return;
 
+            HexPoints.Clear();
+
             Graphics g = e.Graphics;
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
             int cellCount = 0;
             int rowOffset = (int)(Math.Sqrt(3) * HexSize / 2);
             int colWidth = (int)(1.5 * HexSize);
-            int xOffset = 50;
-            int yOffset = 50;
+            int xOffset = 25;
+            int yOffset = 45;
             int extraColumn = Math.Max(0, (Columns / 5) - 1);
 
             Font font = new Font("Arial", 9, FontStyle.Bold);
@@ -455,6 +680,8 @@ namespace Lynx.Forms.ChallengeRoute
             // Draw lines between cells based on the links in SelectedChallengeRoutes
             foreach (var route in SelectedChallengeRoutes.Cells)
             {
+                
+
                 (int, int) cellPosition = cellPositions[route.CellNum];
 
                 List<int> links = new List<int> { route.CellLink1, route.CellLink2, route.CellLink3 };
@@ -464,11 +691,97 @@ namespace Lynx.Forms.ChallengeRoute
                     if (link != -1)
                     {
                         (int, int) linkCellPositions = cellPositions[link];
-                        Pen customPen = new Pen(Color.White, 3);
-                        g.DrawLine(customPen, cellPosition.Item1, cellPosition.Item2, linkCellPositions.Item1, linkCellPositions.Item2);
+
+                        // Draw selected connexion
+                        if (SelectedCell != null && SelectedCell == route)
+                        {
+                            Pen customPen = new Pen(Color.Red, 3);
+                            g.DrawLine(customPen, cellPosition.Item1, cellPosition.Item2, linkCellPositions.Item1, linkCellPositions.Item2);
+                        }
+                        else
+                        {
+                            Pen customPen = new Pen(Color.White, 3);
+                            g.DrawLine(customPen, cellPosition.Item1, cellPosition.Item2, linkCellPositions.Item1, linkCellPositions.Item2);
+                        }           
                     }
                 }
             }
+        }
+
+        private void PreviewPictureBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                if (SelectedCell != null)
+                {
+                    DraggingCell = SelectedCell.CellNum;
+                    IsDragging = true;
+                }
+            } else if (e.Button == MouseButtons.Left)
+            {
+                PointF clickPoint = previewPictureBox.PointToClient(Control.MousePosition);
+
+                for (int hexIndex = 0; hexIndex < HexPoints.Count; hexIndex++)
+                {
+                    PointF[] polygon = HexPoints[hexIndex];
+                    int j = polygon.Length - 1;
+                    bool inside = false;
+
+                    for (int i = 0; i < polygon.Length; i++)
+                    {
+                        if (((polygon[i].Y > clickPoint.Y) != (polygon[j].Y > clickPoint.Y)) &&
+                            (clickPoint.X < (polygon[j].X - polygon[i].X) * (clickPoint.Y - polygon[i].Y) /
+                            (polygon[j].Y - polygon[i].Y) + polygon[i].X))
+                        {
+                            inside = !inside;
+                        }
+                        j = i;
+                    }
+
+                    if (inside)
+                    {
+                        if (SelectCellByNumber(cellFlatComboBox, hexIndex) == false)
+                        {
+                            AddCell(hexIndex);
+                        }
+
+                        return;
+                    }
+                }
+            }
+        }
+
+        private void PreviewPictureBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (IsDragging && e.Button == MouseButtons.Right)
+            {
+                DraggingOffset = e.Location;
+                previewPictureBox.Invalidate();
+            }
+        }
+
+        private void PreviewPictureBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (IsDragging)
+            {
+                IsDragging = false;
+
+                previewPictureBox.Invalidate();
+
+                int newCellNum = GetCellUnderCursor(e.Location);
+
+                if (newCellNum != -1 && newCellNum != DraggingCell)
+                {
+                    SwapCells(DraggingCell, newCellNum);
+                }
+
+                DraggingCell = -1;
+            }
+        }
+
+        private void PreviewPictureBox_MouseEnter(object sender, EventArgs e)
+        {
+            previewPictureBox.Focus();
         }
 
         private void RouteListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -484,6 +797,7 @@ namespace Lynx.Forms.ChallengeRoute
             previewPictureBox.Invalidate();
 
             nameTextBox.Text = routeListBox.SelectedItem.ToString();
+            filenameTextBox.Text = SelectedChallengeRoutes.Filename;
 
             // fill element in cell flat combobox
             FillCellFlatComboBox();
@@ -563,6 +877,9 @@ namespace Lynx.Forms.ChallengeRoute
                     SelectCellByNumber(cellLinkFlatComboBox2, SelectedCell.CellLink2);
                     SelectCellByNumber(cellLinkFlatComboBox3, SelectedCell.CellLink3);
 
+                    string conditionText = (SelectedCell.PhaseAppear == "0") ? "" : Condition.ToString(SelectedCell.PhaseAppear);
+                    conditionLineNumberRTB.RichTextBox.Text = conditionText;
+
                     informationGroupBox.Enabled = true;
                     linkGroupBox.Enabled = true;
                     restrictionGroupBox.Enabled = true;
@@ -572,6 +889,220 @@ namespace Lynx.Forms.ChallengeRoute
                     previewPictureBox.Invalidate();
                 }
             }
+        }
+
+        private void CellNumberFlatNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            // Ensure the control is focused and a cell is selected before proceeding
+            if (!cellNumberFlatNumericUpDown.Focused || SelectedCell == null) return;
+
+            // Store the old cell number before changing it
+            int oldCellNum = SelectedCell.CellNum;
+            int newCellNum = Convert.ToInt32(cellNumberFlatNumericUpDown.Value);
+
+            SwapCells(oldCellNum, newCellNum);
+        }
+
+        private void CellFlagFlatNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            // Ensure the control is focused and a cell is selected before proceeding
+            if (!cellFlagFlatNumericUpDown.Focused || SelectedCell == null) return;
+
+            // Update the flag value of the selected cell based on the numeric input
+            SelectedCell.Flag = Convert.ToInt32(cellFlagFlatNumericUpDown.Value);
+        }
+
+        private void CellTypeFlatComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Ensure the control is focused, a valid index is selected, and a cell is available
+            if (!cellTypeFlatComboBox.Focused || cellTypeFlatComboBox.SelectedIndex == -1 || SelectedCell == null) return;
+
+            // Update the selected cell's type based on the chosen index
+            SelectedCell.CellType = cellTypeFlatComboBox.SelectedIndex;
+
+            // Refresh the UI to reflect the changes
+            RouteListBox_SelectedIndexChanged(routeListBox, EventArgs.Empty);
+            SelectCellByNumber(cellFlatComboBox, SelectedCell.CellNum);
+        }
+
+        private void CellContentFlatComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Ensure the control is focused, a valid index is selected, and a cell is available
+            if (!cellContentFlatComboBox.Focused || cellContentFlatComboBox.SelectedIndex == -1 || SelectedCell == null) return;
+
+            if (SelectedCell.CellType == 2)
+            {
+                // Assign the selected team ID to the cell's content
+                SelectedCell.ContentID = (cellContentFlatComboBox.SelectedItem as Team).ID;
+            }
+            else if (SelectedCell.CellNum == 3 || SelectedCell.CellNum == 4)
+            {
+                // Assign the corresponding item ID if the selected item exists in the dictionary
+                if (ItemsNamesDict.Any(x => x.Value == cellContentFlatComboBox.SelectedItem.ToString()))
+                {
+                    SelectedCell.ContentID = ItemsNamesDict.FirstOrDefault(x => x.Value == cellContentFlatComboBox.SelectedItem.ToString()).Key;
+                }
+            }
+
+            // Refresh the UI to reflect the changes
+            RouteListBox_SelectedIndexChanged(routeListBox, EventArgs.Empty);
+            SelectCellByNumber(cellFlatComboBox, SelectedCell.CellNum);
+        }
+
+        private void AddButton_Click(object sender, EventArgs e)
+        {
+            AddCellWindow addCellWindow = new AddCellWindow(SelectedChallengeRoutes.Cells.Select(x => x.CellNum).Distinct().ToList());
+            addCellWindow.ShowDialog();
+
+            if (addCellWindow.SelectedCell != -1)
+            {
+                AddCell(addCellWindow.SelectedCell);
+            }
+        }
+
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+            DeleteSelectedCell();
+        }
+
+        private void ChallengeRouteWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                Control focusedControl = this.ActiveControl;
+
+                if (focusedControl is TextBox ||
+                    focusedControl is Button ||
+                    focusedControl is ComboBox ||
+                    focusedControl is NumericUpDown || 
+                    focusedControl is LineNumberRTB ||
+                    focusedControl is RichTextBox)
+                {
+                    return;
+                }
+
+                DeleteSelectedCell();
+            }
+        }
+
+        private void AddAllCellsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (SelectedChallengeRoutes != null)
+            {
+                int cellIndex = -1; 
+
+                for (int i = 0; i < 24; i++)
+                {
+                    if (!SelectedChallengeRoutes.Cells.Any(x => x.CellNum == i))
+                    {
+                        IRouteConfig newCell = GameOpened.GetEmptyObject<IRouteConfig>();
+
+                        newCell.CellNum = i;
+                        newCell.CellLink1 = -1;
+                        newCell.CellLink2 = -1;
+                        newCell.CellLink3 = -1;
+                        newCell.PhaseAppear = "";
+                        newCell.Map = "";
+                        newCell.MatchTextLock = "";
+
+                        SelectedChallengeRoutes.Cells.Add(newCell);
+
+                        cellIndex = i;
+                    }
+                }
+
+                if (cellIndex != -1)
+                {
+                    // Refresh the UI to reflect the changes
+                    RouteListBox_SelectedIndexChanged(routeListBox, EventArgs.Empty);
+                    SelectCellByNumber(cellFlatComboBox, cellIndex);
+                }
+            }
+        }
+
+        private void RemoveAllCellsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (SelectedChallengeRoutes != null)
+            {
+                DialogResult result = MessageBox.Show(
+                    $"Are you sure you want to delete all cells?",
+                    "Confirmation",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning
+                );
+
+                if (result == DialogResult.Yes)
+                {
+                    SelectedChallengeRoutes.Cells.Clear();
+
+                    SelectedCell = null;
+                    informationGroupBox.Enabled = false;
+                    linkGroupBox.Enabled = false;
+                    conditionGroupBox.Enabled = false;
+                    deleteButton.Enabled = false;
+
+                    previewPictureBox.Invalidate();
+
+                    MessageBox.Show($"All cells was removed!");
+
+                    // Refresh the UI to reflect the changes
+                    RouteListBox_SelectedIndexChanged(routeListBox, EventArgs.Empty);
+                }
+            }
+        }
+
+        private void TextLockTextBox_TextChanged(object sender, EventArgs e)
+        {
+            // Ensure the control is focused, a valid index is selected, and a cell is available
+            if (!textLockTextBox.Focused || cellContentFlatComboBox.SelectedIndex == -1 || SelectedCell == null) return;
+
+            SelectedCell.MatchTextLock = textLockTextBox.Text;
+        }
+
+        private void MapTextBox_TextChanged(object sender, EventArgs e)
+        {
+            // Ensure the control is focused, a valid index is selected, and a cell is available
+            if (!mapTextBox.Focused || cellContentFlatComboBox.SelectedIndex == -1 || SelectedCell == null) return;
+
+            SelectedCell.Map = mapTextBox.Text;
+        }
+
+        private void CellLinkFlatComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ChangeCellLink(sender as FlatComboBox, 1);
+        }
+
+        private void CellLinkFlatComboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ChangeCellLink(sender as FlatComboBox, 2);
+        }
+
+        private void cellLinkFlatComboBox3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ChangeCellLink(sender as FlatComboBox, 3);
+        }
+
+        private void UnlinButton1_Click(object sender, EventArgs e)
+        {
+            UnlinkCell(1);
+        }
+
+        private void UnlinkButton2_Click(object sender, EventArgs e)
+        {
+            UnlinkCell(2);
+        }
+
+        private void UnlinkButton3_Click(object sender, EventArgs e)
+        {
+            UnlinkCell(3);
+        }
+
+        private void MatchFlatComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Ensure the control is focused, a valid index is selected, and a cell is available
+            if (!matchFlatComboBox.Focused || matchFlatComboBox.SelectedIndex == -1 || SelectedCell == null) return;
+
+            SelectedCell.MatchRestriction = matchFlatComboBox.SelectedIndex;
         }
     }
 }

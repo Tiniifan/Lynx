@@ -251,6 +251,8 @@ namespace Lynx.InazumaEleven.Games.GO
             public int ItemID { get; set; }
             public int NameID { get; set; }
             public int DescriptionID { get; set; }
+            public int Unk3 { get; set; }
+            public int ItemCategory { get; set; }
         }
 
         public class ItemConfigAvatar : IItemConfig
@@ -258,7 +260,10 @@ namespace Lynx.InazumaEleven.Games.GO
             public int ItemID { get; set; }
             public int ItemNumber { get; set; }
             public int NameID { get; set; }
+            public int FullNameID { get; set; }
             public int DescriptionID { get; set; }
+            public int Unk5 { get; set; }
+            public int ItemCategory { get; set; }
 
             // Méthode pour convertir explicitement en ItemConfig
             public ItemConfig ToItemConfig()
@@ -267,7 +272,52 @@ namespace Lynx.InazumaEleven.Games.GO
                 {
                     ItemID = this.ItemID,
                     NameID = this.NameID,
-                    DescriptionID = this.DescriptionID
+                    DescriptionID = this.DescriptionID,
+                    ItemCategory = this.ItemCategory
+                };
+            }
+        }
+
+        public class ItemConfigDirector : IItemConfig
+        {
+            public int ItemID { get; set; }
+            public int ItemNumber { get; set; }
+            public int NameID { get; set; }
+            public int DescriptionID { get; set; }
+            public int Unk4 { get; set; }
+            public int ItemCategory { get; set; }
+
+            // Méthode pour convertir explicitement en ItemConfig
+            public ItemConfig ToItemConfig()
+            {
+                return new ItemConfig
+                {
+                    ItemID = this.ItemID,
+                    NameID = this.NameID,
+                    DescriptionID = this.DescriptionID,
+                    ItemCategory = this.ItemCategory
+                };
+            }
+        }
+
+        public class ItemConfigUniform : IItemConfig
+        {
+            public int ItemID { get; set; }
+            public int NameID { get; set; }
+            public int DescriptionID { get; set; }
+            public int ItemNumber { get; set; }
+            public int Unk4 { get; set; }
+            public int ItemCategory { get; set; }
+
+            // Méthode pour convertir explicitement en ItemConfig
+            public ItemConfig ToItemConfig()
+            {
+                return new ItemConfig
+                {
+                    ItemID = this.ItemID,
+                    NameID = this.NameID,
+                    DescriptionID = this.DescriptionID,
+                    ItemCategory = this.ItemCategory
                 };
             }
         }
