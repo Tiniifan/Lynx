@@ -86,6 +86,10 @@ namespace Lynx.InazumaEleven.Games.GO
                     return new GOSupport.SkillConfig() as T;
                 case System.Type t when t == typeof(IRouteConfig):
                     return new GOSupport.RouteConfig() as T;
+                case System.Type t when t == typeof(IEncountTeamInfo):
+                    return new GOSupport.EncountTeamInfo() as T;
+                case System.Type t when t == typeof(IStoryTeamInfo):
+                    return new GOSupport.StoryTeamInfo() as T;
                 default:
                     return null;
             }
@@ -816,6 +820,27 @@ namespace Lynx.InazumaEleven.Games.GO
             }
 
             Game.Directory.GetFolderFromFullPath("/data/res/team").Files["team_param.cfg.bin"].ByteContent = teamParamFile.Save();
+        }
+
+        public object[] GetTeamConfig()
+        {
+            CfgBin teamConfigFile = new CfgBin();
+            teamConfigFile.Open(Game.Directory.GetFileFromFullPath($"/data/res/team/team_config.cfg.bin"));
+
+            return teamConfigFile.Entries
+                .Where(x => x.GetName() == "STORY_TEAM_INFO_BEGIN" || x.GetName() == "ENCOUNT_TEAM_INFO_BEGIN")
+                .SelectMany(x => x.Children)
+                .Select(x =>
+                {
+                    if (x.Variables.Count == 53)
+                        return x.ToClass<GOSupport.StoryTeamInfo>() as object;
+                    else if (x.Variables.Count == 20)
+                        return x.ToClass<GOSupport.EncountTeamInfo>() as object;
+                    else
+                        return null;
+                })
+                .Where(x => x != null)
+                .ToArray();
         }
 
         public IStoryTeamInfo[] GetStoryTeams()

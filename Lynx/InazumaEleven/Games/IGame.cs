@@ -224,6 +224,12 @@ namespace Lynx.InazumaEleven.Games
         IEncountTeamInfo[] GetEncounterTeams();
 
         /// <summary>
+        /// Gets the encounter team and story team information.
+        /// </summary>
+        /// <returns>An array of encounter team information.</returns>
+        object[] GetTeamConfig();
+
+        /// <summary>
         /// Saves the story and encounter team configurations.
         /// </summary>
         /// <param name="storyTeams">The story team information to save.</param>
