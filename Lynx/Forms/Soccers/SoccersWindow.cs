@@ -584,6 +584,24 @@ namespace Lynx.Forms.Soccers
             soccerFlatComboBox.Items.AddRange(SoccerNamesDict.Values.ToArray());       
         }
 
+        private void SoccersWindow_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            IStoryTeamInfo[] storyTeams = TeamConfigs.Where(x => x is IStoryTeamInfo).Cast<IStoryTeamInfo>().ToArray();
+            IEncountTeamInfo[] encountTeams = TeamConfigs
+                .Where(x => x is IEncountTeamInfo && !(x is IStoryTeamInfo))
+                .Cast<IEncountTeamInfo>()
+                .ToArray();
+
+            GameOpened.SaveSoccers(Soccers.ToArray());
+            GameOpened.SaveTeamParams(TeamParams.ToArray());
+            GameOpened.SaveTeamConfig(storyTeams, encountTeams);
+
+            if (TeamText != null)
+            {
+                GameOpened.SaveTextFile(GameOpened.Files["team_text"], TeamText);
+            }
+        }
+
         private void SoccerFlatComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (soccerFlatComboBox.SelectedIndex == -1) return;
@@ -617,6 +635,10 @@ namespace Lynx.Forms.Soccers
             if (paramFromSoccerFlatComboBox.SelectedIndex == -1) return;
 
             paramFlatComboBox.SelectedIndex = paramFromSoccerFlatComboBox.SelectedIndex;
+
+            if (!paramFromSoccerFlatComboBox.Focused || SelectedSoccer == null) return;
+
+            SelectedSoccer.TeamParamID = TeamParams[paramFromSoccerFlatComboBox.SelectedIndex].TeamParamID;
         }
 
         private void ParamFlatComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -702,6 +724,19 @@ namespace Lynx.Forms.Soccers
             if (configFromParamFlatComboBox.SelectedIndex == -1) return;
 
             configFlatComboBox.SelectedIndex = configFromParamFlatComboBox.SelectedIndex;
+
+            if (!configFromParamFlatComboBox.Focused || SelectedTeamConfig == null) return;
+
+            var teamConfig = TeamConfigs[configFromParamFlatComboBox.SelectedIndex];
+
+            if (teamConfig is IEncountTeamInfo encountTeam)
+            {
+                SelectedTeamParam.TeamConfigID = encountTeam.TeamConfigID;
+            }
+            else if (teamConfig is IStoryTeamInfo storyTeam)
+            {
+                SelectedTeamParam.TeamConfigID = storyTeam.TeamConfigID;
+            }
         }
 
         private void ConfigFlatComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -737,6 +772,11 @@ namespace Lynx.Forms.Soccers
                 addLevelFlatNumericUpDown3.Value = encountTeam.DifferenceLevelPlayer3;
                 addLevelFlatNumericUpDown4.Value = encountTeam.DifferenceLevelPlayer4;
                 addLevelFlatNumericUpDown5.Value = encountTeam.DifferenceLevelPlayer5;
+                kitNumberFlatNumericUpDown1.Value = encountTeam.NumberPlayer1;
+                kitNumberFlatNumericUpDown2.Value = encountTeam.NumberPlayer2;
+                kitNumberFlatNumericUpDown3.Value = encountTeam.NumberPlayer3;
+                kitNumberFlatNumericUpDown4.Value = encountTeam.NumberPlayer4;
+                kitNumberFlatNumericUpDown5.Value = encountTeam.NumberPlayer5;
                 ResetComboBox(playerFlatComboBox6, true);
                 ResetComboBox(playerFlatComboBox7, true);
                 ResetComboBox(playerFlatComboBox8, true);
@@ -759,6 +799,17 @@ namespace Lynx.Forms.Soccers
                 ResetNumericUpDown(addLevelFlatNumericUpDown14, true);
                 ResetNumericUpDown(addLevelFlatNumericUpDown15, true);
                 ResetNumericUpDown(addLevelFlatNumericUpDown16, true);
+                ResetNumericUpDown(kitNumberFlatNumericUpDown6, true);
+                ResetNumericUpDown(kitNumberFlatNumericUpDown7, true);
+                ResetNumericUpDown(kitNumberFlatNumericUpDown8, true);
+                ResetNumericUpDown(kitNumberFlatNumericUpDown9, true);
+                ResetNumericUpDown(kitNumberFlatNumericUpDown10, true);
+                ResetNumericUpDown(kitNumberFlatNumericUpDown11, true);
+                ResetNumericUpDown(kitNumberFlatNumericUpDown12, true);
+                ResetNumericUpDown(kitNumberFlatNumericUpDown13, true);
+                ResetNumericUpDown(kitNumberFlatNumericUpDown14, true);
+                ResetNumericUpDown(kitNumberFlatNumericUpDown15, true);
+                ResetNumericUpDown(kitNumberFlatNumericUpDown16, true);
                 teamTypeFlatComboBox.SelectedIndex = 0;
 
                 if (SelectedTeamConfig is IStoryTeamInfo storyTeam)
@@ -785,6 +836,17 @@ namespace Lynx.Forms.Soccers
                     addLevelFlatNumericUpDown14.Value = storyTeam.DifferenceLevelPlayer14;
                     addLevelFlatNumericUpDown15.Value = storyTeam.DifferenceLevelPlayer15;
                     addLevelFlatNumericUpDown16.Value = storyTeam.DifferenceLevelPlayer16;
+                    kitNumberFlatNumericUpDown6.Value = storyTeam.NumberPlayer6;
+                    kitNumberFlatNumericUpDown7.Value = storyTeam.NumberPlayer7;
+                    kitNumberFlatNumericUpDown8.Value = storyTeam.NumberPlayer8;
+                    kitNumberFlatNumericUpDown9.Value = storyTeam.NumberPlayer9;
+                    kitNumberFlatNumericUpDown10.Value = storyTeam.NumberPlayer10;
+                    kitNumberFlatNumericUpDown11.Value = storyTeam.NumberPlayer11;
+                    kitNumberFlatNumericUpDown12.Value = storyTeam.NumberPlayer12;
+                    kitNumberFlatNumericUpDown13.Value = storyTeam.NumberPlayer13;
+                    kitNumberFlatNumericUpDown14.Value = storyTeam.NumberPlayer14;
+                    kitNumberFlatNumericUpDown15.Value = storyTeam.NumberPlayer15;
+                    kitNumberFlatNumericUpDown16.Value = storyTeam.NumberPlayer16;
                     teamTypeFlatComboBox.SelectedIndex = 1;
 
                     // Enable
@@ -810,6 +872,17 @@ namespace Lynx.Forms.Soccers
                     addLevelFlatNumericUpDown14.Enabled = true;
                     addLevelFlatNumericUpDown15.Enabled = true;
                     addLevelFlatNumericUpDown16.Enabled = true;
+                    kitNumberFlatNumericUpDown6.Enabled = true;
+                    kitNumberFlatNumericUpDown7.Enabled = true;
+                    kitNumberFlatNumericUpDown8.Enabled = true;
+                    kitNumberFlatNumericUpDown9.Enabled = true;
+                    kitNumberFlatNumericUpDown10.Enabled = true;
+                    kitNumberFlatNumericUpDown11.Enabled = true;
+                    kitNumberFlatNumericUpDown12.Enabled = true;
+                    kitNumberFlatNumericUpDown13.Enabled = true;
+                    kitNumberFlatNumericUpDown14.Enabled = true;
+                    kitNumberFlatNumericUpDown15.Enabled = true;
+                    kitNumberFlatNumericUpDown16.Enabled = true;
                 }
 
                 teamNameLabel.Enabled = true;
@@ -1284,47 +1357,108 @@ namespace Lynx.Forms.Soccers
             }
         }
 
-        private void PlayerFlatComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void PlayerFlatComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (playerFlatComboBox1.SelectedIndex == -1 || !playerFlatComboBox1.Focused || SelectedTeamConfig == null) return;
+            if (sender is ComboBox comboBox)
+            {
+                if (comboBox.SelectedIndex == -1 || !comboBox.Focused || SelectedTeamConfig == null) return;
 
-            if (SelectedTeamConfig is IEncountTeamInfo encountTeam)
-            {
-                encountTeam.Player1 = CharaNamesDict.ElementAt(playerFlatComboBox1.SelectedIndex).Key;
-            }
-            else if (SelectedTeamConfig is IStoryTeamInfo storyTeam)
-            {
-                storyTeam.Player1 = CharaNamesDict.ElementAt(playerFlatComboBox1.SelectedIndex).Key;
+                var selectedKey = CharaNamesDict.ElementAt(comboBox.SelectedIndex).Key;
+
+                // Dynamically extract the player number from the ComboBox name
+                // Example: "playerFlatComboBox1" → Extracts "1"
+                string comboBoxName = comboBox.Name;
+                if (!int.TryParse(new string(comboBoxName.Where(char.IsDigit).ToArray()), out int playerNumber)) return;
+
+                string propertyName = $"Player{playerNumber}";
+
+                // Use reflection to get the property from the SelectedTeamConfig type
+                var teamType = SelectedTeamConfig.GetType();
+                var property = teamType.GetProperty(propertyName);
+
+                // If the property exists and is writable, assign the selected key to it
+                if (property != null && property.CanWrite)
+                {
+                    property.SetValue(SelectedTeamConfig, selectedKey);
+                }
             }
         }
 
-        private void AddLevelFlatNumericUpDown1_ValueChanged(object sender, EventArgs e)
+        private void KitNumberFlatNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (addLevelFlatNumericUpDown1.Focused == false || SelectedTeamConfig == null) return;
+            if (sender is NumericUpDown numericUpDown)
+            {
+                if (!numericUpDown.Focused || SelectedTeamConfig == null) return;
 
-            if (SelectedTeamConfig is IEncountTeamInfo encountTeam)
-            {
-                encountTeam.DifferenceLevelPlayer1 = Convert.ToInt32(addLevelFlatNumericUpDown1.Value);
-            }
-            else if (SelectedTeamConfig is IStoryTeamInfo storyTeam)
-            {
-                storyTeam.DifferenceLevelPlayer1 = Convert.ToInt32(addLevelFlatNumericUpDown1.Value);
+                int kitNumber = Convert.ToInt32(numericUpDown.Value);
+
+                // Dynamically extract the player number from the NumericUpDown name
+                // Example: "kitNumberFlatNumericUpDown1" → Extracts "1"
+                string numericUpDownName = numericUpDown.Name;
+                if (!int.TryParse(new string(numericUpDownName.Where(char.IsDigit).ToArray()), out int playerNumber)) return;
+
+                string propertyName = $"NumberPlayer{playerNumber}";
+
+                // Use reflection to get the property from the SelectedTeamConfig type
+                var teamType = SelectedTeamConfig.GetType();
+                var property = teamType.GetProperty(propertyName);
+
+                // If the property exists and is writable, assign the numeric value to it
+                if (property != null && property.CanWrite)
+                {
+                    property.SetValue(SelectedTeamConfig, kitNumber);
+                }
             }
         }
 
-        private void DeletePlayerButton1_Click(object sender, EventArgs e)
+        private void AddLevelFlatNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (sender is NumericUpDown numericUpDown)
+            {
+                if (!numericUpDown.Focused || SelectedTeamConfig == null) return;
+
+                int differenceLevel = Convert.ToInt32(numericUpDown.Value);
+
+                // Dynamically extract the player number from the NumericUpDown name
+                // Example: "addLevelFlatNumericUpDown1" → Extracts "1"
+                string numericUpDownName = numericUpDown.Name;
+                if (!int.TryParse(new string(numericUpDownName.Where(char.IsDigit).ToArray()), out int playerNumber)) return;
+
+                string propertyName = $"DifferenceLevelPlayer{playerNumber}";
+
+                // Use reflection to get the property from the SelectedTeamConfig type
+                var teamType = SelectedTeamConfig.GetType();
+                var property = teamType.GetProperty(propertyName);
+
+                // If the property exists and is writable, assign the numeric value to it
+                if (property != null && property.CanWrite)
+                {
+                    property.SetValue(SelectedTeamConfig, differenceLevel);
+                }
+            }
+        }
+
+        private void DeletePlayerButton_Click(object sender, EventArgs e)
         {
             if (SelectedTeamConfig == null) return;
 
             playerFlatComboBox1.SelectedIndex = playerFlatComboBox1.Items.Count - 1;
 
-            if (SelectedTeamConfig is IEncountTeamInfo encountTeam)
+            // Dynamically determine the player number from the ComboBox name (assuming "playerFlatComboBox1")
+            string comboBoxName = playerFlatComboBox1.Name;
+            if (!int.TryParse(new string(comboBoxName.Where(char.IsDigit).ToArray()), out int playerNumber)) return;
+
+            string propertyName = $"Player{playerNumber}";
+
+            // Use reflection to get the property from the SelectedTeamConfig type
+            var teamType = SelectedTeamConfig.GetType();
+            var property = teamType.GetProperty(propertyName);
+
+            // If the property exists and is writable, set the selected player to the new value
+            if (property != null && property.CanWrite)
             {
-                encountTeam.Player1 = CharaNamesDict.ElementAt(playerFlatComboBox1.SelectedIndex).Key;
-            }
-            else if (SelectedTeamConfig is IStoryTeamInfo storyTeam)
-            {
-                storyTeam.Player1 = CharaNamesDict.ElementAt(playerFlatComboBox1.SelectedIndex).Key;
+                var selectedKey = CharaNamesDict.ElementAt(playerFlatComboBox1.SelectedIndex).Key;
+                property.SetValue(SelectedTeamConfig, selectedKey);
             }
         }
     }

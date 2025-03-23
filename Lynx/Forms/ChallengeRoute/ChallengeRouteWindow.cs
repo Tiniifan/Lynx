@@ -24,6 +24,7 @@ using Color = System.Drawing.Color;
 using Control = System.Windows.Forms.Control;
 using ChallengeRouteClass = Lynx.InazumaEleven.Logic.ChallengeRoute;
 using Team = Lynx.InazumaEleven.Logic.Team;
+using IGame = Lynx.InazumaEleven.Games.IGame;
 using System.Text.RegularExpressions;
 using Lynx.Level5.Save.Logic.Competition_Route;
 using Lynx.Level5.Base64;
@@ -32,6 +33,7 @@ using Lynx.UI;
 using System.Reflection;
 using Lynx.Forms.Characters;
 using Lynx.Level5.Save.Logic;
+using Lynx.Level5.Save.Games;
 
 namespace Lynx.Forms.ChallengeRoute
 {
@@ -70,6 +72,8 @@ namespace Lynx.Forms.ChallengeRoute
         private bool IsDragging = false;
 
         private Point DraggingOffset;
+
+        private List<string> FilesToDelete;
 
         public ChallengeRouteWindow(IGame game)
         {
@@ -169,97 +173,6 @@ namespace Lynx.Forms.ChallengeRoute
 
                 team.Name = $"{name} ({FindSoccerID(team.ID)})";
                 index++;
-            }
-        }
-
-        private void InitializeChallengeRouteResource()
-        {
-            GameSupports.GameFile skillTextGameFile = GameOpened.Files["item_text"];
-            Itemtext = new T2bþ(skillTextGameFile.File.Directory.GetFileFromFullPath(skillTextGameFile.Path));
-            GameSupports.GameFile teamText = GameOpened.Files["team_text"];
-            TeamText = new T2bþ(teamText.File.Directory.GetFileFromFullPath(teamText.Path));
-            GameSupports.GameFile trouteText = GameOpened.Files["troute_text"];
-            RouteText = new T2bþ(trouteText.File.Directory.GetFileFromFullPath(trouteText.Path));
-
-            matchFlatComboBox.Items.AddRange(MatchRestrictions.IEGO.ToArray());
-
-            ItemsConfigs = GameOpened.GetItems("all").ToList();
-            ItemsNamesDict = GetNames(ItemsConfigs.ToArray());
-
-            // load team
-            ISoccerInfo[] soccers = GameOpened.GetSoccers();
-            ITeamParamInfo[] teamParams = GameOpened.GetTeamParams();
-            IStoryTeamInfo[] storyTeams = GameOpened.GetStoryTeams();
-            IEncountTeamInfo[] encountTeams = GameOpened.GetEncounterTeams();
-            Teams = soccers.Select(soccer =>
-            {
-                // Chercher TeamParam correspondant au Soccer
-                var teamParam = teamParams.FirstOrDefault(tp => tp.TeamParamID == soccer.TeamParamID);
-
-                if (teamParam != null)
-                {
-                    // Chercher TeamConfigID dans StoryTeams
-                    var storyTeam = storyTeams.FirstOrDefault(st => st.TeamConfigID == teamParam.TeamConfigID);
-                    if (storyTeam != null)
-                    {
-                        return new Team(soccer.SoccerID, storyTeam.Emblem2, storyTeam.NameID, teamParam.Level);
-                    }
-
-                    // Chercher TeamConfigID dans EncountTeams
-                    var encountTeam = encountTeams.FirstOrDefault(et => et.TeamConfigID == teamParam.TeamConfigID);
-                    if (encountTeam != null)
-                    {
-                        return new Team(soccer.SoccerID, encountTeam.Emblem2, encountTeam.NameID, teamParam.Level);
-                    }
-                }
-
-                // Si aucune correspondance trouvée, Emblem = -1
-                return new Team(soccer.SoccerID, -1, 0, 0);
-
-            }).ToList();
-            GetNames(Teams.ToArray());
-
-            // initialise data
-            routeListBox.Items.Clear();
-            ChallengeRoutes = new List<ChallengeRouteClass>();
-
-            // Get all routes files
-            GameSupports.GameFile soccerFolder = GameOpened.Files["soccer"];
-            string[] files = GameOpened.Game.Directory.GetFolderFromFullPath(soccerFolder.Path).Files.Keys.ToArray();
-
-            int index = 0;
-            foreach(string file in files)
-            {
-                if (file.StartsWith("scr_br"))
-                {
-                    (IRouteConfig[], int) route = GameOpened.GetRoutes(file);
-
-                    foreach(IRouteConfig cell in route.Item1)
-                    {
-                        if (cell.Map == null)
-                        {
-                            cell.Map = "";
-                        }
-
-                        if (cell.MatchTextLock == null)
-                        {
-                            cell.MatchTextLock = "";
-                        }
-                    }
-
-                    // Determine the route name
-                    string name = route.Item2 == 0x00
-                        ? " "
-                        : RouteText.Nouns.TryGetValue(route.Item2, out var noun) && noun.Strings.Count > 0
-                            ? noun.Strings[0].Text
-                            : $"Route {index}";
-
-                    index++;
-
-                    ChallengeRoutes.Add(new ChallengeRouteClass(file, route.Item2, route.Item1.ToList()));
-
-                    routeListBox.Items.Add(name);
-                }
             }
         }
 
@@ -543,9 +456,9 @@ namespace Lynx.Forms.ChallengeRoute
                 newCell.CellLink1 = -1;
                 newCell.CellLink2 = -1;
                 newCell.CellLink3 = -1;
-                newCell.PhaseAppear = "";
+                newCell.PhaseAppear = "0";
                 newCell.Map = "";
-                newCell.MatchTextLock = "";
+                newCell.MatchTextLock = null;
 
                 SelectedChallengeRoutes.Cells.Add(newCell);
 
@@ -603,11 +516,175 @@ namespace Lynx.Forms.ChallengeRoute
             SelectCellByNumber(cellFlatComboBox, SelectedCell.CellNum);
         }
 
+        private void ResetCombobox(FlatComboBox comboBox)
+        {
+            comboBox.SelectedIndex = -1;
+            comboBox.Text = "";
+        }
+
+        private void ResetCellPanel()
+        {
+            cellNumberFlatNumericUpDown.Value = 0;
+            cellFlagFlatNumericUpDown.Value = 0;
+            ResetCombobox(cellTypeFlatComboBox);
+            ResetCombobox(cellContentFlatComboBox);
+            ResetCombobox(cellLinkFlatComboBox1);
+            ResetCombobox(cellLinkFlatComboBox2);
+            ResetCombobox(cellLinkFlatComboBox3);
+            ResetCombobox(matchFlatComboBox);
+            textLockTextBox.Text = "";
+            mapTextBox.Text = "";
+            conditionLineNumberRTB.RichTextBox.Text = "";
+        }
+
+        private void FillRouteListBox()
+        {
+            int index = 0;
+
+            routeListBox.Items.Clear();
+            
+            foreach(ChallengeRouteClass challengeRoutes in ChallengeRoutes)
+            {
+                string name = challengeRoutes.NameID == 0x00
+                    ? $"Route {index}"
+                    : RouteText.Nouns.TryGetValue(challengeRoutes.NameID, out var noun) && noun.Strings.Count > 0
+                        ? noun.Strings[0].Text
+                        : $"Route {index}";
+
+                routeListBox.Items.Add(name);
+
+                index++;
+            }
+        }
+
+        private string GenerateFileName()
+        {
+            // Récupérer tous les numéros existants
+            HashSet<int> existingNumbers = new HashSet<int>();
+
+            foreach (var challenge in ChallengeRoutes)
+            {
+                if (challenge.Filename.StartsWith("scr_br_") && challenge.Filename.EndsWith(".cfg.bin"))
+                {
+                    string numberPart = challenge.Filename.Replace("scr_br_", "").Replace(".cfg.bin", "").Replace("_d", "").Replace("_s", "");
+
+                    if (int.TryParse(numberPart, out int num))
+                    {
+                        existingNumbers.Add(num);
+                    }
+                }
+            }
+
+            // Trouver le premier numéro manquant entre 1 et 1000
+            for (int i = 1; i <= 1000; i++)
+            {
+                if (!existingNumbers.Contains(i))
+                {
+                    return $"scr_br_{i:D4}.cfg.bin"; // Format en 4 chiffres (ex: 0001)
+                }
+            }
+
+            throw new Exception("No available filename found in range 1-1000.");
+        }
+
+        private void InitializeChallengeRouteResource()
+        {
+            FilesToDelete = new List<string>();
+
+            GameSupports.GameFile skillTextGameFile = GameOpened.Files["item_text"];
+            Itemtext = new T2bþ(skillTextGameFile.File.Directory.GetFileFromFullPath(skillTextGameFile.Path));
+            GameSupports.GameFile teamText = GameOpened.Files["team_text"];
+            TeamText = new T2bþ(teamText.File.Directory.GetFileFromFullPath(teamText.Path));
+            GameSupports.GameFile trouteText = GameOpened.Files["troute_text"];
+            RouteText = new T2bþ(trouteText.File.Directory.GetFileFromFullPath(trouteText.Path));
+
+            matchFlatComboBox.Items.AddRange(MatchRestrictions.IEGO.ToArray());
+
+            ItemsConfigs = GameOpened.GetItems("all").ToList();
+            ItemsNamesDict = GetNames(ItemsConfigs.ToArray());
+
+            // load team
+            ISoccerInfo[] soccers = GameOpened.GetSoccers();
+            ITeamParamInfo[] teamParams = GameOpened.GetTeamParams();
+            IStoryTeamInfo[] storyTeams = GameOpened.GetStoryTeams();
+            IEncountTeamInfo[] encountTeams = GameOpened.GetEncounterTeams();
+            Teams = soccers.Select(soccer =>
+            {
+                // Chercher TeamParam correspondant au Soccer
+                var teamParam = teamParams.FirstOrDefault(tp => tp.TeamParamID == soccer.TeamParamID);
+
+                if (teamParam != null)
+                {
+                    // Chercher TeamConfigID dans StoryTeams
+                    var storyTeam = storyTeams.FirstOrDefault(st => st.TeamConfigID == teamParam.TeamConfigID);
+                    if (storyTeam != null)
+                    {
+                        return new Team(soccer.SoccerID, storyTeam.Emblem2, storyTeam.NameID, teamParam.Level);
+                    }
+
+                    // Chercher TeamConfigID dans EncountTeams
+                    var encountTeam = encountTeams.FirstOrDefault(et => et.TeamConfigID == teamParam.TeamConfigID);
+                    if (encountTeam != null)
+                    {
+                        return new Team(soccer.SoccerID, encountTeam.Emblem2, encountTeam.NameID, teamParam.Level);
+                    }
+                }
+
+                // Si aucune correspondance trouvée, Emblem = -1
+                return new Team(soccer.SoccerID, -1, 0, 0);
+
+            }).ToList();
+            GetNames(Teams.ToArray());
+
+            // initialise data
+            routeListBox.Items.Clear();
+            ChallengeRoutes = new List<ChallengeRouteClass>();
+
+            // Get all routes files
+            GameSupports.GameFile soccerFolder = GameOpened.Files["soccer"];
+            string[] files = GameOpened.Game.Directory.GetFolderFromFullPath(soccerFolder.Path).Files.Keys.ToArray();
+
+            foreach (string file in files)
+            {
+                if (file.StartsWith("scr_br"))
+                {
+                    (IRouteConfig[], int) route = GameOpened.GetRoutes(file);
+
+                    foreach (IRouteConfig cell in route.Item1)
+                    {
+                        if (cell.Map == null)
+                        {
+                            cell.Map = "";
+                        }
+                    }
+
+                    ChallengeRoutes.Add(new ChallengeRouteClass(file, route.Item2, route.Item1.ToList()));
+                }
+            }
+
+            FillRouteListBox();
+        }
+
         private void ChallengeRouteWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
+            // Remove files
+            VirtualDirectory directory = GameOpened.Game.Directory.GetFolderFromFullPath($"/data/res/soccer/");
+            foreach (string file in FilesToDelete)
+            {
+                if (directory.Files.ContainsKey(file))
+                {
+                    directory.Files.Remove(file);
+                }
+            }
+
             foreach(ChallengeRouteClass challengeRoute in ChallengeRoutes)
             {
                 GameOpened.SaveRoutes(challengeRoute.Filename, challengeRoute.NameID, challengeRoute.Cells.ToArray());
+            }
+
+            if (RouteText != null)
+            {
+                GameOpened.SaveTextFile(GameOpened.Files["troute_text"], RouteText);
             }
         }
 
@@ -814,6 +891,8 @@ namespace Lynx.Forms.ChallengeRoute
         {
             if (cellFlatComboBox.SelectedIndex == -1) return;
 
+            ResetCellPanel();
+
             int cellNumber = GetCellNumber(cellFlatComboBox.SelectedItem.ToString());
 
             if (cellNumber != -1)
@@ -848,7 +927,7 @@ namespace Lynx.Forms.ChallengeRoute
 
                         }
                     } 
-                    else if (SelectedCell.CellNum == 3 || SelectedCell.CellNum == 4)
+                    else if (SelectedCell.CellType == 3 || SelectedCell.CellType == 4)
                     {
                         // item
                         cellContentFlatComboBox.Items.AddRange(ItemsNamesDict.Values.ToArray());
@@ -935,7 +1014,7 @@ namespace Lynx.Forms.ChallengeRoute
                 // Assign the selected team ID to the cell's content
                 SelectedCell.ContentID = (cellContentFlatComboBox.SelectedItem as Team).ID;
             }
-            else if (SelectedCell.CellNum == 3 || SelectedCell.CellNum == 4)
+            else if (SelectedCell.CellType == 3 || SelectedCell.CellType == 4)
             {
                 // Assign the corresponding item ID if the selected item exists in the dictionary
                 if (ItemsNamesDict.Any(x => x.Value == cellContentFlatComboBox.SelectedItem.ToString()))
@@ -1001,9 +1080,9 @@ namespace Lynx.Forms.ChallengeRoute
                         newCell.CellLink1 = -1;
                         newCell.CellLink2 = -1;
                         newCell.CellLink3 = -1;
-                        newCell.PhaseAppear = "";
+                        newCell.PhaseAppear = "0";
                         newCell.Map = "";
-                        newCell.MatchTextLock = "";
+                        newCell.MatchTextLock = null;
 
                         SelectedChallengeRoutes.Cells.Add(newCell);
 
@@ -1056,7 +1135,13 @@ namespace Lynx.Forms.ChallengeRoute
             // Ensure the control is focused, a valid index is selected, and a cell is available
             if (!textLockTextBox.Focused || cellContentFlatComboBox.SelectedIndex == -1 || SelectedCell == null) return;
 
-            SelectedCell.MatchTextLock = textLockTextBox.Text;
+            if (textLockTextBox.Text == "")
+            {
+                SelectedCell.MatchTextLock = null;
+            } else
+            {
+                SelectedCell.MatchTextLock = textLockTextBox.Text;
+            }        
         }
 
         private void MapTextBox_TextChanged(object sender, EventArgs e)
@@ -1103,6 +1188,82 @@ namespace Lynx.Forms.ChallengeRoute
             if (!matchFlatComboBox.Focused || matchFlatComboBox.SelectedIndex == -1 || SelectedCell == null) return;
 
             SelectedCell.MatchRestriction = matchFlatComboBox.SelectedIndex;
+        }
+
+        private void NameTextBox_Click(object sender, EventArgs e)
+        {
+            if (SelectedChallengeRoutes == null) return;
+
+            Nyanko.Nyanko nyanko = new Nyanko.Nyanko(Path.GetFileName(GameOpened.Files["troute_text"].Path), RouteText, false, true, SelectedChallengeRoutes.NameID);
+            nyanko.ShowDialog();
+            RouteText = nyanko.T2bþFileOpened;
+
+            // Update current name
+            if (nyanko.SelectedHash != 0)
+            {
+                SelectedChallengeRoutes.NameID = nyanko.SelectedHash;
+            }
+
+            int selectedIndex = routeListBox.SelectedIndex;
+
+            // Reload
+            FillRouteListBox();
+
+            routeListBox.SelectedIndex = selectedIndex;
+        }
+
+        private void FilenameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (!filenameTextBox.Focused && SelectedChallengeRoutes == null) return;
+
+            // Vérifie si le champ est vide ou si "scr_br" a été retiré
+            if (string.IsNullOrWhiteSpace(filenameTextBox.Text) || !filenameTextBox.Text.Contains("scr_br"))
+            {
+                filenameTextBox.Text = GenerateFileName();
+            }
+
+            SelectedChallengeRoutes.Filename = filenameTextBox.Text;
+        }
+
+        private void AddToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string filename = GenerateFileName();
+
+            if (FilesToDelete.Contains(filename))
+            {
+                FilesToDelete.Remove(filename);
+            }
+
+            ChallengeRoutes.Add(new ChallengeRouteClass(filename, 0, new List<IRouteConfig>()));
+            FillRouteListBox();
+            routeListBox.SelectedIndex = routeListBox.Items.Count - 1;
+            cellFlatComboBox.SelectedIndex = -1;
+            cellFlatComboBox.Text = "";
+        }
+
+        private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (routeListBox.SelectedIndex == -1) return;
+
+            string routeName = routeListBox.SelectedItem.ToString();
+
+            DialogResult dialogResult = MessageBox.Show("Do you want to delete " + routeName + "?", "Delete Route", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                challengeRouteGroupBox.Enabled = false;
+
+                FilesToDelete.Add(SelectedChallengeRoutes.Filename);
+                ChallengeRoutes.Remove(SelectedChallengeRoutes);
+
+                SelectedChallengeRoutes = null;
+                routeListBox.SelectedIndex = -1;
+                previewPictureBox.Image = null;
+
+                MessageBox.Show(routeName + " has been removed!");
+
+                // Reload
+                FillRouteListBox();
+            }
         }
     }
 }

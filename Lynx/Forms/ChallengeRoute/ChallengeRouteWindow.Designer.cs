@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.previewPictureBox = new System.Windows.Forms.PictureBox();
             this.challengeRouteGroupBox = new System.Windows.Forms.GroupBox();
             this.filenameTextBox = new System.Windows.Forms.TextBox();
@@ -38,24 +39,40 @@
             this.label4 = new System.Windows.Forms.Label();
             this.deleteButton = new System.Windows.Forms.Button();
             this.addButton = new System.Windows.Forms.Button();
+            this.cellFlatComboBox = new Lynx.UI.FlatComboBox();
             this.conditionGroupBox = new System.Windows.Forms.GroupBox();
             this.button2 = new System.Windows.Forms.Button();
+            this.conditionLineNumberRTB = new Lynx.UI.LineNumberRTB();
             this.restrictionGroupBox = new System.Windows.Forms.GroupBox();
             this.mapTextBox = new System.Windows.Forms.TextBox();
             this.textLockTextBox = new System.Windows.Forms.TextBox();
+            this.matchFlatComboBox = new Lynx.UI.FlatComboBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.linkGroupBox = new System.Windows.Forms.GroupBox();
+            this.unlinkButton2 = new System.Windows.Forms.Button();
+            this.unlinkButton3 = new System.Windows.Forms.Button();
+            this.unlinButton1 = new System.Windows.Forms.Button();
+            this.cellLinkFlatComboBox2 = new Lynx.UI.FlatComboBox();
+            this.cellLinkFlatComboBox1 = new Lynx.UI.FlatComboBox();
+            this.cellLinkFlatComboBox3 = new Lynx.UI.FlatComboBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.informationGroupBox = new System.Windows.Forms.GroupBox();
+            this.cellContentFlatComboBox = new Lynx.UI.FlatComboBox();
+            this.cellTypeFlatComboBox = new Lynx.UI.FlatComboBox();
             this.label18 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.cellNumberFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
+            this.cellFlagFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.routeListBox = new System.Windows.Forms.ListBox();
+            this.routeContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.insertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportAsCfgbinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,19 +80,6 @@
             this.manageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addAllCellsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeAllCellsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.unlinButton1 = new System.Windows.Forms.Button();
-            this.unlinkButton3 = new System.Windows.Forms.Button();
-            this.unlinkButton2 = new System.Windows.Forms.Button();
-            this.cellFlatComboBox = new Lynx.UI.FlatComboBox();
-            this.conditionLineNumberRTB = new Lynx.UI.LineNumberRTB();
-            this.matchFlatComboBox = new Lynx.UI.FlatComboBox();
-            this.cellLinkFlatComboBox2 = new Lynx.UI.FlatComboBox();
-            this.cellLinkFlatComboBox1 = new Lynx.UI.FlatComboBox();
-            this.cellLinkFlatComboBox3 = new Lynx.UI.FlatComboBox();
-            this.cellContentFlatComboBox = new Lynx.UI.FlatComboBox();
-            this.cellTypeFlatComboBox = new Lynx.UI.FlatComboBox();
-            this.cellNumberFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
-            this.cellFlagFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.previewPictureBox)).BeginInit();
             this.challengeRouteGroupBox.SuspendLayout();
             this.itemGroupBox.SuspendLayout();
@@ -83,9 +87,10 @@
             this.restrictionGroupBox.SuspendLayout();
             this.linkGroupBox.SuspendLayout();
             this.informationGroupBox.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cellNumberFlatNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cellFlagFlatNumericUpDown)).BeginInit();
+            this.routeContextMenuStrip.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // previewPictureBox
@@ -125,9 +130,9 @@
             this.filenameTextBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.filenameTextBox.Location = new System.Drawing.Point(411, 25);
             this.filenameTextBox.Name = "filenameTextBox";
-            this.filenameTextBox.ReadOnly = true;
             this.filenameTextBox.Size = new System.Drawing.Size(220, 13);
             this.filenameTextBox.TabIndex = 303;
+            this.filenameTextBox.TextChanged += new System.EventHandler(this.FilenameTextBox_TextChanged);
             // 
             // label3
             // 
@@ -149,6 +154,7 @@
             this.nameTextBox.ReadOnly = true;
             this.nameTextBox.Size = new System.Drawing.Size(217, 13);
             this.nameTextBox.TabIndex = 301;
+            this.nameTextBox.Click += new System.EventHandler(this.NameTextBox_Click);
             // 
             // label1
             // 
@@ -212,6 +218,19 @@
             this.addButton.UseVisualStyleBackColor = true;
             this.addButton.Click += new System.EventHandler(this.AddButton_Click);
             // 
+            // cellFlatComboBox
+            // 
+            this.cellFlatComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.cellFlatComboBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.cellFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.cellFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.cellFlatComboBox.FormattingEnabled = true;
+            this.cellFlatComboBox.Location = new System.Drawing.Point(91, 19);
+            this.cellFlatComboBox.Name = "cellFlatComboBox";
+            this.cellFlatComboBox.Size = new System.Drawing.Size(217, 21);
+            this.cellFlatComboBox.TabIndex = 300;
+            this.cellFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.CellFlatComboBox_SelectedIndexChanged);
+            // 
             // conditionGroupBox
             // 
             this.conditionGroupBox.Controls.Add(this.button2);
@@ -234,6 +253,18 @@
             this.button2.TabIndex = 274;
             this.button2.Text = "Compile";
             this.button2.UseVisualStyleBackColor = true;
+            // 
+            // conditionLineNumberRTB
+            // 
+            this.conditionLineNumberRTB.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.conditionLineNumberRTB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.conditionLineNumberRTB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.conditionLineNumberRTB.Location = new System.Drawing.Point(9, 21);
+            this.conditionLineNumberRTB.Name = "conditionLineNumberRTB";
+            this.conditionLineNumberRTB.Size = new System.Drawing.Size(601, 133);
+            this.conditionLineNumberRTB.TabIndex = 269;
             // 
             // restrictionGroupBox
             // 
@@ -272,6 +303,19 @@
             this.textLockTextBox.Size = new System.Drawing.Size(217, 13);
             this.textLockTextBox.TabIndex = 300;
             this.textLockTextBox.TextChanged += new System.EventHandler(this.TextLockTextBox_TextChanged);
+            // 
+            // matchFlatComboBox
+            // 
+            this.matchFlatComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.matchFlatComboBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.matchFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.matchFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.matchFlatComboBox.FormattingEnabled = true;
+            this.matchFlatComboBox.Location = new System.Drawing.Point(85, 26);
+            this.matchFlatComboBox.Name = "matchFlatComboBox";
+            this.matchFlatComboBox.Size = new System.Drawing.Size(217, 21);
+            this.matchFlatComboBox.TabIndex = 298;
+            this.matchFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.MatchFlatComboBox_SelectedIndexChanged);
             // 
             // label15
             // 
@@ -322,6 +366,81 @@
             this.linkGroupBox.TabStop = false;
             this.linkGroupBox.Text = "Link";
             // 
+            // unlinkButton2
+            // 
+            this.unlinkButton2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.unlinkButton2.ForeColor = System.Drawing.Color.White;
+            this.unlinkButton2.Location = new System.Drawing.Point(583, 21);
+            this.unlinkButton2.Name = "unlinkButton2";
+            this.unlinkButton2.Size = new System.Drawing.Size(24, 23);
+            this.unlinkButton2.TabIndex = 304;
+            this.unlinkButton2.Text = "X";
+            this.unlinkButton2.UseVisualStyleBackColor = true;
+            this.unlinkButton2.Click += new System.EventHandler(this.UnlinkButton2_Click);
+            // 
+            // unlinkButton3
+            // 
+            this.unlinkButton3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.unlinkButton3.ForeColor = System.Drawing.Color.White;
+            this.unlinkButton3.Location = new System.Drawing.Point(278, 50);
+            this.unlinkButton3.Name = "unlinkButton3";
+            this.unlinkButton3.Size = new System.Drawing.Size(24, 23);
+            this.unlinkButton3.TabIndex = 303;
+            this.unlinkButton3.Text = "X";
+            this.unlinkButton3.UseVisualStyleBackColor = true;
+            this.unlinkButton3.Click += new System.EventHandler(this.UnlinkButton3_Click);
+            // 
+            // unlinButton1
+            // 
+            this.unlinButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.unlinButton1.ForeColor = System.Drawing.Color.White;
+            this.unlinButton1.Location = new System.Drawing.Point(278, 21);
+            this.unlinButton1.Name = "unlinButton1";
+            this.unlinButton1.Size = new System.Drawing.Size(24, 23);
+            this.unlinButton1.TabIndex = 302;
+            this.unlinButton1.Text = "X";
+            this.unlinButton1.UseVisualStyleBackColor = true;
+            this.unlinButton1.Click += new System.EventHandler(this.UnlinButton1_Click);
+            // 
+            // cellLinkFlatComboBox2
+            // 
+            this.cellLinkFlatComboBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.cellLinkFlatComboBox2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.cellLinkFlatComboBox2.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.cellLinkFlatComboBox2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.cellLinkFlatComboBox2.FormattingEnabled = true;
+            this.cellLinkFlatComboBox2.Location = new System.Drawing.Point(390, 23);
+            this.cellLinkFlatComboBox2.Name = "cellLinkFlatComboBox2";
+            this.cellLinkFlatComboBox2.Size = new System.Drawing.Size(187, 21);
+            this.cellLinkFlatComboBox2.TabIndex = 299;
+            this.cellLinkFlatComboBox2.SelectedIndexChanged += new System.EventHandler(this.CellLinkFlatComboBox2_SelectedIndexChanged);
+            // 
+            // cellLinkFlatComboBox1
+            // 
+            this.cellLinkFlatComboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.cellLinkFlatComboBox1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.cellLinkFlatComboBox1.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.cellLinkFlatComboBox1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.cellLinkFlatComboBox1.FormattingEnabled = true;
+            this.cellLinkFlatComboBox1.Location = new System.Drawing.Point(85, 23);
+            this.cellLinkFlatComboBox1.Name = "cellLinkFlatComboBox1";
+            this.cellLinkFlatComboBox1.Size = new System.Drawing.Size(187, 21);
+            this.cellLinkFlatComboBox1.TabIndex = 298;
+            this.cellLinkFlatComboBox1.SelectedIndexChanged += new System.EventHandler(this.CellLinkFlatComboBox1_SelectedIndexChanged);
+            // 
+            // cellLinkFlatComboBox3
+            // 
+            this.cellLinkFlatComboBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.cellLinkFlatComboBox3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.cellLinkFlatComboBox3.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.cellLinkFlatComboBox3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.cellLinkFlatComboBox3.FormattingEnabled = true;
+            this.cellLinkFlatComboBox3.Location = new System.Drawing.Point(85, 50);
+            this.cellLinkFlatComboBox3.Name = "cellLinkFlatComboBox3";
+            this.cellLinkFlatComboBox3.Size = new System.Drawing.Size(187, 21);
+            this.cellLinkFlatComboBox3.TabIndex = 296;
+            this.cellLinkFlatComboBox3.SelectedIndexChanged += new System.EventHandler(this.cellLinkFlatComboBox3_SelectedIndexChanged);
+            // 
             // label12
             // 
             this.label12.AutoSize = true;
@@ -370,6 +489,38 @@
             this.informationGroupBox.TabStop = false;
             this.informationGroupBox.Text = "Information";
             // 
+            // cellContentFlatComboBox
+            // 
+            this.cellContentFlatComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.cellContentFlatComboBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.cellContentFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.cellContentFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.cellContentFlatComboBox.FormattingEnabled = true;
+            this.cellContentFlatComboBox.Location = new System.Drawing.Point(390, 52);
+            this.cellContentFlatComboBox.Name = "cellContentFlatComboBox";
+            this.cellContentFlatComboBox.Size = new System.Drawing.Size(217, 21);
+            this.cellContentFlatComboBox.TabIndex = 297;
+            this.cellContentFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.CellContentFlatComboBox_SelectedIndexChanged);
+            // 
+            // cellTypeFlatComboBox
+            // 
+            this.cellTypeFlatComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.cellTypeFlatComboBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.cellTypeFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.cellTypeFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.cellTypeFlatComboBox.FormattingEnabled = true;
+            this.cellTypeFlatComboBox.Items.AddRange(new object[] {
+            "None",
+            "Start",
+            "Match",
+            "Blue Chest",
+            "Gold Chest"});
+            this.cellTypeFlatComboBox.Location = new System.Drawing.Point(85, 52);
+            this.cellTypeFlatComboBox.Name = "cellTypeFlatComboBox";
+            this.cellTypeFlatComboBox.Size = new System.Drawing.Size(217, 21);
+            this.cellTypeFlatComboBox.TabIndex = 296;
+            this.cellTypeFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.CellTypeFlatComboBox_SelectedIndexChanged);
+            // 
             // label18
             // 
             this.label18.AutoSize = true;
@@ -389,6 +540,47 @@
             this.label6.Size = new System.Drawing.Size(44, 13);
             this.label6.TabIndex = 294;
             this.label6.Text = "Content";
+            // 
+            // cellNumberFlatNumericUpDown
+            // 
+            this.cellNumberFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.cellNumberFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.cellNumberFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.cellNumberFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.cellNumberFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.cellNumberFlatNumericUpDown.Location = new System.Drawing.Point(85, 25);
+            this.cellNumberFlatNumericUpDown.Maximum = new decimal(new int[] {
+            23,
+            0,
+            0,
+            0});
+            this.cellNumberFlatNumericUpDown.Name = "cellNumberFlatNumericUpDown";
+            this.cellNumberFlatNumericUpDown.Size = new System.Drawing.Size(217, 20);
+            this.cellNumberFlatNumericUpDown.TabIndex = 283;
+            this.cellNumberFlatNumericUpDown.ValueChanged += new System.EventHandler(this.CellNumberFlatNumericUpDown_ValueChanged);
+            // 
+            // cellFlagFlatNumericUpDown
+            // 
+            this.cellFlagFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.cellFlagFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.cellFlagFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.cellFlagFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.cellFlagFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.cellFlagFlatNumericUpDown.Location = new System.Drawing.Point(390, 26);
+            this.cellFlagFlatNumericUpDown.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.cellFlagFlatNumericUpDown.Minimum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            -2147483648});
+            this.cellFlagFlatNumericUpDown.Name = "cellFlagFlatNumericUpDown";
+            this.cellFlagFlatNumericUpDown.Size = new System.Drawing.Size(217, 20);
+            this.cellFlagFlatNumericUpDown.TabIndex = 292;
+            this.cellFlagFlatNumericUpDown.ValueChanged += new System.EventHandler(this.CellFlagFlatNumericUpDown_ValueChanged);
             // 
             // label2
             // 
@@ -413,6 +605,7 @@
             // routeListBox
             // 
             this.routeListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.routeListBox.ContextMenuStrip = this.routeContextMenuStrip;
             this.routeListBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.routeListBox.FormattingEnabled = true;
             this.routeListBox.Location = new System.Drawing.Point(12, 29);
@@ -420,6 +613,32 @@
             this.routeListBox.Size = new System.Drawing.Size(445, 368);
             this.routeListBox.TabIndex = 280;
             this.routeListBox.SelectedIndexChanged += new System.EventHandler(this.RouteListBox_SelectedIndexChanged);
+            // 
+            // routeContextMenuStrip
+            // 
+            this.routeContextMenuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.routeContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.insertToolStripMenuItem,
+            this.deleteToolStripMenuItem});
+            this.routeContextMenuStrip.Name = "characterContextMenuStrip";
+            this.routeContextMenuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.routeContextMenuStrip.Size = new System.Drawing.Size(181, 70);
+            // 
+            // insertToolStripMenuItem
+            // 
+            this.insertToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.insertToolStripMenuItem.Name = "insertToolStripMenuItem";
+            this.insertToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.insertToolStripMenuItem.Text = "Add";
+            this.insertToolStripMenuItem.Click += new System.EventHandler(this.AddToolStripMenuItem_Click);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.DeleteToolStripMenuItem_Click);
             // 
             // menuStrip1
             // 
@@ -487,192 +706,6 @@
             this.removeAllCellsToolStripMenuItem.Text = "Delete all cells";
             this.removeAllCellsToolStripMenuItem.Click += new System.EventHandler(this.RemoveAllCellsToolStripMenuItem_Click);
             // 
-            // unlinButton1
-            // 
-            this.unlinButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.unlinButton1.ForeColor = System.Drawing.Color.White;
-            this.unlinButton1.Location = new System.Drawing.Point(278, 21);
-            this.unlinButton1.Name = "unlinButton1";
-            this.unlinButton1.Size = new System.Drawing.Size(24, 23);
-            this.unlinButton1.TabIndex = 302;
-            this.unlinButton1.Text = "X";
-            this.unlinButton1.UseVisualStyleBackColor = true;
-            this.unlinButton1.Click += new System.EventHandler(this.UnlinButton1_Click);
-            // 
-            // unlinkButton3
-            // 
-            this.unlinkButton3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.unlinkButton3.ForeColor = System.Drawing.Color.White;
-            this.unlinkButton3.Location = new System.Drawing.Point(278, 50);
-            this.unlinkButton3.Name = "unlinkButton3";
-            this.unlinkButton3.Size = new System.Drawing.Size(24, 23);
-            this.unlinkButton3.TabIndex = 303;
-            this.unlinkButton3.Text = "X";
-            this.unlinkButton3.UseVisualStyleBackColor = true;
-            this.unlinkButton3.Click += new System.EventHandler(this.UnlinkButton3_Click);
-            // 
-            // unlinkButton2
-            // 
-            this.unlinkButton2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.unlinkButton2.ForeColor = System.Drawing.Color.White;
-            this.unlinkButton2.Location = new System.Drawing.Point(583, 21);
-            this.unlinkButton2.Name = "unlinkButton2";
-            this.unlinkButton2.Size = new System.Drawing.Size(24, 23);
-            this.unlinkButton2.TabIndex = 304;
-            this.unlinkButton2.Text = "X";
-            this.unlinkButton2.UseVisualStyleBackColor = true;
-            this.unlinkButton2.Click += new System.EventHandler(this.UnlinkButton2_Click);
-            // 
-            // cellFlatComboBox
-            // 
-            this.cellFlatComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.cellFlatComboBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.cellFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.cellFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.cellFlatComboBox.FormattingEnabled = true;
-            this.cellFlatComboBox.Location = new System.Drawing.Point(91, 19);
-            this.cellFlatComboBox.Name = "cellFlatComboBox";
-            this.cellFlatComboBox.Size = new System.Drawing.Size(217, 21);
-            this.cellFlatComboBox.TabIndex = 300;
-            this.cellFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.CellFlatComboBox_SelectedIndexChanged);
-            // 
-            // conditionLineNumberRTB
-            // 
-            this.conditionLineNumberRTB.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.conditionLineNumberRTB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.conditionLineNumberRTB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.conditionLineNumberRTB.Location = new System.Drawing.Point(9, 21);
-            this.conditionLineNumberRTB.Name = "conditionLineNumberRTB";
-            this.conditionLineNumberRTB.Size = new System.Drawing.Size(601, 133);
-            this.conditionLineNumberRTB.TabIndex = 269;
-            // 
-            // matchFlatComboBox
-            // 
-            this.matchFlatComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.matchFlatComboBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.matchFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.matchFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.matchFlatComboBox.FormattingEnabled = true;
-            this.matchFlatComboBox.Location = new System.Drawing.Point(85, 26);
-            this.matchFlatComboBox.Name = "matchFlatComboBox";
-            this.matchFlatComboBox.Size = new System.Drawing.Size(217, 21);
-            this.matchFlatComboBox.TabIndex = 298;
-            this.matchFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.MatchFlatComboBox_SelectedIndexChanged);
-            // 
-            // cellLinkFlatComboBox2
-            // 
-            this.cellLinkFlatComboBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.cellLinkFlatComboBox2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.cellLinkFlatComboBox2.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.cellLinkFlatComboBox2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.cellLinkFlatComboBox2.FormattingEnabled = true;
-            this.cellLinkFlatComboBox2.Location = new System.Drawing.Point(390, 23);
-            this.cellLinkFlatComboBox2.Name = "cellLinkFlatComboBox2";
-            this.cellLinkFlatComboBox2.Size = new System.Drawing.Size(187, 21);
-            this.cellLinkFlatComboBox2.TabIndex = 299;
-            this.cellLinkFlatComboBox2.SelectedIndexChanged += new System.EventHandler(this.CellLinkFlatComboBox2_SelectedIndexChanged);
-            // 
-            // cellLinkFlatComboBox1
-            // 
-            this.cellLinkFlatComboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.cellLinkFlatComboBox1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.cellLinkFlatComboBox1.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.cellLinkFlatComboBox1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.cellLinkFlatComboBox1.FormattingEnabled = true;
-            this.cellLinkFlatComboBox1.Location = new System.Drawing.Point(85, 23);
-            this.cellLinkFlatComboBox1.Name = "cellLinkFlatComboBox1";
-            this.cellLinkFlatComboBox1.Size = new System.Drawing.Size(187, 21);
-            this.cellLinkFlatComboBox1.TabIndex = 298;
-            this.cellLinkFlatComboBox1.SelectedIndexChanged += new System.EventHandler(this.CellLinkFlatComboBox1_SelectedIndexChanged);
-            // 
-            // cellLinkFlatComboBox3
-            // 
-            this.cellLinkFlatComboBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.cellLinkFlatComboBox3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.cellLinkFlatComboBox3.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.cellLinkFlatComboBox3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.cellLinkFlatComboBox3.FormattingEnabled = true;
-            this.cellLinkFlatComboBox3.Location = new System.Drawing.Point(85, 50);
-            this.cellLinkFlatComboBox3.Name = "cellLinkFlatComboBox3";
-            this.cellLinkFlatComboBox3.Size = new System.Drawing.Size(187, 21);
-            this.cellLinkFlatComboBox3.TabIndex = 296;
-            this.cellLinkFlatComboBox3.SelectedIndexChanged += new System.EventHandler(this.cellLinkFlatComboBox3_SelectedIndexChanged);
-            // 
-            // cellContentFlatComboBox
-            // 
-            this.cellContentFlatComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.cellContentFlatComboBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.cellContentFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.cellContentFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.cellContentFlatComboBox.FormattingEnabled = true;
-            this.cellContentFlatComboBox.Location = new System.Drawing.Point(390, 52);
-            this.cellContentFlatComboBox.Name = "cellContentFlatComboBox";
-            this.cellContentFlatComboBox.Size = new System.Drawing.Size(217, 21);
-            this.cellContentFlatComboBox.TabIndex = 297;
-            this.cellContentFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.CellContentFlatComboBox_SelectedIndexChanged);
-            // 
-            // cellTypeFlatComboBox
-            // 
-            this.cellTypeFlatComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.cellTypeFlatComboBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.cellTypeFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.cellTypeFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.cellTypeFlatComboBox.FormattingEnabled = true;
-            this.cellTypeFlatComboBox.Items.AddRange(new object[] {
-            "None",
-            "Start",
-            "Match",
-            "Blue Chest",
-            "Gold Chest"});
-            this.cellTypeFlatComboBox.Location = new System.Drawing.Point(85, 52);
-            this.cellTypeFlatComboBox.Name = "cellTypeFlatComboBox";
-            this.cellTypeFlatComboBox.Size = new System.Drawing.Size(217, 21);
-            this.cellTypeFlatComboBox.TabIndex = 296;
-            this.cellTypeFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.CellTypeFlatComboBox_SelectedIndexChanged);
-            // 
-            // cellNumberFlatNumericUpDown
-            // 
-            this.cellNumberFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.cellNumberFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.cellNumberFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.cellNumberFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.cellNumberFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.cellNumberFlatNumericUpDown.Location = new System.Drawing.Point(85, 25);
-            this.cellNumberFlatNumericUpDown.Maximum = new decimal(new int[] {
-            23,
-            0,
-            0,
-            0});
-            this.cellNumberFlatNumericUpDown.Name = "cellNumberFlatNumericUpDown";
-            this.cellNumberFlatNumericUpDown.Size = new System.Drawing.Size(217, 20);
-            this.cellNumberFlatNumericUpDown.TabIndex = 283;
-            this.cellNumberFlatNumericUpDown.ValueChanged += new System.EventHandler(this.CellNumberFlatNumericUpDown_ValueChanged);
-            // 
-            // cellFlagFlatNumericUpDown
-            // 
-            this.cellFlagFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.cellFlagFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.cellFlagFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.cellFlagFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.cellFlagFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.cellFlagFlatNumericUpDown.Location = new System.Drawing.Point(390, 26);
-            this.cellFlagFlatNumericUpDown.Maximum = new decimal(new int[] {
-            2147483647,
-            0,
-            0,
-            0});
-            this.cellFlagFlatNumericUpDown.Minimum = new decimal(new int[] {
-            2147483647,
-            0,
-            0,
-            -2147483648});
-            this.cellFlagFlatNumericUpDown.Name = "cellFlagFlatNumericUpDown";
-            this.cellFlagFlatNumericUpDown.Size = new System.Drawing.Size(217, 20);
-            this.cellFlagFlatNumericUpDown.TabIndex = 292;
-            this.cellFlagFlatNumericUpDown.ValueChanged += new System.EventHandler(this.CellFlagFlatNumericUpDown_ValueChanged);
-            // 
             // ChallengeRouteWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -700,10 +733,11 @@
             this.linkGroupBox.PerformLayout();
             this.informationGroupBox.ResumeLayout(false);
             this.informationGroupBox.PerformLayout();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cellNumberFlatNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cellFlagFlatNumericUpDown)).EndInit();
+            this.routeContextMenuStrip.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -759,5 +793,8 @@
         private System.Windows.Forms.Button unlinkButton3;
         private System.Windows.Forms.Button unlinButton1;
         private System.Windows.Forms.Button unlinkButton2;
+        private System.Windows.Forms.ContextMenuStrip routeContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem insertToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
     }
 }

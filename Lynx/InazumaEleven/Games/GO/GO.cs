@@ -746,6 +746,7 @@ namespace Lynx.InazumaEleven.Games.GO
             baseBegin.Children.Clear();
 
             baseBegin.Variables[0].Value = routes.Length;
+            baseBegin.Variables[1].Value = nameCRC32;
 
             for (int i = 0; i < routes.Count(); i++)
             {
@@ -755,7 +756,6 @@ namespace Lynx.InazumaEleven.Games.GO
             }
 
             Game.Directory.GetFolderFromFullPath("/data/res/soccer").Files[filename].ByteContent = routeFile.SaveWithStrings();
-            // Console.WriteLine(BitConverter.ToString(Game.Directory.GetFolderFromFullPath("/data/res/soccer").Files[filename].ByteContent).Replace("-", ""));
         }
 
         public ISoccerInfo[] GetSoccers()
@@ -787,7 +787,7 @@ namespace Lynx.InazumaEleven.Games.GO
                 baseBegin.Children.Add(newBaseEntry);
             }
 
-            Game.Directory.GetFolderFromFullPath("/data/res/soccer").Files["soccer_config.cfg.bin"].ByteContent = soccerFile.Save();
+            Game.Directory.GetFolderFromFullPath("/data/res/soccer").Files["soccer_config.cfg.bin"].ByteContent = soccerFile.SaveWithStrings();
         }
 
         public ITeamParamInfo[] GetTeamParams()

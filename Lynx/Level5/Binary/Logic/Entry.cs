@@ -87,11 +87,17 @@ namespace Lynx.Level5.Binary.Logic
                 {
                     if (variable.Value is string stringValue)
                     {
-                        output.Add(stringValue);
+                        if (stringValue != null)
+                        {
+                            output.Add(stringValue);
+                        }
                     }
                     else if (variable.Value is OffsetTextPair offsetTextPair)
                     {
-                        output.Add(offsetTextPair.Text);
+                        if (!offsetTextPair.IsNull)
+                        {
+                            output.Add(offsetTextPair.Text);
+                        }
                     }
                 }
             }
@@ -429,8 +435,14 @@ namespace Lynx.Level5.Binary.Logic
                             switch (variable.Type)
                             {
                                 case Type.String:
-                                    OffsetTextPair offsetTextPair = variable.Value as OffsetTextPair;
-                                    writer.Write(offsetTextPair.Offset);
+                                    if (variable.Value is null)
+                                    {
+                                        writer.Write(-1);
+                                    } else
+                                    {
+                                        OffsetTextPair offsetTextPair = variable.Value as OffsetTextPair;
+                                        writer.Write(offsetTextPair.Offset);
+                                    }
                                     break;
                                 case Type.Int:
                                     writer.Write(Convert.ToInt32(variable.Value));
@@ -651,21 +663,24 @@ namespace Lynx.Level5.Binary.Logic
                 }
                 else
                 {
-                    if (values[valueIndex] is OffsetTextPair offsetTextPair)
+                    if (valueIndex < values.Length)
                     {
-                        if (propertyType == typeof(string))
+                        if (values[valueIndex] is OffsetTextPair offsetTextPair)
                         {
-                            values[valueIndex] = offsetTextPair.Text;
+                            if (propertyType == typeof(string))
+                            {
+                                values[valueIndex] = offsetTextPair.Text;
+                            }
+                            else
+                            {
+                                values[valueIndex] = offsetTextPair.Offset;
+                            }
                         }
-                        else
-                        {
-                            values[valueIndex] = offsetTextPair.Offset;
-                        }
-                    }
 
-                    object convertedValue = Convert.ChangeType(values[valueIndex], propertyType);
-                    property.SetValue(structure, convertedValue);
-                    valueIndex++;
+                        object convertedValue = Convert.ChangeType(values[valueIndex], propertyType);
+                        property.SetValue(structure, convertedValue);
+                        valueIndex++;
+                    }
                 }
             }
 
@@ -745,7 +760,10 @@ namespace Lynx.Level5.Binary.Logic
                         variableList.Add(new Variable(variableType, variableValue));
                     }
                 }
-
+                else
+                {
+                    variableList.Add(new Variable(Type.String, null));
+                }
             }
 
             Variables = variableList;

@@ -382,10 +382,13 @@ namespace Lynx.Level5.Binary
                                 } else
                                 {
                                     text = "";
-                                }       
-                            }
+                                }
 
-                            variables.Add(new Variable(Logic.Type.String, new OffsetTextPair(offset, text)));
+                                variables.Add(new Variable(Logic.Type.String, new OffsetTextPair(offset, text)));
+                            } else
+                            {
+                                variables.Add(new Variable(Logic.Type.String, new OffsetTextPair(offset, "", true)));
+                            }                   
                         }
                         else if (paramTypes[j] == Logic.Type.Int)
                         {
