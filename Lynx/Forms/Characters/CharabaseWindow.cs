@@ -398,7 +398,7 @@ namespace Lynx.Forms.Characters
             Charanames = nyanko.T2bþFileOpened;
 
             // Update current name
-            if (nyanko.SelectedHash > 0)
+            if (nyanko.SelectedHash != 0)
             {
                 SelectedCharabase.NameHash = nyanko.SelectedHash;
             }
@@ -417,7 +417,7 @@ namespace Lynx.Forms.Characters
             Charanames = nyanko.T2bþFileOpened;
 
             // Update current nickname
-            if (nyanko.SelectedHash > 0)
+            if (nyanko.SelectedHash != 0)
             {
                 SelectedCharabase.NicknameHash = nyanko.SelectedHash;
 
@@ -603,7 +603,7 @@ namespace Lynx.Forms.Characters
             CharaKiznaxHint = nyanko.T2bþFileOpened;
 
             // Update current description
-            if (nyanko.SelectedHash > 0)
+            if (nyanko.SelectedHash != 0)
             {
                 SelectedCharabase.DescriptionHash = nyanko.SelectedHash;
 

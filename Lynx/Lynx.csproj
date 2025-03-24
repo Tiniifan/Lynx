@@ -251,6 +251,12 @@
     <Compile Include="Forms\Skills\SkillWindow.Designer.cs">
       <DependentUpon>SkillWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Soccers\NewSoccerWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Soccers\NewSoccerWindow.Designer.cs">
+      <DependentUpon>NewSoccerWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Soccers\SoccersWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -446,6 +452,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Skills\SkillWindow.resx">
       <DependentUpon>SkillWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Soccers\NewSoccerWindow.resx">
+      <DependentUpon>NewSoccerWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Soccers\SoccersWindow.resx">
       <DependentUpon>SoccersWindow.cs</DependentUpon>

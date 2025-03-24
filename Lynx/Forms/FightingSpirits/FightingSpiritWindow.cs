@@ -673,7 +673,7 @@ namespace Lynx.Forms.FightingSpirits
             Itemtext = nyanko.T2bþFileOpened;
 
             // Update current name
-            if (nyanko.SelectedHash > 0)
+            if (nyanko.SelectedHash != 0)
             {
                 SelectedAvatar.NicknameHash = nyanko.SelectedHash;
             }
@@ -691,7 +691,7 @@ namespace Lynx.Forms.FightingSpirits
             Itemtext = nyanko.T2bþFileOpened;
 
             // Update current nickname
-            if (nyanko.SelectedHash > 0)
+            if (nyanko.SelectedHash != 0)
             {
                 SelectedAvatar.FullNameHash = nyanko.SelectedHash;
 

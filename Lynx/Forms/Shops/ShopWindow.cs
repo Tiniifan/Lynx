@@ -365,7 +365,7 @@ namespace Lynx.Forms.Shops
                 Systemtext = nyanko.T2bþFileOpened;
 
                 // Update current name
-                if (nyanko.SelectedHash > 0)
+                if (nyanko.SelectedHash != 0)
                 {
                     community.NameID = nyanko.SelectedHash;
                 }
@@ -396,7 +396,7 @@ namespace Lynx.Forms.Shops
                 EncountText = nyanko.T2bþFileOpened;
 
                 // Update current name
-                if (nyanko.SelectedHash > 0)
+                if (nyanko.SelectedHash != 0)
                 {
                     community.AreaID = nyanko.SelectedHash;
                 }

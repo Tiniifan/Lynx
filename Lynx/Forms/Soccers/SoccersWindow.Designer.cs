@@ -213,6 +213,18 @@ namespace Lynx.Forms.Soccers
             this.soccerGroupBox = new System.Windows.Forms.GroupBox();
             this.paramGroupBox = new System.Windows.Forms.GroupBox();
             this.configGroupBox = new System.Windows.Forms.GroupBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportAsCfgbinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportAscsvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.currentConfigToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.curentParamToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.currentSoccerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newConfigToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newParamToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newSoccerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.infoGroupBox.SuspendLayout();
             this.playersGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kitNumberFlatNumericUpDown16)).BeginInit();
@@ -278,6 +290,7 @@ namespace Lynx.Forms.Soccers
             this.soccerGroupBox.SuspendLayout();
             this.paramGroupBox.SuspendLayout();
             this.configGroupBox.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // infoGroupBox
@@ -2910,7 +2923,7 @@ namespace Lynx.Forms.Soccers
             this.soccerGroupBox.Controls.Add(this.settingsGroupBox);
             this.soccerGroupBox.Controls.Add(this.infoGroupBox);
             this.soccerGroupBox.ForeColor = System.Drawing.Color.White;
-            this.soccerGroupBox.Location = new System.Drawing.Point(12, 12);
+            this.soccerGroupBox.Location = new System.Drawing.Point(12, 27);
             this.soccerGroupBox.Name = "soccerGroupBox";
             this.soccerGroupBox.Size = new System.Drawing.Size(582, 260);
             this.soccerGroupBox.TabIndex = 267;
@@ -2925,7 +2938,7 @@ namespace Lynx.Forms.Soccers
             this.paramGroupBox.Controls.Add(this.equipmentsGroupBox);
             this.paramGroupBox.Controls.Add(this.levelGroupBox);
             this.paramGroupBox.ForeColor = System.Drawing.Color.White;
-            this.paramGroupBox.Location = new System.Drawing.Point(12, 278);
+            this.paramGroupBox.Location = new System.Drawing.Point(12, 293);
             this.paramGroupBox.Name = "paramGroupBox";
             this.paramGroupBox.Size = new System.Drawing.Size(582, 625);
             this.paramGroupBox.TabIndex = 284;
@@ -2938,19 +2951,116 @@ namespace Lynx.Forms.Soccers
             this.configGroupBox.Controls.Add(this.emblemGroupBox);
             this.configGroupBox.Controls.Add(this.informationConfigGroupBox);
             this.configGroupBox.ForeColor = System.Drawing.Color.White;
-            this.configGroupBox.Location = new System.Drawing.Point(600, 12);
+            this.configGroupBox.Location = new System.Drawing.Point(600, 27);
             this.configGroupBox.Name = "configGroupBox";
             this.configGroupBox.Size = new System.Drawing.Size(410, 891);
             this.configGroupBox.TabIndex = 285;
             this.configGroupBox.TabStop = false;
             this.configGroupBox.Text = "Config";
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportToolStripMenuItem,
+            this.addToolStripMenuItem,
+            this.deleteToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1022, 24);
+            this.menuStrip1.TabIndex = 286;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // exportToolStripMenuItem
+            // 
+            this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportAsCfgbinToolStripMenuItem,
+            this.exportAscsvToolStripMenuItem});
+            this.exportToolStripMenuItem.Enabled = false;
+            this.exportToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.exportToolStripMenuItem.Text = "Export";
+            // 
+            // exportAsCfgbinToolStripMenuItem
+            // 
+            this.exportAsCfgbinToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.exportAsCfgbinToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.exportAsCfgbinToolStripMenuItem.Name = "exportAsCfgbinToolStripMenuItem";
+            this.exportAsCfgbinToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportAsCfgbinToolStripMenuItem.Text = "Export as .cfg.bin";
+            // 
+            // exportAscsvToolStripMenuItem
+            // 
+            this.exportAscsvToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.exportAscsvToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.exportAscsvToolStripMenuItem.Name = "exportAscsvToolStripMenuItem";
+            this.exportAscsvToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportAscsvToolStripMenuItem.Text = "Export as .xlsx";
+            // 
+            // addToolStripMenuItem
+            // 
+            this.addToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newConfigToolStripMenuItem,
+            this.newParamToolStripMenuItem,
+            this.newSoccerToolStripMenuItem});
+            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
+            this.addToolStripMenuItem.Text = "Add";
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.currentConfigToolStripMenuItem,
+            this.curentParamToolStripMenuItem,
+            this.currentSoccerToolStripMenuItem});
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            // 
+            // currentConfigToolStripMenuItem
+            // 
+            this.currentConfigToolStripMenuItem.Name = "currentConfigToolStripMenuItem";
+            this.currentConfigToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.currentConfigToolStripMenuItem.Text = "Current Config";
+            // 
+            // curentParamToolStripMenuItem
+            // 
+            this.curentParamToolStripMenuItem.Name = "curentParamToolStripMenuItem";
+            this.curentParamToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.curentParamToolStripMenuItem.Text = "Curent Param";
+            // 
+            // currentSoccerToolStripMenuItem
+            // 
+            this.currentSoccerToolStripMenuItem.Name = "currentSoccerToolStripMenuItem";
+            this.currentSoccerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.currentSoccerToolStripMenuItem.Text = "Current Soccer";
+            // 
+            // newConfigToolStripMenuItem
+            // 
+            this.newConfigToolStripMenuItem.Name = "newConfigToolStripMenuItem";
+            this.newConfigToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newConfigToolStripMenuItem.Text = "New Config";
+            // 
+            // newParamToolStripMenuItem
+            // 
+            this.newParamToolStripMenuItem.Name = "newParamToolStripMenuItem";
+            this.newParamToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newParamToolStripMenuItem.Text = "New Param";
+            // 
+            // newSoccerToolStripMenuItem
+            // 
+            this.newSoccerToolStripMenuItem.Name = "newSoccerToolStripMenuItem";
+            this.newSoccerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newSoccerToolStripMenuItem.Text = "New Soccer";
+            // 
             // SoccersWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.ClientSize = new System.Drawing.Size(1022, 912);
+            this.ClientSize = new System.Drawing.Size(1022, 928);
+            this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.configGroupBox);
             this.Controls.Add(this.paramGroupBox);
             this.Controls.Add(this.soccerGroupBox);
@@ -3033,7 +3143,10 @@ namespace Lynx.Forms.Soccers
             this.soccerGroupBox.ResumeLayout(false);
             this.paramGroupBox.ResumeLayout(false);
             this.configGroupBox.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -3222,5 +3335,17 @@ namespace Lynx.Forms.Soccers
         private System.Windows.Forms.Label label6;
         private UI.FlatNumericUpDown kitNumberFlatNumericUpDown2;
         private UI.FlatNumericUpDown kitNumberFlatNumericUpDown1;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportAsCfgbinToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportAscsvToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newConfigToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newParamToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem currentConfigToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem curentParamToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem currentSoccerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newSoccerToolStripMenuItem;
     }
 }
