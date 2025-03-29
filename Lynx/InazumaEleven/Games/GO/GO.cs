@@ -90,6 +90,10 @@ namespace Lynx.InazumaEleven.Games.GO
                     return new GOSupport.EncountTeamInfo() as T;
                 case System.Type t when t == typeof(IStoryTeamInfo):
                     return new GOSupport.StoryTeamInfo() as T;
+                case System.Type t when t == typeof(ITeamParamInfo):
+                    return new GOSupport.TeamParamInfo() as T;
+                case System.Type t when t == typeof(ISoccerInfo):
+                    return new GOSupport.SoccerInfo() as T;
                 default:
                     return null;
             }

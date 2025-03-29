@@ -19,11 +19,7 @@ namespace Lynx.Forms.Soccers
 
         public int SelectedHash;
 
-        public NewSoccerWindow(List<int> usedHash)
-        {
-            InitializeComponent();
-            UsedHash = usedHash;
-        }
+        public bool IsStoryTeam;
 
         private bool SameCharacterHash(string name)
         {
@@ -31,8 +27,12 @@ namespace Lynx.Forms.Soccers
             return UsedHash.IndexOf(crc32) != -1;
         }
 
-        private void NewSoccerWindow_Shown(object sender, EventArgs e)
+        public NewSoccerWindow(List<int> usedHash, string selectedType)
         {
+            InitializeComponent();
+            UsedHash = usedHash;
+            SelectedType = selectedType;
+
             for (int i = 0; i < 10000; i++)
             {
                 if (SelectedType == "config")
@@ -49,6 +49,9 @@ namespace Lynx.Forms.Soccers
                     {
                         encounterConfigListBox.Items.Add(encounterConfig);
                     }
+
+                    charaTypeVSTabControl.TabPages.Remove(paramTabPage);
+                    charaTypeVSTabControl.TabPages.Remove(soccerTabPage);
                 }
                 else if (SelectedType == "param")
                 {
@@ -64,6 +67,9 @@ namespace Lynx.Forms.Soccers
                     {
                         encounterParamListBox.Items.Add(encounterParam);
                     }
+
+                    charaTypeVSTabControl.TabPages.Remove(configTabPage);
+                    charaTypeVSTabControl.TabPages.Remove(soccerTabPage);
                 }
                 else if (SelectedType == "soccer")
                 {
@@ -73,6 +79,9 @@ namespace Lynx.Forms.Soccers
                     {
                         soccerListBox.Items.Add(soccer);
                     }
+
+                    charaTypeVSTabControl.TabPages.Remove(configTabPage);
+                    charaTypeVSTabControl.TabPages.Remove(paramTabPage);
                 }
             }
         }
@@ -85,6 +94,7 @@ namespace Lynx.Forms.Soccers
                 {
                     case 0:
                         SelectedHash = unchecked((int)Crc32.Compute(Encoding.UTF8.GetBytes(storyConfigListBox.SelectedItem.ToString())));
+                        IsStoryTeam = true;
                         break;
                     case 1:
                         SelectedHash = unchecked((int)Crc32.Compute(Encoding.UTF8.GetBytes(encounterConfigListBox.SelectedItem.ToString())));
@@ -96,6 +106,7 @@ namespace Lynx.Forms.Soccers
                 {
                     case 0:
                         SelectedHash = unchecked((int)Crc32.Compute(Encoding.UTF8.GetBytes(storyParamListBox.SelectedItem.ToString())));
+                        IsStoryTeam = true;
                         break;
                     case 1:
                         SelectedHash = unchecked((int)Crc32.Compute(Encoding.UTF8.GetBytes(encounterParamListBox.SelectedItem.ToString())));

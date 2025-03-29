@@ -34,6 +34,7 @@ using Lynx.Forms.Characters;
 using Lynx.Level5.Save.Logic;
 using System.Runtime.Remoting.Lifetime;
 using System.Xml.Linq;
+using Lynx.Forms.Skills;
 
 namespace Lynx.Forms.Soccers
 {
@@ -274,7 +275,7 @@ namespace Lynx.Forms.Soccers
                 }
 
                 string name = nameID == 0x00
-                    ? " "
+                    ? $"Team {index}"
                     : TeamText.Nouns.TryGetValue(nameID, out var noun) && noun.Strings.Count > 0
                         ? noun.Strings[0].Text
                         : $"Team {index}";
@@ -483,6 +484,38 @@ namespace Lynx.Forms.Soccers
             }
         }
 
+        private void FillCombobox()
+        {
+            int configFlatComboBoxIndex = configFlatComboBox.SelectedIndex;
+            int configFromParamFlatComboBoxIndex = configFromParamFlatComboBox.SelectedIndex;
+            int paramFlatComboBoxIndex = paramFlatComboBox.SelectedIndex;
+            int paramFromSoccerFlatComboBoxIndex = paramFromSoccerFlatComboBox.SelectedIndex;
+            int soccerFlatComboBoxIndex = soccerFlatComboBox.SelectedIndex;
+
+            configFlatComboBox.Items.Clear();
+            configFromParamFlatComboBox.Items.Clear();
+            paramFlatComboBox.Items.Clear();
+            paramFromSoccerFlatComboBox.Items.Clear();
+            soccerFlatComboBox.Items.Clear();
+
+            TeamConfigNamesDict = GetNames(TeamConfigs.ToArray());
+            configFlatComboBox.Items.AddRange(TeamConfigNamesDict.Values.ToArray());
+            configFromParamFlatComboBox.Items.AddRange(configFlatComboBox.Items.Cast<object>().ToArray());
+
+            TeamParamNamesDict = GetNames(TeamParams.ToArray());
+            paramFlatComboBox.Items.AddRange(TeamParamNamesDict.Values.ToArray());
+            paramFromSoccerFlatComboBox.Items.AddRange(paramFlatComboBox.Items.Cast<object>().ToArray());
+
+            SoccerNamesDict = GetNames(Soccers.ToArray());
+            soccerFlatComboBox.Items.AddRange(SoccerNamesDict.Values.ToArray());
+
+            configFlatComboBox.SelectedIndex = configFlatComboBoxIndex;
+            configFromParamFlatComboBox.SelectedIndex = configFromParamFlatComboBoxIndex;
+            paramFlatComboBox.SelectedIndex = configFlatComboBoxIndex;
+            paramFromSoccerFlatComboBox.SelectedIndex = paramFromSoccerFlatComboBoxIndex;
+            soccerFlatComboBox.SelectedIndex = soccerFlatComboBoxIndex;
+        }
+
         private void InitializeSoccersResource()
         {
             // Text
@@ -572,16 +605,7 @@ namespace Lynx.Forms.Soccers
             TeamParams = GameOpened.GetTeamParams().ToList();
             TeamConfigs = GameOpened.GetTeamConfig().ToList();
 
-            TeamConfigNamesDict = GetNames(TeamConfigs.ToArray());
-            configFlatComboBox.Items.AddRange(TeamConfigNamesDict.Values.ToArray());
-            configFromParamFlatComboBox.Items.AddRange(configFlatComboBox.Items.Cast<Object>().ToArray());
-
-            TeamParamNamesDict = GetNames(TeamParams.ToArray());
-            paramFlatComboBox.Items.AddRange(TeamParamNamesDict.Values.ToArray());
-            paramFromSoccerFlatComboBox.Items.AddRange(paramFlatComboBox.Items.Cast<Object>().ToArray());
-
-            SoccerNamesDict = GetNames(Soccers.ToArray());
-            soccerFlatComboBox.Items.AddRange(SoccerNamesDict.Values.ToArray());       
+            FillCombobox();
         }
 
         private void SoccersWindow_FormClosed(object sender, FormClosedEventArgs e)
@@ -1459,6 +1483,86 @@ namespace Lynx.Forms.Soccers
             {
                 var selectedKey = CharaNamesDict.ElementAt(playerFlatComboBox1.SelectedIndex).Key;
                 property.SetValue(SelectedTeamConfig, selectedKey);
+            }
+        }
+
+        private void NewConfigToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NewSoccerWindow newSoccerWindow = new NewSoccerWindow(
+                TeamConfigs
+                    .OfType<IStoryTeamInfo>()
+                    .Concat(TeamConfigs.OfType<IEncountTeamInfo>())
+                    .Select(x => x.TeamConfigID)
+                    .Distinct()
+                    .ToList(),
+                "config"
+            );
+
+            newSoccerWindow.ShowDialog();
+
+            if (newSoccerWindow.SelectedHash != 0)
+            {
+                if (newSoccerWindow.IsStoryTeam)
+                {
+                    IStoryTeamInfo newStoryTeamInfo = GameOpened.GetEmptyObject<IStoryTeamInfo>();
+                    newStoryTeamInfo.TeamConfigID = newSoccerWindow.SelectedHash;
+                    TeamConfigs.Add(newStoryTeamInfo);
+                    FillCombobox();
+                } else
+                {
+                    IEncountTeamInfo newEncounterTeam = GameOpened.GetEmptyObject<IEncountTeamInfo>();
+                    newEncounterTeam.TeamConfigID = newSoccerWindow.SelectedHash;
+                    TeamConfigs.Add(newEncounterTeam);
+                    FillCombobox();
+                }
+
+                configFlatComboBox.SelectedIndex = configFlatComboBox.Items.Count - 1;
+            }
+        }
+
+        private void NewParamToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NewSoccerWindow newSoccerWindow = new NewSoccerWindow(
+                TeamParams
+                    .Select(x => x.TeamParamID)
+                    .Distinct()
+                    .ToList(),
+                "param"
+            );
+
+            newSoccerWindow.ShowDialog();
+
+            if (newSoccerWindow.SelectedHash != 0)
+            {
+                ITeamParamInfo newTeamParam = GameOpened.GetEmptyObject<ITeamParamInfo>();
+                newTeamParam.TeamParamID = newSoccerWindow.SelectedHash;
+                TeamParams.Add(newTeamParam);
+                FillCombobox();
+
+                paramFlatComboBox.SelectedIndex = paramFlatComboBox.Items.Count - 1;
+            }
+        }
+
+        private void NewSoccerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NewSoccerWindow newSoccerWindow = new NewSoccerWindow(
+                Soccers
+                    .Select(x => x.SoccerID)
+                    .Distinct()
+                    .ToList(),
+                "soccer"
+            );
+
+            newSoccerWindow.ShowDialog();
+
+            if (newSoccerWindow.SelectedHash != 0)
+            {
+                ISoccerInfo newSoccer = GameOpened.GetEmptyObject<ISoccerInfo>();
+                newSoccer.SoccerID = newSoccerWindow.SelectedHash;
+                Soccers.Add(newSoccer);
+                FillCombobox();
+
+                soccerFlatComboBox.SelectedIndex = soccerFlatComboBox.Items.Count - 1;
             }
         }
     }

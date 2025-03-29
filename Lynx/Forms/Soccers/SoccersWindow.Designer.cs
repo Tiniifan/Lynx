@@ -218,13 +218,13 @@ namespace Lynx.Forms.Soccers
             this.exportAsCfgbinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportAscsvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newConfigToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newParamToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newSoccerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.currentConfigToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.curentParamToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.currentSoccerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newConfigToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newParamToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newSoccerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.infoGroupBox.SuspendLayout();
             this.playersGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kitNumberFlatNumericUpDown16)).BeginInit();
@@ -3004,9 +3004,37 @@ namespace Lynx.Forms.Soccers
             this.newConfigToolStripMenuItem,
             this.newParamToolStripMenuItem,
             this.newSoccerToolStripMenuItem});
+            this.addToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
             this.addToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
             this.addToolStripMenuItem.Text = "Add";
+            // 
+            // newConfigToolStripMenuItem
+            // 
+            this.newConfigToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.newConfigToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.newConfigToolStripMenuItem.Name = "newConfigToolStripMenuItem";
+            this.newConfigToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newConfigToolStripMenuItem.Text = "New Config";
+            this.newConfigToolStripMenuItem.Click += new System.EventHandler(this.NewConfigToolStripMenuItem_Click);
+            // 
+            // newParamToolStripMenuItem
+            // 
+            this.newParamToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.newParamToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.newParamToolStripMenuItem.Name = "newParamToolStripMenuItem";
+            this.newParamToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newParamToolStripMenuItem.Text = "New Param";
+            this.newParamToolStripMenuItem.Click += new System.EventHandler(this.NewParamToolStripMenuItem_Click);
+            // 
+            // newSoccerToolStripMenuItem
+            // 
+            this.newSoccerToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.newSoccerToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.newSoccerToolStripMenuItem.Name = "newSoccerToolStripMenuItem";
+            this.newSoccerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newSoccerToolStripMenuItem.Text = "New Soccer";
+            this.newSoccerToolStripMenuItem.Click += new System.EventHandler(this.NewSoccerToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
@@ -3014,45 +3042,35 @@ namespace Lynx.Forms.Soccers
             this.currentConfigToolStripMenuItem,
             this.curentParamToolStripMenuItem,
             this.currentSoccerToolStripMenuItem});
+            this.deleteToolStripMenuItem.Enabled = false;
+            this.deleteToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.deleteToolStripMenuItem.Text = "Delete";
             // 
             // currentConfigToolStripMenuItem
             // 
+            this.currentConfigToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.currentConfigToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.currentConfigToolStripMenuItem.Name = "currentConfigToolStripMenuItem";
             this.currentConfigToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.currentConfigToolStripMenuItem.Text = "Current Config";
             // 
             // curentParamToolStripMenuItem
             // 
+            this.curentParamToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.curentParamToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.curentParamToolStripMenuItem.Name = "curentParamToolStripMenuItem";
             this.curentParamToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.curentParamToolStripMenuItem.Text = "Curent Param";
             // 
             // currentSoccerToolStripMenuItem
             // 
+            this.currentSoccerToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.currentSoccerToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.currentSoccerToolStripMenuItem.Name = "currentSoccerToolStripMenuItem";
             this.currentSoccerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.currentSoccerToolStripMenuItem.Text = "Current Soccer";
-            // 
-            // newConfigToolStripMenuItem
-            // 
-            this.newConfigToolStripMenuItem.Name = "newConfigToolStripMenuItem";
-            this.newConfigToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.newConfigToolStripMenuItem.Text = "New Config";
-            // 
-            // newParamToolStripMenuItem
-            // 
-            this.newParamToolStripMenuItem.Name = "newParamToolStripMenuItem";
-            this.newParamToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.newParamToolStripMenuItem.Text = "New Param";
-            // 
-            // newSoccerToolStripMenuItem
-            // 
-            this.newSoccerToolStripMenuItem.Name = "newSoccerToolStripMenuItem";
-            this.newSoccerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.newSoccerToolStripMenuItem.Text = "New Soccer";
             // 
             // SoccersWindow
             // 
