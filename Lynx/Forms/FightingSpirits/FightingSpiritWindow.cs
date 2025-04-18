@@ -3,7 +3,6 @@ using System.IO;
 using System.Data;
 using System.Linq;
 using System.Text;
-using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using Lynx.Tools;
@@ -12,16 +11,14 @@ using Lynx.Level5.Image;
 using Lynx.InazumaEleven.Games;
 using Lynx.InazumaEleven.Logic;
 using Lynx.InazumaEleven.Common;
-using Lynx.InazumaEleven.Games.GO;
-using static Lynx.InazumaEleven.Games.GO.GOSupport;
-using Lynx.Level5.Save.Logic;
 using OfficeOpenXml;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace Lynx.Forms.FightingSpirits
 {
     public partial class FightingSpiritWindow : Form
     {
-        private IGame GameOpened;
+        private Game GameOpened;
 
         private List<IAvatar> Avatars;
 
@@ -71,6 +68,7 @@ namespace Lynx.Forms.FightingSpirits
             // Not found
             return SelectedAvatar.AvatarHash.ToString("X8");
         }
+        
         private Dictionary<int, string> GetNames(IAvatar[] avatars)
         {
             Dictionary<int, string> output = new Dictionary<int, string>();
@@ -355,6 +353,13 @@ namespace Lynx.Forms.FightingSpirits
             MessageBox.Show($"Saved on {Path.GetFileName(filePath)}");
         }
 
+        private void Save()
+        {
+            GameOpened.SaveAvatars(Avatars.ToArray());
+            GameOpened.SaveAvatarGrowthTable(AvatarTimeGrowths.ToArray());
+            GameOpened.SaveTextFile(GameOpened.Files["item_text"], Itemtext);
+        }
+
         private void InitializeAvatarResource()
         {
             GameSupports.GameFile skillTextGameFile = GameOpened.Files["item_text"];
@@ -378,7 +383,7 @@ namespace Lynx.Forms.FightingSpirits
             FillDataGridView();
         }
 
-        public FightingSpiritWindow(IGame game)
+        public FightingSpiritWindow(Game game)
         {
             GameOpened = game;
             InitializeComponent();
@@ -387,9 +392,7 @@ namespace Lynx.Forms.FightingSpirits
 
         private void FightingSpiritWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
-            GameOpened.SaveAvatars(Avatars.ToArray());
-            //GameOpened.SaveAvatarGrowthTable(AvatarTimeGrowths.ToArray());
-            GameOpened.SaveTextFile(GameOpened.Files["item_text"], Itemtext);
+            Save();
         }
 
         private void SearchTextBox_TextChanged(object sender, EventArgs e)
@@ -853,6 +856,33 @@ namespace Lynx.Forms.FightingSpirits
                     descriptionTextBox.Clear();
                 }
             }
+        }
+
+        private void ExportAsCfgbinToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.IsFolderPicker = true;
+
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                // Save
+                Save();
+
+                // Get files
+                (string, byte[]) itemconfig = GameOpened.GetFileNameAndContent("item_config");
+                (string, byte[]) itemtext = GameOpened.GetFileNameAndContent("item_text");
+
+                // Export files
+                File.WriteAllBytes(Path.Combine(dialog.FileName, itemconfig.Item1), itemconfig.Item2);
+                File.WriteAllBytes(Path.Combine(dialog.FileName, itemtext.Item1), itemtext.Item2);
+
+                MessageBox.Show("Data exported!");
+            }
+        }
+
+        private void ExportAscsvToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // To do
         }
     }
 }

@@ -12,34 +12,22 @@ using Lynx.Level5.Image;
 using Lynx.InazumaEleven.Games;
 using Lynx.InazumaEleven.Logic;
 using Lynx.InazumaEleven.Common;
-using Lynx.InazumaEleven.Games.GO;
 using OfficeOpenXml;
-using OfficeOpenXml.FormulaParsing;
-using static Lynx.InazumaEleven.Games.GO.GOSupport;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Header;
-using DocumentFormat.OpenXml.Drawing.Charts;
-using DocumentFormat.OpenXml.Spreadsheet;
 using Font = System.Drawing.Font;
 using Color = System.Drawing.Color;
 using Control = System.Windows.Forms.Control;
 using ChallengeRouteClass = Lynx.InazumaEleven.Logic.ChallengeRoute;
 using Team = Lynx.InazumaEleven.Logic.Team;
-using IGame = Lynx.InazumaEleven.Games.IGame;
 using System.Text.RegularExpressions;
-using Lynx.Level5.Save.Logic.Competition_Route;
 using Lynx.Level5.Base64;
-using DocumentFormat.OpenXml.Wordprocessing;
 using Lynx.UI;
-using System.Reflection;
-using Lynx.Forms.Characters;
-using Lynx.Level5.Save.Logic;
-using Lynx.Level5.Save.Games;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace Lynx.Forms.ChallengeRoute
 {
     public partial class ChallengeRouteWindow : Form
     {
-        private IGame GameOpened;
+        private Game GameOpened;
 
         private const int HexSize = 25;
 
@@ -75,9 +63,12 @@ namespace Lynx.Forms.ChallengeRoute
 
         private List<string> FilesToDelete;
 
-        public ChallengeRouteWindow(IGame game)
+        VirtualDirectory SoccerDirectory;
+
+        public ChallengeRouteWindow(Game game)
         {
             GameOpened = game;
+            SoccerDirectory = GameOpened.GetDirectory("soccer");
 
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
@@ -606,8 +597,7 @@ namespace Lynx.Forms.ChallengeRoute
             // load team
             ISoccerInfo[] soccers = GameOpened.GetSoccers();
             ITeamParamInfo[] teamParams = GameOpened.GetTeamParams();
-            IStoryTeamInfo[] storyTeams = GameOpened.GetStoryTeams();
-            IEncountTeamInfo[] encountTeams = GameOpened.GetEncounterTeams();
+            IEncountTeamInfo[] teamConfigs = GameOpened.GetTeamConfig().Select(x => (IEncountTeamInfo)x).ToArray();
             Teams = soccers.Select(soccer =>
             {
                 // Chercher TeamParam correspondant au Soccer
@@ -615,18 +605,10 @@ namespace Lynx.Forms.ChallengeRoute
 
                 if (teamParam != null)
                 {
-                    // Chercher TeamConfigID dans StoryTeams
-                    var storyTeam = storyTeams.FirstOrDefault(st => st.TeamConfigID == teamParam.TeamConfigID);
-                    if (storyTeam != null)
+                    var teamConfig = teamConfigs.FirstOrDefault(st => st.TeamConfigID == teamParam.TeamConfigID);
+                    if (teamConfig != null)
                     {
-                        return new Team(soccer.SoccerID, storyTeam.Emblem2, storyTeam.NameID, teamParam.Level);
-                    }
-
-                    // Chercher TeamConfigID dans EncountTeams
-                    var encountTeam = encountTeams.FirstOrDefault(et => et.TeamConfigID == teamParam.TeamConfigID);
-                    if (encountTeam != null)
-                    {
-                        return new Team(soccer.SoccerID, encountTeam.Emblem2, encountTeam.NameID, teamParam.Level);
+                        return new Team(soccer.SoccerID, teamConfig.Emblem2, teamConfig.NameID, teamParam.Level);
                     }
                 }
 
@@ -641,8 +623,7 @@ namespace Lynx.Forms.ChallengeRoute
             ChallengeRoutes = new List<ChallengeRouteClass>();
 
             // Get all routes files
-            GameSupports.GameFile soccerFolder = GameOpened.Files["soccer"];
-            string[] files = GameOpened.Game.Directory.GetFolderFromFullPath(soccerFolder.Path).Files.Keys.ToArray();
+            string[] files = SoccerDirectory.Files.Keys.ToArray();
 
             foreach (string file in files)
             {
@@ -665,19 +646,18 @@ namespace Lynx.Forms.ChallengeRoute
             FillRouteListBox();
         }
 
-        private void ChallengeRouteWindow_FormClosed(object sender, FormClosedEventArgs e)
+        private void Save()
         {
             // Remove files
-            VirtualDirectory directory = GameOpened.Game.Directory.GetFolderFromFullPath($"/data/res/soccer/");
             foreach (string file in FilesToDelete)
             {
-                if (directory.Files.ContainsKey(file))
+                if (SoccerDirectory.Files.ContainsKey(file))
                 {
-                    directory.Files.Remove(file);
+                    SoccerDirectory.Files.Remove(file);
                 }
             }
 
-            foreach(ChallengeRouteClass challengeRoute in ChallengeRoutes)
+            foreach (ChallengeRouteClass challengeRoute in ChallengeRoutes)
             {
                 GameOpened.SaveRoutes(challengeRoute.Filename, challengeRoute.NameID, challengeRoute.Cells.ToArray());
             }
@@ -686,6 +666,11 @@ namespace Lynx.Forms.ChallengeRoute
             {
                 GameOpened.SaveTextFile(GameOpened.Files["troute_text"], RouteText);
             }
+        }
+
+        private void ChallengeRouteWindow_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Save();
         }
 
         private void PreviewPictureBox_Paint(object sender, PaintEventArgs e)
@@ -1263,6 +1248,31 @@ namespace Lynx.Forms.ChallengeRoute
 
                 // Reload
                 FillRouteListBox();
+            }
+        }
+
+        private void ExportAsCfgbinToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.IsFolderPicker = true;
+
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                // Save
+                Save();
+
+                // Export soccer files
+                foreach (ChallengeRouteClass challengeRoute in ChallengeRoutes)
+                {
+                    SoccerDirectory.Files[challengeRoute.Filename].Read();
+                    File.WriteAllBytes(Path.Combine(dialog.FileName, challengeRoute.Filename), SoccerDirectory.Files[challengeRoute.Filename].ByteContent);
+                }
+
+                // Export text files
+                (string, byte[]) routeText = GameOpened.GetFileNameAndContent("troute_text");
+                File.WriteAllBytes(Path.Combine(dialog.FileName, routeText.Item1), routeText.Item2);
+
+                MessageBox.Show("Data exported!");
             }
         }
     }

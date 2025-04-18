@@ -155,6 +155,12 @@
     <Compile Include="Forms\Characters\NewCharaparamWindow.designer.cs">
       <DependentUpon>NewCharaparamWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Coaches\CoachWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Coaches\CoachWindow.Designer.cs">
+      <DependentUpon>CoachWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FightingSpirits\FightingSpiritWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -277,12 +283,13 @@
     <Compile Include="InazumaEleven\Common\Skins.cs" />
     <Compile Include="InazumaEleven\Common\Elements.cs" />
     <Compile Include="InazumaEleven\Common\Years.cs" />
+    <Compile Include="InazumaEleven\Games\Game.cs" />
     <Compile Include="InazumaEleven\Games\GameSupports.cs" />
     <Compile Include="InazumaEleven\Games\GO\GO.cs" />
     <Compile Include="InazumaEleven\Games\GO\GOSupport.cs" />
-    <Compile Include="InazumaEleven\Games\IGame.cs" />
     <Compile Include="InazumaEleven\Logic\AvatarGrowthStat.cs" />
     <Compile Include="InazumaEleven\Logic\ChallengeRoute.cs" />
+    <Compile Include="InazumaEleven\Logic\CoachText.cs" />
     <Compile Include="InazumaEleven\Logic\IRouteConfig.cs" />
     <Compile Include="InazumaEleven\Logic\ISoccerInfo.cs" />
     <Compile Include="InazumaEleven\Logic\ITeamConfigInfo.cs" />
@@ -404,6 +411,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Characters\NewCharaparamWindow.resx">
       <DependentUpon>NewCharaparamWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Coaches\CoachWindow.resx">
+      <DependentUpon>CoachWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FightingSpirits\FightingSpiritWindow.resx">
       <DependentUpon>FightingSpiritWindow.cs</DependentUpon>

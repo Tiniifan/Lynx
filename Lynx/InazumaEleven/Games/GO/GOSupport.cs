@@ -54,7 +54,7 @@ namespace Lynx.InazumaEleven.Games.GO
             public int FightingSpiritHash { get; set; }
             public int SpecialMoveCount { get; set; }
             public int SpecialMoveOffset { get; set; }
-            public int Unk1 { get; set; }
+            public int PlayerGroup { get; set; }
             public int ExperienceGrow { get; set; }
             public int StatVariance { get; set; }
             public int Unk2 { get; set; }
@@ -278,7 +278,7 @@ namespace Lynx.InazumaEleven.Games.GO
             }
         }
 
-        public class ItemConfigDirector : IItemConfig
+        public class ItemConfigDirector : IItemDirector
         {
             public int ItemID { get; set; }
             public int ItemNumber { get; set; }
@@ -286,18 +286,38 @@ namespace Lynx.InazumaEleven.Games.GO
             public int DescriptionID { get; set; }
             public int Unk4 { get; set; }
             public int ItemCategory { get; set; }
-
-            // Méthode pour convertir explicitement en ItemConfig
-            public ItemConfig ToItemConfig()
-            {
-                return new ItemConfig
-                {
-                    ItemID = this.ItemID,
-                    NameID = this.NameID,
-                    DescriptionID = this.DescriptionID,
-                    ItemCategory = this.ItemCategory
-                };
-            }
+            public int Unk6 { get; set; }
+            public int Unk7 { get; set; }
+            public int Unk8 { get; set; }
+            public int PlayerGroupBuff1 { get; set; }
+            public int PlayerGroupBuff2 { get; set; }
+            public int PlayerGroupBuff3 { get; set; }
+            public int PlayerGroupDebuff1 { get; set; }
+            public int PlayerGroupDebuff2 { get; set; }
+            public int PlayerGroupDebuff3 { get; set; }
+            public int FPCompatible { get; set; }
+            public int TPCompatible { get; set; }
+            public int KickCompatible { get; set; }
+            public int DribbleCompatible { get; set; }
+            public int TechniqueCompatible { get; set; }
+            public int BlockCompatible { get; set; }
+            public int SpeedCompatible { get; set; }
+            public int StaminaCompatible { get; set; }
+            public int CatchCompatible { get; set; }
+            public int LuckCompatible { get; set; }
+            public int FPNotCompatible { get; set; }
+            public int TPNotCompatible { get; set; }
+            public int KickNotCompatible { get; set; }
+            public int DribbleNotCompatible { get; set; }
+            public int TechniqueNotCompatible { get; set; }
+            public int BlockNotCompatible { get; set; }
+            public int SpeedNotCompatible { get; set; }
+            public int StaminaNotCompatible { get; set; }
+            public int CatchNotCompatible { get; set; }
+            public int LuckNotCompatible { get; set; }
+            public int ItemPositionX { get; set; }
+            public int ItemPositionY { get; set; }
+            public int Unk37 { get; set; }
         }
 
         public class ItemConfigUniform : IItemConfig

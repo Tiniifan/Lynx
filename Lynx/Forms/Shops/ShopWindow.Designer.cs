@@ -30,10 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.shopDataGridView = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -52,10 +52,15 @@
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportAsCfgbinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportAscsvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.shopDataGridView)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.infoGroupBox.SuspendLayout();
             this.contextMenuStrip2.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // shopDataGridView
@@ -76,31 +81,31 @@
             this.Column2,
             this.Column3});
             this.shopDataGridView.ContextMenuStrip = this.contextMenuStrip1;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.shopDataGridView.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.shopDataGridView.DefaultCellStyle = dataGridViewCellStyle5;
             this.shopDataGridView.Enabled = false;
             this.shopDataGridView.EnableHeadersVisualStyles = false;
             this.shopDataGridView.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.shopDataGridView.Location = new System.Drawing.Point(261, 83);
+            this.shopDataGridView.Location = new System.Drawing.Point(312, 71);
             this.shopDataGridView.Name = "shopDataGridView";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.shopDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.shopDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle11;
             this.shopDataGridView.RowHeadersVisible = false;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.shopDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle5;
-            this.shopDataGridView.Size = new System.Drawing.Size(625, 334);
+            dataGridViewCellStyle13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.shopDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle13;
+            this.shopDataGridView.Size = new System.Drawing.Size(625, 544);
             this.shopDataGridView.TabIndex = 54;
             this.shopDataGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.ShopDataGridView_CellMouseUp);
             this.shopDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.ShopDataGridView_CellValueChanged);
@@ -108,8 +113,8 @@
             // 
             // Column1
             // 
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle4;
             this.Column1.HeaderText = "Name";
             this.Column1.Name = "Column1";
             this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -151,7 +156,7 @@
             this.searchTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.searchTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.searchTextBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.searchTextBox.Location = new System.Drawing.Point(12, 12);
+            this.searchTextBox.Location = new System.Drawing.Point(63, 5);
             this.searchTextBox.Name = "searchTextBox";
             this.searchTextBox.Size = new System.Drawing.Size(243, 13);
             this.searchTextBox.TabIndex = 55;
@@ -166,9 +171,9 @@
             this.shopTreeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.shopTreeView.ForeColor = System.Drawing.Color.White;
             this.shopTreeView.LineColor = System.Drawing.Color.White;
-            this.shopTreeView.Location = new System.Drawing.Point(12, 39);
+            this.shopTreeView.Location = new System.Drawing.Point(12, 27);
             this.shopTreeView.Name = "shopTreeView";
-            this.shopTreeView.Size = new System.Drawing.Size(243, 379);
+            this.shopTreeView.Size = new System.Drawing.Size(294, 588);
             this.shopTreeView.TabIndex = 56;
             this.shopTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.ShopTreeView_AfterSelect);
             this.shopTreeView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShopTreeView_MouseDown);
@@ -250,7 +255,7 @@
             this.infoGroupBox.Controls.Add(this.label1);
             this.infoGroupBox.Enabled = false;
             this.infoGroupBox.ForeColor = System.Drawing.Color.White;
-            this.infoGroupBox.Location = new System.Drawing.Point(261, 32);
+            this.infoGroupBox.Location = new System.Drawing.Point(312, 21);
             this.infoGroupBox.Name = "infoGroupBox";
             this.infoGroupBox.Size = new System.Drawing.Size(625, 45);
             this.infoGroupBox.TabIndex = 265;
@@ -283,16 +288,59 @@
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.DeleteToolStripMenuItem_Click);
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(950, 24);
+            this.menuStrip1.TabIndex = 276;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // exportToolStripMenuItem
+            // 
+            this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportAsCfgbinToolStripMenuItem,
+            this.exportAscsvToolStripMenuItem});
+            this.exportToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.exportToolStripMenuItem.Text = "Export";
+            // 
+            // exportAsCfgbinToolStripMenuItem
+            // 
+            this.exportAsCfgbinToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.exportAsCfgbinToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.exportAsCfgbinToolStripMenuItem.Name = "exportAsCfgbinToolStripMenuItem";
+            this.exportAsCfgbinToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportAsCfgbinToolStripMenuItem.Text = "Export as .cfg.bin";
+            this.exportAsCfgbinToolStripMenuItem.Click += new System.EventHandler(this.ExportAsCfgbinToolStripMenuItem_Click);
+            // 
+            // exportAscsvToolStripMenuItem
+            // 
+            this.exportAscsvToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.exportAscsvToolStripMenuItem.Enabled = false;
+            this.exportAscsvToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.exportAscsvToolStripMenuItem.Name = "exportAscsvToolStripMenuItem";
+            this.exportAscsvToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportAscsvToolStripMenuItem.Text = "Export as .xlsx";
+            this.exportAscsvToolStripMenuItem.Click += new System.EventHandler(this.ExportAscsvToolStripMenuItem_Click);
+            // 
             // ShopWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.ClientSize = new System.Drawing.Size(899, 430);
+            this.ClientSize = new System.Drawing.Size(950, 627);
+            this.Controls.Add(this.searchTextBox);
+            this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.infoGroupBox);
             this.Controls.Add(this.shopTreeView);
-            this.Controls.Add(this.searchTextBox);
             this.Controls.Add(this.shopDataGridView);
+            this.MaximumSize = new System.Drawing.Size(966, 666);
+            this.MinimumSize = new System.Drawing.Size(966, 666);
             this.Name = "ShopWindow";
             this.Text = "ShopWindow";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ShopWindow_FormClosed);
@@ -302,6 +350,8 @@
             this.infoGroupBox.ResumeLayout(false);
             this.infoGroupBox.PerformLayout();
             this.contextMenuStrip2.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -326,5 +376,9 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
         private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportAsCfgbinToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportAscsvToolStripMenuItem;
     }
 }

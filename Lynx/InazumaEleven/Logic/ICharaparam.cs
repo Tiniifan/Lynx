@@ -21,6 +21,7 @@
         int FightingSpiritHash { get; set; }
         int SpecialMoveCount { get; set; }
         int SpecialMoveOffset { get; set; }
+        int PlayerGroup { get; set; }
         int ExperienceGrow { get; set; }
         int StatVariance { get; set; }
         int FPGrow { get; set; }

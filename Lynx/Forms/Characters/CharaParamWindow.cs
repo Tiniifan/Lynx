@@ -13,12 +13,16 @@ using Lynx.InazumaEleven.Logic;
 using Lynx.InazumaEleven.Common;
 using Lynx.InazumaEleven.Games.GO;
 using OfficeOpenXml;
+using Lynx.Level5.Save.Logic;
+using static Lynx.InazumaEleven.Games.GO.GOSupport;
+using Player = Lynx.InazumaEleven.Logic.Player;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace Lynx.Forms.Characters
 {
     public partial class CharaParamWindow : Form
     {
-        private IGame GameOpened;
+        private Game GameOpened;
 
         private List<ICharabase> Charabases;
 
@@ -44,7 +48,7 @@ namespace Lynx.Forms.Characters
 
         private Dictionary<int, string> FightingSpiritNames;
 
-        public CharaParamWindow(IGame game)
+        public CharaParamWindow(Game game)
         {
             GameOpened = game;
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
@@ -232,7 +236,6 @@ namespace Lynx.Forms.Characters
             if (!specialMoveNumericUpDown.Focused) return;
 
             int specialMoveIndex = Convert.ToInt32(specialMoveNumericUpDown.Name.Replace("moveLevelFlatNumericUpDown", "")) - 1;
-            Console.WriteLine(specialMoveIndex);
             SelectedPlayer.SpecialMoves[specialMoveIndex].Level = Convert.ToInt32(specialMoveNumericUpDown.Value);
         }
 
@@ -306,24 +309,27 @@ namespace Lynx.Forms.Characters
                 worksheet.Cells[1, 2].Value = "ID";
                 worksheet.Cells[1, 3].Value = "Position";
                 worksheet.Cells[1, 4].Value = "Element";
-                worksheet.Cells[1, 5].Value = "FP";
-                worksheet.Cells[1, 6].Value = "TP";
-                worksheet.Cells[1, 7].Value = "Kick";
-                worksheet.Cells[1, 8].Value = "Dribble";
-                worksheet.Cells[1, 9].Value = "Technique";
-                worksheet.Cells[1, 10].Value = "Block";
-                worksheet.Cells[1, 11].Value = "Speed";
-                worksheet.Cells[1, 12].Value = "Stamina";
-                worksheet.Cells[1, 13].Value = "Catch";
-                worksheet.Cells[1, 14].Value = "Luck";
-                worksheet.Cells[1, 15].Value = "Freedom";
-                worksheet.Cells[1, 16].Value = "Fighting Spirit";
-                worksheet.Cells[1, 17].Value = "Move 1";
-                worksheet.Cells[1, 18].Value = "Move 2";
-                worksheet.Cells[1, 19].Value = "Move 3";
-                worksheet.Cells[1, 20].Value = "Move 4";
-                worksheet.Cells[1, 21].Value = "Move 5";
-                worksheet.Cells[1, 22].Value = "Move 6";
+                worksheet.Cells[1, 5].Value = "Group";
+
+                // Add the rest of the original headers, shifted by the number of group headers added
+                worksheet.Cells[1, 6].Value = "FP";
+                worksheet.Cells[1, 7].Value = "TP";
+                worksheet.Cells[1, 8].Value = "Kick";
+                worksheet.Cells[1, 9].Value = "Dribble";
+                worksheet.Cells[1, 10].Value = "Technique";
+                worksheet.Cells[1, 11].Value = "Block";
+                worksheet.Cells[1, 12].Value = "Speed";
+                worksheet.Cells[1, 13].Value = "Stamina";
+                worksheet.Cells[1, 14].Value = "Catch";
+                worksheet.Cells[1, 15].Value = "Luck";
+                worksheet.Cells[1, 16].Value = "Freedom";
+                worksheet.Cells[1, 17].Value = "Fighting Spirit";
+                worksheet.Cells[1, 18].Value = "Move 1";
+                worksheet.Cells[1, 19].Value = "Move 2";
+                worksheet.Cells[1, 20].Value = "Move 3";
+                worksheet.Cells[1, 21].Value = "Move 4";
+                worksheet.Cells[1, 22].Value = "Move 5";
+                worksheet.Cells[1, 23].Value = "Move 6";
 
                 // Fill the rows with data
                 int row = 2;
@@ -335,7 +341,7 @@ namespace Lynx.Forms.Characters
                     if (charabase != null)
                     {
                         worksheet.Cells[row, 1].Value = GetText(charabase.NameHash, true);
-                    } 
+                    }
                     else
                     {
                         worksheet.Cells[row, 1].Value = $"Player {row - 1}";
@@ -344,24 +350,26 @@ namespace Lynx.Forms.Characters
                     worksheet.Cells[row, 2].Value = FindCharacterID(player.Charaparam.ParamHash);
                     worksheet.Cells[row, 3].Value = positionFlatComboBox.Items[player.Charaparam.PlayerPosition].ToString();
                     worksheet.Cells[row, 4].Value = elementFlatComboBox.Items[player.Charaparam.Element].ToString();
-                    worksheet.Cells[row, 5].Value = player.Charaparam.FP;
-                    worksheet.Cells[row, 6].Value = player.Charaparam.TP;
-                    worksheet.Cells[row, 7].Value = player.Charaparam.Kick;
-                    worksheet.Cells[row, 8].Value = player.Charaparam.Dribble;
-                    worksheet.Cells[row, 9].Value = player.Charaparam.Technique;
-                    worksheet.Cells[row, 10].Value = player.Charaparam.Block;
-                    worksheet.Cells[row, 11].Value = player.Charaparam.Speed;
-                    worksheet.Cells[row, 12].Value = player.Charaparam.Stamina;
-                    worksheet.Cells[row, 13].Value = player.Charaparam.Catch;
-                    worksheet.Cells[row, 14].Value = player.Charaparam.Luck;
-                    worksheet.Cells[row, 15].Value = player.Charaparam.Freedom;
+                    worksheet.Cells[row, 5].Value = player.Charaparam.PlayerGroup;
+                    worksheet.Cells[row, 6].Value = player.Charaparam.FP;
+                    worksheet.Cells[row, 7].Value = player.Charaparam.TP;
+                    worksheet.Cells[row, 8].Value = player.Charaparam.Kick;
+                    worksheet.Cells[row, 9].Value = player.Charaparam.Dribble;
+                    worksheet.Cells[row, 10].Value = player.Charaparam.Technique;
+                    worksheet.Cells[row, 11].Value = player.Charaparam.Block;
+                    worksheet.Cells[row, 12].Value = player.Charaparam.Speed;
+                    worksheet.Cells[row, 13].Value = player.Charaparam.Stamina;
+                    worksheet.Cells[row, 14].Value = player.Charaparam.Catch;
+                    worksheet.Cells[row, 15].Value = player.Charaparam.Luck;
+                    worksheet.Cells[row, 16].Value = player.Charaparam.Freedom;
 
                     if (player.Charaparam.FightingSpiritHash != 0x00)
                     {
-                        worksheet.Cells[row, 16].Value = FightingSpiritNames[player.Charaparam.FightingSpiritHash].ToString();
-                    } else
+                        worksheet.Cells[row, 17].Value = FightingSpiritNames[player.Charaparam.FightingSpiritHash].ToString();
+                    }
+                    else
                     {
-                        worksheet.Cells[row, 16].Value = "";
+                        worksheet.Cells[row, 17].Value = "";
                     }
 
                     for (int i = 0; i < 6; i++)
@@ -374,12 +382,13 @@ namespace Lynx.Forms.Characters
                             {
                                 if (skill.SkillHash != 0x00)
                                 {
-                                    worksheet.Cells[row, 17 + i].Value = $"{SkillnamesDict[skill.SkillHash]} ({player.SpecialMoves[i].LevelLearned})";
-                                } else
-                                {
-                                    worksheet.Cells[row, 17 + i].Value = $"";
+                                    worksheet.Cells[row, 18 + i].Value = $"{SkillnamesDict[skill.SkillHash]} ({player.SpecialMoves[i].LevelLearned})";
                                 }
-                                
+                                else
+                                {
+                                    worksheet.Cells[row, 18 + i].Value = $"";
+                                }
+
                             }
                         }
                         else
@@ -388,7 +397,7 @@ namespace Lynx.Forms.Characters
 
                             if (defaultSkill != null && SkillnamesDict.ContainsKey(defaultSkill.SkillHash))
                             {
-                                worksheet.Cells[row, 17 + i].Value = $"{moveFlatComboBox1.Items.IndexOf(SkillnamesDict[defaultSkill.SkillHash])}";
+                                worksheet.Cells[row, 18 + i].Value = $"{moveFlatComboBox1.Items.IndexOf(SkillnamesDict[defaultSkill.SkillHash])}";
                             }
                         }
                     }
@@ -421,7 +430,7 @@ namespace Lynx.Forms.Characters
                     row++;
                 }
 
-                for (int col = 1; col <= 22; col++)
+                for (int col = 1; col <= 23; col++) // Update the loop limit
                 {
                     worksheet.Column(col).AutoFit();
                 }
@@ -432,6 +441,36 @@ namespace Lynx.Forms.Characters
             }
 
             MessageBox.Show($"Saved on {Path.GetFileName(filePath)}");
+        }
+
+        private void Save()
+        {
+            int skillOffset = 0;
+            List<ISkillTable> skillTables = new List<ISkillTable>();
+
+            foreach (Player player in Players)
+            {
+                // Fix player special move offset start
+                player.Charaparam.SpecialMoveOffset = skillOffset;
+
+                // Fix moveset
+                ISkillTable[] myPlayerSkills = player.SpecialMoves.Where(x => x.SkillHash != 0x00).ToArray();
+                foreach (ISkillTable myPlayerSkill in myPlayerSkills)
+                {
+                    myPlayerSkill.SkillIndex = skillOffset;
+                    skillOffset++;
+                }
+
+                // Fix plater special move count
+                player.Charaparam.SpecialMoveCount = myPlayerSkills.Length;
+
+                // Add new moveset on skilltables
+                skillTables.AddRange(myPlayerSkills);
+            }
+
+            GameOpened.SaveCharaparams(Players.Select(x => x.Charaparam).ToArray());
+            GameOpened.SaveSkillTable(skillTables.ToArray());
+            GameOpened.SaveTextFile(GameOpened.Files["chara_text"], Charanames);
         }
 
         private void CharaParamWindow_Shown(object sender, EventArgs e)
@@ -498,48 +537,11 @@ namespace Lynx.Forms.Characters
             moveFlatComboBox4.Items.AddRange(moveFlatComboBox1.Items.Cast<Object>().ToArray());
             moveFlatComboBox5.Items.AddRange(moveFlatComboBox1.Items.Cast<Object>().ToArray());
             moveFlatComboBox6.Items.AddRange(moveFlatComboBox1.Items.Cast<Object>().ToArray());
-
-            foreach(Player player in Players.Where(x => x.Charaparam.Element == 4 && x.Charaparam.PlayerPosition == 2))
-            {
-                // Get charabase
-                ICharabase charabase = Charabases.FirstOrDefault(x => x.BaseHash == player.Charaparam.BaseHash);
-
-                if (charabase.Gender == 2)
-                {
-                    Console.WriteLine(GetText(charabase.NameHash, true));
-                }
-                
-            }
         }
 
         private void CharaParamWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
-            int skillOffset = 0;
-            List<ISkillTable> skillTables = new List<ISkillTable>();
-
-            foreach (Player player in Players)
-            {
-                // Fix player special move offset start
-                player.Charaparam.SpecialMoveOffset = skillOffset;
-
-                // Fix moveset
-                ISkillTable[] myPlayerSkills = player.SpecialMoves.Where(x => x.SkillHash != 0x00).ToArray();
-                foreach (ISkillTable myPlayerSkill in myPlayerSkills)
-                {
-                    myPlayerSkill.SkillIndex = skillOffset;
-                    skillOffset++;
-                }
-
-                // Fix plater special move count
-                player.Charaparam.SpecialMoveCount = myPlayerSkills.Length;
-
-                // Add new moveset on skilltables
-                skillTables.AddRange(myPlayerSkills);
-            }
-
-            GameOpened.SaveCharaparams(Players.Select(x => x.Charaparam).ToArray());
-            GameOpened.SaveSkillTable(skillTables.ToArray());
-            GameOpened.SaveTextFile(GameOpened.Files["chara_text"], Charanames);
+            Save();
         }
 
         private void SearchTextBox_TextChanged(object sender, EventArgs e)
@@ -628,6 +630,7 @@ namespace Lynx.Forms.Characters
             elementFlatComboBox.SelectedIndex = SelectedPlayer.Charaparam.Element;
             trainingFlatComboBox.SelectedIndex = SelectedPlayer.Charaparam.TrainingUD;
             experienceFlatComboBox.SelectedIndex = SelectedPlayer.Charaparam.ExperienceGrow;
+            groupFlatNumericUpDown.Value = SelectedPlayer.Charaparam.PlayerGroup;
 
             fpFlatNumericUpDown.Value = SelectedPlayer.Charaparam.FP;
             fpGrowFlatComboBox.SelectedIndex = SelectedPlayer.Charaparam.FPGrow;
@@ -781,6 +784,13 @@ namespace Lynx.Forms.Characters
             if (!experienceFlatComboBox.Focused || experienceFlatComboBox.SelectedIndex == -1) return;
 
             SelectedPlayer.Charaparam.ExperienceGrow = experienceFlatComboBox.SelectedIndex;
+        }
+
+        private void GroupFlatNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (!groupFlatNumericUpDown.Focused) return;
+
+            SelectedPlayer.Charaparam.PlayerGroup = Convert.ToInt32(groupFlatNumericUpDown.Value);
         }
 
         private void FpFlatNumericUpDown_ValueChanged(object sender, EventArgs e)
@@ -1137,7 +1147,26 @@ namespace Lynx.Forms.Characters
 
         private void ExportAsCfgbinToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.IsFolderPicker = true;
 
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                // Save
+                Save();
+
+                // Get files
+                (string, byte[]) charaparam = GameOpened.GetFileNameAndContent("chara_param");
+                (string, byte[]) skilltable = GameOpened.GetFileNameAndContent("skill_table");
+                (string, byte[]) charatext = GameOpened.GetFileNameAndContent("chara_text");
+
+                // Export files
+                File.WriteAllBytes(Path.Combine(dialog.FileName, charaparam.Item1), charaparam.Item2);
+                File.WriteAllBytes(Path.Combine(dialog.FileName, skilltable.Item1), skilltable.Item2);
+                File.WriteAllBytes(Path.Combine(dialog.FileName, charatext.Item1), charatext.Item2);
+
+                MessageBox.Show("Data exported!");
+            }
         }
 
         private void ExportAscsvToolStripMenuItem_Click(object sender, EventArgs e)

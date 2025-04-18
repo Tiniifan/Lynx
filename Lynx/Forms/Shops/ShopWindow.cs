@@ -13,12 +13,13 @@ using Lynx.InazumaEleven.Games;
 using Lynx.InazumaEleven.Logic;
 using Lynx.InazumaEleven.Common;
 using Lynx.InazumaEleven.Games.GO;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace Lynx.Forms.Shops
 {
     public partial class ShopWindow : Form
     {
-        private IGame GameOpened;
+        private Game GameOpened;
 
         private Dictionary<int, string> ItemNames;
 
@@ -38,7 +39,9 @@ namespace Lynx.Forms.Shops
 
         private TreeNode RightClickNode;
 
-        public ShopWindow(IGame game)
+        private VirtualDirectory ShopDirectory;
+
+        public ShopWindow(Game game)
         {
             GameOpened = game;
             InitializeComponent();
@@ -80,6 +83,8 @@ namespace Lynx.Forms.Shops
 
         private void InitializeShopResource()
         {
+            ShopDirectory = GameOpened.GetDirectory("shop");
+
             TreeNode shopsNode = new TreeNode("Shops");
             TreeNode communitiespNode = new TreeNode("Communities");
 
@@ -99,8 +104,7 @@ namespace Lynx.Forms.Shops
             Communities = GameOpened.GetCommunities().ToList();
 
             Shops = new Dictionary<string, List<IShopConfig>>();
-            string[] shopDirectoriesNames = GameOpened.Game.Directory.GetFolderFromFullPath(GameOpened.Files["shop"].Path)
-                .Files.Where(x => x.Key != "community_config.cfg.bin").Select(x => x.Key.Replace("shop_", "").Replace(".cfg.bin", "")).ToArray();
+            string[] shopDirectoriesNames = ShopDirectory.Files.Where(x => x.Key != "community_config.cfg.bin").Select(x => x.Key.Replace("shop_", "").Replace(".cfg.bin", "")).ToArray();
             ShopsName = new Dictionary<string, string>();
             Dictionary<string, int> nameCounter = new Dictionary<string, int>();
 
@@ -240,9 +244,26 @@ namespace Lynx.Forms.Shops
 
         }
 
+        private void Save()
+        {
+            foreach (KeyValuePair<string, List<IShopConfig>> shop in Shops)
+            {
+                GameOpened.SaveShop(shop.Key, shop.Value.Where(x => x.ItemID != 0x0).ToArray());
+            }
+
+            GameOpened.SaveCommunities(Communities.ToArray());
+            GameOpened.SaveTextFile(GameOpened.Files["system_text"], Systemtext);
+            GameOpened.SaveTextFile(GameOpened.Files["encount_area_text"], EncountText);
+        }
+
         private void ShopWindow_Shown(object sender, EventArgs e)
         {
             shopTreeView.Focus();
+        }
+
+        private void ShopWindow_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Save();
         }
 
         private void ShopTreeView_AfterSelect(object sender, TreeViewEventArgs e)
@@ -493,18 +514,6 @@ namespace Lynx.Forms.Shops
             }
         }
 
-        private void ShopWindow_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            foreach(KeyValuePair<string, List<IShopConfig>> shop in Shops)
-            {
-                GameOpened.SaveShop(shop.Key, shop.Value.Where(x => x.ItemID != 0x0).ToArray());
-            }
-
-            GameOpened.SaveCommunities(Communities.ToArray());
-            GameOpened.SaveTextFile(GameOpened.Files["system_text"], Systemtext);
-            GameOpened.SaveTextFile(GameOpened.Files["encount_area_text"], EncountText);
-        }
-
         private void AddToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (RightClickNode == null) return;
@@ -520,7 +529,7 @@ namespace Lynx.Forms.Shops
                 typeIndex = Convert.ToInt32(RightClickNode.Text == "Communities");
             }
 
-            string[] fileNames = GameOpened.Game.Directory.GetFolderFromFullPath(GameOpened.Files["shop"].Path).Files.Keys.ToArray();
+            string[] fileNames = ShopDirectory.Files.Keys.ToArray();
             int[] shopNums = fileNames
                 .Where(x => x.StartsWith("shop_shp"))
                 .Select(x => Convert.ToInt32(x.Replace("shop_shp", "").Replace(".cfg.bin", "")))
@@ -535,9 +544,8 @@ namespace Lynx.Forms.Shops
             Shops.Add(shopName, new List<IShopConfig>());
 
             // Create shop file
-            VirtualDirectory shopDirectory = GameOpened.Game.Directory.GetFolderFromFullPath(GameOpened.Files["shop"].Path);
             CfgBin newShopCfgBin = new CfgBin();
-            shopDirectory.AddFile(newFileName, new SubMemoryStream(newShopCfgBin.Save()));
+            ShopDirectory.AddFile(newFileName, new SubMemoryStream(newShopCfgBin.Save()));
             
             // Add Community
             if (typeIndex == 1)
@@ -576,8 +584,7 @@ namespace Lynx.Forms.Shops
                 Shops.Remove(shopID);
 
                 // Remove file from archive opened
-                VirtualDirectory shopFolder = GameOpened.Game.Directory.GetFolderFromFullPath(GameOpened.Files["shop"].Path);
-                shopFolder.Files.Remove($"shop_{shopID}.cfg.bin");
+                ShopDirectory.Files.Remove($"shop_{shopID}.cfg.bin");
 
                 // Update datagridview
                 infoGroupBox.Enabled = false;
@@ -623,6 +630,43 @@ namespace Lynx.Forms.Shops
                 FillTreeView(null);
             searchTextBox.Text = "Search...";
             searchTextBox.Enabled = true;
+        }
+
+        private void ExportAsCfgbinToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.IsFolderPicker = true;
+
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                // Save
+                Save();
+
+                // Export shop files
+                foreach (string shopname in ShopsName.Keys)
+                {
+                    string filename = $"shop_{shopname}.cfg.bin";
+
+                    if (ShopDirectory.Files.ContainsKey(filename))
+                    {
+                        ShopDirectory.Files[filename].Read();
+                        File.WriteAllBytes(Path.Combine(dialog.FileName, filename), ShopDirectory.Files[filename].ByteContent);
+                    }
+                }
+
+                // Export text files
+                (string, byte[]) systemText = GameOpened.GetFileNameAndContent("system_text");
+                (string, byte[]) encountAreaText = GameOpened.GetFileNameAndContent("encount_area_text");
+                File.WriteAllBytes(Path.Combine(dialog.FileName, systemText.Item1), systemText.Item2);
+                File.WriteAllBytes(Path.Combine(dialog.FileName, encountAreaText.Item1), encountAreaText.Item2);
+
+                MessageBox.Show("Data exported!");
+            }
+        }
+
+        private void ExportAscsvToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // To do
         }
     }
 }

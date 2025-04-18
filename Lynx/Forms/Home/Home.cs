@@ -20,12 +20,13 @@ using Lynx.Forms.SaveEditor;
 using Lynx.Forms.FightingSpirits;
 using Lynx.Forms.ChallengeRoute;
 using Lynx.Forms.Soccers;
+using Lynx.Forms.Coaches;
 
 namespace Lynx.Forms.Home
 {
     public partial class Home : Form
     {
-        public IGame GameOpened;
+        public Game GameOpened;
 
         public Home()
         {
@@ -51,7 +52,9 @@ namespace Lynx.Forms.Home
             shopsGroupBox.Enabled = true;
             eventGroupBox.Enabled = true;
             debugGroupBox.Enabled = true;
+            matchGroupBox.Enabled = true;
             saveToolStripMenuItem.Enabled = true;
+            mapEditorButton.Enabled = false;
         }
 
         private void Home_DragDrop(object sender, DragEventArgs e)
@@ -91,6 +94,11 @@ namespace Lynx.Forms.Home
             }
         }
 
+        private void openFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void FeaturesListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (featuresListBox.SelectedIndex == -1) return;
@@ -122,12 +130,13 @@ namespace Lynx.Forms.Home
                     SaveEditorButton_Click(sender, e);
                     break;
                 case "Challenge Route":
-                    ChallengeRouteWindow challengeRouteWindow = new ChallengeRouteWindow(GameOpened);
-                    challengeRouteWindow.ShowDialog();
+                    ChallengeRouteButton_Click(sender, e);
                     break;
                 case "Teams":
-                    SoccersWindow soccerWindow = new SoccersWindow(GameOpened);
-                    soccerWindow.ShowDialog();
+                    TeamsButton_Click(sender, e);
+                    break;
+                case "Coaches":
+                    CoachesButton_Click(sender, e);
                     break;
             }
         }
@@ -170,8 +179,9 @@ namespace Lynx.Forms.Home
 
         private void MapEditorButton_Click(object sender, EventArgs e)
         {
-            MapSelect mapSelectWindow = new MapSelect(GameOpened);
-            mapSelectWindow.ShowDialog();
+            MessageBox.Show("Not yet available");
+            // MapSelect mapSelectWindow = new MapSelect(GameOpened);
+            // mapSelectWindow.ShowDialog();
         }
 
         private void ScriptButton_Click(object sender, EventArgs e)
@@ -184,6 +194,24 @@ namespace Lynx.Forms.Home
         {
             SaveEditorWindow saveEditorWindow = new SaveEditorWindow(GameOpened);
             saveEditorWindow.ShowDialog();
+        }
+
+        private void TeamsButton_Click(object sender, EventArgs e)
+        {
+            SoccersWindow soccerWindow = new SoccersWindow(GameOpened);
+            soccerWindow.ShowDialog();
+        }
+
+        private void ChallengeRouteButton_Click(object sender, EventArgs e)
+        {
+            ChallengeRouteWindow challengeRouteWindow = new ChallengeRouteWindow(GameOpened);
+            challengeRouteWindow.ShowDialog();
+        }
+
+        private void CoachesButton_Click(object sender, EventArgs e)
+        {
+            CoachWindow coachWindow = new CoachWindow(GameOpened);
+            coachWindow.ShowDialog();
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Lynx.Forms.Skills
 {
     public partial class SkillWindow : Form
     {
-        private IGame GameOpened;
+        private Game GameOpened;
 
         private Dictionary<string, List<ISkillConfig>> Skills;
 
@@ -39,7 +39,7 @@ namespace Lynx.Forms.Skills
             { 15, "Skill" }
         };
 
-        public SkillWindow(IGame game)
+        public SkillWindow(Game game)
         {
             GameOpened = game;
             InitializeComponent();
@@ -357,6 +357,12 @@ namespace Lynx.Forms.Skills
             MessageBox.Show($"Saved on {Path.GetFileName(filePath)}");
         }
 
+        private void Save()
+        {
+            GameOpened.SaveSkillConfigs(Skills.SelectMany(pair => pair.Value).ToArray());
+            GameOpened.SaveTextFile(GameOpened.Files["skill_text"], Skilltext);
+        }
+
         private void SkillWindow_Shown(object sender, EventArgs e)
         {
             skillTreeView.Focus();
@@ -364,8 +370,7 @@ namespace Lynx.Forms.Skills
 
         private void SkillWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
-            GameOpened.SaveSkillConfigs(Skills.SelectMany(pair => pair.Value).ToArray());
-            GameOpened.SaveTextFile(GameOpened.Files["skill_text"], Skilltext);
+            Save();
         }
 
         private void SkillTreeView_AfterSelect(object sender, TreeViewEventArgs e)
@@ -748,9 +753,17 @@ namespace Lynx.Forms.Skills
 
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                (string, byte[]) skillConfig = GameOpened.ExportSkillConfigs(Skills.SelectMany(pair => pair.Value).ToArray());
-                File.WriteAllBytes(Path.Combine(dialog.FileName, skillConfig.Item1), skillConfig.Item2);
-                Skilltext.Save(Path.Combine(dialog.FileName, Path.GetFileName(GameOpened.Files["skill_text"].Path)));
+                // Save
+                Save();
+
+                // Get files
+                (string, byte[]) skillconfig = GameOpened.GetFileNameAndContent("skill_config");
+                (string, byte[]) skilltext = GameOpened.GetFileNameAndContent("skill_text");
+
+                // Export files
+                File.WriteAllBytes(Path.Combine(dialog.FileName, skillconfig.Item1), skillconfig.Item2);
+                File.WriteAllBytes(Path.Combine(dialog.FileName, skilltext.Item1), skilltext.Item2);
+
                 MessageBox.Show("Data exported!");
             }
         }

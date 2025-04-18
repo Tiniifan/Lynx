@@ -13,12 +13,14 @@ using Lynx.InazumaEleven.Games;
 using Lynx.InazumaEleven.Logic;
 using Lynx.InazumaEleven.Common;
 using Lynx.InazumaEleven.Games.GO;
+using Microsoft.WindowsAPICodePack.Dialogs;
+using Lynx.Level5.Save.Saves;
 
 namespace Lynx.Forms.Characters
 {
     public partial class CharabaseWindow : Form
     {
-        private IGame GameOpened;
+        private Game GameOpened;
 
         private List<ICharabase> Charabases;
 
@@ -32,7 +34,7 @@ namespace Lynx.Forms.Characters
 
         private Dictionary<string, List<int>> Models;
 
-        public CharabaseWindow(IGame game)
+        public CharabaseWindow(Game game)
         {
             GameOpened = game;
             InitializeComponent();
@@ -173,6 +175,18 @@ namespace Lynx.Forms.Characters
             return SelectedCharabase.BaseHash.ToString("X8");
         }
 
+        private void Save()
+        {
+            GameOpened.SaveCharaBase(Charabases.ToArray());
+
+            GameOpened.SaveTextFile(GameOpened.Files["chara_text"], Charanames);
+
+            if (CharaKiznaxHint != null)
+            {
+                GameOpened.SaveTextFile(GameOpened.Files["kiznax_hint_text"], CharaKiznaxHint);
+            }
+        }
+
         private void CharabaseWindow_Shown(object sender, EventArgs e)
         {
             characterListBox.Focus();
@@ -224,14 +238,7 @@ namespace Lynx.Forms.Characters
 
         private void CharabaseWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
-            GameOpened.SaveCharaBase(Charabases.ToArray());
-
-            GameOpened.SaveTextFile(GameOpened.Files["chara_text"], Charanames);
-
-            if (CharaKiznaxHint != null)
-            {
-                GameOpened.SaveTextFile(GameOpened.Files["kiznax_hint_text"], CharaKiznaxHint);
-            }
+            Save();
         }
 
         private void CharacterListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -722,6 +729,35 @@ namespace Lynx.Forms.Characters
 
                 characterListBox.SelectedIndex = insertIndex;
             }
+        }
+
+        private void ExportAsCfgbinToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.IsFolderPicker = true;
+
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                // Save
+                Save();
+
+                // Get files
+                (string, byte[]) charabase = GameOpened.GetFileNameAndContent("chara_base");
+                (string, byte[]) charaname = GameOpened.GetFileNameAndContent("chara_text");
+                (string, byte[]) charakiznaxhint = GameOpened.GetFileNameAndContent("kiznax_hint_text");
+
+                // Export files
+                File.WriteAllBytes(Path.Combine(dialog.FileName, charabase.Item1), charabase.Item2);
+                File.WriteAllBytes(Path.Combine(dialog.FileName, charaname.Item1), charaname.Item2);
+                File.WriteAllBytes(Path.Combine(dialog.FileName, charakiznaxhint.Item1), charakiznaxhint.Item2);
+
+                MessageBox.Show("Data exported!");
+            }
+        }
+
+        private void ExportAscsvToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // To do
         }
     }
 }

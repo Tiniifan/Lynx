@@ -126,6 +126,8 @@ namespace Lynx.Forms.Characters
             this.exportAsCfgbinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportAscsvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.groupFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
+            this.label12 = new System.Windows.Forms.Label();
             this.characterContextMenuStrip.SuspendLayout();
             this.characterGroupBox.SuspendLayout();
             this.charaVSTabControl.SuspendLayout();
@@ -162,6 +164,7 @@ namespace Lynx.Forms.Characters
             this.avatarGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.facePictureBox)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.groupFlatNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // characterListBox
@@ -172,7 +175,7 @@ namespace Lynx.Forms.Characters
             this.characterListBox.FormattingEnabled = true;
             this.characterListBox.Location = new System.Drawing.Point(12, 27);
             this.characterListBox.Name = "characterListBox";
-            this.characterListBox.Size = new System.Drawing.Size(236, 576);
+            this.characterListBox.Size = new System.Drawing.Size(236, 602);
             this.characterListBox.TabIndex = 1;
             this.characterListBox.SelectedIndexChanged += new System.EventHandler(this.CharacterListBox_SelectedIndexChanged);
             // 
@@ -228,7 +231,7 @@ namespace Lynx.Forms.Characters
             this.characterGroupBox.ForeColor = System.Drawing.Color.White;
             this.characterGroupBox.Location = new System.Drawing.Point(254, 21);
             this.characterGroupBox.Name = "characterGroupBox";
-            this.characterGroupBox.Size = new System.Drawing.Size(417, 582);
+            this.characterGroupBox.Size = new System.Drawing.Size(417, 608);
             this.characterGroupBox.TabIndex = 5;
             this.characterGroupBox.TabStop = false;
             this.characterGroupBox.Text = "Character";
@@ -253,7 +256,7 @@ namespace Lynx.Forms.Characters
             this.charaVSTabControl.Name = "charaVSTabControl";
             this.charaVSTabControl.Padding = new System.Drawing.Point(0, 0);
             this.charaVSTabControl.SelectedIndex = 0;
-            this.charaVSTabControl.Size = new System.Drawing.Size(387, 453);
+            this.charaVSTabControl.Size = new System.Drawing.Size(387, 485);
             this.charaVSTabControl.TabIndex = 49;
             // 
             // tabPage1
@@ -264,12 +267,14 @@ namespace Lynx.Forms.Characters
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(379, 424);
+            this.tabPage1.Size = new System.Drawing.Size(379, 456);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Trait and Stats";
             // 
             // traitGroupBox
             // 
+            this.traitGroupBox.Controls.Add(this.label12);
+            this.traitGroupBox.Controls.Add(this.groupFlatNumericUpDown);
             this.traitGroupBox.Controls.Add(this.label2);
             this.traitGroupBox.Controls.Add(this.label19);
             this.traitGroupBox.Controls.Add(this.positionFlatComboBox);
@@ -281,7 +286,7 @@ namespace Lynx.Forms.Characters
             this.traitGroupBox.ForeColor = System.Drawing.Color.White;
             this.traitGroupBox.Location = new System.Drawing.Point(19, 6);
             this.traitGroupBox.Name = "traitGroupBox";
-            this.traitGroupBox.Size = new System.Drawing.Size(350, 76);
+            this.traitGroupBox.Size = new System.Drawing.Size(350, 106);
             this.traitGroupBox.TabIndex = 264;
             this.traitGroupBox.TabStop = false;
             this.traitGroupBox.Text = "Trait";
@@ -410,7 +415,7 @@ namespace Lynx.Forms.Characters
             this.statsGroupBox.Controls.Add(this.staminaFlatNumericUpDown);
             this.statsGroupBox.Controls.Add(this.catchFlatNumericUpDown);
             this.statsGroupBox.ForeColor = System.Drawing.Color.White;
-            this.statsGroupBox.Location = new System.Drawing.Point(19, 88);
+            this.statsGroupBox.Location = new System.Drawing.Point(19, 118);
             this.statsGroupBox.Name = "statsGroupBox";
             this.statsGroupBox.Size = new System.Drawing.Size(350, 329);
             this.statsGroupBox.TabIndex = 259;
@@ -1405,7 +1410,7 @@ namespace Lynx.Forms.Characters
             this.exportAscsvToolStripMenuItem});
             this.exportToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.exportToolStripMenuItem.Text = "Export";
             // 
             // exportAsCfgbinToolStripMenuItem
@@ -1413,7 +1418,7 @@ namespace Lynx.Forms.Characters
             this.exportAsCfgbinToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.exportAsCfgbinToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.exportAsCfgbinToolStripMenuItem.Name = "exportAsCfgbinToolStripMenuItem";
-            this.exportAsCfgbinToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.exportAsCfgbinToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.exportAsCfgbinToolStripMenuItem.Text = "Export as .cfg.bin";
             this.exportAsCfgbinToolStripMenuItem.Click += new System.EventHandler(this.ExportAsCfgbinToolStripMenuItem_Click);
             // 
@@ -1422,20 +1427,49 @@ namespace Lynx.Forms.Characters
             this.exportAscsvToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.exportAscsvToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.exportAscsvToolStripMenuItem.Name = "exportAscsvToolStripMenuItem";
-            this.exportAscsvToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.exportAscsvToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.exportAscsvToolStripMenuItem.Text = "Export as .xlsx";
             this.exportAscsvToolStripMenuItem.Click += new System.EventHandler(this.ExportAscsvToolStripMenuItem_Click);
+            // 
+            // groupFlatNumericUpDown
+            // 
+            this.groupFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.groupFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.groupFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.groupFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.groupFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.groupFlatNumericUpDown.Location = new System.Drawing.Point(61, 73);
+            this.groupFlatNumericUpDown.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.groupFlatNumericUpDown.Name = "groupFlatNumericUpDown";
+            this.groupFlatNumericUpDown.Size = new System.Drawing.Size(104, 22);
+            this.groupFlatNumericUpDown.TabIndex = 264;
+            this.groupFlatNumericUpDown.ValueChanged += new System.EventHandler(this.GroupFlatNumericUpDown_ValueChanged);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(6, 75);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(40, 13);
+            this.label12.TabIndex = 265;
+            this.label12.Text = "Group";
             // 
             // CharaParamWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.ClientSize = new System.Drawing.Size(684, 614);
+            this.ClientSize = new System.Drawing.Size(684, 639);
             this.Controls.Add(this.characterGroupBox);
             this.Controls.Add(this.searchTextBox);
             this.Controls.Add(this.characterListBox);
             this.Controls.Add(this.menuStrip1);
+            this.MaximumSize = new System.Drawing.Size(700, 678);
+            this.MinimumSize = new System.Drawing.Size(700, 678);
             this.Name = "CharaParamWindow";
             this.Text = "CharaParamWindow";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CharaParamWindow_FormClosed);
@@ -1484,6 +1518,7 @@ namespace Lynx.Forms.Characters
             ((System.ComponentModel.ISupportInitialize)(this.facePictureBox)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.groupFlatNumericUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1587,5 +1622,7 @@ namespace Lynx.Forms.Characters
         private System.Windows.Forms.ToolStripMenuItem exportAsCfgbinToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportAscsvToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.Label label12;
+        private UI.FlatNumericUpDown groupFlatNumericUpDown;
     }
 }

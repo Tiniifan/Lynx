@@ -29,9 +29,9 @@ namespace Lynx.Forms.SaveEditor
 
         private Dictionary<int, Level5.Save.Logic.Move> Moves;
 
-        private InazumaEleven.Games.IGame GameOpened;
+        private InazumaEleven.Games.Game GameOpened;
 
-        public SaveEditorWindow(InazumaEleven.Games.IGame game)
+        public SaveEditorWindow(InazumaEleven.Games.Game game)
         {
             GameOpened = game;
             InitializeComponent();

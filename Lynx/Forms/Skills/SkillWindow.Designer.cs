@@ -79,9 +79,9 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.exportAsCfgbinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportAscsvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.infoGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numberFlatNumericUpDown)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -866,7 +866,7 @@
             this.exportAscsvToolStripMenuItem});
             this.exportToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.exportToolStripMenuItem.Text = "Export";
             // 
             // exportAsCfgbinToolStripMenuItem
@@ -898,6 +898,8 @@
             this.Controls.Add(this.searchTextBox);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximumSize = new System.Drawing.Size(896, 445);
+            this.MinimumSize = new System.Drawing.Size(896, 445);
             this.Name = "SkillWindow";
             this.Text = "SkillWindow";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SkillWindow_FormClosed);

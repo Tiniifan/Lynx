@@ -19,13 +19,15 @@ namespace Lynx.Forms.Scipts
 {
     public partial class ScriptSelect : Form
     {
-        private IGame GameOpened;
+        private Game GameOpened;
 
         private Dictionary<string, List<string>> Scripts;
 
         private TreeNode RightClickNode;
 
-        public ScriptSelect(IGame game)
+        private VirtualDirectory ScriptDirectory;
+
+        public ScriptSelect(Game game)
         {
             GameOpened = game;
             InitializeComponent();
@@ -34,7 +36,8 @@ namespace Lynx.Forms.Scipts
 
         private void InitializeScriptResource()
         {
-            GetScripts(null);
+            ScriptDirectory = GameOpened.GetDirectory("script");
+            GetScripts(null);          
         }
 
         private void GetScripts(string searchText)
@@ -42,8 +45,7 @@ namespace Lynx.Forms.Scipts
             scriptTreeView.Nodes.Clear();
             Scripts = new Dictionary<string, List<string>>();
 
-            VirtualDirectory scriptDirectory = GameOpened.Game.Directory.GetFolderFromFullPath(GameOpened.Files["script"].Path);
-            foreach(VirtualDirectory subDirectory in scriptDirectory.Folders)
+            foreach(VirtualDirectory subDirectory in ScriptDirectory.Folders)
             {
                 TreeNode directoryNode = new TreeNode(subDirectory.Name);
 
@@ -79,9 +81,9 @@ namespace Lynx.Forms.Scipts
                 string scriptText = "";
                 string scriptFileNameWithExtension = e.Node.Text;
                 string scriptFileNameWithoutExtension = e.Node.Text.Replace(".nutb", "");
-                string scriptFullPath = $"/data/script/{parentNode.Text}/{scriptFileNameWithExtension}";
+                string scriptFullPath = $"/{parentNode.Text}/{scriptFileNameWithExtension}";
 
-                if (GameOpened.Game.Directory.IsFullPathExists(scriptFullPath))
+                if (ScriptDirectory.IsFullPathExists(scriptFullPath))
                 {
                     string directoryPath = "./temp";
 
@@ -90,7 +92,7 @@ namespace Lynx.Forms.Scipts
                         Directory.CreateDirectory(directoryPath);
                     }
 
-                    byte[] scriptData = GameOpened.Game.Directory.GetFileFromFullPath(scriptFullPath);
+                    byte[] scriptData = ScriptDirectory.GetFileFromFullPath(scriptFullPath);
                     File.WriteAllBytes($"./temp/{scriptFileNameWithoutExtension}.nutb", scriptData);
 
                     ProcessStartInfo processStartInfo = new ProcessStartInfo
@@ -119,7 +121,7 @@ namespace Lynx.Forms.Scipts
                         {
                             if (scriptEditor.Output != null)
                             {
-                                GameOpened.Game.Directory.GetFolderFromFullPath($"/data/script/{parentNode.Text}").Files[scriptFileNameWithExtension].ByteContent = scriptEditor.Output;
+                                ScriptDirectory.GetFolderFromFullPath($"/{parentNode.Text}").Files[scriptFileNameWithExtension].ByteContent = scriptEditor.Output;
                             }
                         }
                     }
@@ -171,12 +173,12 @@ namespace Lynx.Forms.Scipts
                 {
                     string newFilename = $"{newScriptWindow.Filename}.nutb";
 
-                    if (GameOpened.Game.Directory.GetFolderFromFullPath($"/data/script/{scriptType}").Files.ContainsKey(newFilename))
+                    if (ScriptDirectory.GetFolderFromFullPath($"/{scriptType}").Files.ContainsKey(newFilename))
                     {
                         MessageBox.Show("The file already exists");
                     } else
                     {
-                        GameOpened.Game.Directory.GetFolderFromFullPath($"/data/script/{scriptType}").AddFile(newFilename, new SubMemoryStream(new byte[] { }));
+                        ScriptDirectory.GetFolderFromFullPath($"/{scriptType}").AddFile(newFilename, new SubMemoryStream(new byte[] { }));
 
                         using (var scriptEditor = new ScriptEditor($"{newScriptWindow.Filename}.nut", ""))
                         {
@@ -188,7 +190,7 @@ namespace Lynx.Forms.Scipts
                             {
                                 if (scriptEditor.Output != null)
                                 {
-                                    GameOpened.Game.Directory.GetFolderFromFullPath($"/data/script/{scriptType}").Files[$"{newScriptWindow.Filename}.nutb"].ByteContent = scriptEditor.Output;
+                                    ScriptDirectory.GetFolderFromFullPath($"/{scriptType}").Files[$"{newScriptWindow.Filename}.nutb"].ByteContent = scriptEditor.Output;
                                 }
 
                                 RightClickNode.Nodes.Add($"{newScriptWindow.Filename}.nutb");
@@ -209,7 +211,7 @@ namespace Lynx.Forms.Scipts
             if (parentNode != null)
             {
                 string scriptFileNameWithExtension = RightClickNode.Text;
-                GameOpened.Game.Directory.GetFolderFromFullPath($"/data/script/{parentNode.Text}").Files.Remove(scriptFileNameWithExtension);
+                ScriptDirectory.GetFolderFromFullPath($"/{parentNode.Text}").Files.Remove(scriptFileNameWithExtension);
                 parentNode.Nodes.Remove(RightClickNode);
                 RightClickNode = null;
             }

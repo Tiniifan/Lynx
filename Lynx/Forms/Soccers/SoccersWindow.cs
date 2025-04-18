@@ -35,12 +35,13 @@ using Lynx.Level5.Save.Logic;
 using System.Runtime.Remoting.Lifetime;
 using System.Xml.Linq;
 using Lynx.Forms.Skills;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace Lynx.Forms.Soccers
 {
     public partial class SoccersWindow : Form
     {
-        private IGame GameOpened;
+        private Game GameOpened;
 
         private T2bþ Itemtext;
 
@@ -88,7 +89,7 @@ namespace Lynx.Forms.Soccers
 
         private object SelectedTeamConfig;
 
-        public SoccersWindow(IGame game)
+        public SoccersWindow(Game game)
         {
             GameOpened = game;
 
@@ -516,6 +517,24 @@ namespace Lynx.Forms.Soccers
             soccerFlatComboBox.SelectedIndex = soccerFlatComboBoxIndex;
         }
 
+        private void Save()
+        {
+            IStoryTeamInfo[] storyTeams = TeamConfigs.Where(x => x is IStoryTeamInfo).Cast<IStoryTeamInfo>().ToArray();
+            IEncountTeamInfo[] encountTeams = TeamConfigs
+                .Where(x => x is IEncountTeamInfo && !(x is IStoryTeamInfo))
+                .Cast<IEncountTeamInfo>()
+                .ToArray();
+
+            GameOpened.SaveSoccers(Soccers.ToArray());
+            GameOpened.SaveTeamParams(TeamParams.ToArray());
+            GameOpened.SaveTeamConfig(storyTeams, encountTeams);
+
+            if (TeamText != null)
+            {
+                GameOpened.SaveTextFile(GameOpened.Files["team_text"], TeamText);
+            }
+        }
+
         private void InitializeSoccersResource()
         {
             // Text
@@ -610,20 +629,7 @@ namespace Lynx.Forms.Soccers
 
         private void SoccersWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
-            IStoryTeamInfo[] storyTeams = TeamConfigs.Where(x => x is IStoryTeamInfo).Cast<IStoryTeamInfo>().ToArray();
-            IEncountTeamInfo[] encountTeams = TeamConfigs
-                .Where(x => x is IEncountTeamInfo && !(x is IStoryTeamInfo))
-                .Cast<IEncountTeamInfo>()
-                .ToArray();
-
-            GameOpened.SaveSoccers(Soccers.ToArray());
-            GameOpened.SaveTeamParams(TeamParams.ToArray());
-            GameOpened.SaveTeamConfig(storyTeams, encountTeams);
-
-            if (TeamText != null)
-            {
-                GameOpened.SaveTextFile(GameOpened.Files["team_text"], TeamText);
-            }
+            Save();
         }
 
         private void SoccerFlatComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -652,6 +658,7 @@ namespace Lynx.Forms.Soccers
             paramFromSoccerFlatComboBox.Enabled = true;
             settingsGroupBox.Enabled = true;
             scriptGroupBox.Enabled = true;
+            currentSoccerToolStripMenuItem.Enabled = true;
         }
 
         private void ParamFromSoccerFlatComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -679,7 +686,14 @@ namespace Lynx.Forms.Soccers
             pendantFlatComboBox.SelectedIndex = pendantFlatComboBox.Items.IndexOf(PendantNamesDict[SelectedTeamParam.PendantID]);
             coachFlatComboBox.SelectedIndex = coachFlatComboBox.Items.IndexOf(CoachNamesDict[SelectedTeamParam.CoachID]);
             tacticFlatComboBox.SelectedIndex = tacticFlatComboBox.Items.IndexOf(TacticNamesDict[SelectedTeamParam.TacticID]);
-            formationFlatComboBox.SelectedIndex = formationFlatComboBox.Items.IndexOf(FormationNamesDict[SelectedTeamParam.FormationID]);
+
+            if (FormationNamesDict.ContainsKey(SelectedTeamParam.FormationID))
+            {
+                formationFlatComboBox.SelectedIndex = formationFlatComboBox.Items.IndexOf(FormationNamesDict[SelectedTeamParam.FormationID]);
+            } else
+            {
+                formationFlatComboBox.SelectedIndex = -1;
+            }
 
             // kit
             if (KitNamesDict.ContainsKey(SelectedTeamParam.Uniform))
@@ -741,6 +755,7 @@ namespace Lynx.Forms.Soccers
             equipmentsGroupBox.Enabled = true;
             strategyGroupBox.Enabled = true;
             dropsGroupBox.Enabled = true;
+            currentParamToolStripMenuItem.Enabled = true;
         }
 
         private void ConfigFromParamFlatComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -913,6 +928,7 @@ namespace Lynx.Forms.Soccers
                 teamNameTextBox.Enabled = true;
                 emblemGroupBox.Enabled = true;
                 playersGroupBox.Enabled = true;
+                currentConfigToolStripMenuItem.Enabled = true;
             }
         }
 
@@ -1563,6 +1579,98 @@ namespace Lynx.Forms.Soccers
                 FillCombobox();
 
                 soccerFlatComboBox.SelectedIndex = soccerFlatComboBox.Items.Count - 1;
+            }
+        }
+
+        private void ExportAsCfgbinToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.IsFolderPicker = true;
+
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                // Save
+                Save();
+
+                // Get files
+                (string, byte[]) teamConfig = GameOpened.GetFileNameAndContent("team_config");
+                (string, byte[]) teamParam = GameOpened.GetFileNameAndContent("team_param");
+                (string, byte[]) soccer = GameOpened.GetFileNameAndContent("soccer_config");
+                (string, byte[]) teamText = GameOpened.GetFileNameAndContent("team_text");
+
+                // Export files
+                File.WriteAllBytes(Path.Combine(dialog.FileName, teamConfig.Item1), teamConfig.Item2);
+                File.WriteAllBytes(Path.Combine(dialog.FileName, teamParam.Item1), teamParam.Item2);
+                File.WriteAllBytes(Path.Combine(dialog.FileName, soccer.Item1), soccer.Item2);
+                File.WriteAllBytes(Path.Combine(dialog.FileName, teamText.Item1), teamText.Item2);
+
+                MessageBox.Show("Data exported!");
+            }
+        }
+
+        private void CurrentConfigToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (SelectedTeamConfig == null) return;
+
+            DialogResult dialogResult = MessageBox.Show("Do you want to delete " + configFlatComboBox.SelectedItem.ToString() + "?", "Delete team config", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                teamNameLabel.Enabled = false;
+                teamNameTextBox.Enabled = false;
+                emblemGroupBox.Enabled = false;
+                playersGroupBox.Enabled = false;
+                currentConfigToolStripMenuItem.Enabled = false;
+
+                TeamConfigs.Remove(SelectedTeamConfig);
+                emblemPictureBox.Image = null;
+
+                MessageBox.Show(configFlatComboBox.SelectedItem.ToString() + " has been removed!");
+
+                FillCombobox();
+            }
+        }
+
+        private void CurrentParamToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (SelectedTeamParam == null) return;
+
+            DialogResult dialogResult = MessageBox.Show("Do you want to delete " + paramFlatComboBox.SelectedItem.ToString() + "?", "Delete team param", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                configLabel.Enabled = false;
+                configFromParamFlatComboBox.Enabled = false;
+                levelGroupBox.Enabled = false;
+                equipmentsGroupBox.Enabled = false;
+                strategyGroupBox.Enabled = false;
+                dropsGroupBox.Enabled = false;
+                currentParamToolStripMenuItem.Enabled = false;
+
+                TeamParams.Remove(SelectedTeamParam);
+
+                MessageBox.Show(paramFlatComboBox.SelectedItem.ToString() + " has been removed!");
+
+                FillCombobox();
+            }
+        }
+
+        private void CurrentSoccerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (SelectedSoccer == null) return;
+
+            DialogResult dialogResult = MessageBox.Show("Do you want to delete " + soccerFlatComboBox.SelectedItem.ToString() + "?", "Delete soccer", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                paramLabel.Enabled = false;
+                paramFromSoccerFlatComboBox.Enabled = false;
+                settingsGroupBox.Enabled = false;
+                scriptGroupBox.Enabled = false;
+                currentSoccerToolStripMenuItem.Enabled = false;
+
+                Soccers.Remove(SelectedSoccer);
+
+                MessageBox.Show(soccerFlatComboBox.SelectedItem.ToString() + " has been removed!");
+
+                FillCombobox();
             }
         }
     }

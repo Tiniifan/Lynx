@@ -32,7 +32,7 @@ namespace Lynx.Forms.Maps
 {
     public partial class MapEditor : Form
     {
-        private IGame GameOpened;
+        private Game GameOpened;
 
         private string MapID;
 
@@ -67,7 +67,7 @@ namespace Lynx.Forms.Maps
         private Thread mapPreviewThread;
         private MapPreview mapPreviewInstance;
 
-        public MapEditor(string mapID, IGame game)
+        public MapEditor(string mapID, Game game)
         {
             MapID = mapID;
             GameOpened = game;
@@ -816,15 +816,14 @@ namespace Lynx.Forms.Maps
 
         private void ScriptButton_Click(object sender, EventArgs e)
         {
-            GameSupports.GameFile eventScript = GameOpened.Files["eventScript"];
+            VirtualDirectory scriptDirectory = GameOpened.GetDirectory("eventScript");
 
             string scriptText = "";
             string scriptFileName = $"ev{valueFlatNumericUpDown.Value}.nut";
-            string scriptFullPath = $"{eventScript.Path}/ev{valueFlatNumericUpDown.Value}.nutb";
 
-            if (GameOpened.Game.Directory.IsFullPathExists(scriptFullPath))
+            if (scriptDirectory.Files.ContainsKey(scriptFileName))
             {
-                byte[] scriptData = GameOpened.Game.Directory.GetFileFromFullPath(scriptFullPath);
+                byte[] scriptData = scriptDirectory.GetFileFromFullPath(scriptFileName);
                 File.WriteAllBytes($"./temp/ev{valueFlatNumericUpDown.Value}.nutb", scriptData);
 
                 ProcessStartInfo processStartInfo = new ProcessStartInfo

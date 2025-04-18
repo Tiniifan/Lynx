@@ -45,7 +45,7 @@
             this.scriptTreeView.LineColor = System.Drawing.Color.White;
             this.scriptTreeView.Location = new System.Drawing.Point(12, 39);
             this.scriptTreeView.Name = "scriptTreeView";
-            this.scriptTreeView.Size = new System.Drawing.Size(243, 379);
+            this.scriptTreeView.Size = new System.Drawing.Size(560, 510);
             this.scriptTreeView.TabIndex = 58;
             this.scriptTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.ScriptTreeView_AfterSelect);
             this.scriptTreeView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ScriptTreeView_MouseDown);
@@ -57,7 +57,7 @@
             this.searchTextBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.searchTextBox.Location = new System.Drawing.Point(12, 12);
             this.searchTextBox.Name = "searchTextBox";
-            this.searchTextBox.Size = new System.Drawing.Size(243, 13);
+            this.searchTextBox.Size = new System.Drawing.Size(560, 13);
             this.searchTextBox.TabIndex = 57;
             this.searchTextBox.Text = "Search...";
             this.searchTextBox.TextChanged += new System.EventHandler(this.SearchTextBox_TextChanged);
@@ -95,9 +95,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.ClientSize = new System.Drawing.Size(273, 450);
+            this.ClientSize = new System.Drawing.Size(584, 561);
             this.Controls.Add(this.scriptTreeView);
             this.Controls.Add(this.searchTextBox);
+            this.MaximumSize = new System.Drawing.Size(600, 600);
+            this.MinimumSize = new System.Drawing.Size(600, 600);
             this.Name = "ScriptSelect";
             this.Text = "ScriptSelect";
             this.Shown += new System.EventHandler(this.ScriptSelect_Shown);

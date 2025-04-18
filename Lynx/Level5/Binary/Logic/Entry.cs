@@ -5,6 +5,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Lynx.Tools;
+using System.Reflection;
 
 namespace Lynx.Level5.Binary.Logic
 {
@@ -648,6 +649,52 @@ namespace Lynx.Level5.Binary.Logic
 
             int valueIndex = 0;
             var properties = typeof(T).GetProperties();
+            object[] values = Variables.Select(y => y.Value).ToArray();
+
+            for (int i = 0; i < properties.Length; i++)
+            {
+                var property = properties[i];
+                var propertyType = property.PropertyType;
+
+                if (propertyType.IsArray)
+                {
+                    int arrayLength = ((Array)property.GetValue(structure)).Length;
+                    Array.Copy(values, valueIndex, (Array)property.GetValue(structure), 0, arrayLength);
+                    valueIndex += arrayLength;
+                }
+                else
+                {
+                    if (valueIndex < values.Length)
+                    {
+                        if (values[valueIndex] is OffsetTextPair offsetTextPair)
+                        {
+                            if (propertyType == typeof(string))
+                            {
+                                values[valueIndex] = offsetTextPair.Text;
+                            }
+                            else
+                            {
+                                values[valueIndex] = offsetTextPair.Offset;
+                            }
+                        }
+
+                        object convertedValue = Convert.ChangeType(values[valueIndex], propertyType);
+                        property.SetValue(structure, convertedValue);
+                        valueIndex++;
+                    }
+                }
+            }
+
+            return structure;
+        }
+
+        public object ToClass(System.Type type)
+        {
+            // Create an instance of the specified type
+            object structure = Activator.CreateInstance(type);
+
+            int valueIndex = 0;
+            var properties = type.GetProperties();
             object[] values = Variables.Select(y => y.Value).ToArray();
 
             for (int i = 0; i < properties.Length; i++)

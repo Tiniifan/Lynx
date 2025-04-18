@@ -58,10 +58,15 @@ namespace Lynx.Forms.Characters
             this.modelNPCFlatComboBox = new Lynx.UI.FlatComboBox();
             this.modelPlayerFlatComboBox = new Lynx.UI.FlatComboBox();
             this.modelNPCOtherFlatComboBox = new Lynx.UI.FlatComboBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportAsCfgbinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportAscsvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.characterContextMenuStrip.SuspendLayout();
             this.characterGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.colorPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.facePictureBox)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // searchTextBox
@@ -69,7 +74,7 @@ namespace Lynx.Forms.Characters
             this.searchTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.searchTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.searchTextBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.searchTextBox.Location = new System.Drawing.Point(12, 12);
+            this.searchTextBox.Location = new System.Drawing.Point(63, 5);
             this.searchTextBox.Name = "searchTextBox";
             this.searchTextBox.Size = new System.Drawing.Size(185, 13);
             this.searchTextBox.TabIndex = 2;
@@ -84,9 +89,9 @@ namespace Lynx.Forms.Characters
             this.characterListBox.ContextMenuStrip = this.characterContextMenuStrip;
             this.characterListBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.characterListBox.FormattingEnabled = true;
-            this.characterListBox.Location = new System.Drawing.Point(12, 38);
+            this.characterListBox.Location = new System.Drawing.Point(12, 27);
             this.characterListBox.Name = "characterListBox";
-            this.characterListBox.Size = new System.Drawing.Size(185, 277);
+            this.characterListBox.Size = new System.Drawing.Size(236, 290);
             this.characterListBox.TabIndex = 3;
             this.characterListBox.SelectedIndexChanged += new System.EventHandler(this.CharacterListBox_SelectedIndexChanged);
             this.characterListBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.CharacterListBox_MouseUp);
@@ -143,9 +148,9 @@ namespace Lynx.Forms.Characters
             this.characterGroupBox.Controls.Add(this.modelNPCOtherFlatComboBox);
             this.characterGroupBox.Enabled = false;
             this.characterGroupBox.ForeColor = System.Drawing.Color.White;
-            this.characterGroupBox.Location = new System.Drawing.Point(203, 32);
+            this.characterGroupBox.Location = new System.Drawing.Point(254, 21);
             this.characterGroupBox.Name = "characterGroupBox";
-            this.characterGroupBox.Size = new System.Drawing.Size(341, 285);
+            this.characterGroupBox.Size = new System.Drawing.Size(341, 296);
             this.characterGroupBox.TabIndex = 4;
             this.characterGroupBox.TabStop = false;
             this.characterGroupBox.Text = "Character";
@@ -392,15 +397,58 @@ namespace Lynx.Forms.Characters
             this.modelNPCOtherFlatComboBox.Visible = false;
             this.modelNPCOtherFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.ModelNPCOtherFlatComboBox_SelectedIndexChanged);
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(604, 24);
+            this.menuStrip1.TabIndex = 275;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // exportToolStripMenuItem
+            // 
+            this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportAsCfgbinToolStripMenuItem,
+            this.exportAscsvToolStripMenuItem});
+            this.exportToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.exportToolStripMenuItem.Text = "Export";
+            // 
+            // exportAsCfgbinToolStripMenuItem
+            // 
+            this.exportAsCfgbinToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.exportAsCfgbinToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.exportAsCfgbinToolStripMenuItem.Name = "exportAsCfgbinToolStripMenuItem";
+            this.exportAsCfgbinToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportAsCfgbinToolStripMenuItem.Text = "Export as .cfg.bin";
+            this.exportAsCfgbinToolStripMenuItem.Click += new System.EventHandler(this.ExportAsCfgbinToolStripMenuItem_Click);
+            // 
+            // exportAscsvToolStripMenuItem
+            // 
+            this.exportAscsvToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.exportAscsvToolStripMenuItem.Enabled = false;
+            this.exportAscsvToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.exportAscsvToolStripMenuItem.Name = "exportAscsvToolStripMenuItem";
+            this.exportAscsvToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportAscsvToolStripMenuItem.Text = "Export as .xlsx";
+            this.exportAscsvToolStripMenuItem.Click += new System.EventHandler(this.ExportAscsvToolStripMenuItem_Click);
+            // 
             // CharabaseWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.ClientSize = new System.Drawing.Size(558, 328);
+            this.ClientSize = new System.Drawing.Size(604, 328);
+            this.Controls.Add(this.searchTextBox);
+            this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.characterGroupBox);
             this.Controls.Add(this.characterListBox);
-            this.Controls.Add(this.searchTextBox);
+            this.MaximumSize = new System.Drawing.Size(620, 367);
+            this.MinimumSize = new System.Drawing.Size(620, 367);
             this.Name = "CharabaseWindow";
             this.Text = "CharabaseWindow";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CharabaseWindow_FormClosed);
@@ -411,6 +459,8 @@ namespace Lynx.Forms.Characters
             this.characterGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.colorPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.facePictureBox)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -446,5 +496,9 @@ namespace Lynx.Forms.Characters
         private System.Windows.Forms.ContextMenuStrip characterContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem insertToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportAsCfgbinToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportAscsvToolStripMenuItem;
     }
 }

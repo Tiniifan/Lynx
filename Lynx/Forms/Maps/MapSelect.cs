@@ -11,13 +11,13 @@ namespace Lynx.Forms.Maps
 {
     public partial class MapSelect : Form
     {
-        private IGame GameOpened;
+        private Game GameOpened;
 
         private Dictionary<string, string> MapName;
 
         private bool CanOpenEditor = false;
 
-        public MapSelect(IGame game)
+        public MapSelect(Game game)
         {
             GameOpened = game;
             InitializeComponent();
@@ -28,7 +28,9 @@ namespace Lynx.Forms.Maps
         {
             GameSupports.GameFile systemTextGameFile = GameOpened.Files["system_text"];
             T2bþ systemText = new T2bþ(systemTextGameFile.File.Directory.GetFileFromFullPath(systemTextGameFile.Path));
-            string[] mapDirectoriesNames = GameOpened.Game.Directory.GetFolderFromFullPath(GameOpened.Files["map"].Path).Folders.Select(x => x.Name).ToArray();
+
+            VirtualDirectory mapDirectory = GameOpened.GetDirectory("map");
+            string[] mapDirectoriesNames = mapDirectory.Folders.Select(x => x.Name).ToArray();
 
             MapName = new Dictionary<string, string>();
             Dictionary<string, int> nameCounter = new Dictionary<string, int>();

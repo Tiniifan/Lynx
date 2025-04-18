@@ -622,13 +622,13 @@
             this.deleteToolStripMenuItem});
             this.routeContextMenuStrip.Name = "characterContextMenuStrip";
             this.routeContextMenuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.routeContextMenuStrip.Size = new System.Drawing.Size(181, 70);
+            this.routeContextMenuStrip.Size = new System.Drawing.Size(108, 48);
             // 
             // insertToolStripMenuItem
             // 
             this.insertToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.insertToolStripMenuItem.Name = "insertToolStripMenuItem";
-            this.insertToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.insertToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.insertToolStripMenuItem.Text = "Add";
             this.insertToolStripMenuItem.Click += new System.EventHandler(this.AddToolStripMenuItem_Click);
             // 
@@ -636,7 +636,7 @@
             // 
             this.deleteToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.DeleteToolStripMenuItem_Click);
             // 
@@ -667,15 +667,17 @@
             this.exportAsCfgbinToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.exportAsCfgbinToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.exportAsCfgbinToolStripMenuItem.Name = "exportAsCfgbinToolStripMenuItem";
-            this.exportAsCfgbinToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.exportAsCfgbinToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exportAsCfgbinToolStripMenuItem.Text = "Export as .cfg.bin";
+            this.exportAsCfgbinToolStripMenuItem.Click += new System.EventHandler(this.ExportAsCfgbinToolStripMenuItem_Click);
             // 
             // exportAscsvToolStripMenuItem
             // 
             this.exportAscsvToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.exportAscsvToolStripMenuItem.Enabled = false;
             this.exportAscsvToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.exportAscsvToolStripMenuItem.Name = "exportAscsvToolStripMenuItem";
-            this.exportAscsvToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.exportAscsvToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exportAscsvToolStripMenuItem.Text = "Export as .xlsx";
             // 
             // manageToolStripMenuItem
@@ -717,6 +719,8 @@
             this.Controls.Add(this.challengeRouteGroupBox);
             this.Controls.Add(this.previewPictureBox);
             this.KeyPreview = true;
+            this.MaximumSize = new System.Drawing.Size(1156, 655);
+            this.MinimumSize = new System.Drawing.Size(1156, 655);
             this.Name = "ChallengeRouteWindow";
             this.Text = "ChallengeRouteWindow";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ChallengeRouteWindow_FormClosed);
