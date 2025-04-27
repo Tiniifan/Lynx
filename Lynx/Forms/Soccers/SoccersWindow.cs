@@ -526,8 +526,8 @@ namespace Lynx.Forms.Soccers
                 .ToArray();
 
             GameOpened.SaveSoccers(Soccers.ToArray());
-            //GameOpened.SaveTeamParams(TeamParams.ToArray());
-            //GameOpened.SaveTeamConfig(storyTeams, encountTeams);
+            GameOpened.SaveTeamParams(TeamParams.ToArray());
+            GameOpened.SaveTeamConfig(storyTeams, encountTeams);
 
             if (TeamText != null)
             {
@@ -535,7 +535,7 @@ namespace Lynx.Forms.Soccers
                 TeamText.Texts.Clear();
 
                 // Save
-                //GameOpened.SaveTextFile(GameOpened.Files["team_text"], TeamText);
+                GameOpened.SaveTextFile(GameOpened.Files["team_text"], TeamText);
             }
         }
 
