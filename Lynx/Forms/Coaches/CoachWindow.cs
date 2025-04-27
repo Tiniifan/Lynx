@@ -15,6 +15,7 @@ using OfficeOpenXml;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using static Lynx.InazumaEleven.Games.GO.GOSupport;
 using Lynx.Level5.Save.Logic;
+using Lynx.Level5.Text.Logic;
 
 namespace Lynx.Forms.Coaches
 {
@@ -133,9 +134,44 @@ namespace Lynx.Forms.Coaches
 
         private void Save()
         {
-            // GameOpened.saveco(Avatars.ToArray());
-            // GameOpened.SaveAvatarGrowthTable(AvatarTimeGrowths.ToArray());
-            // GameOpened.SaveTextFile(GameOpened.Files["item_text"], Itemtext);
+            GameOpened.SaveCoaches(Coaches.ToArray());
+            GameOpened.SaveTextFile(GameOpened.Files["item_text"], Itemtext);
+
+            // Update Systemtext
+            foreach(IItemDirector coach in Coaches)
+            {
+                if (CoachNamesDict.ContainsKey(coach.ItemID))
+                {
+                    int numCoach = coach.ItemNumber;
+                    CoachText coachText = CoachNamesDict[coach.ItemID];
+
+                    if (coachText.StatText1 != null && coachText.StatText1 != "")
+                    {
+                        int statText1Crc32 = unchecked((int)Crc32.Compute(Encoding.UTF8.GetBytes($"Dir-{coach.ItemNumber}-1")));
+
+                        if (Systemtext.Texts.ContainsKey(statText1Crc32))
+                        {
+                            Systemtext.Texts.Remove(statText1Crc32);
+                        }
+
+                        Systemtext.Texts.Add(statText1Crc32, new TextConfig(new List<StringLevel5>() { new StringLevel5(0, coachText.StatText1) }));
+                    }
+
+                    if (coachText.StatText2 != null && coachText.StatText2 != "")
+                    {
+                        int statText2Crc32 = unchecked((int)Crc32.Compute(Encoding.UTF8.GetBytes($"Dir-{coach.ItemNumber}-2")));
+
+                        if (Systemtext.Texts.ContainsKey(statText2Crc32))
+                        {
+                            Systemtext.Texts.Remove(statText2Crc32);
+                        }
+
+                        Systemtext.Texts.Add(statText2Crc32, new TextConfig(new List<StringLevel5>() { new StringLevel5(0, coachText.StatText2) }));
+                    }
+                }
+            }
+
+            GameOpened.SaveTextFile(GameOpened.Files["system_text"], Systemtext);
         }
 
         private void InitializeCoachResource()
@@ -512,6 +548,30 @@ namespace Lynx.Forms.Coaches
             if (!statTextBox2.Focused) return;
 
             CoachNamesDict[SelectedCoach.ItemID].StatText2 = statTextBox2.Text;
+        }
+
+        private void ExportAsCfgbinToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.IsFolderPicker = true;
+
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                // Save
+                Save();
+
+                // Get files
+                (string, byte[]) itemconfig = GameOpened.GetFileNameAndContent("item_config");
+                (string, byte[]) itemtext = GameOpened.GetFileNameAndContent("item_text");
+                (string, byte[]) systemtext = GameOpened.GetFileNameAndContent("system_text");
+
+                // Export files
+                File.WriteAllBytes(Path.Combine(dialog.FileName, itemconfig.Item1), itemconfig.Item2);
+                File.WriteAllBytes(Path.Combine(dialog.FileName, itemtext.Item1), itemtext.Item2);
+                File.WriteAllBytes(Path.Combine(dialog.FileName, systemtext.Item1), systemtext.Item2);
+
+                MessageBox.Show("Data exported!");
+            }
         }
     }
 }

@@ -12,6 +12,7 @@ using Lynx.Level5.Binary.Logic;
 using static Lynx.InazumaEleven.Games.GO.GOSupport;
 using Lynx.Level5.Archive.XPCK;
 using Type = System.Type;
+using System.Reflection;
 
 namespace Lynx.InazumaEleven.Games
 {
@@ -1360,6 +1361,26 @@ namespace Lynx.InazumaEleven.Games
                 default:
                     return null;
             }
+        }
+
+        public void SaveCoaches(IItemDirector[] coaches)
+        {
+            CfgBin itemConfigFile = new CfgBin();
+            itemConfigFile.Open(GetFileContent("item_config"));
+
+            Entry baseBegin = itemConfigFile.Entries.Where(x => x.GetName() == "ITEM_DIRECTOR_BEGIN").FirstOrDefault();
+            baseBegin.Children.Clear();
+
+            baseBegin.Variables[0].Value = coaches.Length;
+
+            for (int i = 0; i < coaches.Count(); i++)
+            {
+                Entry newBaseEntry = new Entry("ITEM_DIRECTOR_" + i, new List<Variable>(), Encoding.UTF8);
+                newBaseEntry.SetVariablesFromClass(coaches[i]);
+                baseBegin.Children.Add(newBaseEntry);
+            }
+
+            GetFile("item_config").ByteContent = itemConfigFile.Save();
         }
 
         /// <summary>

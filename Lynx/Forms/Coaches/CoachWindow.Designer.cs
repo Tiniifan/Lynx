@@ -186,7 +186,7 @@
             this.exportAscsvToolStripMenuItem.Enabled = false;
             this.exportAscsvToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.exportAscsvToolStripMenuItem.Name = "exportAscsvToolStripMenuItem";
-            this.exportAscsvToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.exportAscsvToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exportAscsvToolStripMenuItem.Text = "Export as .xlsx";
             // 
             // exportToolStripMenuItem
@@ -204,8 +204,9 @@
             this.exportAsCfgbinToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.exportAsCfgbinToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.exportAsCfgbinToolStripMenuItem.Name = "exportAsCfgbinToolStripMenuItem";
-            this.exportAsCfgbinToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.exportAsCfgbinToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exportAsCfgbinToolStripMenuItem.Text = "Export as .cfg.bin";
+            this.exportAsCfgbinToolStripMenuItem.Click += new System.EventHandler(this.ExportAsCfgbinToolStripMenuItem_Click);
             // 
             // menuStrip1
             // 

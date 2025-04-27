@@ -738,7 +738,7 @@ namespace Lynx.Level5.Binary.Logic
         {
             List<Variable> variableList = new List<Variable>();
 
-            var properties = typeof(T).GetProperties();
+            var properties = structure.GetType().GetProperties();
 
             foreach (var property in properties)
             {

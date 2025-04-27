@@ -33,6 +33,7 @@ namespace Lynx.Forms.Home
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.featuresGroupBox = new System.Windows.Forms.GroupBox();
             this.featuresListBox = new System.Windows.Forms.ListBox();
@@ -55,7 +56,6 @@ namespace Lynx.Forms.Home
             this.matchGroupBox = new System.Windows.Forms.GroupBox();
             this.challengeRouteButton = new System.Windows.Forms.Button();
             this.teamsButton = new System.Windows.Forms.Button();
-            this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.featuresGroupBox.SuspendLayout();
             this.characterGroupBox.SuspendLayout();
@@ -95,6 +95,14 @@ namespace Lynx.Forms.Home
             this.openFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openFileToolStripMenuItem.Text = "Open (File)";
             this.openFileToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItem_Click);
+            // 
+            // openFolderToolStripMenuItem
+            // 
+            this.openFolderToolStripMenuItem.Enabled = false;
+            this.openFolderToolStripMenuItem.Name = "openFolderToolStripMenuItem";
+            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openFolderToolStripMenuItem.Text = "Open (Folder)";
+            this.openFolderToolStripMenuItem.Click += new System.EventHandler(this.openFolderToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
@@ -351,13 +359,6 @@ namespace Lynx.Forms.Home
             this.teamsButton.Text = "Teams";
             this.teamsButton.UseVisualStyleBackColor = true;
             this.teamsButton.Click += new System.EventHandler(this.TeamsButton_Click);
-            // 
-            // openFolderToolStripMenuItem
-            // 
-            this.openFolderToolStripMenuItem.Name = "openFolderToolStripMenuItem";
-            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.openFolderToolStripMenuItem.Text = "Open (Folder)";
-            this.openFolderToolStripMenuItem.Click += new System.EventHandler(this.openFolderToolStripMenuItem_Click);
             // 
             // Home
             // 
