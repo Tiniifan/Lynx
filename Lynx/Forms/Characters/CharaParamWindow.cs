@@ -453,15 +453,18 @@ namespace Lynx.Forms.Characters
                 // Fix player special move offset start
                 player.Charaparam.SpecialMoveOffset = skillOffset;
 
-                // Fix moveset
                 ISkillTable[] myPlayerSkills = player.SpecialMoves.Where(x => x.SkillHash != 0x00).ToArray();
                 foreach (ISkillTable myPlayerSkill in myPlayerSkills)
                 {
-                    myPlayerSkill.SkillIndex = skillOffset;
+                    ISkillTable newSkillTable = GameOpened.GetEmptyObject<ISkillTable>();
+                    newSkillTable.SkillIndex = skillOffset;
+                    myPlayerSkill.LevelLearned = myPlayerSkill.LevelLearned;
+                    myPlayerSkill.SkillHash = myPlayerSkill.SkillHash;
+                    myPlayerSkill.Level = myPlayerSkill.Level;
                     skillOffset++;
                 }
 
-                // Fix plater special move count
+                // Fix player special move count
                 player.Charaparam.SpecialMoveCount = myPlayerSkills.Length;
 
                 // Add new moveset on skilltables

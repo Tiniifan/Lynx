@@ -186,7 +186,7 @@
             this.exportAscsvToolStripMenuItem.Enabled = false;
             this.exportAscsvToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.exportAscsvToolStripMenuItem.Name = "exportAscsvToolStripMenuItem";
-            this.exportAscsvToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportAscsvToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.exportAscsvToolStripMenuItem.Text = "Export as .xlsx";
             // 
             // exportToolStripMenuItem
@@ -204,7 +204,7 @@
             this.exportAsCfgbinToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.exportAsCfgbinToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.exportAsCfgbinToolStripMenuItem.Name = "exportAsCfgbinToolStripMenuItem";
-            this.exportAsCfgbinToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportAsCfgbinToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.exportAsCfgbinToolStripMenuItem.Text = "Export as .cfg.bin";
             this.exportAsCfgbinToolStripMenuItem.Click += new System.EventHandler(this.ExportAsCfgbinToolStripMenuItem_Click);
             // 
@@ -1540,7 +1540,6 @@
             this.statTextBox2.Location = new System.Drawing.Point(22, 19);
             this.statTextBox2.Multiline = true;
             this.statTextBox2.Name = "statTextBox2";
-            this.statTextBox2.ReadOnly = true;
             this.statTextBox2.Size = new System.Drawing.Size(429, 62);
             this.statTextBox2.TabIndex = 270;
             this.statTextBox2.TextChanged += new System.EventHandler(this.StatTextBox2_TextChanged);
@@ -1564,7 +1563,6 @@
             this.statTextBox1.Location = new System.Drawing.Point(22, 19);
             this.statTextBox1.Multiline = true;
             this.statTextBox1.Name = "statTextBox1";
-            this.statTextBox1.ReadOnly = true;
             this.statTextBox1.Size = new System.Drawing.Size(429, 62);
             this.statTextBox1.TabIndex = 270;
             this.statTextBox1.TextChanged += new System.EventHandler(this.StatTextBox1_TextChanged);
