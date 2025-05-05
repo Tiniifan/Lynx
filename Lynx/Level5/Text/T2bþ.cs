@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Lynx.Level5.Binary.Logic;
 using Lynx.Level5.Binary;
 using Lynx.Level5.Text.Logic;
-using Lynx.Level5.Binary.Logic;
 
 namespace Lynx.Level5.Text
 {
@@ -26,93 +26,17 @@ namespace Lynx.Level5.Text
         public T2bþ(Stream stream)
         {
             Open(stream);
-
-            // Get faces
-            int[] faces = Entries
-                .Where(x => x.GetName() == "TEXT_WASHA_BEGIN")
-                .SelectMany(x => x.Children)
-                .Select(x => Convert.ToInt32(x.Variables[1].Value))
-                .ToArray();
-
-            // Get faces configs
-            Dictionary<int, int> facesConfig = Entries
-                .Where(x => x.GetName() == "TEXT_CONFIG_BEGIN")
-                .SelectMany(x => x.Children)
-                .ToDictionary(x => Convert.ToInt32(x.Variables[0].Value), y => Convert.ToInt32(y.Variables[2].Value));
-
-            // Get Texts
-            Texts = Entries
-                .Where(x => x.GetName() == "TEXT_INFO_BEGIN")
-                .SelectMany(x => x.Children)
-                .GroupBy(
-                    x => Convert.ToInt32(x.Variables[0].Value),
-                    y =>
-                    {
-                        int variable0Value = Convert.ToInt32(y.Variables[0].Value);
-                        int washaID = -1;
-                        List<StringLevel5> strings = new List<StringLevel5>();
-
-                        if (facesConfig.ContainsKey(variable0Value))
-                        {
-                            int configValue = facesConfig[variable0Value];
-                            if (configValue != -1 && configValue < faces.Length)
-                            {
-                                washaID = faces[configValue];
-                            }
-                        }
-
-                        strings.Add(new StringLevel5(
-                            Convert.ToInt32(y.Variables[1].Value),
-                            (y.Variables[2].Value as OffsetTextPair).Text
-                        ));
-
-                        return new TextConfig(strings, washaID);
-                    }
-                )
-                .ToDictionary(
-                    group => group.Key,
-                    group =>
-                    {
-                        var mergedStrings = group.SelectMany(item => item.Strings).ToList();
-                        return new TextConfig(mergedStrings, group.First().WashaID);
-                    }
-                );
-
-            // Get Nouns
-            Nouns = Entries
-                .Where(x => x.GetName() == "NOUN_INFO_BEGIN")
-                .SelectMany(x => x.Children)
-                .GroupBy(
-                    x => Convert.ToInt32(x.Variables[0].Value),
-                    y =>
-                    {
-                        int variable0Value = Convert.ToInt32(y.Variables[0].Value);
-                        int washaID = -1; // Default value
-                        List<StringLevel5> strings = new List<StringLevel5>
-                        {
-                            new StringLevel5(
-                                Convert.ToInt32(y.Variables[1].Value),
-                                (y.Variables[5].Value as OffsetTextPair).Text
-                            )
-                        };
-
-                        return new TextConfig(strings, washaID);
-                    }
-                )
-                .ToDictionary(
-                    group => group.Key,
-                    group =>
-                    {
-                        var mergedStrings = group.SelectMany(item => item.Strings).ToList();
-                        return new TextConfig(mergedStrings, group.First().WashaID);
-                    }
-                );
+            LoadBinary();
         }
 
         public T2bþ(byte[] data)
         {
             Open(data);
+            LoadBinary();
+        }
 
+        private void LoadBinary()
+        {
             // Get faces
             int[] faces = Entries
                 .Where(x => x.GetName() == "TEXT_WASHA_BEGIN")
@@ -203,9 +127,9 @@ namespace Lynx.Level5.Text
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(xmlData);
 
-            XmlNodeList textNodes = xmlDoc.SelectNodes("/Texts/TextConfig");
+            XmlNodeList textConfigNodes = xmlDoc.SelectNodes("Root/*/TextConfig");
 
-            foreach (XmlNode textNode in textNodes)
+            foreach (XmlNode textNode in textConfigNodes)
             {
                 int crc32 = int.Parse(textNode.Attributes.GetNamedItem("crc32").Value.Replace("0x", ""), System.Globalization.NumberStyles.HexNumber);
                 int washa = int.Parse(textNode.Attributes.GetNamedItem("washa").Value.Replace("0x", ""), System.Globalization.NumberStyles.HexNumber);
@@ -244,31 +168,27 @@ namespace Lynx.Level5.Text
 
             foreach (string line in lines)
             {
-                if (IsRegularFormat(line))
+                Match match = GetMatch(line);
+
+                if (match != null)
                 {
-                    Match match = Regex.Match(line, @"\[(\w+)/0x([A-Fa-f0-9]+)/0x([A-Fa-f0-9]+)\]");
-
-                    if (match.Success)
+                    string type = match.Groups[1].Value;
+                    int crc32 = int.Parse(match.Groups[2].Value, System.Globalization.NumberStyles.HexNumber);
+                    int washa = -1;
+                    if (match.Groups[3].Value != "-1")
                     {
-                        string type = match.Groups[1].Value;
-                        int crc32 = int.Parse(match.Groups[2].Value, System.Globalization.NumberStyles.HexNumber);
-                        int washa = int.Parse(match.Groups[3].Value, System.Globalization.NumberStyles.HexNumber);
-
-                        currentTextConfig = new TextConfig(new List<StringLevel5>(), washa);
-
-                        if (type == "Texts")
-                        {
-                            Texts[crc32] = currentTextConfig;
-                        }
-                        else if (type == "Nouns")
-                        {
-                            Nouns[crc32] = currentTextConfig;
-                        }
+                        washa = int.Parse(match.Groups[3].Value, System.Globalization.NumberStyles.HexNumber);
                     }
-                    else
+
+                    currentTextConfig = new TextConfig(new List<StringLevel5>(), washa);
+
+                    if (type.Trim().Equals("Texts"))
                     {
-                        Texts.Add(currentIndex, new TextConfig(new List<StringLevel5>() { new StringLevel5(0, line) }, -1));
-                        currentTextConfig = null;
+                        Texts[crc32] = currentTextConfig;
+                    }
+                    else if (type.Trim().Equals("Nouns"))
+                    {
+                        Nouns[crc32] = currentTextConfig;
                     }
                 }
                 else if (!string.IsNullOrWhiteSpace(line))
@@ -288,9 +208,20 @@ namespace Lynx.Level5.Text
             }
         }
 
-        private bool IsRegularFormat(string line)
+        private Match GetMatch(string line)
         {
-            return Regex.IsMatch(line, @"\[(\w+)/0x([A-Fa-f0-9]+)/0x([A-Fa-f0-9]+)\]");
+            if (Regex.IsMatch(line, @"\[(\w+)/0x([A-Fa-f0-9]+)/0x([A-Fa-f0-9]+)\]"))
+            {
+                return Regex.Match(line, @"\[(\w+)/0x([A-Fa-f0-9]+)/0x([A-Fa-f0-9]+)\]");
+            }
+            else if (Regex.IsMatch(line, @"\[(\w+)/0x([A-Fa-f0-9]+)/(-1)\]"))
+            {
+                return Regex.Match(line, @"\[(\w+)/0x([A-Fa-f0-9]+)/(-1)\]");
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private string[] GetStrings()
@@ -459,37 +390,7 @@ namespace Lynx.Level5.Text
                 ReplaceEntry("NOUN_INFO_BEGIN", nounEntry);
             }
 
-            Strings = strings;
             Save(fileName);
-        }
-
-        public byte[] Save(bool iego)
-        {
-            Dictionary<int, string> strings = GetStringsTable();
-
-            if (Texts.Count > 0)
-            {
-                Entry textEntry = GetTextEntry(strings);
-                ReplaceEntry("TEXT_INFO_BEGIN", textEntry);
-
-                if (iego)
-                {
-                    Entry configEntry = GetTextConfigEntry();
-                    Entry washaEntry = GetTextWashaEntry();
-
-                    ReplaceEntry("TEXT_CONFIG_BEGIN", configEntry);
-                    ReplaceEntry("TEXT_WASHA_BEGIN", washaEntry);
-                }
-            }
-
-            if (Nouns.Count > 0)
-            {
-                Entry nounEntry = GetNounEntry(strings);
-                ReplaceEntry("NOUN_INFO_BEGIN", nounEntry);
-            }
-
-            Strings = strings;
-            return Save();
         }
 
         public string[] ConvertToXml(Dictionary<int, TextConfig> texts, string baliseName)
@@ -524,17 +425,25 @@ namespace Lynx.Level5.Text
         {
             List<string> xmlStrings = new List<string>();
 
+            // Ajouter la déclaration XML
             xmlStrings.Add("<?xml version=\"1.0\"?>");
 
-            if (Texts.Count > 1)
+            // Ajouter l'élément racine <Root>
+            xmlStrings.Add("<Root>");
+
+            // Ajouter les éléments <Texts> et <Nouns>
+            if (Texts.Count > 0)
             {
                 xmlStrings.AddRange(ConvertToXml(Texts, "Texts"));
             }
 
-            if (Nouns.Count > 1)
+            if (Nouns.Count > 0)
             {
                 xmlStrings.AddRange(ConvertToXml(Nouns, "Nouns"));
             }
+
+            // Fermer l'élément racine </Root>
+            xmlStrings.Add("</Root>");
 
             return xmlStrings.ToArray();
         }

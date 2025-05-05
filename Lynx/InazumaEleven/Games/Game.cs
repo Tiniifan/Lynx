@@ -797,7 +797,7 @@ namespace Lynx.InazumaEleven.Games
             }
 
             // Save the file
-            mapDirectory.GetFolderFromFullPath(mapID).Files[fileName].ByteContent = npcFile.SaveWithStrings();
+            mapDirectory.GetFolderFromFullPath(mapID).Files[fileName].ByteContent = npcFile.Save();
         }
 
         /// <summary>
@@ -916,7 +916,7 @@ namespace Lynx.InazumaEleven.Games
             }
 
             // Save the file
-            mapDirectory.GetFolderFromFullPath(mapID).Files[fileName].ByteContent = npcFile.SaveWithStrings();
+            mapDirectory.GetFolderFromFullPath(mapID).Files[fileName].ByteContent = npcFile.Save();
         }
 
         /// <summary>
@@ -945,7 +945,7 @@ namespace Lynx.InazumaEleven.Games
             string fileName = $"{mapID}_{LanguageCode}.cfg.bin";
 
             // Save the file
-            mapDirectory.GetFolderFromFullPath(mapID).Files[fileName].ByteContent = fileData.Save(true);
+            mapDirectory.GetFolderFromFullPath(mapID).Files[fileName].ByteContent = fileData.Save();
         }
 
         /// <summary>
@@ -1124,7 +1124,7 @@ namespace Lynx.InazumaEleven.Games
                 baseBegin.Children.Add(newBaseEntry);
             }
 
-            soccerDirectory.Files[filename].ByteContent = routeFile.SaveWithStrings();
+            soccerDirectory.Files[filename].ByteContent = routeFile.Save();
         }
 
         /// <summary>
@@ -1164,7 +1164,7 @@ namespace Lynx.InazumaEleven.Games
                 baseBegin.Children.Add(newBaseEntry);
             }
 
-            GetFile("soccer_config").ByteContent = soccerFile.SaveWithStrings();
+            GetFile("soccer_config").ByteContent = soccerFile.Save();
         }
 
         /// <summary>
@@ -1434,7 +1434,7 @@ namespace Lynx.InazumaEleven.Games
         public void SaveTextFile(GameSupports.GameFile fileName, T2bþ fileData)
         {
             VirtualDirectory directory = fileName.File.Directory.GetFolderFromFullPath(Path.GetDirectoryName(fileName.Path).Replace("\\", "/"));
-            directory.Files[Path.GetFileName(fileName.Path)].ByteContent = fileData.Save(false);
+            directory.Files[Path.GetFileName(fileName.Path)].ByteContent = fileData.Save();
         }
 
         /// <summary>

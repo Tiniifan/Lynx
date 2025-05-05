@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using Lynx.Tools;
 using Lynx.Level5.Binary.Logic;
-using DocumentFormat.OpenXml.Bibliography;
+using Lynx.Level5.Binary;
+using Lynx.Tools;
 
 namespace Lynx.Level5.Binary
 {
@@ -16,36 +16,16 @@ namespace Lynx.Level5.Binary
 
         public List<Entry> Entries;
 
-        public Dictionary<int, string> Strings;
-
         public CfgBin()
         {
             Entries = new List<Entry>();
-            Strings = new Dictionary<int, string>();
         }
 
         public void Open(byte[] data)
         {
             using (var reader = new BinaryDataReader(data))
             {
-                reader.Seek((uint)reader.Length - 0x0A);
-                Encoding = SetEncoding(reader.ReadValue<byte>());
-
-                reader.Seek(0x0);
-                var header = reader.ReadStruct<CfgBinSupport.Header>();
-
-                byte[] entriesBuffer = reader.GetSection(0x10, header.StringTableOffset);
-
-                byte[] stringTableBuffer = reader.GetSection((uint)header.StringTableOffset, header.StringTableLength);
-                Strings = ParseStrings(header.StringTableCount, stringTableBuffer);
-
-                long keyTableOffset = RoundUp(header.StringTableOffset + header.StringTableLength, 16);
-                reader.Seek((uint)keyTableOffset);
-                int keyTableSize = reader.ReadValue<int>();
-                byte[] keyTableBlob = reader.GetSection((uint)keyTableOffset, keyTableSize);
-                Dictionary<uint, string> keyTable = ParseKeyTable(keyTableBlob);
-
-                Entries = ParseEntries(header.EntriesCount, entriesBuffer, keyTable);
+                OpenInternal(reader);
             }
         }
 
@@ -53,25 +33,33 @@ namespace Lynx.Level5.Binary
         {
             using (var reader = new BinaryDataReader(stream))
             {
-                reader.Seek((uint)reader.Length - 0x0A);
-                Encoding = SetEncoding(reader.ReadValue<byte>());
-
-                reader.Seek(0x0);
-                var header = reader.ReadStruct<CfgBinSupport.Header>();
-
-                byte[] entriesBuffer = reader.GetSection(0x10, header.StringTableOffset);
-
-                byte[] stringTableBuffer = reader.GetSection((uint)header.StringTableOffset, header.StringTableLength);
-                Strings = ParseStrings(header.StringTableCount, stringTableBuffer);
-
-                long keyTableOffset = RoundUp(header.StringTableOffset + header.StringTableLength, 16);
-                reader.Seek((uint)keyTableOffset);
-                int keyTableSize = reader.ReadValue<int>();
-                byte[] keyTableBlob = reader.GetSection((uint)keyTableOffset, keyTableSize);
-                Dictionary<uint, string> keyTable = ParseKeyTable(keyTableBlob);
-
-                Entries = ParseEntries(header.EntriesCount, entriesBuffer, keyTable);
+                OpenInternal(reader);
             }
+        }
+
+        private void OpenInternal(BinaryDataReader reader)
+        {
+            // Read encoding information from the footer
+            reader.Seek((uint)reader.Length - 0x0A);
+            Encoding = SetEncoding(reader.ReadValue<byte>());
+
+            // Read header
+            reader.Seek(0x0);
+            var header = reader.ReadStruct<CfgBinSupport.Header>();
+
+            // Read entry section and string table
+            byte[] entriesBuffer = reader.GetSection(0x10, header.StringTableOffset);
+            byte[] stringTableBuffer = reader.GetSection((uint)header.StringTableOffset, header.StringTableLength);
+
+            // Read key table
+            long keyTableOffset = RoundUp(header.StringTableOffset + header.StringTableLength, 16);
+            reader.Seek((uint)keyTableOffset);
+            int keyTableSize = reader.ReadValue<int>();
+            byte[] keyTableBlob = reader.GetSection((uint)keyTableOffset, keyTableSize);
+            Dictionary<uint, string> keyTable = ParseKeyTable(keyTableBlob);
+
+            // Parse entries
+            Entries = ParseEntries(header.EntriesCount, entriesBuffer, keyTable, stringTableBuffer);
         }
 
         public void Save(string fileName)
@@ -79,160 +67,61 @@ namespace Lynx.Level5.Binary
             using (FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
             {
                 BinaryDataWriter writer = new BinaryDataWriter(stream);
-
-                CfgBinSupport.Header header;
-                header.EntriesCount = Count(Entries);
-                header.StringTableOffset = 0;
-                header.StringTableLength = 0;
-                header.StringTableCount = Strings.Count;
-
-                writer.Seek(0x10);
-
-                foreach (Entry entry in Entries)
-                {
-                    writer.Write(entry.EncodeEntry());
-                }
-
-                writer.WriteAlignment(0x10, 0xFF);
-                header.StringTableOffset = (int)writer.Position;
-
-                if (Strings.Count > 0)
-                {
-                    writer.Write(EncodeStrings(Strings));
-                    header.StringTableLength = (int)writer.Position - header.StringTableOffset;
-                    writer.WriteAlignment(0x10, 0xFF);
-                }
-
-                List<string> uniqueKeysList = Entries
-                    .SelectMany(entry => entry.GetUniqueKeys())
-                    .Distinct()
-                    .ToList();
-
-                writer.Write(EncodeKeyTable(uniqueKeysList));
-
-                writer.Write(new byte[5] { 0x01, 0x74, 0x32, 0x62, 0xFE });
-                writer.Write(new byte[4] { 0x01, GetEncoding(), 0x00, 0x01 });
-                writer.WriteAlignment();
-
-                writer.Seek(0);
-                writer.WriteStruct(header);
+                SaveInternal(writer);
             }
         }
 
         public byte[] Save()
         {
-            using (MemoryStream stream = new MemoryStream())
+            using (var stream = new MemoryStream())
             {
                 BinaryDataWriter writer = new BinaryDataWriter(stream);
-
-                CfgBinSupport.Header header;
-                header.EntriesCount = Count(Entries);
-                header.StringTableOffset = 0;
-                header.StringTableLength = 0;
-                header.StringTableCount = Strings.Count;
-
-                writer.Seek(0x10);
-
-                foreach (Entry entry in Entries)
-                {
-                    writer.Write(entry.EncodeEntry());
-                }
-
-                writer.WriteAlignment(0x10, 0xFF);
-                header.StringTableOffset = (int)writer.Position;
-
-                if (Strings.Count > 0)
-                {
-                    writer.Write(EncodeStrings(Strings));
-                    header.StringTableLength = (int)writer.Position - header.StringTableOffset;
-                    writer.WriteAlignment(0x10, 0xFF);
-                }
-
-                List<string> uniqueKeysList = Entries
-                    .SelectMany(entry => entry.GetUniqueKeys())
-                    .Distinct()
-                    .ToList();
-
-                writer.Write(EncodeKeyTable(uniqueKeysList));
-
-                writer.Write(new byte[5] { 0x01, 0x74, 0x32, 0x62, 0xFE });
-                writer.Write(new byte[4] { 0x01, GetEncoding(), 0x00, 0x01 });
-                writer.WriteAlignment();
-
-                writer.Seek(0);
-                writer.WriteStruct(header);
-
+                SaveInternal(writer);
                 return stream.ToArray();
             }
         }
 
-        public byte[] SaveWithStrings()
+        private void SaveInternal(BinaryDataWriter writer)
         {
-            // Clear Strings
-            Strings.Clear();
+            int stringCount;
+            byte[] stringTable = GenerateStringTable(out stringCount);
 
-            int currentOffset = 0;
+            CfgBinSupport.Header header;
+            header.EntriesCount = Count(Entries);
+            header.StringTableOffset = 0;
+            header.StringTableLength = 0;
+            header.StringTableCount = stringCount;
 
-            // Regenerate the string table
+            writer.Seek(0x10);
+
             foreach (Entry entry in Entries)
             {
-                List<string> stringsFromTheEntry = entry.GetStringsAsList();
-
-                foreach(string myString in stringsFromTheEntry)
-                {
-                    if (!Strings.ContainsValue(myString))
-                    {
-                        Strings[currentOffset] = myString;
-                        currentOffset += Encoding.GetByteCount(myString) + 1;
-                    }
-                }
-
-                entry.UpdateOffsetsRecursive(Strings);
+                writer.Write(entry.EncodeEntry());
             }
 
-            using (MemoryStream stream = new MemoryStream())
+            writer.WriteAlignment(0x10, 0xFF);
+            header.StringTableOffset = (int)writer.Position;
+
+            if (stringCount > 0)
             {
-                BinaryDataWriter writer = new BinaryDataWriter(stream);
-
-                CfgBinSupport.Header header;
-                header.EntriesCount = Count(Entries);
-                header.StringTableOffset = 0;
-                header.StringTableLength = 0;
-                header.StringTableCount = Strings.Count;
-
-                writer.Seek(0x10);
-
-                foreach (Entry entry in Entries)
-                {
-                    writer.Write(entry.EncodeEntry());
-                }
-
+                writer.Write(stringTable);
+                header.StringTableLength = (int)writer.Position - header.StringTableOffset;
                 writer.WriteAlignment(0x10, 0xFF);
-                header.StringTableOffset = (int)writer.Position;
-
-                if (Strings.Count > 0)
-                {
-                    writer.Write(EncodeStrings(Strings));
-                    header.StringTableLength = (int)writer.Position - header.StringTableOffset;
-                    writer.WriteAlignment(0x10, 0xFF);
-                }
-
-                List<string> uniqueKeysList = Entries
-                    .SelectMany(entry => entry.GetUniqueKeys())
-                    .Distinct()
-                    .ToList();
-
-                writer.Write(EncodeKeyTable(uniqueKeysList));
-
-                writer.Write(new byte[5] { 0x01, 0x74, 0x32, 0x62, 0xFE });
-                writer.Write(new byte[4] { 0x01, GetEncoding(), 0x00, 0x01 });
-                writer.WriteAlignment();
-
-                writer.Seek(0);
-                writer.WriteStruct(header);
-
-                return stream.ToArray();      
             }
+
+            List<string> uniqueKeysList = Entries
+                .SelectMany(entry => entry.GetUniqueKeys())
+                .Distinct()
+                .ToList();
+
+            writer.Write(EncodeKeyTable(uniqueKeysList));
+
+            writer.Write(new byte[5] { 0x01, 0x74, 0x32, 0x62, 0xFE });
+            writer.Write(new byte[4] { 0x01, GetEncoding(), 0x00, 0x01 });
+            writer.WriteAlignment();
+
+            writer.Seek(0);
+            writer.WriteStruct(header);
         }
 
         public void ReplaceEntry(string entryName, Entry newEntry)
@@ -273,19 +162,60 @@ namespace Lynx.Level5.Binary
             }
         }
 
-        private Dictionary<int, string> ParseStrings(int stringCount, byte[] stringTableBuffer)
+        private string GetString(int number, byte[] strings)
         {
-            Dictionary<int, string> result = new Dictionary<int, string>();
+            if (number >= strings.Length || number < 0)
+                return string.Empty;
 
-            using (BinaryDataReader reader = new BinaryDataReader(stringTableBuffer))
+            // Set the start index from the provided offset
+            int start = number;
+            int end = number;
+
+            // Find the first null byte (0x00) or the end of the array
+            while (end < strings.Length && strings[end] != 0)
             {
-                for (int i = 0; i < stringCount; i++)
-                {
-                    result.Add((int)reader.Position, reader.ReadString(Encoding));
-                }
+                end++;
             }
 
-            return result;
+            // Extract the relevant byte sequence
+            int length = end - start;
+            byte[] segment = new byte[length];
+            Array.Copy(strings, start, segment, 0, length);
+
+            // Decode the byte segment using the specified encoding
+            return Encoding.GetString(segment);
+        }
+
+        public byte[] GenerateStringTable(out int stringCount)
+        {
+            Dictionary<int, string> offsetToString = new Dictionary<int, string>();
+            List<byte> stringsBuffer = new List<byte>();
+            int currentOffset = 0;
+
+            // Regenerate the string table
+            foreach (Entry entry in Entries)
+            {
+                List<string> stringsFromTheEntry = entry.GetStringsAsList();
+
+                foreach (string myString in stringsFromTheEntry)
+                {
+                    if (!offsetToString.ContainsValue(myString) && myString != null)
+                    {
+                        offsetToString[currentOffset] = myString;
+
+                        byte[] bytes = Encoding.GetBytes(myString);
+                        stringsBuffer.AddRange(bytes);
+                        stringsBuffer.Add(0);
+
+                        currentOffset += bytes.Length + 1;
+                    }
+                }
+
+                entry.UpdateOffsetsRecursive(offsetToString);
+            }
+
+            stringCount = offsetToString.Count;
+            return stringsBuffer.ToArray();
         }
 
         private Dictionary<uint, string> ParseKeyTable(byte[] buffer)
@@ -314,7 +244,7 @@ namespace Lynx.Level5.Binary
             return keyTable;
         }
 
-        private List<Entry> ParseEntries(int entriesCount, byte[] entriesBuffer, Dictionary<uint, string> keyTable)
+        private List<Entry> ParseEntries(int entriesCount, byte[] entriesBuffer, Dictionary<uint, string> keyTable, byte[] stringTableBuffer)
         {
             List<Entry> temp = new List<Entry>();
 
@@ -376,19 +306,13 @@ namespace Lynx.Level5.Binary
 
                             if (offset != -1)
                             {
-                                if (Strings.ContainsKey(offset))
-                                {
-                                    text = Strings[offset];
-                                } else
-                                {
-                                    text = "";
-                                }
-
+                                text = GetString(offset, stringTableBuffer);
                                 variables.Add(new Variable(Logic.Type.String, new OffsetTextPair(offset, text)));
-                            } else
+                            }
+                            else
                             {
                                 variables.Add(new Variable(Logic.Type.String, new OffsetTextPair(offset, "", true)));
-                            }                   
+                            }
                         }
                         else if (paramTypes[j] == Logic.Type.Int)
                         {
@@ -570,23 +494,6 @@ namespace Lynx.Level5.Binary
             return output;
         }
 
-        private byte[] EncodeStrings(Dictionary<int, string> strings)
-        {
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                using (BinaryDataWriter writer = new BinaryDataWriter(memoryStream))
-                {
-                    foreach (KeyValuePair<int, string> kvp in strings)
-                    {
-                        writer.Write(Encoding.GetBytes(kvp.Value));
-                        writer.Write((byte)0x00);
-                    }
-
-                    return memoryStream.ToArray();
-                }
-            }
-        }
-
         public byte[] EncodeKeyTable(List<string> keyList)
         {
             using (MemoryStream stream = new MemoryStream())
@@ -657,6 +564,35 @@ namespace Lynx.Level5.Binary
             }
 
             return totalCount;
+        }
+
+        public int CountStrings()
+        {
+            HashSet<string> uniqueStrings = new HashSet<string>();
+
+            foreach (Entry entry in Entries)
+            {
+                List<string> stringsFromEntry = entry.GetStringsAsList();
+
+                foreach (string myString in stringsFromEntry)
+                {
+                    if (string.IsNullOrEmpty(myString))
+                        continue;
+
+                    // Skip if already covered by a longer string
+                    if (uniqueStrings.Any(s => s.Contains(myString)))
+                        continue;
+
+                    // Remove shorter strings now covered by this one
+                    var toRemove = uniqueStrings.Where(s => myString.Contains(s)).ToList();
+                    foreach (var s in toRemove)
+                        uniqueStrings.Remove(s);
+
+                    uniqueStrings.Add(myString);
+                }
+            }
+
+            return uniqueStrings.Count;
         }
     }
 }
