@@ -268,7 +268,9 @@ namespace Lynx.Forms.SaveEditor
                         true
                     )
                 })
-            .ToDictionary(pair => pair.AvatarHash, pair => pair.Avatar);
+                .GroupBy(pair => pair.AvatarHash)
+                .Select(group => group.First())
+                .ToDictionary(pair => pair.AvatarHash, pair => pair.Avatar);
 
             avatarFlatComboBox.Items.AddRange(avatarnames);
         }

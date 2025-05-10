@@ -56,6 +56,7 @@ namespace Lynx.Forms.Home
             this.matchGroupBox = new System.Windows.Forms.GroupBox();
             this.challengeRouteButton = new System.Windows.Forms.Button();
             this.teamsButton = new System.Windows.Forms.Button();
+            this.translationHelperButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.featuresGroupBox.SuspendLayout();
             this.characterGroupBox.SuspendLayout();
@@ -92,7 +93,7 @@ namespace Lynx.Forms.Home
             // openFileToolStripMenuItem
             // 
             this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
-            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.openFileToolStripMenuItem.Text = "Open (File)";
             this.openFileToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItem_Click);
             // 
@@ -100,7 +101,7 @@ namespace Lynx.Forms.Home
             // 
             this.openFolderToolStripMenuItem.Enabled = false;
             this.openFolderToolStripMenuItem.Name = "openFolderToolStripMenuItem";
-            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.openFolderToolStripMenuItem.Text = "Open (Folder)";
             this.openFolderToolStripMenuItem.Click += new System.EventHandler(this.openFolderToolStripMenuItem_Click);
             // 
@@ -108,7 +109,7 @@ namespace Lynx.Forms.Home
             // 
             this.saveToolStripMenuItem.Enabled = false;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
             // 
@@ -140,7 +141,8 @@ namespace Lynx.Forms.Home
             "Save Editor",
             "Challenge Route",
             "Teams",
-            "Coaches"});
+            "Coaches",
+            "Translation Helper"});
             this.featuresListBox.Location = new System.Drawing.Point(6, 19);
             this.featuresListBox.Name = "featuresListBox";
             this.featuresListBox.Size = new System.Drawing.Size(188, 381);
@@ -284,9 +286,9 @@ namespace Lynx.Forms.Home
             this.shopsGroupBox.Controls.Add(this.shopsButton);
             this.shopsGroupBox.Enabled = false;
             this.shopsGroupBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.shopsGroupBox.Location = new System.Drawing.Point(440, 117);
+            this.shopsGroupBox.Location = new System.Drawing.Point(218, 387);
             this.shopsGroupBox.Name = "shopsGroupBox";
-            this.shopsGroupBox.Size = new System.Drawing.Size(216, 84);
+            this.shopsGroupBox.Size = new System.Drawing.Size(216, 54);
             this.shopsGroupBox.TabIndex = 7;
             this.shopsGroupBox.TabStop = false;
             this.shopsGroupBox.Text = "Shops";
@@ -304,15 +306,16 @@ namespace Lynx.Forms.Home
             // 
             // debugGroupBox
             // 
+            this.debugGroupBox.Controls.Add(this.translationHelperButton);
             this.debugGroupBox.Controls.Add(this.saveEditorButton);
             this.debugGroupBox.Enabled = false;
             this.debugGroupBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.debugGroupBox.Location = new System.Drawing.Point(218, 387);
+            this.debugGroupBox.Location = new System.Drawing.Point(440, 117);
             this.debugGroupBox.Name = "debugGroupBox";
-            this.debugGroupBox.Size = new System.Drawing.Size(216, 54);
+            this.debugGroupBox.Size = new System.Drawing.Size(216, 84);
             this.debugGroupBox.TabIndex = 8;
             this.debugGroupBox.TabStop = false;
-            this.debugGroupBox.Text = "Debug";
+            this.debugGroupBox.Text = "Other";
             // 
             // saveEditorButton
             // 
@@ -359,6 +362,17 @@ namespace Lynx.Forms.Home
             this.teamsButton.Text = "Teams";
             this.teamsButton.UseVisualStyleBackColor = true;
             this.teamsButton.Click += new System.EventHandler(this.TeamsButton_Click);
+            // 
+            // translationHelperButton
+            // 
+            this.translationHelperButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.translationHelperButton.Location = new System.Drawing.Point(6, 48);
+            this.translationHelperButton.Name = "translationHelperButton";
+            this.translationHelperButton.Size = new System.Drawing.Size(200, 23);
+            this.translationHelperButton.TabIndex = 1;
+            this.translationHelperButton.Text = "Translation Helper";
+            this.translationHelperButton.UseVisualStyleBackColor = true;
+            this.translationHelperButton.Click += new System.EventHandler(this.TranslationHelperButton_Click);
             // 
             // Home
             // 
@@ -427,5 +441,6 @@ namespace Lynx.Forms.Home
         private System.Windows.Forms.Button teamsButton;
         private System.Windows.Forms.Button coachesButton;
         private System.Windows.Forms.ToolStripMenuItem openFolderToolStripMenuItem;
+        private System.Windows.Forms.Button translationHelperButton;
     }
 }

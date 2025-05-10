@@ -250,6 +250,11 @@ namespace Lynx.InazumaEleven.Games
             return null;
         }
 
+        public virtual void GetGameFiles()
+        {
+
+        }
+
         /// <summary>
         /// Retrieves a file from the game's file system as a SubMemoryStream.
         /// </summary>

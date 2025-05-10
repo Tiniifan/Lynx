@@ -269,6 +269,12 @@
     <Compile Include="Forms\Soccers\SoccersWindow.Designer.cs">
       <DependentUpon>SoccersWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\TranslationHelper\TranslationHelperWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TranslationHelper\TranslationHelperWindow.Designer.cs">
+      <DependentUpon>TranslationHelperWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="InazumaEleven\Common\AvatarGrowthStats.cs" />
     <Compile Include="InazumaEleven\Common\GrowingTimes.cs" />
     <Compile Include="InazumaEleven\Common\GrowStats.cs" />
@@ -468,6 +474,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Soccers\SoccersWindow.resx">
       <DependentUpon>SoccersWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TranslationHelper\TranslationHelperWindow.resx">
+      <DependentUpon>TranslationHelperWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

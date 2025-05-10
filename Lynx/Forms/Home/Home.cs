@@ -21,6 +21,7 @@ using Lynx.Forms.FightingSpirits;
 using Lynx.Forms.ChallengeRoute;
 using Lynx.Forms.Soccers;
 using Lynx.Forms.Coaches;
+using Lynx.Forms.TranslationHelper;
 
 namespace Lynx.Forms.Home
 {
@@ -138,6 +139,9 @@ namespace Lynx.Forms.Home
                 case "Coaches":
                     CoachesButton_Click(sender, e);
                     break;
+                case "Translation Helper":
+                    TranslationHelperButton_Click(sender, e);
+                    break;
             }
         }
 
@@ -212,6 +216,12 @@ namespace Lynx.Forms.Home
         {
             CoachWindow coachWindow = new CoachWindow(GameOpened);
             coachWindow.ShowDialog();
+        }
+
+        private void TranslationHelperButton_Click(object sender, EventArgs e)
+        {
+            TranslationHelperWindow translationHelperWindow = new TranslationHelperWindow(GameOpened);
+            translationHelperWindow.ShowDialog();
         }
     }
 }

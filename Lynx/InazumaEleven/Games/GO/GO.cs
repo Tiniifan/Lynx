@@ -49,7 +49,7 @@ namespace Lynx.InazumaEleven.Games.GO
             TypeItemConfigDirector = typeof(ItemConfigDirector);
         }
 
-        private void GetGameFiles()
+        public override void GetGameFiles()
         {
             Files = new Dictionary<string, GameSupports.GameFile>
             {
