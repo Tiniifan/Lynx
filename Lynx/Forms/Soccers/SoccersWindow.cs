@@ -1612,6 +1612,92 @@ namespace Lynx.Forms.Soccers
             }
         }
 
+        private void ExportAscsvToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (TeamParams == null || TeamParams.Count == 0)
+            {
+                MessageBox.Show("No data to export.");
+                return;
+            }
+
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx";
+                saveFileDialog.Title = "Export TeamParams to Excel";
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+                    using (var package = new ExcelPackage())
+                    {
+                        var worksheet = package.Workbook.Worksheets.Add("TeamParams");
+
+                        // Headers
+                        string[] headers = new[]
+                        {
+                            "Name", "Level", "Prestige", "Friendship", "Victory Point", "Nice Play",
+                            "Drop 1", "Rate", "Drop 2", "Rate", "Drop 3", "Rate",
+                            "Drop 4", "Rate", "Drop 5", "Rate", "Drop 6", "Rate"
+                        };
+
+                        for (int i = 0; i < headers.Length; i++)
+                        {
+                            worksheet.Cells[1, i + 1].Value = headers[i];
+                            worksheet.Cells[1, i + 1].Style.Font.Bold = true;
+                        }
+
+                        for (int i = 0; i < TeamParams.Count; i++)
+                        {
+                            var param = TeamParams[i];
+                            var config = TeamConfigs.FirstOrDefault(x =>
+                                (x is IEncountTeamInfo encount && encount.TeamConfigID == param.TeamConfigID) ||
+                                (x is IStoryTeamInfo story && story.TeamConfigID == param.TeamConfigID));
+
+                            string name = "";
+                            if (config is IEncountTeamInfo encountTeam)
+                            {
+                                if (TeamText.Nouns.ContainsKey(encountTeam.NameID))
+                                {
+                                    name = TeamText.Nouns[encountTeam.NameID].Strings[0].Text;
+                                }
+                            }
+
+                            int row = i + 2;
+                            worksheet.Cells[row, 1].Value = name;
+                            worksheet.Cells[row, 2].Value = param.Level;
+                            worksheet.Cells[row, 3].Value = param.Prestige;
+                            worksheet.Cells[row, 4].Value = param.Friendship;
+                            worksheet.Cells[row, 5].Value = param.VictoryPoints;
+                            worksheet.Cells[row, 6].Value = param.NicePlayBonus;
+
+                            worksheet.Cells[row, 7].Value = ItemsNamesDict[param.DropID1];
+                            worksheet.Cells[row, 8].Value = param.DropRate1;
+                            worksheet.Cells[row, 9].Value = ItemsNamesDict[param.DropID2];
+                            worksheet.Cells[row, 10].Value = param.DropRate2;
+                            worksheet.Cells[row, 11].Value = ItemsNamesDict[param.DropID3];
+                            worksheet.Cells[row, 12].Value = param.DropRate3;
+                            worksheet.Cells[row, 13].Value = ItemsNamesDict[param.DropID4];
+                            worksheet.Cells[row, 14].Value = param.DropRate4;
+                            worksheet.Cells[row, 15].Value = ItemsNamesDict[param.DropID5];
+                            worksheet.Cells[row, 16].Value = param.DropRate5;
+                            worksheet.Cells[row, 17].Value = ItemsNamesDict[param.DropID6];
+                            worksheet.Cells[row, 18].Value = param.DropRate6;
+                        }
+
+                        // Autosize
+                        worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+
+                        // Save
+                        FileInfo fi = new FileInfo(saveFileDialog.FileName);
+                        package.SaveAs(fi);
+
+                        MessageBox.Show("Export completed successfully.");
+                    }
+                }
+            }
+        }
+
         private void CurrentConfigToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (SelectedTeamConfig == null) return;
