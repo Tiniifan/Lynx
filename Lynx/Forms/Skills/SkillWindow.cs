@@ -226,31 +226,31 @@ namespace Lynx.Forms.Skills
         {
             using (ExcelPackage package = new ExcelPackage())
             {
+                var worksheet = package.Workbook.Worksheets.Add("Skills");
+
+                // Add headers
+                worksheet.Cells[1, 1].Value = "Name";
+                worksheet.Cells[1, 2].Value = "ID";
+                worksheet.Cells[1, 3].Value = "Type";
+                worksheet.Cells[1, 4].Value = "Position";
+                worksheet.Cells[1, 5].Value = "Element";
+                worksheet.Cells[1, 6].Value = "Effect";
+                worksheet.Cells[1, 7].Value = "Partner";
+                worksheet.Cells[1, 8].Value = "TP";
+                worksheet.Cells[1, 9].Value = "Power";
+                worksheet.Cells[1, 10].Value = "Fault (%)";
+                worksheet.Cells[1, 11].Value = "Technique";
+                worksheet.Cells[1, 12].Value = "Evolution Type";
+                worksheet.Cells[1, 13].Value = "Evolution Grow";
+                worksheet.Cells[1, 14].Value = "Category"; // Nom de la catégorie d'origine
+
+                int row = 2;
+
                 foreach (var entry in Skills)
                 {
-                    // Create a new sheet for each key in the dictionary
-                    var worksheet = package.Workbook.Worksheets.Add(entry.Key);
-
-                    // Add headers
-                    worksheet.Cells[1, 1].Value = "Name";
-                    worksheet.Cells[1, 2].Value = "ID";
-                    worksheet.Cells[1, 3].Value = "Type";
-                    worksheet.Cells[1, 4].Value = "Position";
-                    worksheet.Cells[1, 5].Value = "Element";
-                    worksheet.Cells[1, 6].Value = "Effect";
-                    worksheet.Cells[1, 7].Value = "Partner";
-                    worksheet.Cells[1, 8].Value = "TP";
-                    worksheet.Cells[1, 9].Value = "Power";
-                    worksheet.Cells[1, 10].Value = "Fault (%)";
-                    worksheet.Cells[1, 11].Value = "Technique";
-                    worksheet.Cells[1, 12].Value = "Evolution Type";
-                    worksheet.Cells[1, 13].Value = "Evolution Grow";
-
                     // Sort skills by Power (ascending order)
                     var sortedSkills = entry.Value.OrderBy(skill => skill.Power).ToList();
 
-                    // Fill the rows with data
-                    int row = 2;
                     foreach (var skill in sortedSkills)
                     {
                         worksheet.Cells[row, 1].Value = GetText(skill.NameHash, true);
@@ -276,39 +276,30 @@ namespace Lynx.Forms.Skills
                             worksheet.Cells[row, 5].Value = elementFlatComboBox.Items[skill.Element - 1].ToString();
 
                             string effect = effectFlatComboBox.Items[skill.EffectType].ToString();
-
-                            if (effect != "No Effect")
-                            {
-                                worksheet.Cells[row, 6].Value = effect;
-                            }
-                            else
-                            {
-                                worksheet.Cells[row, 6].Value = "";
-                            }
+                            worksheet.Cells[row, 6].Value = effect != "No Effect" ? effect : "";
                         }
 
-                        // Color the row based on the element
-                        var range = worksheet.Cells[row, 5, row, 5];  // The entire row, from column 1 to 14
+                        var range = worksheet.Cells[row, 5, row, 5];
 
                         switch (skill.Element)
                         {
                             case 1:
-                                range.Style.Font.Color.SetColor(System.Drawing.Color.Blue);  // Blue text
+                                range.Style.Font.Color.SetColor(System.Drawing.Color.Blue);
                                 break;
                             case 2:
-                                range.Style.Font.Color.SetColor(System.Drawing.Color.Green);  // Green text
+                                range.Style.Font.Color.SetColor(System.Drawing.Color.Green);
                                 break;
                             case 3:
-                                range.Style.Font.Color.SetColor(System.Drawing.Color.Red);  // Red text
+                                range.Style.Font.Color.SetColor(System.Drawing.Color.Red);
                                 break;
                             case 4:
-                                range.Style.Font.Color.SetColor(System.Drawing.Color.FromArgb(255, 204, 0));  // Dark yellow text
+                                range.Style.Font.Color.SetColor(System.Drawing.Color.FromArgb(255, 204, 0));
                                 break;
                             case 5:
-                                range.Style.Font.Color.SetColor(System.Drawing.Color.Purple);  // Purple text
+                                range.Style.Font.Color.SetColor(System.Drawing.Color.Purple);
                                 break;
                             default:
-                                range.Style.Font.Color.SetColor(System.Drawing.Color.Gray);  // Gray text
+                                range.Style.Font.Color.SetColor(System.Drawing.Color.Gray);
                                 break;
                         }
 
@@ -319,37 +310,22 @@ namespace Lynx.Forms.Skills
                         worksheet.Cells[row, 11].Value = skill.Technique;
 
                         string evolution = typeFlatComboBox.Items[skill.EvolutionType].ToString();
-
-                        if (evolution != "No evolution")
-                        {
-                            worksheet.Cells[row, 12].Value = evolution;
-                        }
-                        else
-                        {
-                            worksheet.Cells[row, 12].Value = "";
-                        }
+                        worksheet.Cells[row, 12].Value = evolution != "No evolution" ? evolution : "";
 
                         string grow = growFlatComboBox.Items[skill.EvolutionGrow].ToString();
+                        worksheet.Cells[row, 13].Value = grow != "No Grow" ? grow : "";
 
-                        if (grow != "No Grow")
-                        {
-                            worksheet.Cells[row, 13].Value = grow;
-                        }
-                        else
-                        {
-                            worksheet.Cells[row, 13].Value = "";
-                        }
+                        worksheet.Cells[row, 14].Value = entry.Key; // Ajoute la clé du dictionnaire (ex: nom de la catégorie)
 
                         row++;
                     }
-
-                    for (int col = 1; col <= 14; col++)
-                    {
-                        worksheet.Column(col).AutoFit();
-                    }
                 }
 
-                // Save the Excel file
+                for (int col = 1; col <= 14; col++)
+                {
+                    worksheet.Column(col).AutoFit();
+                }
+
                 FileInfo file = new FileInfo(filePath);
                 package.SaveAs(file);
             }

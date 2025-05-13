@@ -225,134 +225,6 @@ namespace Lynx.Forms.FightingSpirits
             }
         }
 
-        public void ExportToExcel(string filePath)
-        {
-            using (ExcelPackage package = new ExcelPackage())
-            {
-                // Create a new sheet
-                var worksheet = package.Workbook.Worksheets.Add("Fighting Spirits");
-
-                // Add headers
-                worksheet.Cells[1, 1].Value = "Name";
-                worksheet.Cells[1, 2].Value = "ID";
-                worksheet.Cells[1, 3].Value = "Position";
-                worksheet.Cells[1, 4].Value = "Element";
-                worksheet.Cells[1, 5].Value = "Special Move";
-                worksheet.Cells[1, 6].Value = "Skill";
-                worksheet.Cells[1, 7].Value = "Use time Growth";
-                worksheet.Cells[1, 8].Value = "FSP (1)";
-                worksheet.Cells[1, 9].Value = "FSP (2)";
-                worksheet.Cells[1, 10].Value = "FSP (3)";
-                worksheet.Cells[1, 11].Value = "FSP (4)";
-                worksheet.Cells[1, 12].Value = "FSP (5)";
-                worksheet.Cells[1, 13].Value = "FSP (Ω)";
-                worksheet.Cells[1, 14].Value = "Attack (1)";
-                worksheet.Cells[1, 15].Value = "Attack (2)";
-                worksheet.Cells[1, 16].Value = "Attack (3)";
-                worksheet.Cells[1, 17].Value = "Attack (4)";
-                worksheet.Cells[1, 18].Value = "Attack (5)";
-                worksheet.Cells[1, 19].Value = "Attack (Ω)";
-
-                // Fill the rows with data
-                int row = 2;
-                foreach (IAvatar avatar in Avatars)
-                {
-                    worksheet.Cells[row, 1].Value = GetText(avatar.NicknameHash, true);
-                    worksheet.Cells[row, 2].Value = FindAvatarID(avatar.AvatarHash);
-                    worksheet.Cells[row, 3].Value = positonFlatComboBox.Items[avatar.Position].ToString();
-                    worksheet.Cells[row, 4].Value = elementFlatComboBox.Items[avatar.Element].ToString();
-                    //worksheet.Cells[row, 5].Value = player.Charaparam.FP;
-                    //worksheet.Cells[row, 6].Value = player.Charaparam.TP;
-                    //worksheet.Cells[row, 7].Value = player.Charaparam.Kick;
-                    //worksheet.Cells[row, 8].Value = player.Charaparam.Dribble;
-                    //worksheet.Cells[row, 9].Value = player.Charaparam.Technique;
-                    //worksheet.Cells[row, 10].Value = player.Charaparam.Block;
-                    //worksheet.Cells[row, 11].Value = player.Charaparam.Speed;
-                    //worksheet.Cells[row, 12].Value = player.Charaparam.Stamina;
-                    //worksheet.Cells[row, 13].Value = player.Charaparam.Catch;
-                    //worksheet.Cells[row, 14].Value = player.Charaparam.Luck;
-                    //worksheet.Cells[row, 15].Value = player.Charaparam.Freedom;
-
-                    //if (player.Charaparam.FightingSpiritHash != 0x00)
-                    //{
-                        //worksheet.Cells[row, 16].Value = FightingSpiritNames[player.Charaparam.FightingSpiritHash].ToString();
-                    //}
-                    //else
-                    //{
-                        //worksheet.Cells[row, 16].Value = "";
-                    //}
-
-                    //for (int i = 0; i < 6; i++)
-                    //{
-                        //if (i < player.SpecialMoves.Count())
-                        //{
-                            //var skill = SkillConfigs.Find(x => x.SkillHash == player.SpecialMoves[i].SkillHash);
-
-                            //if (skill != null && SkillnamesDict.ContainsKey(skill.SkillHash))
-                            //{
-                                //if (skill.SkillHash != 0x00)
-                                //{
-                                    //worksheet.Cells[row, 17 + i].Value = $"{SkillnamesDict[skill.SkillHash]} ({player.SpecialMoves[i].LevelLearned})";
-                                //}
-                                //else
-                                //{
-                                    //worksheet.Cells[row, 17 + i].Value = $"";
-                                //}
-
-                            //}
-                        //}
-                        //else
-                        //{
-                            //var defaultSkill = SkillConfigs.Find(x => x.SkillHash == 0x00);
-
-                            //if (defaultSkill != null && SkillnamesDict.ContainsKey(defaultSkill.SkillHash))
-                            //{
-                                //worksheet.Cells[row, 17 + i].Value = $"{moveFlatComboBox1.Items.IndexOf(SkillnamesDict[defaultSkill.SkillHash])}";
-                            //}
-                        //}
-                    //}
-
-                    // Color the row based on the element
-                    var range = worksheet.Cells[row, 4, row, 4];  // The entire row, from column 4 to 4
-
-                    switch (avatar.Element)
-                    {
-                        case 1:
-                            range.Style.Font.Color.SetColor(System.Drawing.Color.Blue);  // Blue text
-                            break;
-                        case 2:
-                            range.Style.Font.Color.SetColor(System.Drawing.Color.Green);  // Green text
-                            break;
-                        case 3:
-                            range.Style.Font.Color.SetColor(System.Drawing.Color.Red);  // Red text
-                            break;
-                        case 4:
-                            range.Style.Font.Color.SetColor(System.Drawing.Color.FromArgb(255, 204, 0));  // Dark yellow text
-                            break;
-                        case 5:
-                            range.Style.Font.Color.SetColor(System.Drawing.Color.Purple);  // Purple text
-                            break;
-                        default:
-                            range.Style.Font.Color.SetColor(System.Drawing.Color.Gray);  // Gray text
-                            break;
-                    }
-
-                    row++;
-                }
-
-                for (int col = 1; col <= 22; col++)
-                {
-                    worksheet.Column(col).AutoFit();
-                }
-
-                // Save the Excel file
-                FileInfo file = new FileInfo(filePath);
-                package.SaveAs(file);
-            }
-
-            MessageBox.Show($"Saved on {Path.GetFileName(filePath)}");
-        }
-
         private void Save()
         {
             GameOpened.SaveAvatars(Avatars.ToArray());
@@ -880,9 +752,144 @@ namespace Lynx.Forms.FightingSpirits
             }
         }
 
+        public void ExportToExcel(string filePath)
+        {
+            using (ExcelPackage package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Skills");
+
+                string[] headers = new string[]
+                {
+            "Name", "ID", "Position", "Element", "Special Move", "Skill", "Fusion (Target)",
+            "Fusion (Material 1)", "Fusion (Material 2)", "Level Growth",
+            "FSP (Level I)", "FSP (Level II)", "FSP (Level III)", "FSP (Level IV)", "FSP (Level V)", "FSP (Level Ω)",
+            "Attack (Level I)", "Attack (Level II)", "Attack (Level III)", "Attack (Level IV)", "Attack (Level V)", "Attack (Level Ω)"
+                };
+
+                for (int i = 0; i < headers.Length; i++)
+                {
+                    worksheet.Cells[1, i + 1].Value = headers[i];
+                }
+
+                int row = 2;
+
+                foreach (var avatar in Avatars)
+                {
+                    if (avatar.AvatarHash == 0) continue;
+
+                    worksheet.Cells[row, 1].Value = AvatarNamesDict.ContainsKey(avatar.AvatarHash)
+                        ? AvatarNamesDict[avatar.AvatarHash]
+                        : "Unknown";
+
+                    worksheet.Cells[row, 2].Value = FindAvatarID(avatar.AvatarHash);
+
+                    worksheet.Cells[row, 3].Value = positonFlatComboBox.Items[avatar.Position].ToString();
+                    worksheet.Cells[row, 4].Value = elementFlatComboBox.Items[avatar.Element].ToString();
+
+                    var skill = SkillConfigs.Find(x => x.SkillHash == avatar.SkillID);
+                    var special = SkillConfigs.Find(x => x.SkillHash == avatar.SpecialMoveID);
+
+                    worksheet.Cells[row, 5].Value = special != null && SkillNamesDict.ContainsKey(special.SkillHash)
+                        ? SkillNamesDict[special.SkillHash]
+                        : "None";
+
+                    worksheet.Cells[row, 6].Value = skill != null && SkillNamesDict.ContainsKey(skill.SkillHash)
+                        ? SkillNamesDict[skill.SkillHash]
+                        : "None";
+
+                    worksheet.Cells[row, 7].Value = AvatarNamesDict.ContainsKey(avatar.FusionID)
+                        ? AvatarNamesDict[avatar.FusionID]
+                        : "None";
+
+                    worksheet.Cells[row, 8].Value = AvatarNamesDict.ContainsKey(avatar.Partner1FusionID)
+                        ? AvatarNamesDict[avatar.Partner1FusionID]
+                        : "None";
+
+                    worksheet.Cells[row, 9].Value = AvatarNamesDict.ContainsKey(avatar.Partner2FusionID)
+                        ? AvatarNamesDict[avatar.Partner2FusionID]
+                        : "None";
+
+                    worksheet.Cells[row, 10].Value = levelGrowthFlatComboBox.Items[avatar.EvolutionGrow].ToString();
+
+                    for (int i = 0; i < 6; i++)
+                    {
+                        worksheet.Cells[row, 11 + i].Value = GetFSPAtLevel(avatar, i);
+                        worksheet.Cells[row, 17 + i].Value = GetAttackAtLevel(avatar, i);
+                    }
+
+                    row++;
+                }
+
+                for (int col = 1; col <= headers.Length; col++)
+                {
+                    worksheet.Column(col).AutoFit();
+                }
+
+                FileInfo file = new FileInfo(filePath);
+                package.SaveAs(file);
+            }
+
+            MessageBox.Show("Data exported!");
+        }
+
+        private int GetFSPAtLevel(IAvatar avatar, int levelIndex)
+        {
+            // levelIndex: 0 = level 1, 5 = level Ω
+            if (avatar.EvolutionStatGrow > 0 && avatar.EvolutionGrow > 0 &&
+                levelIndex >= 0 && levelIndex <= 5)
+            {
+                var fgTable = AvatarGrowthStats.IEGO[avatar.EvolutionStatGrow][avatar.EvolutionGrow].FG;
+                int baseFSP = avatar.FightingSpiritPoint;
+                int total = baseFSP;
+
+                for (int i = 0; i < levelIndex; i++)
+                {
+                    total += fgTable[i];
+                }
+
+                return total;
+            }
+
+            return avatar.FightingSpiritPoint;
+        }
+
+        private int GetAttackAtLevel(IAvatar avatar, int levelIndex)
+        {
+            if (avatar.EvolutionStatGrow > 0 && avatar.EvolutionGrow > 0 &&
+                levelIndex >= 0 && levelIndex <= 5)
+            {
+                var powerTable = AvatarGrowthStats.IEGO[avatar.EvolutionStatGrow][avatar.EvolutionGrow].Attack;
+                int basePower = avatar.Attack;
+                int total = basePower;
+
+                for (int i = 0; i < levelIndex; i++)
+                {
+                    total += powerTable[i];
+                }
+
+                return total;
+            }
+
+            return avatar.Attack;
+        }
+
         private void ExportAscsvToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // To do
+            if (!string.IsNullOrEmpty(Properties.Settings.Default.SaveFileDialogSheet))
+            {
+                saveFileDialog1.InitialDirectory = Properties.Settings.Default.SaveFileDialogSheet;
+            }
+
+            saveFileDialog1.Filter = "XLSX Files(*.xlsx) | *.xlsx";
+            saveFileDialog1.Title = "Export your file as sheet";
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                ExportToExcel(saveFileDialog1.FileName);
+
+                Properties.Settings.Default.OpenFileDialogSaveEditor = Path.GetDirectoryName(saveFileDialog1.FileName);
+                Properties.Settings.Default.Save();
+            }
         }
     }
 }
