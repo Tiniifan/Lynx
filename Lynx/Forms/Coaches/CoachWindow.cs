@@ -511,7 +511,7 @@ namespace Lynx.Forms.Coaches
         {
             if (!debuffLuckFlatNumericUpDown.Focused) return;
 
-            SelectedCoach.CatchNotCompatible = Convert.ToInt32(debuffLuckFlatNumericUpDown.Value);
+            SelectedCoach.LuckNotCompatible = Convert.ToInt32(debuffLuckFlatNumericUpDown.Value);
         }
 
         private void DescriptionTextBox_Click(object sender, EventArgs e)
