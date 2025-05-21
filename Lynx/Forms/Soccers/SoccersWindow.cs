@@ -952,7 +952,7 @@ namespace Lynx.Forms.Soccers
 
         private void SoundTextBox_TextChanged(object sender, EventArgs e)
         {
-            if (soundTextBox.Text != null || !soundTextBox.Focused || SelectedSoccer == null) return;
+            if (soundTextBox.Text == null || !soundTextBox.Focused || SelectedSoccer == null) return;
 
             SelectedSoccer.Sound = soundTextBox.Text;
         }
