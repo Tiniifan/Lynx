@@ -2017,7 +2017,6 @@ namespace Lynx.Forms.Soccers
             this.soundTextBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.soundTextBox.Location = new System.Drawing.Point(407, 19);
             this.soundTextBox.Name = "soundTextBox";
-            this.soundTextBox.ReadOnly = true;
             this.soundTextBox.Size = new System.Drawing.Size(152, 13);
             this.soundTextBox.TabIndex = 290;
             this.soundTextBox.TextChanged += new System.EventHandler(this.SoundTextBox_TextChanged);
@@ -2978,7 +2977,7 @@ namespace Lynx.Forms.Soccers
             this.exportAscsvToolStripMenuItem});
             this.exportToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
             this.exportToolStripMenuItem.Text = "Export";
             // 
             // exportAsCfgbinToolStripMenuItem
@@ -2986,7 +2985,7 @@ namespace Lynx.Forms.Soccers
             this.exportAsCfgbinToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.exportAsCfgbinToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.exportAsCfgbinToolStripMenuItem.Name = "exportAsCfgbinToolStripMenuItem";
-            this.exportAsCfgbinToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportAsCfgbinToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.exportAsCfgbinToolStripMenuItem.Text = "Export as .cfg.bin";
             this.exportAsCfgbinToolStripMenuItem.Click += new System.EventHandler(this.ExportAsCfgbinToolStripMenuItem_Click);
             // 
@@ -2995,7 +2994,7 @@ namespace Lynx.Forms.Soccers
             this.exportAscsvToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.exportAscsvToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.exportAscsvToolStripMenuItem.Name = "exportAscsvToolStripMenuItem";
-            this.exportAscsvToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportAscsvToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.exportAscsvToolStripMenuItem.Text = "Export as .xlsx";
             this.exportAscsvToolStripMenuItem.Click += new System.EventHandler(this.ExportAscsvToolStripMenuItem_Click);
             // 
@@ -3083,13 +3082,13 @@ namespace Lynx.Forms.Soccers
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.ClientSize = new System.Drawing.Size(1022, 928);
+            this.ClientSize = new System.Drawing.Size(1022, 749);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.configGroupBox);
             this.Controls.Add(this.paramGroupBox);
             this.Controls.Add(this.soccerGroupBox);
             this.MaximumSize = new System.Drawing.Size(1038, 967);
-            this.MinimumSize = new System.Drawing.Size(1038, 967);
+            this.MinimumSize = new System.Drawing.Size(1038, 726);
             this.Name = "SoccersWindow";
             this.Text = "SoccersWindow";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SoccersWindow_FormClosed);
