@@ -146,6 +146,31 @@ namespace Lynx.Forms.Nyanko
             }
         }
 
+        private int GenerateUniqueCrc32(string baseText)
+        {
+            int crc32;
+
+            // First, try with the base text
+            crc32 = unchecked((int)Crc32.Compute(Encoding.UTF8.GetBytes(baseText)));
+
+            // If the key doesn't exist in both collections, return it
+            if (!T2bþFileOpened.Texts.ContainsKey(crc32) && !T2bþFileOpened.Nouns.ContainsKey(crc32))
+            {
+                return crc32;
+            }
+
+            // Otherwise, generate random CRC32 using UUIDs until finding a unique key
+            do
+            {
+                // Generate a random UUID and calculate its CRC32
+                string uuid = Guid.NewGuid().ToString();
+                crc32 = unchecked((int)Crc32.Compute(Encoding.UTF8.GetBytes(uuid)));
+            }
+            while (T2bþFileOpened.Texts.ContainsKey(crc32) || T2bþFileOpened.Nouns.ContainsKey(crc32));
+
+            return crc32;
+        }
+
         private void Nyanko_Load(object sender, EventArgs e)
         {
             DrawTreeView(FileName);
@@ -371,45 +396,16 @@ namespace Lynx.Forms.Nyanko
             textTreeView.CollapseAll();
         }
 
-        private void NounTypeAddTextToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (SelectedRightClickTreeNode == null) return;
-
-            TreeNode selectedNode = SelectedRightClickTreeNode;
-
-            string newText = Interaction.InputBox("Enter text:");
-            int crc32 = unchecked((int)Crc32.Compute(Encoding.UTF8.GetBytes("noun_" + newText)));
-
-            T2bþFileOpened.Nouns.Add(crc32, new TextConfig(new List<StringLevel5>() { new StringLevel5(0, newText) }));
-
-            TreeNode nounValueNode = new TreeNode(newText);
-            nounValueNode.Tag = new TreeNodeTag
-            {
-                Type = "NounItem",
-                Key = crc32,
-                Number = 0
-            };
-
-            nounValueNode.ContextMenuStrip = textItemContextMenuStrip;
-            selectedNode.Nodes.Add(nounValueNode);
-
-            textTreeView.SelectedNode = nounValueNode;
-            nounValueNode.EnsureVisible();
-
-            SelectedRightClickTreeNode = null;
-        }
-
         private void AddKeyToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             if (SelectedRightClickTreeNode == null) return;
-
             TreeNode selectedNode = SelectedRightClickTreeNode;
-
             string newText = Interaction.InputBox("Enter text:");
-            int crc32 = unchecked((int)Crc32.Compute(Encoding.UTF8.GetBytes("text_" + newText)));
+
+            // Generate a unique CRC32
+            int crc32 = GenerateUniqueCrc32("text_" + newText);
 
             T2bþFileOpened.Texts.Add(crc32, new TextConfig(new List<StringLevel5>() { new StringLevel5(0, newText) }));
-
             TreeNode textValueNode = new TreeNode(newText);
             textValueNode.Tag = new TreeNodeTag
             {
@@ -417,13 +413,34 @@ namespace Lynx.Forms.Nyanko
                 Key = crc32,
                 Number = 0
             };
-
             textValueNode.ContextMenuStrip = textItemContextMenuStrip;
             selectedNode.Nodes.Add(textValueNode);
-
             textTreeView.SelectedNode = textValueNode;
             textValueNode.EnsureVisible();
+            SelectedRightClickTreeNode = null;
+        }
 
+        private void NounTypeAddTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (SelectedRightClickTreeNode == null) return;
+            TreeNode selectedNode = SelectedRightClickTreeNode;
+            string newText = Interaction.InputBox("Enter text:");
+
+            // Generate a unique CRC32
+            int crc32 = GenerateUniqueCrc32("noun_" + newText);
+
+            T2bþFileOpened.Nouns.Add(crc32, new TextConfig(new List<StringLevel5>() { new StringLevel5(0, newText) }));
+            TreeNode nounValueNode = new TreeNode(newText);
+            nounValueNode.Tag = new TreeNodeTag
+            {
+                Type = "NounItem",
+                Key = crc32,
+                Number = 0
+            };
+            nounValueNode.ContextMenuStrip = textItemContextMenuStrip;
+            selectedNode.Nodes.Add(nounValueNode);
+            textTreeView.SelectedNode = nounValueNode;
+            nounValueNode.EnsureVisible();
             SelectedRightClickTreeNode = null;
         }
 
