@@ -393,6 +393,25 @@ namespace Lynx.Level5.Text
             Save(fileName);
         }
 
+        public new byte[] Save()
+        {
+            Dictionary<int, string> strings = GetStringsTable();
+
+            if (Texts.Count > 0)
+            {
+                Entry textEntry = GetTextEntry(strings);
+                ReplaceEntry("TEXT_INFO_BEGIN", textEntry);
+            }
+
+            if (Nouns.Count > 0)
+            {
+                Entry nounEntry = GetNounEntry(strings);
+                ReplaceEntry("NOUN_INFO_BEGIN", nounEntry);
+            }
+
+            return base.Save();
+        }
+
         public string[] ConvertToXml(Dictionary<int, TextConfig> texts, string baliseName)
         {
             List<string> xmlStrings = new List<string>();

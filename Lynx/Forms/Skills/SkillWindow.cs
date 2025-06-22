@@ -673,14 +673,13 @@ namespace Lynx.Forms.Skills
         {
             Nyanko.Nyanko nyanko = new Nyanko.Nyanko(Path.GetFileName(GameOpened.Files["skill_text"].Path), Skilltext, true, false, SelectedSkillConfig.DescriptionHash);
             nyanko.ShowDialog();
+
             Skilltext = nyanko.T2bþFileOpened;
 
             // Update current nickname
             if (nyanko.SelectedHash != 0)
             {
-                SelectedSkillConfig.DescriptionHash = nyanko.SelectedHash;
-
-                
+                SelectedSkillConfig.DescriptionHash = nyanko.SelectedHash;                
 
                 if (Skilltext.Texts.ContainsKey(SelectedSkillConfig.DescriptionHash))
                 {
