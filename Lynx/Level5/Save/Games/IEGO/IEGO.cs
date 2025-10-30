@@ -269,12 +269,23 @@ namespace Lynx.Level5.Save.Games.IEGO
 
                     for (int j = 0; j < 6; j++)
                     {
-                        var moveKeyValue = Moves.FirstOrDefault(x => x.Value.Name == player.Moves[j].Name);
-                        writer.Write(moveKeyValue.Key);
-                        writer.Write((byte)player.Moves[j].Level);
-                        writer.Write((byte)player.Moves[j].UsedCount);
-                        writer.Write(Convert.ToInt32(player.Moves[j].Unlock));
-                        writer.Skip(2);
+                        if (j < player.Moves.Count)
+                        {
+                            var moveKeyValue = Moves.FirstOrDefault(x => x.Value.Name == player.Moves[j].Name);
+                            writer.Write(moveKeyValue.Key);
+                            writer.Write((byte)player.Moves[j].Level);
+                            writer.Write((byte)player.Moves[j].UsedCount);
+                            writer.Write(Convert.ToInt32(player.Moves[j].Unlock));
+                            writer.Skip(2);
+                        }
+                        else
+                        {
+                            writer.Write((uint)0x00);
+                            writer.Write((byte)0x00);
+                            writer.Write((byte)0x00);
+                            writer.Write(0x00);
+                            writer.Skip(2);
+                        }
                     }
 
                     writer.Skip(0x38);
