@@ -30,13 +30,14 @@
         {
             this.importTranslationButton = new System.Windows.Forms.Button();
             this.exportTranslationButton = new System.Windows.Forms.Button();
+            this.buttonExportCfgBin = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // importTranslationButton
             // 
             this.importTranslationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.importTranslationButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.importTranslationButton.Location = new System.Drawing.Point(12, 12);
+            this.importTranslationButton.Location = new System.Drawing.Point(21, 12);
             this.importTranslationButton.Name = "importTranslationButton";
             this.importTranslationButton.Size = new System.Drawing.Size(200, 23);
             this.importTranslationButton.TabIndex = 1;
@@ -48,7 +49,7 @@
             // 
             this.exportTranslationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.exportTranslationButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.exportTranslationButton.Location = new System.Drawing.Point(12, 41);
+            this.exportTranslationButton.Location = new System.Drawing.Point(21, 41);
             this.exportTranslationButton.Name = "exportTranslationButton";
             this.exportTranslationButton.Size = new System.Drawing.Size(200, 23);
             this.exportTranslationButton.TabIndex = 2;
@@ -56,16 +57,30 @@
             this.exportTranslationButton.UseVisualStyleBackColor = true;
             this.exportTranslationButton.Click += new System.EventHandler(this.ExportTranslationButton_Click);
             // 
-            // TranslationHelper
+            // buttonExportCfgBin
+            // 
+            this.buttonExportCfgBin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonExportCfgBin.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.buttonExportCfgBin.Location = new System.Drawing.Point(21, 70);
+            this.buttonExportCfgBin.Name = "buttonExportCfgBin";
+            this.buttonExportCfgBin.Size = new System.Drawing.Size(200, 23);
+            this.buttonExportCfgBin.TabIndex = 3;
+            this.buttonExportCfgBin.Text = "Export as .cfg.bin";
+            this.buttonExportCfgBin.UseVisualStyleBackColor = true;
+            this.buttonExportCfgBin.Click += new System.EventHandler(this.ButtonExportCfgBin_Click);
+            // 
+            // TranslationHelperWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.ClientSize = new System.Drawing.Size(233, 78);
+            this.ClientSize = new System.Drawing.Size(238, 106);
+            this.Controls.Add(this.buttonExportCfgBin);
             this.Controls.Add(this.exportTranslationButton);
             this.Controls.Add(this.importTranslationButton);
-            this.Name = "TranslationHelper";
+            this.Name = "TranslationHelperWindow";
             this.Text = "TranslationHelper";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TranslationHelperWindow_FormClosed);
             this.ResumeLayout(false);
 
         }
@@ -74,5 +89,6 @@
 
         private System.Windows.Forms.Button importTranslationButton;
         private System.Windows.Forms.Button exportTranslationButton;
+        private System.Windows.Forms.Button buttonExportCfgBin;
     }
 }

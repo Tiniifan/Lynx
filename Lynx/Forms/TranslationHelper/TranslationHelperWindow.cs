@@ -19,6 +19,7 @@ using Lynx.UI;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Lynx.InazumaEleven.Games.GO;
 using Lynx.Level5.Text.Logic;
+using static Lynx.InazumaEleven.Games.GO.GOSupport;
 
 namespace Lynx.Forms.TranslationHelper
 {
@@ -73,7 +74,7 @@ namespace Lynx.Forms.TranslationHelper
                 Charatexts[key] = new T2bþ(charaTextGameFile.File.Directory.GetFileFromFullPath(charaTextGameFile.Path));
 
                 GameSupports.GameFile systemTextGameFile = GameOpened.Files["system_text"];
-                Systemtexts[key] = new T2bþ(charaTextGameFile.File.Directory.GetFileFromFullPath(systemTextGameFile.Path));
+                Systemtexts[key] = new T2bþ(systemTextGameFile.File.Directory.GetFileFromFullPath(systemTextGameFile.Path));
 
                 GameSupports.GameFile trouteTextGameFile = GameOpened.Files["troute_text"];
                 Troutetexts[key] = new T2bþ(trouteTextGameFile.File.Directory.GetFileFromFullPath(trouteTextGameFile.Path));
@@ -94,7 +95,193 @@ namespace Lynx.Forms.TranslationHelper
 
         private void ImportTranslationButton_Click(object sender, EventArgs e)
         {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "Excel Files (*.xlsx)|*.xlsx";
+                openFileDialog.Title = "Import Translation from Excel";
 
+                if (openFileDialog.ShowDialog() != DialogResult.OK)
+                    return;
+
+                try
+                {
+                    using (ExcelPackage package = new ExcelPackage(new FileInfo(openFileDialog.FileName)))
+                    {
+                        // Import each sheet
+                        ImportSheetToDictionary(package, "Charatexts", Charatexts);
+                        ImportSheetToDictionary(package, "Systemtexts", Systemtexts);
+                        ImportSheetToDictionary(package, "Troutetexts", Troutetexts);
+                        ImportSheetToDictionary(package, "Itemtexts", Itemtexts);
+                        ImportSheetToDictionary(package, "Skilltexts", Skilltexts);
+                        ImportSheetToDictionary(package, "Teamtexts", Teamtexts);
+
+                        MessageBox.Show("Import completed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error during import: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+        private void ImportSheetToDictionary(ExcelPackage package, string sheetName, Dictionary<string, T2bþ> dict)
+        {
+            var sheet = package.Workbook.Worksheets[sheetName];
+            if (sheet == null)
+            {
+                MessageBox.Show($"Sheet '{sheetName}' not found in the Excel file.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Read header to get language columns
+            var languages = new List<string>();
+            var languageColumns = new Dictionary<string, int>();
+
+            // Start from column 3 (after ID and Type)
+            int colIndex = 3; 
+            while (sheet.Cells[1, colIndex].Value != null)
+            {
+                string lang = sheet.Cells[1, colIndex].Value.ToString();
+                languages.Add(lang);
+                languageColumns[lang] = colIndex;
+                colIndex++;
+            }
+
+            // Process each row
+            int rowCount = sheet.Dimension?.Rows ?? 0;
+            for (int row = 2; row <= rowCount; row++)
+            {
+                var idCell = sheet.Cells[row, 1].Value;
+                var typeCell = sheet.Cells[row, 2].Value;
+
+                if (idCell == null || typeCell == null)
+                    continue;
+
+                // Parse the CRC key
+                if (!int.TryParse(idCell.ToString(), System.Globalization.NumberStyles.HexNumber, null, out int crcKey))
+                    continue;
+
+                string entryType = typeCell.ToString();
+
+                // Import text for each language
+                foreach (var lang in languages)
+                {
+                    if (lang == CibleLanguage)
+                        continue;
+
+                    if (!dict.ContainsKey(lang))
+                        continue;
+
+                    var textCell = sheet.Cells[row, languageColumns[lang]].Value;
+
+                    // Skip if text is null, empty, or whitesp
+                    if (textCell == null || string.IsNullOrWhiteSpace(textCell.ToString()))
+                        continue;
+
+                    string textValue = textCell.ToString();
+
+                    // Verify that the key does not exist before importing
+                    bool keyExists = false;
+                    if (entryType == "Text")
+                    {
+                        keyExists = dict[lang].Texts.ContainsKey(crcKey);
+                    }
+                    else if (entryType == "Noun")
+                    {
+                        keyExists = dict[lang].Nouns.ContainsKey(crcKey);
+                    }
+
+                    if (keyExists)
+                    {
+                        var result = MessageBox.Show(
+                            $"Key {crcKey:X8} already exists in {lang} for {sheetName} ({entryType}). Do you want to overwrite it?",
+                            "Key Already Exists",
+                            MessageBoxButtons.YesNoCancel,
+                            MessageBoxIcon.Question);
+
+                        if (result == DialogResult.Cancel)
+                            return;
+                        else if (result == DialogResult.No)
+                            continue;
+                    }
+
+                    // Import the text
+                    ImportTextEntry(dict[lang], crcKey, entryType, textValue);
+                }
+            }
+        }
+
+        private void ImportTextEntry(T2bþ t2b, int crcKey, string entryType, string textValue)
+        {
+            try
+            {
+                if (entryType == "Text")
+                {
+                    // Create or update text entry
+                    if (!t2b.Texts.ContainsKey(crcKey))
+                    {
+                        t2b.Texts[crcKey] = new TextConfig();
+                    }
+
+                    // Ensure the Strings list is initialized and has at least one entry
+                    if (t2b.Texts[crcKey].Strings == null)
+                    {
+                        t2b.Texts[crcKey].Strings = new List<StringLevel5>();
+                    }
+
+                    if (t2b.Texts[crcKey].Strings.Count == 0)
+                    {
+                        t2b.Texts[crcKey].Strings.Add(new StringLevel5());
+                    }
+
+                    t2b.Texts[crcKey].Strings[0].Text = textValue;
+                }
+                else if (entryType == "Noun")
+                {
+                    // Create or update noun entry
+                    if (!t2b.Nouns.ContainsKey(crcKey))
+                    {
+                        t2b.Nouns[crcKey] = new TextConfig();
+                    }
+
+                    // Ensure the Strings list is initialized and has at least one entry
+                    if (t2b.Nouns[crcKey].Strings == null)
+                    {
+                        t2b.Nouns[crcKey].Strings = new List<StringLevel5>();
+                    }
+
+                    if (t2b.Nouns[crcKey].Strings.Count == 0)
+                    {
+                        t2b.Nouns[crcKey].Strings.Add(new StringLevel5());
+                    }
+
+                    t2b.Nouns[crcKey].Strings[0].Text = textValue;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error importing entry {crcKey:X8}: {ex.Message}", "Import Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void Save()
+        {
+            foreach (string key in GOSupport.AvailableLanguages.Values)
+            {
+                GameOpened.LanguageCode = key;
+                GameOpened.GetGameFiles();
+
+                GameOpened.SaveTextFile(GameOpened.Files["chara_text"], Charatexts[key]);
+                GameOpened.SaveTextFile(GameOpened.Files["system_text"], Systemtexts[key]);
+                GameOpened.SaveTextFile(GameOpened.Files["troute_text"], Troutetexts[key]);
+                GameOpened.SaveTextFile(GameOpened.Files["item_text"], Itemtexts[key]);
+                GameOpened.SaveTextFile(GameOpened.Files["skill_text"], Skilltexts[key]);
+                GameOpened.SaveTextFile(GameOpened.Files["team_text"], Teamtexts[key]);
+            }
+
+            // Restaure default game language files
+            GameOpened.LanguageCode = CibleLanguage;
+            GameOpened.GetGameFiles();
         }
 
         private void ExportTranslationButton_Click(object sender, EventArgs e)
@@ -215,6 +402,51 @@ namespace Lynx.Forms.TranslationHelper
                     row++;
                 }
             }
+        }
+
+        private void ButtonExportCfgBin_Click(object sender, EventArgs e)
+        {
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.IsFolderPicker = true;
+
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                // Save
+                Save();
+
+                foreach (string key in GOSupport.AvailableLanguages.Values)
+                {
+                    GameOpened.LanguageCode = key;
+                    GameOpened.GetGameFiles();
+
+                    // Get files
+                    (string, byte[]) charatext = GameOpened.GetFileNameAndContent("chara_text");
+                    (string, byte[]) systemtext = GameOpened.GetFileNameAndContent("system_text");
+                    (string, byte[]) troutetext = GameOpened.GetFileNameAndContent("troute_text");
+                    (string, byte[]) itemtext = GameOpened.GetFileNameAndContent("item_text");
+                    (string, byte[]) skilltext = GameOpened.GetFileNameAndContent("skill_text");
+                    (string, byte[]) teamtext = GameOpened.GetFileNameAndContent("team_text");
+
+                    // Export files
+                    File.WriteAllBytes(Path.Combine(dialog.FileName, charatext.Item1), charatext.Item2);
+                    File.WriteAllBytes(Path.Combine(dialog.FileName, systemtext.Item1), systemtext.Item2);
+                    File.WriteAllBytes(Path.Combine(dialog.FileName, troutetext.Item1), troutetext.Item2);
+                    File.WriteAllBytes(Path.Combine(dialog.FileName, itemtext.Item1), itemtext.Item2);
+                    File.WriteAllBytes(Path.Combine(dialog.FileName, skilltext.Item1), skilltext.Item2);
+                    File.WriteAllBytes(Path.Combine(dialog.FileName, teamtext.Item1), teamtext.Item2);
+                }
+
+                // Restaure default game language files
+                GameOpened.LanguageCode = CibleLanguage;
+                GameOpened.GetGameFiles();
+
+                MessageBox.Show("Data exported!");
+            }
+        }
+
+        private void TranslationHelperWindow_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Save();
         }
     }
 }
