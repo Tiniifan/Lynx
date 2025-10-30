@@ -167,6 +167,12 @@
     <Compile Include="Forms\FightingSpirits\FightingSpiritWindow.Designer.cs">
       <DependentUpon>FightingSpiritWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FontEditor\FontWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FontEditor\FontWindow.Designer.cs">
+      <DependentUpon>FontWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Home\Home.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -423,6 +429,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FightingSpirits\FightingSpiritWindow.resx">
       <DependentUpon>FightingSpiritWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FontEditor\FontWindow.resx">
+      <DependentUpon>FontWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Home\Home.resx">
       <DependentUpon>Home.cs</DependentUpon>

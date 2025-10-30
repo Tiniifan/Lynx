@@ -183,9 +183,9 @@ namespace Lynx.Forms.Home
 
         private void MapEditorButton_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Not yet available");
-            // MapSelect mapSelectWindow = new MapSelect(GameOpened);
-            // mapSelectWindow.ShowDialog();
+            //MessageBox.Show("Not yet available");
+            MapSelect mapSelectWindow = new MapSelect(GameOpened);
+            mapSelectWindow.ShowDialog();
         }
 
         private void ScriptButton_Click(object sender, EventArgs e)
