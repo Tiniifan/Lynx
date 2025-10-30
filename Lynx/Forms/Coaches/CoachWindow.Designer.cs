@@ -569,7 +569,6 @@
             0,
             -2147483648});
             this.buffGroupFlatNumericUpDown2.Name = "buffGroupFlatNumericUpDown2";
-            this.buffGroupFlatNumericUpDown2.ReadOnly = true;
             this.buffGroupFlatNumericUpDown2.Size = new System.Drawing.Size(140, 22);
             this.buffGroupFlatNumericUpDown2.TabIndex = 298;
             this.buffGroupFlatNumericUpDown2.ValueChanged += new System.EventHandler(this.BuffGroupFlatNumericUpDown2_ValueChanged);
@@ -602,7 +601,6 @@
             0,
             -2147483648});
             this.buffGroupFlatNumericUpDown3.Name = "buffGroupFlatNumericUpDown3";
-            this.buffGroupFlatNumericUpDown3.ReadOnly = true;
             this.buffGroupFlatNumericUpDown3.Size = new System.Drawing.Size(140, 22);
             this.buffGroupFlatNumericUpDown3.TabIndex = 296;
             this.buffGroupFlatNumericUpDown3.ValueChanged += new System.EventHandler(this.BuffGroupFlatNumericUpDown3_ValueChanged);
@@ -635,7 +633,6 @@
             0,
             -2147483648});
             this.buffGroupFlatNumericUpDown1.Name = "buffGroupFlatNumericUpDown1";
-            this.buffGroupFlatNumericUpDown1.ReadOnly = true;
             this.buffGroupFlatNumericUpDown1.Size = new System.Drawing.Size(140, 22);
             this.buffGroupFlatNumericUpDown1.TabIndex = 291;
             this.buffGroupFlatNumericUpDown1.ValueChanged += new System.EventHandler(this.BuffGroupFlatNumericUpDown1_ValueChanged);
@@ -708,7 +705,6 @@
             0,
             -2147483648});
             this.buffCatchFlatNumericUpDown.Name = "buffCatchFlatNumericUpDown";
-            this.buffCatchFlatNumericUpDown.ReadOnly = true;
             this.buffCatchFlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.buffCatchFlatNumericUpDown.TabIndex = 308;
             this.buffCatchFlatNumericUpDown.ValueChanged += new System.EventHandler(this.BuffCatchFlatNumericUpDown_ValueChanged);
@@ -732,7 +728,6 @@
             0,
             -2147483648});
             this.buffLuckFlatNumericUpDown.Name = "buffLuckFlatNumericUpDown";
-            this.buffLuckFlatNumericUpDown.ReadOnly = true;
             this.buffLuckFlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.buffLuckFlatNumericUpDown.TabIndex = 309;
             this.buffLuckFlatNumericUpDown.ValueChanged += new System.EventHandler(this.BuffLuckFlatNumericUpDown_ValueChanged);
@@ -775,7 +770,6 @@
             0,
             -2147483648});
             this.buffSpeedFlatNumericUpDown.Name = "buffSpeedFlatNumericUpDown";
-            this.buffSpeedFlatNumericUpDown.ReadOnly = true;
             this.buffSpeedFlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.buffSpeedFlatNumericUpDown.TabIndex = 304;
             this.buffSpeedFlatNumericUpDown.ValueChanged += new System.EventHandler(this.BuffSpeedFlatNumericUpDown_ValueChanged);
@@ -799,7 +793,6 @@
             0,
             -2147483648});
             this.buffStaminaFlatNumericUpDown.Name = "buffStaminaFlatNumericUpDown";
-            this.buffStaminaFlatNumericUpDown.ReadOnly = true;
             this.buffStaminaFlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.buffStaminaFlatNumericUpDown.TabIndex = 305;
             this.buffStaminaFlatNumericUpDown.ValueChanged += new System.EventHandler(this.BuffStaminaFlatNumericUpDown_ValueChanged);
@@ -842,7 +835,6 @@
             0,
             -2147483648});
             this.buffTechniqueFlatNumericUpDown.Name = "buffTechniqueFlatNumericUpDown";
-            this.buffTechniqueFlatNumericUpDown.ReadOnly = true;
             this.buffTechniqueFlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.buffTechniqueFlatNumericUpDown.TabIndex = 300;
             this.buffTechniqueFlatNumericUpDown.ValueChanged += new System.EventHandler(this.BuffTechniqueFlatNumericUpDown_ValueChanged);
@@ -866,7 +858,6 @@
             0,
             -2147483648});
             this.buffBlockFlatNumericUpDown.Name = "buffBlockFlatNumericUpDown";
-            this.buffBlockFlatNumericUpDown.ReadOnly = true;
             this.buffBlockFlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.buffBlockFlatNumericUpDown.TabIndex = 301;
             this.buffBlockFlatNumericUpDown.ValueChanged += new System.EventHandler(this.BuffBlockFlatNumericUpDown_ValueChanged);
@@ -909,7 +900,6 @@
             0,
             -2147483648});
             this.buffKickFlatNumericUpDown.Name = "buffKickFlatNumericUpDown";
-            this.buffKickFlatNumericUpDown.ReadOnly = true;
             this.buffKickFlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.buffKickFlatNumericUpDown.TabIndex = 296;
             this.buffKickFlatNumericUpDown.ValueChanged += new System.EventHandler(this.BuffKickFlatNumericUpDown_ValueChanged);
@@ -933,7 +923,6 @@
             0,
             -2147483648});
             this.buffDribbleFlatNumericUpDown.Name = "buffDribbleFlatNumericUpDown";
-            this.buffDribbleFlatNumericUpDown.ReadOnly = true;
             this.buffDribbleFlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.buffDribbleFlatNumericUpDown.TabIndex = 297;
             this.buffDribbleFlatNumericUpDown.ValueChanged += new System.EventHandler(this.BuffDribbleFlatNumericUpDown_ValueChanged);
@@ -976,7 +965,6 @@
             0,
             -2147483648});
             this.buffFpFlatNumericUpDown.Name = "buffFpFlatNumericUpDown";
-            this.buffFpFlatNumericUpDown.ReadOnly = true;
             this.buffFpFlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.buffFpFlatNumericUpDown.TabIndex = 291;
             this.buffFpFlatNumericUpDown.ValueChanged += new System.EventHandler(this.BuffFpFlatNumericUpDown_ValueChanged);
@@ -1000,7 +988,6 @@
             0,
             -2147483648});
             this.buffTpFlatNumericUpDown.Name = "buffTpFlatNumericUpDown";
-            this.buffTpFlatNumericUpDown.ReadOnly = true;
             this.buffTpFlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.buffTpFlatNumericUpDown.TabIndex = 293;
             this.buffTpFlatNumericUpDown.ValueChanged += new System.EventHandler(this.BuffTpFlatNumericUpDown_ValueChanged);
@@ -1072,7 +1059,6 @@
             0,
             -2147483648});
             this.debuffGroupFlatNumericUpDown2.Name = "debuffGroupFlatNumericUpDown2";
-            this.debuffGroupFlatNumericUpDown2.ReadOnly = true;
             this.debuffGroupFlatNumericUpDown2.Size = new System.Drawing.Size(140, 22);
             this.debuffGroupFlatNumericUpDown2.TabIndex = 298;
             this.debuffGroupFlatNumericUpDown2.ValueChanged += new System.EventHandler(this.DebuffGroupFlatNumericUpDown2_ValueChanged);
@@ -1105,7 +1091,6 @@
             0,
             -2147483648});
             this.debuffGroupFlatNumericUpDown3.Name = "debuffGroupFlatNumericUpDown3";
-            this.debuffGroupFlatNumericUpDown3.ReadOnly = true;
             this.debuffGroupFlatNumericUpDown3.Size = new System.Drawing.Size(140, 22);
             this.debuffGroupFlatNumericUpDown3.TabIndex = 296;
             this.debuffGroupFlatNumericUpDown3.ValueChanged += new System.EventHandler(this.DebuffGroupFlatNumericUpDown3_ValueChanged);
@@ -1138,7 +1123,6 @@
             0,
             -2147483648});
             this.debuffGroupFlatNumericUpDown1.Name = "debuffGroupFlatNumericUpDown1";
-            this.debuffGroupFlatNumericUpDown1.ReadOnly = true;
             this.debuffGroupFlatNumericUpDown1.Size = new System.Drawing.Size(140, 22);
             this.debuffGroupFlatNumericUpDown1.TabIndex = 291;
             this.debuffGroupFlatNumericUpDown1.ValueChanged += new System.EventHandler(this.DebuffGroupFlatNumericUpDown1_ValueChanged);
@@ -1211,7 +1195,6 @@
             0,
             -2147483648});
             this.debuffCatchFlatNumericUpDown.Name = "debuffCatchFlatNumericUpDown";
-            this.debuffCatchFlatNumericUpDown.ReadOnly = true;
             this.debuffCatchFlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.debuffCatchFlatNumericUpDown.TabIndex = 308;
             this.debuffCatchFlatNumericUpDown.ValueChanged += new System.EventHandler(this.DebuffCatchFlatNumericUpDown_ValueChanged);
@@ -1235,7 +1218,6 @@
             0,
             -2147483648});
             this.debuffLuckFlatNumericUpDown.Name = "debuffLuckFlatNumericUpDown";
-            this.debuffLuckFlatNumericUpDown.ReadOnly = true;
             this.debuffLuckFlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.debuffLuckFlatNumericUpDown.TabIndex = 309;
             this.debuffLuckFlatNumericUpDown.ValueChanged += new System.EventHandler(this.DebuffLuckFlatNumericUpDown_ValueChanged);
@@ -1278,7 +1260,6 @@
             0,
             -2147483648});
             this.debuffSpeedFlatNumericUpDown.Name = "debuffSpeedFlatNumericUpDown";
-            this.debuffSpeedFlatNumericUpDown.ReadOnly = true;
             this.debuffSpeedFlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.debuffSpeedFlatNumericUpDown.TabIndex = 304;
             this.debuffSpeedFlatNumericUpDown.ValueChanged += new System.EventHandler(this.DebuffSpeedFlatNumericUpDown_ValueChanged);
@@ -1302,7 +1283,6 @@
             0,
             -2147483648});
             this.debuffStaminaFlatNumericUpDown.Name = "debuffStaminaFlatNumericUpDown";
-            this.debuffStaminaFlatNumericUpDown.ReadOnly = true;
             this.debuffStaminaFlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.debuffStaminaFlatNumericUpDown.TabIndex = 305;
             this.debuffStaminaFlatNumericUpDown.ValueChanged += new System.EventHandler(this.DebuffStaminaFlatNumericUpDown_ValueChanged);
@@ -1345,7 +1325,6 @@
             0,
             -2147483648});
             this.debuffTechniqueFlatNumericUpDown.Name = "debuffTechniqueFlatNumericUpDown";
-            this.debuffTechniqueFlatNumericUpDown.ReadOnly = true;
             this.debuffTechniqueFlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.debuffTechniqueFlatNumericUpDown.TabIndex = 300;
             this.debuffTechniqueFlatNumericUpDown.ValueChanged += new System.EventHandler(this.DebuffTechniqueFlatNumericUpDown_ValueChanged);
@@ -1369,7 +1348,6 @@
             0,
             -2147483648});
             this.debuffBlockFlatNumericUpDown.Name = "debuffBlockFlatNumericUpDown";
-            this.debuffBlockFlatNumericUpDown.ReadOnly = true;
             this.debuffBlockFlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.debuffBlockFlatNumericUpDown.TabIndex = 301;
             this.debuffBlockFlatNumericUpDown.ValueChanged += new System.EventHandler(this.DebuffBlockFlatNumericUpDown_ValueChanged);
@@ -1412,7 +1390,6 @@
             0,
             -2147483648});
             this.debuffKickFlatNumericUpDown.Name = "debuffKickFlatNumericUpDown";
-            this.debuffKickFlatNumericUpDown.ReadOnly = true;
             this.debuffKickFlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.debuffKickFlatNumericUpDown.TabIndex = 296;
             this.debuffKickFlatNumericUpDown.ValueChanged += new System.EventHandler(this.DebuffKickFlatNumericUpDown_ValueChanged);
@@ -1436,7 +1413,6 @@
             0,
             -2147483648});
             this.debuffDribbleFlatNumericUpDown.Name = "debuffDribbleFlatNumericUpDown";
-            this.debuffDribbleFlatNumericUpDown.ReadOnly = true;
             this.debuffDribbleFlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.debuffDribbleFlatNumericUpDown.TabIndex = 297;
             this.debuffDribbleFlatNumericUpDown.ValueChanged += new System.EventHandler(this.DebuffDribbleFlatNumericUpDown_ValueChanged);
@@ -1479,7 +1455,6 @@
             0,
             -2147483648});
             this.debuffFpFlatNumericUpDown.Name = "debuffFpFlatNumericUpDown";
-            this.debuffFpFlatNumericUpDown.ReadOnly = true;
             this.debuffFpFlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.debuffFpFlatNumericUpDown.TabIndex = 291;
             this.debuffFpFlatNumericUpDown.ValueChanged += new System.EventHandler(this.DebuffFpFlatNumericUpDown_ValueChanged);
@@ -1503,7 +1478,6 @@
             0,
             -2147483648});
             this.debuffTpFlatNumericUpDown.Name = "debuffTpFlatNumericUpDown";
-            this.debuffTpFlatNumericUpDown.ReadOnly = true;
             this.debuffTpFlatNumericUpDown.Size = new System.Drawing.Size(140, 22);
             this.debuffTpFlatNumericUpDown.TabIndex = 293;
             this.debuffTpFlatNumericUpDown.ValueChanged += new System.EventHandler(this.DebuffTpFlatNumericUpDown_ValueChanged);

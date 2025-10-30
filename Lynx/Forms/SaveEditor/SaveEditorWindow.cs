@@ -376,28 +376,35 @@ namespace Lynx.Forms.SaveEditor
             genderTextBox.Text = SelectedPlayer.Gender.Name;
 
             avatarFlatComboBox.SelectedIndex = avatarFlatComboBox.Items.IndexOf(SelectedPlayer.Avatar.Name);
-            moveFlatComboBox1.SelectedIndex = moveFlatComboBox1.Items.IndexOf(SelectedPlayer.Moves[0].Name);
-            moveFlatComboBox2.SelectedIndex = moveFlatComboBox2.Items.IndexOf(SelectedPlayer.Moves[1].Name);
-            moveFlatComboBox3.SelectedIndex = moveFlatComboBox3.Items.IndexOf(SelectedPlayer.Moves[2].Name);
-            moveFlatComboBox4.SelectedIndex = moveFlatComboBox4.Items.IndexOf(SelectedPlayer.Moves[3].Name);
-            moveFlatComboBox5.SelectedIndex = moveFlatComboBox5.Items.IndexOf(SelectedPlayer.Moves[4].Name);
-            moveFlatComboBox6.SelectedIndex = moveFlatComboBox6.Items.IndexOf(SelectedPlayer.Moves[5].Name);
-
             avatarLevelFlatNumericUpDown.Value = SelectedPlayer.Avatar.Level;
-            moveLevelFlatNumericUpDown1.Value = SelectedPlayer.Moves[0].Level;
-            moveLevelFlatNumericUpDown2.Value = SelectedPlayer.Moves[1].Level;
-            moveLevelFlatNumericUpDown3.Value = SelectedPlayer.Moves[2].Level;
-            moveLevelFlatNumericUpDown4.Value = SelectedPlayer.Moves[3].Level;
-            moveLevelFlatNumericUpDown5.Value = SelectedPlayer.Moves[4].Level;
-            moveLevelFlatNumericUpDown6.Value = SelectedPlayer.Moves[5].Level;
-
             unlockAvatarFlatCheckBox.Checked = SelectedPlayer.Invoke;
-            unlockFlatCheckBox1.Checked = SelectedPlayer.Moves[0].Unlock;
-            unlockFlatCheckBox2.Checked = SelectedPlayer.Moves[1].Unlock;
-            unlockFlatCheckBox3.Checked = SelectedPlayer.Moves[2].Unlock;
-            unlockFlatCheckBox4.Checked = SelectedPlayer.Moves[3].Unlock;
-            unlockFlatCheckBox5.Checked = SelectedPlayer.Moves[4].Unlock;
-            unlockFlatCheckBox6.Checked = SelectedPlayer.Moves[5].Unlock;
+
+            // Group similar controls into arrays
+            var moveCombos = new[] { moveFlatComboBox1, moveFlatComboBox2, moveFlatComboBox3, moveFlatComboBox4, moveFlatComboBox5, moveFlatComboBox6 };
+            var moveLevels = new[] { moveLevelFlatNumericUpDown1, moveLevelFlatNumericUpDown2, moveLevelFlatNumericUpDown3, moveLevelFlatNumericUpDown4, moveLevelFlatNumericUpDown5, moveLevelFlatNumericUpDown6 };
+            var moveUnlocks = new[] { unlockFlatCheckBox1, unlockFlatCheckBox2, unlockFlatCheckBox3, unlockFlatCheckBox4, unlockFlatCheckBox5, unlockFlatCheckBox6 };
+
+            // Number of available moves
+            int moveCount = SelectedPlayer.Moves.Count;
+
+            // Loop on the 6 moves
+            for (int i = 0; i < moveCombos.Length; i++)
+            {
+                if (i < moveCount)
+                {
+                    moveCombos[i].SelectedIndex = moveCombos[i].Items.IndexOf(SelectedPlayer.Moves[i].Name);
+                    moveLevels[i].Value = SelectedPlayer.Moves[i].Level;
+                    moveUnlocks[i].Checked = SelectedPlayer.Moves[i].Unlock;
+                }
+                else
+                {
+                    // No move
+                    moveCombos[i].SelectedIndex = -1;
+                    moveLevels[i].Value = 0;
+                    moveUnlocks[i].Checked = false;
+                }
+            }
+
 
             playerGroupBox.Enabled = true;
         }
