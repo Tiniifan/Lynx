@@ -1,15 +1,17 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E3DC003D-B49F-4BDE-8CF6-F78B2D2D0A5A}</ProjectGuid>
+    <ProjectGuid>{F336F23E-001A-4F4D-9454-03902FAD3C7B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Lynx</RootNamespace>
     <AssemblyName>Lynx</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
@@ -32,514 +34,65 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>Icon.ico</ApplicationIcon>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DocumentFormat.OpenXml, Version=3.2.0.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
-      <HintPath>..\packages\DocumentFormat.OpenXml.3.2.0\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
-    </Reference>
-    <Reference Include="DocumentFormat.OpenXml.Framework, Version=3.2.0.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
-      <HintPath>..\packages\DocumentFormat.OpenXml.Framework.3.2.0\lib\net46\DocumentFormat.OpenXml.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="EPPlus, Version=7.5.3.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
-      <HintPath>..\packages\EPPlus.7.5.3\lib\net462\EPPlus.dll</HintPath>
-    </Reference>
-    <Reference Include="EPPlus.Interfaces, Version=7.5.0.0, Culture=neutral, PublicKeyToken=a694d7f3b0907a61, processorArchitecture=MSIL">
-      <HintPath>..\packages\EPPlus.Interfaces.7.5.0\lib\net462\EPPlus.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="EPPlus.System.Drawing, Version=7.5.0.0, Culture=neutral, PublicKeyToken=2308d35469c9bac0, processorArchitecture=MSIL">
-      <HintPath>..\packages\EPPlus.System.Drawing.7.5.0\lib\net462\EPPlus.System.Drawing.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=9.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.9.0.1\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.3.0.1\lib\netstandard2.0\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.WindowsAPICodePack.Core.1.1.0\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.WindowsAPICodePack.Shell.1.1.0\lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
-    </Reference>
-    <Reference Include="PresentationCore" />
     <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.6.0\lib\net462\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing.Common, Version=9.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Drawing.Common.9.0.1\lib\net462\System.Drawing.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Formats.Asn1, Version=9.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Formats.Asn1.9.0.1\lib\net462\System.Formats.Asn1.dll</HintPath>
-    </Reference>
-    <Reference Include="System.IO.Pipelines, Version=9.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IO.Pipelines.9.0.1\lib\net462\System.IO.Pipelines.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Memory, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.6.0\lib\net462\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.6.0\lib\net462\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.1.0\lib\net462\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Security" />
-    <Reference Include="System.Text.Encodings.Web, Version=9.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Encodings.Web.9.0.1\lib\net462\System.Text.Encodings.Web.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Text.Json, Version=9.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Json.9.0.1\lib\net462\System.Text.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.6.0\lib\net462\System.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
     <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\ChallengeRoute\AddCellWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\ChallengeRoute\AddCellWindow.Designer.cs">
-      <DependentUpon>AddCellWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\ChallengeRoute\ChallengeRouteWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\ChallengeRoute\ChallengeRouteWindow.Designer.cs">
-      <DependentUpon>ChallengeRouteWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Characters\CharabaseWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Characters\CharabaseWindow.Designer.cs">
-      <DependentUpon>CharabaseWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Characters\CharaParamWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Characters\CharaParamWindow.Designer.cs">
-      <DependentUpon>CharaParamWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Characters\NewCharabaseWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Characters\NewCharabaseWindow.Designer.cs">
-      <DependentUpon>NewCharabaseWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Characters\NewCharaparamWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Characters\NewCharaparamWindow.designer.cs">
-      <DependentUpon>NewCharaparamWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Coaches\CoachWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Coaches\CoachWindow.Designer.cs">
-      <DependentUpon>CoachWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\FightingSpirits\FightingSpiritWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\FightingSpirits\FightingSpiritWindow.Designer.cs">
-      <DependentUpon>FightingSpiritWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\FontEditor\FontWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\FontEditor\FontWindow.Designer.cs">
-      <DependentUpon>FontWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Home\Home.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Home\Home.Designer.cs">
-      <DependentUpon>Home.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Home\LanguageWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Home\LanguageWindow.Designer.cs">
-      <DependentUpon>LanguageWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Maps\MapEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Maps\MapEditor.Designer.cs">
-      <DependentUpon>MapEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Maps\MapPreview.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Maps\MapPreview.Designer.cs">
-      <DependentUpon>MapPreview.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Maps\MapSelect.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Maps\MapSelect.Designer.cs">
-      <DependentUpon>MapSelect.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Maps\NewNPCWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Maps\NewNPCWindow.Designer.cs">
-      <DependentUpon>NewNPCWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Nyanko\Nyanko.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Nyanko\Nyanko.Designer.cs">
-      <DependentUpon>Nyanko.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Nyanko\SearchWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Nyanko\SearchWindow.Designer.cs">
-      <DependentUpon>SearchWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\SaveEditor\SaveEditorWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\SaveEditor\SaveEditorWindow.Designer.cs">
-      <DependentUpon>SaveEditorWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Scipts\NewScriptWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Scipts\NewScriptWindow.Designer.cs">
-      <DependentUpon>NewScriptWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Scipts\ScriptEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Scipts\ScriptEditor.Designer.cs">
-      <DependentUpon>ScriptEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Scipts\ScriptSelect.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Scipts\ScriptSelect.Designer.cs">
-      <DependentUpon>ScriptSelect.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Shops\ShopWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Shops\ShopWindow.Designer.cs">
-      <DependentUpon>ShopWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Skills\NewSkillWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Skills\NewSkillWindow.Designer.cs">
-      <DependentUpon>NewSkillWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Skills\SkillWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Skills\SkillWindow.Designer.cs">
-      <DependentUpon>SkillWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Soccers\NewSoccerWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Soccers\NewSoccerWindow.Designer.cs">
-      <DependentUpon>NewSoccerWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Soccers\SoccersWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Soccers\SoccersWindow.Designer.cs">
-      <DependentUpon>SoccersWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\TranslationHelper\TranslationHelperWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\TranslationHelper\TranslationHelperWindow.Designer.cs">
-      <DependentUpon>TranslationHelperWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="InazumaEleven\Common\AvatarGrowthStats.cs" />
-    <Compile Include="InazumaEleven\Common\GrowingTimes.cs" />
-    <Compile Include="InazumaEleven\Common\GrowStats.cs" />
-    <Compile Include="InazumaEleven\Common\Bodies.cs" />
-    <Compile Include="InazumaEleven\Common\CharaTypes.cs" />
-    <Compile Include="InazumaEleven\Common\ExperienceCurve.cs" />
-    <Compile Include="InazumaEleven\Common\ItemTypes.cs" />
-    <Compile Include="InazumaEleven\Common\MatchRestrictions.cs" />
-    <Compile Include="InazumaEleven\Common\MovePositions.cs" />
-    <Compile Include="InazumaEleven\Common\PlayerPositions.cs" />
-    <Compile Include="InazumaEleven\Common\Genders.cs" />
-    <Compile Include="InazumaEleven\Common\Skins.cs" />
-    <Compile Include="InazumaEleven\Common\Elements.cs" />
-    <Compile Include="InazumaEleven\Common\Years.cs" />
-    <Compile Include="InazumaEleven\Games\Game.cs" />
-    <Compile Include="InazumaEleven\Games\GameSupports.cs" />
-    <Compile Include="InazumaEleven\Games\GO\GO.cs" />
-    <Compile Include="InazumaEleven\Games\GO\GOSupport.cs" />
-    <Compile Include="InazumaEleven\Logic\AvatarGrowthStat.cs" />
-    <Compile Include="InazumaEleven\Logic\ChallengeRoute.cs" />
-    <Compile Include="InazumaEleven\Logic\CoachText.cs" />
-    <Compile Include="InazumaEleven\Logic\IRouteConfig.cs" />
-    <Compile Include="InazumaEleven\Logic\ISoccerInfo.cs" />
-    <Compile Include="InazumaEleven\Logic\ITeamConfigInfo.cs" />
-    <Compile Include="InazumaEleven\Logic\ITeamParamInfo.cs" />
-    <Compile Include="InazumaEleven\Logic\Team.cs" />
-    <Compile Include="InazumaEleven\Logic\UseTimeGrowth.cs" />
-    <Compile Include="InazumaEleven\Logic\ICommunityInfo.cs" />
-    <Compile Include="InazumaEleven\Logic\IShopConfig.cs" />
-    <Compile Include="InazumaEleven\Logic\IItemConfig.cs" />
-    <Compile Include="InazumaEleven\Logic\Player.cs" />
-    <Compile Include="InazumaEleven\Logic\IAvatar.cs" />
-    <Compile Include="InazumaEleven\Logic\ITalkConfig.cs" />
-    <Compile Include="InazumaEleven\Logic\ITalkInfo.cs" />
-    <Compile Include="InazumaEleven\Logic\INPCAppear.cs" />
-    <Compile Include="InazumaEleven\Logic\INPCPreset.cs" />
-    <Compile Include="InazumaEleven\Logic\INPCBase.cs" />
-    <Compile Include="InazumaEleven\Logic\ITrainingUD.cs" />
-    <Compile Include="InazumaEleven\Logic\ICharabase.cs" />
-    <Compile Include="InazumaEleven\Logic\ICharaparam.cs" />
-    <Compile Include="InazumaEleven\Logic\ISkillConfig.cs" />
-    <Compile Include="InazumaEleven\Logic\ISkillTable.cs" />
-    <Compile Include="Level5\Archive\ARC0\ARC0.cs" />
-    <Compile Include="Level5\Archive\ARC0\ARC0Support.cs" />
-    <Compile Include="Level5\Archive\IArchive.cs" />
-    <Compile Include="Level5\Archive\XPCK\XPCK.cs" />
-    <Compile Include="Level5\Archive\XPCK\XPCKSupport.cs" />
-    <Compile Include="Level5\Base64\Condition.cs" />
-    <Compile Include="Level5\Binary\CfgBin.cs" />
-    <Compile Include="Level5\Binary\CfgBinSupport.cs" />
-    <Compile Include="Level5\Binary\Logic\Entry.cs" />
-    <Compile Include="Level5\Binary\Logic\OffsetTextPair.cs" />
-    <Compile Include="Level5\Binary\Logic\Type.cs" />
-    <Compile Include="Level5\Binary\Logic\Variable.cs" />
-    <Compile Include="Level5\Compression\Compressor.cs" />
-    <Compile Include="Level5\Compression\ETC1\ETC1.cs" />
-    <Compile Include="Level5\Compression\ETC1\ETC1Decoder.cs" />
-    <Compile Include="Level5\Compression\ETC1\RGB.cs" />
-    <Compile Include="Level5\Compression\Huffman\Huffman.cs" />
-    <Compile Include="Level5\Compression\Huffman\HuffmanDecoder.cs" />
-    <Compile Include="Level5\Compression\ICompression.cs" />
-    <Compile Include="Level5\Compression\LZ10\LZ10.cs" />
-    <Compile Include="Level5\Compression\NoCompression\NoCompression.cs" />
-    <Compile Include="Level5\Compression\RLE\RLE.cs" />
-    <Compile Include="Level5\Compression\XORShift\XORShift.cs" />
-    <Compile Include="Level5\Compression\ZLib\Zlib.cs" />
-    <Compile Include="Level5\Image\Color Formats\ColorFormats.cs" />
-    <Compile Include="Level5\Image\Color Formats\IColorFormat.cs" />
-    <Compile Include="Level5\Image\IMGC.cs" />
-    <Compile Include="Level5\Image\IMGCSupport.cs" />
-    <Compile Include="Level5\Image\IMGCSwizzle.cs" />
-    <Compile Include="Level5\Save\Games\IEGOCS\IEGOCS.cs" />
-    <Compile Include="Level5\Save\Games\IEGOCS\IEGOCSHelper.cs" />
-    <Compile Include="Level5\Save\Games\IEGOGalaxy\IEGOGalaxy.cs" />
-    <Compile Include="Level5\Save\Games\IEGOGalaxy\IEGOGalaxyHelper.cs" />
-    <Compile Include="Level5\Save\Games\IEGO\IEGO.cs" />
-    <Compile Include="Level5\Save\Games\IEGO\IEGOHelper.cs" />
-    <Compile Include="Level5\Save\Games\IGame.cs" />
-    <Compile Include="Level5\Save\Logic\Avatar.cs" />
-    <Compile Include="Level5\Save\Logic\BestMatch.cs" />
-    <Compile Include="Level5\Save\Logic\Competition Route\Cell.cs" />
-    <Compile Include="Level5\Save\Logic\Competition Route\Route.cs" />
-    <Compile Include="Level5\Save\Logic\Element.cs" />
-    <Compile Include="Level5\Save\Logic\Equipment.cs" />
-    <Compile Include="Level5\Save\Logic\Gender.cs" />
-    <Compile Include="Level5\Save\Logic\Item.cs" />
-    <Compile Include="Level5\Save\Logic\MixiMax.cs" />
-    <Compile Include="Level5\Save\Logic\Move.cs" />
-    <Compile Include="Level5\Save\Logic\Player.cs" />
-    <Compile Include="Level5\Save\Logic\PlayRecord.cs" />
-    <Compile Include="Level5\Save\Logic\Position.cs" />
-    <Compile Include="Level5\Save\Logic\Save.cs" />
-    <Compile Include="Level5\Save\Logic\Streetpass.cs" />
-    <Compile Include="Level5\Save\Logic\Team.cs" />
-    <Compile Include="Level5\Save\Saves\IE\IE.cs" />
-    <Compile Include="Level5\Save\Saves\ISave.cs" />
-    <Compile Include="Level5\Text\Logic\TextConfig.cs" />
-    <Compile Include="Level5\Text\T2bþ.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tools\BinaryDataReader.cs" />
-    <Compile Include="Tools\BinaryDataWriter.cs" />
-    <Compile Include="Tools\Crc32.cs" />
-    <Compile Include="Tools\Draw.cs" />
-    <Compile Include="Tools\ResourceReader.cs" />
-    <Compile Include="Tools\SubMemoryStream.cs" />
-    <Compile Include="Tools\VirtualDirectory.cs" />
-    <Compile Include="UI\FlatCheckBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\FlatComboBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\FlatNumericUpDown.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\LineNumberRTB.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\LineNumberRTB.Designer.cs">
-      <DependentUpon>LineNumberRTB.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\VSTabControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <EmbeddedResource Include="Forms\ChallengeRoute\AddCellWindow.resx">
-      <DependentUpon>AddCellWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ChallengeRoute\ChallengeRouteWindow.resx">
-      <DependentUpon>ChallengeRouteWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Characters\CharabaseWindow.resx">
-      <DependentUpon>CharabaseWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Characters\CharaParamWindow.resx">
-      <DependentUpon>CharaParamWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Characters\NewCharabaseWindow.resx">
-      <DependentUpon>NewCharabaseWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Characters\NewCharaparamWindow.resx">
-      <DependentUpon>NewCharaparamWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Coaches\CoachWindow.resx">
-      <DependentUpon>CoachWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FightingSpirits\FightingSpiritWindow.resx">
-      <DependentUpon>FightingSpiritWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FontEditor\FontWindow.resx">
-      <DependentUpon>FontWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Home\Home.resx">
-      <DependentUpon>Home.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Home\LanguageWindow.resx">
-      <DependentUpon>LanguageWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Maps\MapEditor.resx">
-      <DependentUpon>MapEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Maps\MapPreview.resx">
-      <DependentUpon>MapPreview.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Maps\MapSelect.resx">
-      <DependentUpon>MapSelect.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Maps\NewNPCWindow.resx">
-      <DependentUpon>NewNPCWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Nyanko\Nyanko.resx">
-      <DependentUpon>Nyanko.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Nyanko\SearchWindow.resx">
-      <DependentUpon>SearchWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SaveEditor\SaveEditorWindow.resx">
-      <DependentUpon>SaveEditorWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Scipts\NewScriptWindow.resx">
-      <DependentUpon>NewScriptWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Scipts\ScriptEditor.resx">
-      <DependentUpon>ScriptEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Scipts\ScriptSelect.resx">
-      <DependentUpon>ScriptSelect.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Shops\ShopWindow.resx">
-      <DependentUpon>ShopWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skills\NewSkillWindow.resx">
-      <DependentUpon>NewSkillWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skills\SkillWindow.resx">
-      <DependentUpon>SkillWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Soccers\NewSoccerWindow.resx">
-      <DependentUpon>NewSoccerWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Soccers\SoccersWindow.resx">
-      <DependentUpon>SoccersWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\TranslationHelper\TranslationHelperWindow.resx">
-      <DependentUpon>TranslationHelperWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
+    </ApplicationDefinition>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="UI\LineNumberRTB.resx">
-      <DependentUpon>LineNumberRTB.cs</DependentUpon>
-    </EmbeddedResource>
-    <None Include="..\.editorconfig">
-      <Link>.editorconfig</Link>
-    </None>
-    <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_0.png" />
-    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_0_selected.png" />
-    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_1.png" />
-    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_1_selected.png" />
-    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_2.png" />
-    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_2_selected.png" />
-    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_3.png" />
-    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_3_selected.png" />
-    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_4.png" />
-    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_4_selected.png" />
-    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_5.png" />
-    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_5_selected.png" />
-    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_6.png" />
-    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_6_selected.png" />
-    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_7.png" />
-    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_7_selected.png" />
-    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_8.png" />
-    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_selected.png" />
-    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_x.png" />
-    <EmbeddedResource Include="InazumaEleven\Images\npc_icon_x2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

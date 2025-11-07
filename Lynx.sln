@@ -1,14 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32510.428
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35514.174 d17.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lynx", "Lynx\Lynx.csproj", "{E3DC003D-B49F-4BDE-8CF6-F78B2D2D0A5A}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{14CFBBB1-79DE-4AB8-AEC4-F74762F1B4B4}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lynx", "Lynx\Lynx.csproj", "{F336F23E-001A-4F4D-9454-03902FAD3C7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,15 +11,12 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E3DC003D-B49F-4BDE-8CF6-F78B2D2D0A5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E3DC003D-B49F-4BDE-8CF6-F78B2D2D0A5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E3DC003D-B49F-4BDE-8CF6-F78B2D2D0A5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E3DC003D-B49F-4BDE-8CF6-F78B2D2D0A5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F336F23E-001A-4F4D-9454-03902FAD3C7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F336F23E-001A-4F4D-9454-03902FAD3C7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F336F23E-001A-4F4D-9454-03902FAD3C7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F336F23E-001A-4F4D-9454-03902FAD3C7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {08837DF8-E877-4C3F-957D-EAAE2C4B6043}
 	EndGlobalSection
 EndGlobal
