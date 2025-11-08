@@ -37,6 +37,11 @@ namespace Lynx.Models
         public bool IsDirectory { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether .fa files are extracted.
+        /// </summary>
+        public bool IsExtractedFaFiles { get; set; }
+
+        /// <summary>
         /// Gets or sets the relative path to the project's image or icon.
         /// </summary>
         public string ImagePath { get; set; }
