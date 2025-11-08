@@ -27,11 +27,6 @@ namespace Lynx.Models
         public string Language { get; set; }
 
         /// <summary>
-        /// Gets or sets the version number of the project.
-        /// </summary>
-        public string Version { get; set; }
-
-        /// <summary>
         /// Gets or sets the filesystem path where the project is located.
         /// </summary>
         public string Path { get; set; }
