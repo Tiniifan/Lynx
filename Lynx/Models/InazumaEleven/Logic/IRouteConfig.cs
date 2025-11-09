@@ -16,7 +16,7 @@ namespace Lynx.Models.InazumaEleven.Logic
         int CellLink1 { get; set; }
         int CellLink2 { get; set; }
         int CellLink3 { get; set; }
-        string PhaseAppear { get; set; }
+        object Condition { get; set; }
         string Map { get; set; }
         int Unk10 { get; set; }
         string MatchTextLock { get; set; }
