@@ -120,6 +120,7 @@
     <Compile Include="ViewModels\Editor\EditorOption.cs" />
     <Compile Include="ViewModels\Editor\EditorOptionItem.cs" />
     <Compile Include="ViewModels\Editor\LynxViewModel.cs" />
+    <Compile Include="ViewModels\Panels\PanelCharabaseViewModel.cs" />
     <Compile Include="ViewModels\StartUp\LynxStartUpViewModel.cs" />
     <Compile Include="ViewModels\StartUp\LynxStartUpViewModel.FileDialogs.cs" />
     <Compile Include="ViewModels\StartUp\LynxStartUpViewModel.GameLogic.cs" />
@@ -131,29 +132,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Views\Panels\AssetBrowserUserControl.xaml.cs">
-      <DependentUpon>AssetBrowserUserControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Panels\DebugConsoleUserControl.xaml.cs">
-      <DependentUpon>DebugConsoleUserControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Panels\EncounterUserControl.xaml.cs">
-      <DependentUpon>EncounterUserControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Panels\EncounterViewModel.xaml.cs">
-      <DependentUpon>EncounterViewModel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Panels\MapEditorUserControl.xaml.cs">
-      <DependentUpon>MapEditorUserControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Panels\PreviewUserControl.xaml.cs">
-      <DependentUpon>PreviewUserControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Panels\PropertiesUserControl.xaml.cs">
-      <DependentUpon>PropertiesUserControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Panels\ScriptEditorUserControl.xaml.cs">
-      <DependentUpon>ScriptEditorUserControl.xaml</DependentUpon>
+    <Compile Include="Views\Panels\PanelCharabase.xaml.cs">
+      <DependentUpon>PanelCharabase.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StartUp\LynxStartUp.xaml.cs">
       <DependentUpon>LynxStartUp.xaml</DependentUpon>
@@ -162,37 +142,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Panels\AssetBrowserUserControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Views\Panels\PanelCharabase.xaml">
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Panels\DebugConsoleUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Panels\EncounterUserControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Panels\EncounterViewModel.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Panels\MapEditorUserControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Panels\PreviewUserControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Panels\PropertiesUserControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Panels\ScriptEditorUserControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\StartUp\LynxStartUp.xaml">
       <Generator>MSBuild:Compile</Generator>
