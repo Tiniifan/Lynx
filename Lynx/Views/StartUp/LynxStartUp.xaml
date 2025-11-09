@@ -1,0 +1,330 @@
+﻿<UserControl x:Class="Lynx.Views.StartUp.LynxStartUp"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:viewmodels="clr-namespace:Lynx.ViewModels.StartUp"
+             xmlns:local="clr-namespace:Lynx.Models"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="1000">
+
+    <UserControl.DataContext>
+        <viewmodels:LynxStartUpViewModel/>
+    </UserControl.DataContext>
+
+    <Grid Background="{DynamicResource Theme.Window.BackgroundBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50*" />
+            <ColumnDefinition Width="50*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- RIGHT PANEL: Create New Project -->
+        <Border Grid.Column="0" Style="{StaticResource PanelBorderStyle}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- Header -->
+                <Border Grid.Row="0" Style="{StaticResource ToolbarBorderStyle}">
+                    <TextBlock Text="Create New Project" 
+                              Style="{StaticResource PanelHeaderStyle}"
+                              FontSize="16"
+                              FontWeight="Bold" />
+                </Border>
+
+                <!-- Form -->
+                <ScrollViewer Grid.Row="1" 
+             VerticalScrollBarVisibility="Auto"
+             Margin="20">
+                    <StackPanel>
+                        <!-- Project Name -->
+                        <GroupBox Header="Project Name" Style="{StaticResource ImaginationGroupBox}">
+                            <TextBox Text="{Binding NewProjectName, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{StaticResource ImaginationTextBox}"
+                    Height="35"
+                    VerticalContentAlignment="Center" />
+                        </GroupBox>
+
+                        <!-- Game Selection -->
+                        <GroupBox Header="Game" Style="{StaticResource ImaginationGroupBox}">
+                            <ComboBox SelectedItem="{Binding NewProjectGame}"
+             Style="{StaticResource ModernComboBoxStyle}"
+             Height="35">
+                                <ComboBox.ItemsSource>
+                                    <x:Array Type="{x:Type local:GameType}">
+                                        <local:GameType>IEGO</local:GameType>
+                                        <local:GameType>IEGOCS</local:GameType>
+                                        <local:GameType>IEGOGalaxy</local:GameType>
+                                    </x:Array>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+                        </GroupBox>
+
+                        <!-- Language Selection (Dynamic) -->
+                        <GroupBox Header="Language" Style="{StaticResource ImaginationGroupBox}">
+                            <ComboBox ItemsSource="{Binding AvailableLanguages}"
+                     SelectedItem="{Binding NewProjectLanguage}"
+                     Style="{StaticResource ModernComboBoxStyle}"
+                     Height="35" />
+                        </GroupBox>
+
+                        <!-- Archive Option (Checkbox) -->
+                        <GroupBox Header="Archive Option" Style="{StaticResource ImaginationGroupBox}">
+                            <CheckBox Content="Extracted .fa files"
+                     IsChecked="{Binding IsExtractedFaFiles}"
+                     Style="{StaticResource ImaginationCheckbox}"
+                     VerticalAlignment="Center" />
+                        </GroupBox>
+
+                        <!-- Project Path -->
+                        <GroupBox Header="Project Path" Style="{StaticResource ImaginationGroupBox}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox Grid.Column="0"
+                        Text="{Binding NewProjectPath, UpdateSourceTrigger=PropertyChanged}"
+                        Style="{StaticResource ImaginationTextBox}"
+                        Height="35"
+                        VerticalContentAlignment="Center" />
+
+                                <Button Grid.Column="1"
+                       Content="📁"
+                       Style="{StaticResource ModernButtonStyle}"
+                       Width="40"
+                       Margin="5,0,0,0"
+                       Command="{Binding BrowsePathCommand}"
+                       ToolTip="Browse" />
+                            </Grid>
+                        </GroupBox>
+
+                        <!-- Project Image (Optional) -->
+                        <GroupBox Header="Project Image (Optional)" Style="{StaticResource ImaginationGroupBox}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox Grid.Column="0"
+                        Text="{Binding NewProjectImagePath, UpdateSourceTrigger=PropertyChanged}"
+                        Style="{StaticResource ImaginationTextBox}"
+                        Height="35"
+                        VerticalContentAlignment="Center"
+                        IsReadOnly="True" />
+
+                                <Button Grid.Column="1"
+                       Content="🖼️"
+                       Style="{StaticResource ModernButtonStyle}"
+                       Width="40"
+                       Margin="5,0,0,0"
+                       Command="{Binding BrowseImageCommand}"
+                       ToolTip="Browse Image" />
+                            </Grid>
+                        </GroupBox>
+
+                        <!-- Image Preview -->
+                        <Border Background="{DynamicResource Theme.TitleBar.BackgroundBrush}"
+               BorderBrush="{DynamicResource Theme.Border.Brush}"
+               BorderThickness="1"
+               CornerRadius="5"
+               Margin="5"
+               Height="150"
+               Visibility="{Binding NewProjectImagePath, Converter={StaticResource NullToVisibilityConverter}}">
+                            <Image Source="{Binding NewProjectImagePath}"
+                  Stretch="Uniform"
+                  Margin="10" />
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Create Button -->
+                <Border Grid.Row="2" 
+                       Background="{DynamicResource Theme.TitleBar.BackgroundBrush}"
+                       BorderBrush="{DynamicResource Theme.Border.Brush}"
+                       BorderThickness="0,1,0,0"
+                       Padding="20">
+                    <Button Content="Create Project"
+                           Style="{StaticResource ModernButtonStyle}"
+                           Width="200"
+                           Height="40"
+                           FontSize="14"
+                           FontWeight="Bold"
+                           HorizontalAlignment="Center"
+                           Command="{Binding CreateProjectCommand}" />
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- LEFT PANEL: Project Library -->
+        <Border Grid.Column="1" Style="{StaticResource PanelBorderStyle}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!-- Header -->
+                <Border Grid.Row="0" Style="{StaticResource ToolbarBorderStyle}">
+                    <TextBlock Text="Project Library" 
+                              Style="{StaticResource PanelHeaderStyle}"
+                              FontSize="16"
+                              FontWeight="Bold" />
+                </Border>
+
+                <!-- Search Bar -->
+                <Border Grid.Row="1" 
+                       Style="{StaticResource SearchBarStyle}"
+                       Margin="10,10,10,5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" 
+                                  Text="🔍" 
+                                  FontSize="14"
+                                  Foreground="{DynamicResource Theme.Text.SecondaryBrush}"
+                                  VerticalAlignment="Center"
+                                  Margin="8,0,5,0" />
+
+                        <TextBox Grid.Column="1"
+                                Style="{StaticResource SearchTextBoxStyle}"
+                                Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                                VerticalContentAlignment="Center" />
+                    </Grid>
+                </Border>
+
+                <!-- Projects List -->
+                <ScrollViewer Grid.Row="2" 
+                             VerticalScrollBarVisibility="Auto"
+                             Margin="10,5,10,10">
+                    <ItemsControl ItemsSource="{Binding Projects}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="{DynamicResource Theme.Control.BackgroundBrush}"
+                                       BorderBrush="{DynamicResource Theme.Border.Brush}"
+                                       BorderThickness="1"
+                                       CornerRadius="5"
+                                       Margin="0,5"
+                                       Padding="10">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Exists}" Value="False">
+                                                    <Setter Property="Opacity" Value="0.4"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="80" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- Project Image -->
+                                        <Border Grid.Column="0"
+                                               Width="70"
+                                               Height="70"
+                                               Background="{DynamicResource Theme.TitleBar.BackgroundBrush}"
+                                               BorderBrush="{DynamicResource Theme.Border.Brush}"
+                                               BorderThickness="1"
+                                               CornerRadius="5"
+                                               VerticalAlignment="Center">
+                                            <Grid>
+                                                <Image Source="{Binding ImagePath, TargetNullValue={x:Null}}"
+                                                      Stretch="UniformToFill"
+                                                      Visibility="{Binding ImagePath, Converter={StaticResource NullToVisibilityConverter}}" />
+                                                <TextBlock Text=""
+                                                          FontSize="30"
+                                                          HorizontalAlignment="Center"
+                                                          VerticalAlignment="Center"
+                                                          Foreground="{DynamicResource Theme.Text.SecondaryBrush}"
+                                                          Visibility="{Binding ImagePath, Converter={StaticResource InverseNullToVisibilityConverter}}" />
+                                            </Grid>
+                                        </Border>
+
+                                        <!-- Project Info -->
+                                        <StackPanel Grid.Column="1" 
+                                                   VerticalAlignment="Center"
+                                                   Margin="15,0">
+                                            <TextBlock Text="{Binding Name}"
+                                                      FontSize="14"
+                                                      FontWeight="SemiBold"
+                                                      Foreground="{DynamicResource Theme.Text.PrimaryBrush}" />
+
+                                            <TextBlock Margin="0,5,0,0">
+                                                <Run Text="Path:" 
+                                                    Foreground="{DynamicResource Theme.Text.SecondaryBrush}" />
+                                                <Run Text="{Binding Path}" 
+                                                    Foreground="{DynamicResource Theme.Text.PrimaryBrush}" />
+                                            </TextBlock>
+
+                                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                                <Border Background="{DynamicResource Theme.Accent.Brush}"
+                                                       Padding="5,2"
+                                                       CornerRadius="3"
+                                                       Margin="0,0,5,0">
+                                                    <TextBlock Text="{Binding Game}"
+                                                              FontSize="10"
+                                                              FontWeight="Bold"
+                                                              Foreground="White" />
+                                                </Border>
+
+                                                <Border Background="{DynamicResource Theme.Control.ActiveBrush}"
+                                                       Padding="5,2"
+                                                       CornerRadius="3">
+                                                    <TextBlock Text="{Binding Language}"
+                                                              FontSize="10"
+                                                              FontWeight="Bold"
+                                                              Foreground="{DynamicResource Theme.Text.PrimaryBrush}" />
+                                                </Border>
+                                            </StackPanel>
+
+                                            <TextBlock Text="⚠️ Project directory not found"
+                                                      FontSize="11"
+                                                      FontStyle="Italic"
+                                                      Foreground="#FFE81123"
+                                                      Margin="0,5,0,0"
+                                                      Visibility="{Binding Exists, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                                        </StackPanel>
+
+                                        <!-- Action Buttons -->
+                                        <StackPanel Grid.Column="2" 
+                                                   VerticalAlignment="Center"
+                                                   Orientation="Horizontal">
+                                            <Button Content="Open"
+                                                   Style="{StaticResource ModernButtonStyle}"
+                                                   Width="70"
+                                                   IsEnabled="{Binding Exists}"
+                                                   Command="{Binding DataContext.OpenProjectCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                   CommandParameter="{Binding}"
+                                                   Margin="0,0,5,0" />
+
+                                            <Button Content="🗑️"
+                                                   Style="{StaticResource ModernButtonStyle}"
+                                                   Width="40"
+                                                   Command="{Binding DataContext.DeleteProjectCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                   CommandParameter="{Binding}"
+                                                   ToolTip="Delete Project" />
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
