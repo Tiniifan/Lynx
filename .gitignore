@@ -7,4 +7,4 @@ Lynx/bin/Release/Lynx.rar
 Lynx/obj/
 *.nut
 *.nutb
-.packages/
+packages/
