@@ -1,9 +1,20 @@
 ﻿<Application x:Class="Lynx.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Lynx"
-             StartupUri="MainWindow.xaml">
+             xmlns:converters="clr-namespace:Lynx.Converters">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Studio Eleven Theme -->
+                <ResourceDictionary Source="pack://application:,,,/ImaginationGUI;component/Styles/Colors/BlueAcrylicTheme.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/ImaginationGUI;component/Styles/ImaginationTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- Converters -->
+            <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+            <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" />
+            <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+            <converters:InverseNullToVisibilityConverter x:Key="InverseNullToVisibilityConverter" />
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
