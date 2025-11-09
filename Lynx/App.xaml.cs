@@ -11,6 +11,7 @@ using ImaginationGUI.Services;
 using Lynx.Models;
 using Lynx.ViewModels.Editor;
 using Lynx.ViewModels.StartUp;
+using Lynx.Models.InazumaEleven.Games;
 
 namespace Lynx
 {
@@ -31,7 +32,7 @@ namespace Lynx
             _viewModel = new MainViewModel
             {
                 IsLoading = false,
-                Title = "Leon - Startup",
+                Title = "Lynx - Startup",
                 MainContent = null
             };
 
@@ -112,18 +113,48 @@ namespace Lynx
             {
                 Orientation = Orientation.Horizontal,
                 Children =
-                {
-                    openButton,
-                    _saveButton,
-                    _closeProjectButton
-                }
+        {
+            openButton,
+            _saveButton,
+            _closeProjectButton
+        }
             };
 
-            _viewModel.Title = $"{_currentProject.Name} ({_currentProject.Game})";
-            _viewModel.MainContent = new Views.Editor.LynxMainContent();
-            _viewModel.CustomTitleBarButtons = buttonPanel;
+            try
+            {
+                // Create the view with the ViewModel that includes the project
+                var editorView = new Views.Editor.LynxMainContent();
+                var lynxViewModel = new LynxViewModel(_currentProject);
+                editorView.DataContext = lynxViewModel;
 
-            // TODO: open the project folder
+                _viewModel.Title = $"{_currentProject.Name} ({_currentProject.Game})";
+                _viewModel.MainContent = editorView;
+                _viewModel.CustomTitleBarButtons = buttonPanel;
+            }
+            catch (NotSupportedException ex)
+            {
+                MessageBox.Show(
+                    $"Cannot open project: {ex.Message}",
+                    "Unsupported Game Type",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+
+                _currentProject = null;
+                ShowStartupScreen();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Error opening project: {ex.Message}",
+                    "Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+
+                _currentProject = null;
+                ShowStartupScreen();
+            }
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -137,7 +168,7 @@ namespace Lynx
 
             try
             {
-                // TODO: Implémenter la sauvegarde du projet
+                // TODO: Implement project save
 
                 MessageBox.Show($"Project '{_currentProject.Name}' saved successfully!",
                     "Success", MessageBoxButton.OK, MessageBoxImage.Information);

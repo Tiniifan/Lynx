@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using ImaginationGUI.Models;
 using ImaginationGUI.ViewModels;
 using ImaginationGUI.Views;
+using Lynx.Models.InazumaEleven.Games;
 using Lynx.ViewModels.Editor;
 
 namespace Lynx.Views.Editor

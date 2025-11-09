@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lynx.InazumaEleven.Logic
+namespace Lynx.Models.InazumaEleven.Logic
 {
     public class AvatarGrowthStat
     {

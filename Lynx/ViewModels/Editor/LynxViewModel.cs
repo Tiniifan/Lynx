@@ -3,6 +3,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ImaginationGUI.ViewModels;
+using Lynx.Models;
+using Lynx.Models.InazumaEleven.Games;
+using Lynx.Models.InazumaEleven.Games.GO;
 using Lynx.Views.Editor;
 
 namespace Lynx.ViewModels.Editor
@@ -36,34 +39,46 @@ namespace Lynx.ViewModels.Editor
             }
         }
 
-        public LynxViewModel()
+        private Game _game;
+
+        public LynxViewModel(ProjectData project)
         {
-            // Initialisation
+            if (project == null)
+                throw new ArgumentNullException(nameof(project));
+
+            // Create the game according to the type
+            _game = CreateGame(project);
+
+            // Initialization
             ImaginationContainer = new ImaginationContainerViewModel("Lynx", "1.0.0");
 
-            // Initialiser les options
+            // Initialize options
             PopulateEditorOptions();
+        }
 
-            //// Créer un nouveau UserControl
-            //var encounterControl = new EncounterUserControl();
-            //// L'ajouter au conteneur
-            //_imaginationContainer.AddPartCommand.Execute(encounterControl);
-            //// Créer un nouveau UserControl
-            //var mapControl = new MapEditorUserControl();
-            //// L'ajouter au conteneur
-            //_imaginationContainer.AddPartCommand.Execute(mapControl);
-            //// Créer un nouveau UserControl
-            //var scriptControl = new ScriptEditorUserControl();
-            //// L'ajouter au conteneur
-            //_imaginationContainer.AddPartCommand.Execute(scriptControl);
-            //// Créer un nouveau UserControl
-            //var previewControl = new PreviewUserControl();
-            //// L'ajouter au conteneur
-            //_imaginationContainer.AddPartCommand.Execute(previewControl);
-            //// Créer un nouveau UserControl
-            //var propertiesControl = new PropertiesUserControl();
-            //// L'ajouter au conteneur
-            //_imaginationContainer.AddPartCommand.Execute(propertiesControl);
+        private Game CreateGame(ProjectData project)
+        {
+            switch (project.Game)
+            {
+                case GameType.IEGO:
+                    return new GO(
+                        project.Path,
+                        project.IsExtractedFaFiles,
+                        project.Language
+                    );
+
+                case GameType.IEGOCS:
+                case GameType.IEGOGalaxy:
+                    throw new NotSupportedException(
+                        $"Game type '{project.Game}' is not yet supported."
+                    );
+
+                default:
+                    throw new ArgumentException(
+                        $"Unknown game type: {project.Game}",
+                        nameof(project)
+                    );
+            }
         }
 
         private void PopulateEditorOptions()
