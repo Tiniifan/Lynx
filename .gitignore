@@ -8,3 +8,4 @@ Lynx/obj/
 *.nut
 *.nutb
 packages/
+*projects.json
