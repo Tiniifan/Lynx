@@ -47,7 +47,7 @@ namespace Lynx.Models.InazumaEleven.Games.GO
                 IE_A = new ARC0(new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
             }
 
-            LanguageCode = GOSupport.AvailableLanguages[languageName];
+            LanguageCode = languageName;
 
             GetGameFiles();
             GetTypes();

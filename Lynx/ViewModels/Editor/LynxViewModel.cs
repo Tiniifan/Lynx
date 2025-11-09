@@ -41,20 +41,30 @@ namespace Lynx.ViewModels.Editor
 
         private Game _game;
 
-        public LynxViewModel(ProjectData project)
+        public LynxViewModel()
+        {
+            // Initialization
+            string appVersion = System.Reflection.Assembly
+                .GetExecutingAssembly()
+                .GetName()
+                .Version
+                .ToString();
+
+            ImaginationContainer = new ImaginationContainerViewModel("Lynx", appVersion);
+
+            // Initialize options
+            PopulateEditorOptions();
+        }
+
+        public LynxViewModel(ProjectData project) : this()
         {
             if (project == null)
                 throw new ArgumentNullException(nameof(project));
 
             // Create the game according to the type
             _game = CreateGame(project);
-
-            // Initialization
-            ImaginationContainer = new ImaginationContainerViewModel("Lynx", "1.0.0");
-
-            // Initialize options
-            PopulateEditorOptions();
         }
+
 
         private Game CreateGame(ProjectData project)
         {
