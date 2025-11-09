@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="Lynx.Views.Editor.LynxMainContent"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:viewmodels="clr-namespace:Lynx.ViewModels.Editor" 
+             xmlns:views="clr-namespace:ImaginationGUI.Views;assembly=ImaginationGUI"
+             xmlns:local="clr-namespace:Lynx.Views.Editor"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="1000">
+
+    <UserControl.DataContext>
+        <viewmodels:LynxViewModel/>
+    </UserControl.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" MinWidth="150"/>
+            <ColumnDefinition Width="8*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Options Panel (20% de l'espace) -->
+        <Border Grid.Column="0" 
+                Style="{StaticResource PanelBorderStyle}">
+            <TreeView x:Name="EditorOptionsTreeView"
+                      Style="{StaticResource ModernTreeViewStyle}"
+                      ItemContainerStyle="{StaticResource ImaginationTreeViewItem}"
+                      ItemsSource="{Binding EditorOptions}"
+                      DisplayMemberPath="DisplayName"
+                      SelectedItemChanged="EditorOptionsTreeView_SelectedItemChanged">
+            </TreeView>
+        </Border>
+
+        <Border Grid.Column="1" 
+                Style="{StaticResource PanelBorderStyle}">
+            <views:ImaginationContainerView
+                                        DataContext="{Binding ImaginationContainer}" />
+        </Border>
+
+        <!-- GridSplitter -->
+        <GridSplitter Grid.Column="0"
+                      Style="{StaticResource ImaginationGridSplitter}"/>
+    </Grid>
+</UserControl>
