@@ -51,8 +51,8 @@
                         <!-- Game Selection -->
                         <GroupBox Header="Game" Style="{StaticResource ImaginationGroupBox}">
                             <ComboBox SelectedItem="{Binding NewProjectGame}"
-             Style="{StaticResource ModernComboBoxStyle}"
-             Height="35">
+                                      Style="{StaticResource ImaginationComboBox}"
+                                      Height="35">
                                 <ComboBox.ItemsSource>
                                     <x:Array Type="{x:Type local:GameType}">
                                         <local:GameType>IEGO</local:GameType>
@@ -66,9 +66,9 @@
                         <!-- Language Selection (Dynamic) -->
                         <GroupBox Header="Language" Style="{StaticResource ImaginationGroupBox}">
                             <ComboBox ItemsSource="{Binding AvailableLanguages}"
-                     SelectedItem="{Binding NewProjectLanguage}"
-                     Style="{StaticResource ModernComboBoxStyle}"
-                     Height="35" />
+                                      SelectedItem="{Binding NewProjectLanguage}"
+                                      Style="{StaticResource ImaginationComboBox}"
+                                      Height="35" />
                         </GroupBox>
 
                         <!-- Archive Option (Checkbox) -->
@@ -95,7 +95,7 @@
 
                                 <Button Grid.Column="1"
                        Content="📁"
-                       Style="{StaticResource ModernButtonStyle}"
+                       Style="{StaticResource ImaginationButton}"
                        Width="40"
                        Margin="5,0,0,0"
                        Command="{Binding BrowsePathCommand}"
@@ -120,7 +120,7 @@
 
                                 <Button Grid.Column="1"
                        Content="🖼️"
-                       Style="{StaticResource ModernButtonStyle}"
+                       Style="{StaticResource ImaginationButton}"
                        Width="40"
                        Margin="5,0,0,0"
                        Command="{Binding BrowseImageCommand}"
@@ -150,7 +150,7 @@
                        BorderThickness="0,1,0,0"
                        Padding="20">
                     <Button Content="Create Project"
-                           Style="{StaticResource ModernButtonStyle}"
+                           Style="{StaticResource ImaginationButton}"
                            Width="200"
                            Height="40"
                            FontSize="14"
@@ -304,7 +304,7 @@
                                                    VerticalAlignment="Center"
                                                    Orientation="Horizontal">
                                             <Button Content="Open"
-                                                   Style="{StaticResource ModernButtonStyle}"
+                                                   Style="{StaticResource ImaginationButton}"
                                                    Width="70"
                                                    IsEnabled="{Binding Exists}"
                                                    Command="{Binding DataContext.OpenProjectCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
@@ -312,7 +312,7 @@
                                                    Margin="0,0,5,0" />
 
                                             <Button Content="🗑️"
-                                                   Style="{StaticResource ModernButtonStyle}"
+                                                   Style="{StaticResource ImaginationButton}"
                                                    Width="40"
                                                    Command="{Binding DataContext.DeleteProjectCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                    CommandParameter="{Binding}"
