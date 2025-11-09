@@ -35,8 +35,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ImaginationGUI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ImaginationGUI\ImaginationGUI\bin\Debug\ImaginationGUI.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="StudioElevenLib">
+      <HintPath>..\..\StudioElevenLib\StudioElevenLib\bin\Release\StudioElevenLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -55,18 +67,93 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+    <Compile Include="Converters\InverseBoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\InverseNullToVisibilityConverter.cs" />
+    <Compile Include="Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="Models\GameType.cs" />
+    <Compile Include="Models\ProjectData.cs" />
+    <Compile Include="Services\ProjectService.cs" />
+    <Compile Include="ViewModels\Editor\EditorOption.cs" />
+    <Compile Include="ViewModels\Editor\EditorOptionItem.cs" />
+    <Compile Include="ViewModels\Editor\LynxViewModel.cs" />
+    <Compile Include="ViewModels\StartUp\LynxStartUpViewModel.cs" />
+    <Compile Include="ViewModels\StartUp\LynxStartUpViewModel.FileDialogs.cs" />
+    <Compile Include="ViewModels\StartUp\LynxStartUpViewModel.GameLogic.cs" />
+    <Compile Include="ViewModels\StartUp\LynxStartUpViewModel.ProjectManagement.cs" />
+    <Compile Include="Views\Editor\LynxMainContent.xaml.cs">
+      <DependentUpon>LynxMainContent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
+    <Compile Include="Views\Panels\AssetBrowserUserControl.xaml.cs">
+      <DependentUpon>AssetBrowserUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Panels\DebugConsoleUserControl.xaml.cs">
+      <DependentUpon>DebugConsoleUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Panels\EncounterUserControl.xaml.cs">
+      <DependentUpon>EncounterUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Panels\EncounterViewModel.xaml.cs">
+      <DependentUpon>EncounterViewModel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Panels\MapEditorUserControl.xaml.cs">
+      <DependentUpon>MapEditorUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Panels\PreviewUserControl.xaml.cs">
+      <DependentUpon>PreviewUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Panels\PropertiesUserControl.xaml.cs">
+      <DependentUpon>PropertiesUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Panels\ScriptEditorUserControl.xaml.cs">
+      <DependentUpon>ScriptEditorUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StartUp\LynxStartUp.xaml.cs">
+      <DependentUpon>LynxStartUp.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\Editor\LynxMainContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Panels\AssetBrowserUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Panels\DebugConsoleUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Panels\EncounterUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Panels\EncounterViewModel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Panels\MapEditorUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Panels\PreviewUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Panels\PropertiesUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Panels\ScriptEditorUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\StartUp\LynxStartUp.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -86,6 +173,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -93,6 +181,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
