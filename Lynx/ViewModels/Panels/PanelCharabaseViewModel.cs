@@ -1,13 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ImaginationGUI.ViewModels;
 using Lynx.Models.InazumaEleven.Games;
 using Lynx.Models.InazumaEleven.Logic;
+using StudioElevenLib.Level5.Image;
+using StudioElevenLib.Level5.Text;
+using StudioElevenLib.Tools;
 
 namespace Lynx.ViewModels.Panels
 {
@@ -16,12 +24,35 @@ namespace Lynx.ViewModels.Panels
         private Game _game;
         private List<ICharabase> _charabases;
         private ICharabase _selectedCharabase;
+        private T2bþ _charanames;
+        private T2bþ _charaKiznaxHint;
+        private Dictionary<string, List<int>> _models;
 
         #region Properties
 
-        public ObservableCollection<CharabaseTreeNode> CharabaseTree { get; set; }
+        public ObservableCollection<CharabaseListItem> CharabaseItems { get; set; }
 
-        private string _searchText = "";
+        private ICollectionView _charabaseListView;
+        public ICollectionView CharabaseListView
+        {
+            get => _charabaseListView;
+            set => SetProperty(ref _charabaseListView, value);
+        }
+
+        private CharabaseListItem _selectedCharabaseItem;
+        public CharabaseListItem SelectedCharabaseItem
+        {
+            get => _selectedCharabaseItem;
+            set
+            {
+                if (SetProperty(ref _selectedCharabaseItem, value) && value?.Charabase != null)
+                {
+                    SelectCharabase(value.Charabase);
+                }
+            }
+        }
+
+        private string _searchText = "Search...";
         public string SearchText
         {
             get => _searchText;
@@ -29,7 +60,10 @@ namespace Lynx.ViewModels.Panels
             {
                 if (SetProperty(ref _searchText, value))
                 {
-                    FilterCharabases();
+                    if (value != "Search...")
+                    {
+                        FilterCharabases();
+                    }
                 }
             }
         }
@@ -181,6 +215,7 @@ namespace Lynx.ViewModels.Panels
         public ICommand EditFullNameCommand { get; }
         public ICommand EditNicknameCommand { get; }
         public ICommand EditDescriptionCommand { get; }
+        public ICommand EditWithNyankoCommand { get; }
         public ICommand InsertCharabaseCommand { get; }
         public ICommand DeleteCharabaseCommand { get; }
         public ICommand ExportAsCfgBinCommand { get; }
@@ -190,7 +225,7 @@ namespace Lynx.ViewModels.Panels
 
         public PanelCharabaseViewModel()
         {
-            CharabaseTree = new ObservableCollection<CharabaseTreeNode>();
+            CharabaseItems = new ObservableCollection<CharabaseListItem>();
             Years = new ObservableCollection<string>();
             CharaTypes = new ObservableCollection<string> { "Unknown", "Player", "Unused", "NPC", "NPC Other" };
             Skins = new ObservableCollection<string>();
@@ -201,6 +236,7 @@ namespace Lynx.ViewModels.Panels
             EditFullNameCommand = new RelayCommand(ExecuteEditFullName);
             EditNicknameCommand = new RelayCommand(ExecuteEditNickname);
             EditDescriptionCommand = new RelayCommand(ExecuteEditDescription);
+            EditWithNyankoCommand = new RelayCommand(ExecuteEditWithNyanko);
             InsertCharabaseCommand = new RelayCommand(ExecuteInsertCharabase);
             DeleteCharabaseCommand = new RelayCommand(ExecuteDeleteCharabase, CanDeleteCharabase);
             ExportAsCfgBinCommand = new RelayCommand(ExecuteExportAsCfgBin);
@@ -212,70 +248,188 @@ namespace Lynx.ViewModels.Panels
             _game = game;
             _charabases = game.GetCharabase().ToList();
 
-            BuildTreeView();
+            // Load text files
+            LoadTextFiles();
+
+            // Load models dictionary
+            LoadModels();
+
+            BuildListView();
             PopulateDropdowns();
         }
 
-        private void BuildTreeView()
+        private void LoadTextFiles()
         {
-            CharabaseTree.Clear();
+            // Load character names
+            GameSupports.GameFile charaText = _game.Files["chara_text"];
+            _charanames = new T2bþ(charaText.File.Directory.GetFileFromFullPath(charaText.Path));
 
-            var rootNode = new CharabaseTreeNode { Name = "Charabase" };
-
-            // Group by CharaBaseType
-            var unknownNode = new CharabaseTreeNode { Name = "Unknown" };
-            var playerNode = new CharabaseTreeNode { Name = "Player" };
-            var unusedNode = new CharabaseTreeNode { Name = "Unused" };
-            var npcNode = new CharabaseTreeNode { Name = "NPC" };
-            var npcOtherNode = new CharabaseTreeNode { Name = "NPC Other" };
-
-            foreach (var charabase in _charabases)
+            // Load character descriptions if available
+            if (_game.Files.ContainsKey("kiznax_hint_text"))
             {
-                var node = new CharabaseTreeNode
-                {
-                    Name = GetCharacterName(charabase),
-                    Charabase = charabase
-                };
+                GameSupports.GameFile kiznaxHintText = _game.Files["kiznax_hint_text"];
+                _charaKiznaxHint = new T2bþ(kiznaxHintText.File.Directory.GetFileFromFullPath(kiznaxHintText.Path));
+            }
+        }
 
-                switch (charabase.CharaBaseType)
+        private void LoadModels()
+        {
+            _models = new Dictionary<string, List<int>>
+            {
+                ["NPC"] = new List<int>(),
+                ["NPCOther"] = new List<int>(),
+                ["Player"] = new List<int>()
+            };
+
+            // Get model info
+            GameSupports.GameFile modelRpgPlayer = _game.Files["modelRpgPlayer"];
+            GameSupports.GameFile modelWazaPlayer = _game.Files["modelWazaPlayer"];
+            GameSupports.GameFile modelRpgNPC = _game.Files["modelRpgNPC"];
+            GameSupports.GameFile modelWazaNPC = _game.Files["modelWazaNPC"];
+
+            // Get available models
+            FillModel(modelRpgPlayer);
+            FillModel(modelWazaPlayer);
+            FillModel(modelRpgNPC);
+            FillModel(modelWazaNPC);
+        }
+
+        private void FillModel(GameSupports.GameFile gameFile)
+        {
+            foreach (string fileName in gameFile.File.Directory.GetFolderFromFullPath(gameFile.Path).Files.Keys)
+            {
+                if (fileName.EndsWith(".xi") || fileName.EndsWith(".xc"))
                 {
-                    case 0:
-                        unknownNode.Children.Add(node);
-                        break;
-                    case 1:
-                        playerNode.Children.Add(node);
-                        break;
-                    case 2:
-                        unusedNode.Children.Add(node);
-                        break;
-                    case 3:
-                        npcNode.Children.Add(node);
-                        break;
-                    case 4:
-                        npcOtherNode.Children.Add(node);
-                        break;
+                    int fileNumber = Convert.ToInt32(fileName
+                                    .Replace("ca", "")
+                                    .Replace("cn", "")
+                                    .Replace("cp", "")
+                                    .Replace("a", "")
+                                    .Replace("m", "")
+                                    .Replace(".xi", "")
+                                    .Replace(".xc", "")
+                                );
+
+                    if (fileName.StartsWith("ca"))
+                    {
+                        if (_models["NPCOther"].IndexOf(fileNumber) == -1)
+                        {
+                            _models["NPCOther"].Add(fileNumber);
+                        }
+                    }
+                    else if (fileName.StartsWith("cn"))
+                    {
+                        if (_models["NPC"].IndexOf(fileNumber) == -1)
+                        {
+                            _models["NPC"].Add(fileNumber);
+                        }
+                    }
+                    else if (fileName.StartsWith("cp"))
+                    {
+                        if (_models["Player"].IndexOf(fileNumber) == -1)
+                        {
+                            _models["Player"].Add(fileNumber);
+                        }
+                    }
+                }
+            }
+        }
+
+        #region ListView Building
+
+        private void BuildListView()
+        {
+            CharabaseItems.Clear();
+
+            var groups = new[]
+            {
+                new { Type = 0, Name = "Unknown" },
+                new { Type = 1, Name = "Player" },
+                new { Type = 2, Name = "Unused" },
+                new { Type = 3, Name = "NPC" },
+                new { Type = 4, Name = "NPC Other" }
+            };
+
+            foreach (var group in groups)
+            {
+                var chars = _charabases.Where(c => c.CharaBaseType == group.Type).ToList();
+
+                foreach (var charabase in chars)
+                {
+                    CharabaseItems.Add(new CharabaseListItem
+                    {
+                        Name = GetCharacterName(charabase),
+                        Charabase = charabase,
+                        CategoryName = group.Name
+                    });
                 }
             }
 
-            rootNode.Children.Add(unknownNode);
-            rootNode.Children.Add(playerNode);
-            rootNode.Children.Add(unusedNode);
-            rootNode.Children.Add(npcNode);
-            rootNode.Children.Add(npcOtherNode);
-
-            CharabaseTree.Add(rootNode);
+            CharabaseListView = CollectionViewSource.GetDefaultView(CharabaseItems);
+            CharabaseListView.GroupDescriptions.Add(new PropertyGroupDescription("CategoryName"));
         }
+
+        #endregion
 
         private void FilterCharabases()
         {
-            // TODO: Implement filtering logic
-            BuildTreeView();
+            if (CharabaseListView == null) return;
+
+            if (string.IsNullOrWhiteSpace(SearchText) || SearchText == "Search...")
+            {
+                CharabaseListView.Filter = null;
+            }
+            else
+            {
+                CharabaseListView.Filter = obj =>
+                {
+                    if (obj is CharabaseListItem item)
+                    {
+                        return item.Name.IndexOf(SearchText, StringComparison.OrdinalIgnoreCase) >= 0;
+                    }
+                    return false;
+                };
+            }
         }
 
         private string GetCharacterName(ICharabase charabase)
         {
-            // TODO: Get name from T2bþ file
+            if (_charanames != null && _charanames.Nouns.TryGetValue(charabase.NameHash, out var noun) && noun.Strings.Count > 0)
+            {
+                return noun.Strings[0].Text;
+            }
             return $"Character {charabase.BaseHash:X8}";
+        }
+
+        private string FindCharacterHash(ICharabase charabase)
+        {
+            for (int i = 0; i < 10000; i++)
+            {
+                string namePlayer = "cp" + i.ToString().PadLeft(4, '0');
+                string nameNPC = "cn" + i.ToString().PadLeft(4, '0');
+                string nameNPCOther = "ca" + i.ToString().PadLeft(4, '0');
+
+                if (SameCharacterHash(charabase, namePlayer))
+                {
+                    return namePlayer;
+                }
+                else if (SameCharacterHash(charabase, nameNPC))
+                {
+                    return nameNPC;
+                }
+                else if (SameCharacterHash(charabase, nameNPCOther))
+                {
+                    return nameNPCOther;
+                }
+            }
+
+            return charabase.BaseHash.ToString("X8");
+        }
+
+        private bool SameCharacterHash(ICharabase charabase, string name)
+        {
+            int crc32 = unchecked((int)Crc32.Compute(Encoding.UTF8.GetBytes(name)));
+            return charabase.BaseHash == crc32;
         }
 
         public void SelectCharabase(ICharabase charabase)
@@ -283,7 +437,7 @@ namespace Lynx.ViewModels.Panels
             _selectedCharabase = charabase;
             IsCharacterSelected = true;
 
-            SelectedCharacterHash = charabase.BaseHash.ToString("X8");
+            SelectedCharacterHash = FindCharacterHash(charabase);
             SelectedCharacterFullName = GetCharacterName(charabase);
             SelectedCharacterNickname = GetCharacterNickname(charabase);
             SelectedCharacterDescription = GetCharacterDescription(charabase);
@@ -302,69 +456,159 @@ namespace Lynx.ViewModels.Panels
 
         private string GetCharacterNickname(ICharabase charabase)
         {
-            // TODO: Get nickname from T2bþ file
-            return "";
+            if (_charanames != null && _charanames.Nouns.ContainsKey(charabase.NicknameHash))
+            {
+                return _charanames.Nouns[charabase.NicknameHash].Strings[0].Text;
+            }
+            return string.Empty;
         }
 
         private string GetCharacterDescription(ICharabase charabase)
         {
-            // TODO: Get description from T2bþ file
-            return "";
+            if (_charaKiznaxHint != null && _charaKiznaxHint.Texts.ContainsKey(charabase.DescriptionHash))
+            {
+                return _charaKiznaxHint.Texts[charabase.DescriptionHash].Strings[0].Text;
+            }
+            return string.Empty;
         }
 
         private void UpdateAvailableModels()
         {
             AvailableModels.Clear();
-            // TODO: Load models based on CharaBaseType
-            for (int i = 0; i < 100; i++)
+
+            if (_selectedCharabase == null || _models == null) return;
+
+            List<int> models = null;
+
+            switch (_selectedCharabase.CharaBaseType)
             {
-                AvailableModels.Add(i.ToString());
+                case 1: // Player
+                    models = _models["Player"];
+                    break;
+                case 3: // NPC
+                    models = _models["NPC"];
+                    break;
+                case 4: // NPC Other
+                    models = _models["NPCOther"];
+                    break;
+            }
+
+            if (models != null)
+            {
+                foreach (var model in models)
+                {
+                    AvailableModels.Add(model.ToString());
+                }
             }
         }
 
         private void UpdateCharacterFace()
         {
-            // TODO: Load character face image
-            CharacterFaceImage = null;
+            if (_selectedCharabase == null || _game == null) return;
+
+            try
+            {
+                string fileCode = GetFileCodeForCharaType(_selectedCharabase.CharaBaseType);
+                if (string.IsNullOrEmpty(fileCode))
+                {
+                    CharacterFaceImage = null;
+                    return;
+                }
+
+                GameSupports.GameFile faceInfo = _game.Files["face"];
+                VirtualDirectory faceFolder = faceInfo.File.Directory.GetFolderFromFullPath(faceInfo.Path);
+
+                string faceFileName = fileCode + _selectedCharabase.ModelNumber.ToString().PadLeft(4, '0') + "a.xi";
+
+                if (faceFolder.Files.ContainsKey(faceFileName))
+                {
+                    byte[] imageData = faceInfo.File.Directory.GetFileFromFullPath(faceInfo.Path + "/" + faceFileName);
+                    var bitmap = IMGC.ToBitmap(imageData);
+
+                    // Convert System.Drawing.Bitmap to BitmapImage
+                    using (MemoryStream memory = new MemoryStream())
+                    {
+                        bitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Png);
+                        memory.Position = 0;
+
+                        BitmapImage bitmapImage = new BitmapImage();
+                        bitmapImage.BeginInit();
+                        bitmapImage.StreamSource = memory;
+                        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmapImage.EndInit();
+                        bitmapImage.Freeze();
+
+                        CharacterFaceImage = bitmapImage;
+                    }
+                }
+                else
+                {
+                    CharacterFaceImage = null;
+                }
+            }
+            catch
+            {
+                CharacterFaceImage = null;
+            }
+        }
+
+        private string GetFileCodeForCharaType(int charaType)
+        {
+            switch (charaType)
+            {
+                case 1: return "cp"; // Player
+                case 3: return "cn"; // NPC
+                case 4: return "ca"; // NPC Other
+                default: return null;
+            }
         }
 
         private void UpdateSkinColor()
         {
-            // TODO: Get color based on skin index
-            //var colors = new[] { Colors.White, Colors.Beige, Colors.Tan, Colors.Brown, Colors.DarkBrown };
-            //if (SelectedSkin < colors.Length)
-            //{
-            //    SkinColor = new SolidColorBrush(colors[SelectedSkin]);
-            //}
+            if (_selectedCharabase == null) return;
+
+            // Get color from EnumHelper - cette méthode doit être implémentée dans votre EnumHelper
+            // Color color = EnumHelper.GetColorById<Skins>(_selectedCharabase.Skin);
+            // SkinColor = new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
+
+            // Placeholder implementation
+            SkinColor = new SolidColorBrush(Colors.Beige);
         }
 
         private void PopulateDropdowns()
         {
-            // TODO: Populate from enums
             Years.Add("Unknown");
             Skins.Add("Unused");
             Bodies.Add("Tall");
             Genders.Add("Unknown");
         }
 
+        #region Commands Implementation
+
         private void ExecuteEditFullName(object parameter)
         {
-            // TODO: Open text editor
+            // TODO: Ouvrir Nyanko pour éditer le nom complet
         }
 
         private void ExecuteEditNickname(object parameter)
         {
-            // TODO: Open text editor
+            // TODO: Ouvrir Nyanko pour éditer le surnom
         }
 
         private void ExecuteEditDescription(object parameter)
         {
-            // TODO: Open text editor
+            // TODO: Ouvrir Nyanko pour éditer la description
+        }
+
+        private void ExecuteEditWithNyanko(object parameter)
+        {
+            // TODO: Ouvrir Nyanko editor
+            // Pour le moment le bouton ne fait rien comme demandé
         }
 
         private void ExecuteInsertCharabase(object parameter)
         {
-            // TODO: Insert new charabase
+            // TODO: Implémenter l'insertion
         }
 
         private bool CanDeleteCharabase(object parameter)
@@ -374,21 +618,23 @@ namespace Lynx.ViewModels.Panels
 
         private void ExecuteDeleteCharabase(object parameter)
         {
-            // TODO: Delete selected charabase
+            // TODO: Implémenter la suppression
         }
 
         private void ExecuteExportAsCfgBin(object parameter)
         {
-            // TODO: Export as cfg.bin
+            // TODO: Implémenter l'export
         }
 
         private void ExecuteExportAsCsv(object parameter)
         {
-            // TODO: Export as CSV
+            // TODO: Implémenter l'export CSV
         }
+
+        #endregion
     }
 
-    public class CharabaseTreeNode : BaseViewModel
+    public class CharabaseListItem : BaseViewModel
     {
         private string _name;
         public string Name
@@ -399,11 +645,6 @@ namespace Lynx.ViewModels.Panels
 
         public ICharabase Charabase { get; set; }
 
-        public ObservableCollection<CharabaseTreeNode> Children { get; set; }
-
-        public CharabaseTreeNode()
-        {
-            Children = new ObservableCollection<CharabaseTreeNode>();
-        }
+        public string CategoryName { get; set; }
     }
 }

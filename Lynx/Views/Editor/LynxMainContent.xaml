@@ -7,7 +7,8 @@
              xmlns:views="clr-namespace:ImaginationGUI.Views;assembly=ImaginationGUI"
              xmlns:local="clr-namespace:Lynx.Views.Editor"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="1000">
+             d:DesignHeight="600" d:DesignWidth="1000"
+             AllowDrop="True">
 
     <UserControl.DataContext>
         <viewmodels:LynxViewModel/>
@@ -19,7 +20,7 @@
             <ColumnDefinition Width="8*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Options Panel (20% de l'espace) -->
+        <!-- Options Panel -->
         <Border Grid.Column="0" 
                 Style="{StaticResource PanelBorderStyle}">
             <TreeView x:Name="EditorOptionsTreeView"
@@ -27,14 +28,20 @@
                       ItemContainerStyle="{StaticResource ImaginationTreeViewItem}"
                       ItemsSource="{Binding EditorOptions}"
                       DisplayMemberPath="DisplayName"
-                      SelectedItemChanged="EditorOptionsTreeView_SelectedItemChanged">
+                      SelectedItemChanged="EditorOptionsTreeView_SelectedItemChanged"
+                      MouseDoubleClick="EditorOptionsTreeView_MouseDoubleClick"
+                      PreviewMouseLeftButtonDown="EditorOptionsTreeView_PreviewMouseLeftButtonDown"
+                      PreviewMouseMove="EditorOptionsTreeView_PreviewMouseMove">
             </TreeView>
         </Border>
 
+        <!-- Container Panel -->
         <Border Grid.Column="1" 
-                Style="{StaticResource PanelBorderStyle}">
+                Style="{StaticResource PanelBorderStyle}"
+                Drop="Container_Drop"
+                DragOver="Container_DragOver">
             <views:ImaginationContainerView
-                                        DataContext="{Binding ImaginationContainer}" />
+                DataContext="{Binding ImaginationContainer}" />
         </Border>
 
         <!-- GridSplitter -->

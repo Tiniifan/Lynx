@@ -14,17 +14,25 @@ namespace Lynx.Views.Panels
             InitializeComponent();
         }
 
-        private void CharabaseTreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        private void CharabaseListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (e.NewValue is CharabaseTreeNode node && node.Charabase != null)
+            // Handle double-click if needed
+        }
+
+        private void SearchTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (SearchTextBox.Text == "Search...")
             {
-                ViewModel?.SelectCharabase(node.Charabase);
+                SearchTextBox.Text = "";
             }
         }
 
-        private void CharabaseTreeView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void SearchTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            // Handle double-click if needed
+            if (string.IsNullOrWhiteSpace(SearchTextBox.Text))
+            {
+                SearchTextBox.Text = "Search...";
+            }
         }
     }
 }

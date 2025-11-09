@@ -17,7 +17,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Left Panel: TreeView -->
+        <!-- Left Panel: ListView -->
         <Border Grid.Column="0" 
                 Style="{StaticResource PanelBorderStyle}">
             <Grid>
@@ -27,55 +27,97 @@
                 </Grid.RowDefinitions>
 
                 <!-- Search Box -->
-                <TextBox Grid.Row="0"
-                         Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
-                         Style="{StaticResource ImaginationTextBox}"
-                         Margin="5"
-                         Height="30"
-                         VerticalContentAlignment="Center">
-                    <TextBox.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="3"/>
-                            <Setter Property="BorderBrush" Value="{DynamicResource Theme.Border.Brush}"/>
-                            <Setter Property="BorderThickness" Value="1"/>
-                            <Setter Property="Background" Value="{DynamicResource Theme.Control.BackgroundBrush}"/>
-                        </Style>
-                    </TextBox.Resources>
-                </TextBox>
+                <Border Grid.Row="0" Style="{StaticResource SearchBarStyle}" Margin="10">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
 
-                <!-- TreeView -->
-                <TreeView Grid.Row="1"
-                          x:Name="CharabaseTreeView"
-                          Style="{StaticResource ModernTreeViewStyle}"
-                          ItemContainerStyle="{StaticResource ImaginationTreeViewItem}"
-                          ItemsSource="{Binding CharabaseTree}"
-                          SelectedItemChanged="CharabaseTreeView_SelectedItemChanged"
-                          MouseDoubleClick="CharabaseTreeView_MouseDoubleClick">
-                    <TreeView.Resources>
-                        <HierarchicalDataTemplate DataType="{x:Type viewmodels:CharabaseTreeNode}" 
-                                                  ItemsSource="{Binding Children}">
+                        <TextBox x:Name="SearchTextBox" 
+                                 Grid.Column="0"
+                                 Style="{StaticResource SearchTextBoxStyle}"
+                                 Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                                 GotFocus="SearchTextBox_GotFocus"
+                                 LostFocus="SearchTextBox_LostFocus"/>
+
+                        <Button Grid.Column="1" 
+                                Background="Transparent" 
+                                BorderThickness="0"
+                                Width="20" 
+                                Height="20"
+                                Margin="0,0,5,0">
+                            <TextBlock Text="🔍" FontSize="10"/>
+                        </Button>
+                    </Grid>
+                </Border>
+
+                <!-- ListView with Grouping -->
+                <ListView x:Name="CharabaseListView"
+                          Grid.Row="1"
+                          Style="{StaticResource ImaginationListView}"
+                          ItemsSource="{Binding CharabaseListView}"
+                          SelectedItem="{Binding SelectedCharabaseItem}"
+                          MouseDoubleClick="CharabaseListView_MouseDoubleClick"
+                          VirtualizingPanel.IsVirtualizing="True"
+                          VirtualizingPanel.VirtualizationMode="Recycling"
+                          ScrollViewer.CanContentScroll="True"
+                          ScrollViewer.IsDeferredScrollingEnabled="True"
+                          ScrollViewer.VerticalScrollBarVisibility="Auto"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+                    <ListView.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.ContainerStyle>
+                                <Style TargetType="{x:Type GroupItem}">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type GroupItem}">
+                                                <Expander IsExpanded="False"
+                                                          BorderThickness="0"
+                                                          Margin="0,2">
+                                                    <Expander.Header>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="{Binding Name}" 
+                                                                       FontWeight="Bold"
+                                                                       Foreground="{DynamicResource Theme.Text.PrimaryBrush}"
+                                                                       Margin="5,2"/>
+                                                            <TextBlock Text=" (" 
+                                                                       Foreground="{DynamicResource Theme.Text.PrimaryBrush}"
+                                                                       Margin="2,2,0,2"/>
+                                                            <TextBlock Text="{Binding ItemCount}" 
+                                                                       Foreground="{DynamicResource Theme.Text.PrimaryBrush}"
+                                                                       Margin="0,2"/>
+                                                            <TextBlock Text=")" 
+                                                                       Foreground="{DynamicResource Theme.Text.PrimaryBrush}"
+                                                                       Margin="0,2,2,2"/>
+                                                        </StackPanel>
+                                                    </Expander.Header>
+                                                    <Expander.Content>
+                                                        <ScrollViewer MaxHeight="400" 
+                                                                      VerticalScrollBarVisibility="Auto"
+                                                                      HorizontalScrollBarVisibility="Disabled"
+                                                                      Margin="10,5,0,5">
+                                                            <ItemsPresenter />
+                                                        </ScrollViewer>
+                                                    </Expander.Content>
+                                                </Expander>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </GroupStyle.ContainerStyle>
+                        </GroupStyle>
+                    </ListView.GroupStyle>
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
                             <TextBlock Text="{Binding Name}" 
+                                       Margin="20,2,5,2"
                                        Foreground="{DynamicResource Theme.Text.PrimaryBrush}"/>
-                        </HierarchicalDataTemplate>
-                    </TreeView.Resources>
-                    <TreeView.ContextMenu>
-                        <ContextMenu Style="{StaticResource Theme.AcrylicContextMenuStyle}">
-                            <MenuItem Header="Insert" 
-                                      Command="{Binding InsertCharabaseCommand}"
-                                      Style="{StaticResource Theme.ContextMenu.MenuItemStyle}"/>
-                            <MenuItem Header="Delete" 
-                                      Command="{Binding DeleteCharabaseCommand}"
-                                      Style="{StaticResource Theme.ContextMenu.MenuItemStyle}"/>
-                            <Separator Style="{StaticResource Theme.ContextMenu.SeparatorStyle}"/>
-                            <MenuItem Header="Export as .cfg.bin" 
-                                      Command="{Binding ExportAsCfgBinCommand}"
-                                      Style="{StaticResource Theme.ContextMenu.MenuItemStyle}"/>
-                            <MenuItem Header="Export as .csv" 
-                                      Command="{Binding ExportAsCsvCommand}"
-                                      Style="{StaticResource Theme.ContextMenu.MenuItemStyle}"/>
-                        </ContextMenu>
-                    </TreeView.ContextMenu>
-                </TreeView>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </Grid>
         </Border>
 
@@ -89,283 +131,467 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <!-- Character Image -->
-                    <Border Grid.Row="0"
-                            Width="128"
-                            Height="128"
-                            HorizontalAlignment="Left"
-                            Margin="10"
-                            BorderBrush="{DynamicResource Theme.Border.Brush}"
-                            BorderThickness="1"
-                            CornerRadius="5">
-                        <Image Source="{Binding CharacterFaceImage}" 
-                               Stretch="Uniform"/>
-                    </Border>
+                    <!-- Top Section: Image + Hash/Fullname/Nickname -->
+                    <Grid Grid.Row="0" Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-                    <!-- Character Details -->
-                    <StackPanel Grid.Row="1" Margin="10">
-                        <!-- Hash -->
-                        <TextBox Text="{Binding SelectedCharacterHash, Mode=OneWay}"
-                                 Tag="Hash"
-                                 Style="{StaticResource ImaginationLabeledTextBox}"
-                                 IsReadOnly="True"/>
+                        <!-- Character Image -->
+                        <Border Grid.Column="0"
+                                Width="128"
+                                Height="128"
+                                VerticalAlignment="Top"
+                                BorderBrush="{DynamicResource Theme.Border.Brush}"
+                                BorderThickness="1"
+                                CornerRadius="5">
+                            <Image Source="{Binding CharacterFaceImage}" 
+                                   Stretch="Uniform"/>
+                        </Border>
 
-                        <!-- Full Name -->
-                        <Button Content="{Binding SelectedCharacterFullName}"
-                                Command="{Binding EditFullNameCommand}"
-                                HorizontalContentAlignment="Left"
-                                Margin="0,2"
-                                Height="35">
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Background="{DynamicResource Theme.Control.BackgroundBrush}"
-                                            BorderBrush="{DynamicResource Theme.Border.Brush}"
-                                            BorderThickness="1"
-                                            CornerRadius="3">
-                                        <Grid Margin="5,5">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="10"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
-
-                                            <TextBlock Grid.Column="0" 
-                                                       Text="Fullname"
-                                                       Foreground="{DynamicResource Theme.Text.PrimaryBrush}"
-                                                       FontSize="12"
-                                                       VerticalAlignment="Center"
-                                                       Margin="5,0"/>
-
-                                            <Border Grid.Column="2"
-                                                    Background="{DynamicResource Theme.TitleBar.BackgroundBrush}"
-                                                    BorderBrush="{DynamicResource Theme.Border.Brush}"
-                                                    BorderThickness="1"
-                                                    CornerRadius="3"
-                                                    Padding="5,0">
-                                                <TextBlock Text="{TemplateBinding Content}"
-                                                           Foreground="{DynamicResource Theme.Text.PrimaryBrush}"
-                                                           VerticalAlignment="Center"/>
-                                            </Border>
-                                        </Grid>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Cursor" Value="Hand"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-
-                        <!-- Nickname -->
-                        <Button Content="{Binding SelectedCharacterNickname}"
-                                Command="{Binding EditNicknameCommand}"
-                                HorizontalContentAlignment="Left"
-                                Margin="0,2"
-                                Height="35">
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Background="{DynamicResource Theme.Control.BackgroundBrush}"
-                                            BorderBrush="{DynamicResource Theme.Border.Brush}"
-                                            BorderThickness="1"
-                                            CornerRadius="3">
-                                        <Grid Margin="5,5">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="10"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
-
-                                            <TextBlock Grid.Column="0" 
-                                                       Text="Nickname"
-                                                       Foreground="{DynamicResource Theme.Text.PrimaryBrush}"
-                                                       FontSize="12"
-                                                       VerticalAlignment="Center"
-                                                       Margin="5,0"/>
-
-                                            <Border Grid.Column="2"
-                                                    Background="{DynamicResource Theme.TitleBar.BackgroundBrush}"
-                                                    BorderBrush="{DynamicResource Theme.Border.Brush}"
-                                                    BorderThickness="1"
-                                                    CornerRadius="3"
-                                                    Padding="5,0">
-                                                <TextBlock Text="{TemplateBinding Content}"
-                                                           Foreground="{DynamicResource Theme.Text.PrimaryBrush}"
-                                                           VerticalAlignment="Center"/>
-                                            </Border>
-                                        </Grid>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Cursor" Value="Hand"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-
-                        <!-- Year -->
-                        <Grid Margin="0,2">
+                        <!-- Hash, Fullname, Nickname -->
+                        <Grid Grid.Column="2" Margin="0,3,0,-3">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="10"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
 
-                            <TextBlock Grid.Column="0" 
-                                       Text="Year"
+                            <!-- Hash -->
+                            <TextBlock Grid.Row="0" Grid.Column="0" 
+                                       Text="Hash"
                                        Foreground="{DynamicResource Theme.Text.PrimaryBrush}"
                                        FontSize="12"
                                        VerticalAlignment="Center"
-                                       Margin="5,0"/>
+                                       Margin="5,7,0,0"/>
 
-                            <ComboBox Grid.Column="2"
-                                      Style="{StaticResource ModernComboBoxStyle}"
-                                      ItemsSource="{Binding Years}"
-                                      SelectedIndex="{Binding SelectedYear}"/>
-                        </Grid>
+                            <Border Grid.Row="0" Grid.Column="2"
+                                    Background="{DynamicResource Theme.TitleBar.BackgroundBrush}"
+                                    BorderBrush="{DynamicResource Theme.Border.Brush}"
+                                    BorderThickness="1"
+                                    CornerRadius="3"
+                                    Height="35"
+                                    Margin="0,2"
+                                    Padding="5,0">
+                                <TextBox Text="{Binding SelectedCharacterHash, Mode=OneWay}"
+                                         Background="Transparent"
+                                         Foreground="{DynamicResource Theme.Text.PrimaryBrush}"
+                                         BorderThickness="0"
+                                         VerticalAlignment="Center"
+                                         IsReadOnly="True"/>
+                            </Border>
 
-                        <!-- Model Type -->
-                        <Grid Margin="0,2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="10"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock Grid.Column="0" 
-                                       Text="Model"
+                            <!-- Full Name -->
+                            <TextBlock Grid.Row="1" Grid.Column="0" 
+                                       Text="Fullname"
                                        Foreground="{DynamicResource Theme.Text.PrimaryBrush}"
                                        FontSize="12"
                                        VerticalAlignment="Center"
-                                       Margin="5,0"/>
+                                       Margin="5,7,0,0"/>
 
-                            <Grid Grid.Column="2">
+                            <Grid Grid.Row="1" Grid.Column="2">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="5"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
-                                <ComboBox Grid.Column="0"
-                                          Style="{StaticResource ModernComboBoxStyle}"
-                                          ItemsSource="{Binding AvailableModels}"
-                                          SelectedItem="{Binding SelectedModel}"/>
+                                <Button Grid.Column="0"
+                                        Content="{Binding SelectedCharacterFullName}"
+                                        Command="{Binding EditFullNameCommand}"
+                                        HorizontalContentAlignment="Left"
+                                        Margin="0,2"
+                                        Height="35">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{DynamicResource Theme.TitleBar.BackgroundBrush}"
+                                                    BorderBrush="{DynamicResource Theme.Border.Brush}"
+                                                    BorderThickness="1"
+                                                    CornerRadius="3"
+                                                    Padding="5,0">
+                                                <TextBlock Text="{TemplateBinding Content}"
+                                                           Foreground="{DynamicResource Theme.Text.PrimaryBrush}"
+                                                           VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Cursor" Value="Hand"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
 
-                                <ComboBox Grid.Column="2"
-                                          Style="{StaticResource ModernComboBoxStyle}"
-                                          ItemsSource="{Binding CharaTypes}"
-                                          SelectedIndex="{Binding SelectedCharaType}"/>
+                                <Button Grid.Column="2"
+                                        Content="Edit with Nyanko"
+                                        Command="{Binding EditWithNyankoCommand}"
+                                        Height="35"
+                                        Margin="0,2"
+                                        Padding="10,0"
+                                        Background="{DynamicResource Theme.TitleBar.BackgroundBrush}"
+                                        BorderBrush="{DynamicResource Theme.Border.Brush}"
+                                        Foreground="{DynamicResource Theme.Text.PrimaryBrush}"
+                                        BorderThickness="1">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Border Background="{TemplateBinding Background}"
+                                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                                CornerRadius="3"
+                                                                Padding="{TemplateBinding Padding}">
+                                                            <ContentPresenter HorizontalAlignment="Center" 
+                                                                              VerticalAlignment="Center"/>
+                                                        </Border>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Cursor" Value="Hand"/>
+                                                                <Setter Property="Opacity" Value="0.8"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </Grid>
+
+                            <!-- Nickname -->
+                            <TextBlock Grid.Row="2" Grid.Column="0" 
+                                       Text="Nickname"
+                                       Foreground="{DynamicResource Theme.Text.PrimaryBrush}"
+                                       FontSize="12"
+                                       VerticalAlignment="Center"
+                                       Margin="5,7,0,0"/>
+
+                            <Grid Grid.Row="2" Grid.Column="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="5"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button Grid.Column="0"
+                                        Content="{Binding SelectedCharacterNickname}"
+                                        Command="{Binding EditNicknameCommand}"
+                                        HorizontalContentAlignment="Left"
+                                        Margin="0,2"
+                                        Height="35">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{DynamicResource Theme.TitleBar.BackgroundBrush}"
+                                                    BorderBrush="{DynamicResource Theme.Border.Brush}"
+                                                    BorderThickness="1"
+                                                    CornerRadius="3"
+                                                    Padding="5,0">
+                                                <TextBlock Text="{TemplateBinding Content}"
+                                                           Foreground="{DynamicResource Theme.Text.PrimaryBrush}"
+                                                           VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Cursor" Value="Hand"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+
+                                <Button Grid.Column="2"
+                                        Content="Edit with Nyanko"
+                                        Command="{Binding EditWithNyankoCommand}"
+                                        Height="35"
+                                        Margin="0,2"
+                                        Padding="10,0"
+                                        Background="{DynamicResource Theme.TitleBar.BackgroundBrush}"
+                                        BorderBrush="{DynamicResource Theme.Border.Brush}"
+                                        Foreground="{DynamicResource Theme.Text.PrimaryBrush}"
+                                        BorderThickness="1">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Border Background="{TemplateBinding Background}"
+                                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                                CornerRadius="3"
+                                                                Padding="{TemplateBinding Padding}">
+                                                            <ContentPresenter HorizontalAlignment="Center" 
+                                                                              VerticalAlignment="Center"/>
+                                                        </Border>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Cursor" Value="Hand"/>
+                                                                <Setter Property="Opacity" Value="0.8"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
                             </Grid>
                         </Grid>
+                    </Grid>
+
+                    <!-- Character Details -->
+                    <Grid Grid.Row="1" Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Labels"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Year -->
+                        <TextBlock Grid.Row="0" Grid.Column="0" 
+                                   Text="Year"
+                                   Foreground="{DynamicResource Theme.Text.PrimaryBrush}"
+                                   FontSize="12"
+                                   VerticalAlignment="Center"
+                                   Margin="5,7,0,0"/>
+
+                        <Border Grid.Row="0" Grid.Column="2"
+                                Background="{DynamicResource Theme.TitleBar.BackgroundBrush}"
+                                BorderBrush="{DynamicResource Theme.Border.Brush}"
+                                BorderThickness="1"
+                                CornerRadius="3"
+                                Height="35"
+                                Margin="0,2">
+                            <ComboBox Style="{StaticResource ImaginationComboBox}"
+                                      ItemsSource="{Binding Years}"
+                                      SelectedIndex="{Binding SelectedYear}"
+                                      Background="Transparent"
+                                      BorderThickness="0"/>
+                        </Border>
+
+                        <!-- Model -->
+                        <TextBlock Grid.Row="1" Grid.Column="0" 
+                                   Text="Model"
+                                   Foreground="{DynamicResource Theme.Text.PrimaryBrush}"
+                                   FontSize="12"
+                                   VerticalAlignment="Center"
+                                   Margin="5,7,0,0"/>
+
+                        <Border Grid.Row="1" Grid.Column="2"
+                                Background="{DynamicResource Theme.TitleBar.BackgroundBrush}"
+                                BorderBrush="{DynamicResource Theme.Border.Brush}"
+                                BorderThickness="1"
+                                CornerRadius="3"
+                                Height="35"
+                                Margin="0,2">
+                            <ComboBox Style="{StaticResource ImaginationComboBox}"
+                                      ItemsSource="{Binding AvailableModels}"
+                                      SelectedItem="{Binding SelectedModel}"
+                                      Background="Transparent"
+                                      BorderThickness="0"/>
+                        </Border>
+
+                        <!-- Model Type -->
+                        <TextBlock Grid.Row="2" Grid.Column="0" 
+                                   Text="Model Type"
+                                   Foreground="{DynamicResource Theme.Text.PrimaryBrush}"
+                                   FontSize="12"
+                                   VerticalAlignment="Center"
+                                   Margin="5,7,0,0"/>
+
+                        <Border Grid.Row="2" Grid.Column="2"
+                                Background="{DynamicResource Theme.TitleBar.BackgroundBrush}"
+                                BorderBrush="{DynamicResource Theme.Border.Brush}"
+                                BorderThickness="1"
+                                CornerRadius="3"
+                                Height="35"
+                                Margin="0,2">
+                            <ComboBox Style="{StaticResource ImaginationComboBox}"
+                                      ItemsSource="{Binding CharaTypes}"
+                                      SelectedIndex="{Binding SelectedCharaType}"
+                                      Background="Transparent"
+                                      BorderThickness="0"/>
+                        </Border>
 
                         <!-- Skin -->
-                        <Grid Margin="0,2">
+                        <TextBlock Grid.Row="3" Grid.Column="0" 
+                                   Text="Skin"
+                                   Foreground="{DynamicResource Theme.Text.PrimaryBrush}"
+                                   FontSize="12"
+                                   VerticalAlignment="Center"
+                                   Margin="5,7,0,0"/>
+
+                        <Grid Grid.Row="3" Grid.Column="2" Margin="0,2">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="10"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="5"/>
                                 <ColumnDefinition Width="30"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Column="0" 
-                                       Text="Skin"
-                                       Foreground="{DynamicResource Theme.Text.PrimaryBrush}"
-                                       FontSize="12"
-                                       VerticalAlignment="Center"
-                                       Margin="5,0"/>
+                            <Border Grid.Column="0"
+                                    Background="{DynamicResource Theme.TitleBar.BackgroundBrush}"
+                                    BorderBrush="{DynamicResource Theme.Border.Brush}"
+                                    BorderThickness="1"
+                                    CornerRadius="3"
+                                    Height="35">
+                                <ComboBox Style="{StaticResource ImaginationComboBox}"
+                                          ItemsSource="{Binding Skins}"
+                                          SelectedIndex="{Binding SelectedSkin}"
+                                          Background="Transparent"
+                                          BorderThickness="0"/>
+                            </Border>
 
-                            <ComboBox Grid.Column="2"
-                                      Style="{StaticResource ModernComboBoxStyle}"
-                                      ItemsSource="{Binding Skins}"
-                                      SelectedIndex="{Binding SelectedSkin}"/>
-
-                            <Border Grid.Column="4"
+                            <Border Grid.Column="2"
                                     Width="30"
                                     Height="30"
                                     CornerRadius="3"
                                     BorderBrush="{DynamicResource Theme.Border.Brush}"
                                     BorderThickness="1"
-                                    Background="{Binding SkinColor}"/>
+                                    Background="{Binding SkinColor}"
+                                    VerticalAlignment="Center"/>
                         </Grid>
 
                         <!-- Body Type -->
-                        <Grid Margin="0,2">
+                        <TextBlock Grid.Row="4" Grid.Column="0" 
+                                   Text="Body Type"
+                                   Foreground="{DynamicResource Theme.Text.PrimaryBrush}"
+                                   FontSize="12"
+                                   VerticalAlignment="Center"
+                                   Margin="5,7,0,0"/>
+
+                        <Border Grid.Row="4" Grid.Column="2"
+                                Background="{DynamicResource Theme.TitleBar.BackgroundBrush}"
+                                BorderBrush="{DynamicResource Theme.Border.Brush}"
+                                BorderThickness="1"
+                                CornerRadius="3"
+                                Height="35"
+                                Margin="0,2">
+                            <ComboBox Style="{StaticResource ImaginationComboBox}"
+                                      ItemsSource="{Binding Bodies}"
+                                      SelectedIndex="{Binding SelectedBody}"
+                                      Background="Transparent"
+                                      BorderThickness="0"/>
+                        </Border>
+
+                        <!-- Gender -->
+                        <TextBlock Grid.Row="5" Grid.Column="0" 
+                                   Text="Gender"
+                                   Foreground="{DynamicResource Theme.Text.PrimaryBrush}"
+                                   FontSize="12"
+                                   VerticalAlignment="Center"
+                                   Margin="5,7,0,0"/>
+
+                        <Border Grid.Row="5" Grid.Column="2"
+                                Background="{DynamicResource Theme.TitleBar.BackgroundBrush}"
+                                BorderBrush="{DynamicResource Theme.Border.Brush}"
+                                BorderThickness="1"
+                                CornerRadius="3"
+                                Height="35"
+                                Margin="0,2">
+                            <ComboBox Style="{StaticResource ImaginationComboBox}"
+                                      ItemsSource="{Binding Genders}"
+                                      SelectedIndex="{Binding SelectedGender}"
+                                      Background="Transparent"
+                                      BorderThickness="0"/>
+                        </Border>
+
+                        <!-- Palpack Des. -->
+                        <TextBlock Grid.Row="6" Grid.Column="0" 
+                                   Text="Palpack Des."
+                                   Foreground="{DynamicResource Theme.Text.PrimaryBrush}"
+                                   FontSize="12"
+                                   VerticalAlignment="Top"
+                                   Margin="5,12,0,0"/>
+
+                        <Grid Grid.Row="6" Grid.Column="2">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="10"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="5"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Column="0" 
-                                       Text="Body Type"
-                                       Foreground="{DynamicResource Theme.Text.PrimaryBrush}"
-                                       FontSize="12"
-                                       VerticalAlignment="Center"
-                                       Margin="5,0"/>
-
-                            <ComboBox Grid.Column="2"
-                                      Style="{StaticResource ModernComboBoxStyle}"
-                                      ItemsSource="{Binding Bodies}"
-                                      SelectedIndex="{Binding SelectedBody}"/>
-
-                            <ComboBox Grid.Column="4"
-                                      Style="{StaticResource ModernComboBoxStyle}"
-                                      ItemsSource="{Binding Genders}"
-                                      SelectedIndex="{Binding SelectedGender}"/>
-                        </Grid>
-
-                        <!-- Description -->
-                        <Button Content="{Binding SelectedCharacterDescription}"
-                                Command="{Binding EditDescriptionCommand}"
-                                HorizontalContentAlignment="Left"
-                                Margin="0,2"
-                                Height="35">
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Background="{DynamicResource Theme.Control.BackgroundBrush}"
-                                            BorderBrush="{DynamicResource Theme.Border.Brush}"
-                                            BorderThickness="1"
-                                            CornerRadius="3">
-                                        <Grid Margin="5,5">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="10"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
-
-                                            <TextBlock Grid.Column="0" 
-                                                       Text="Palpack Des."
+                            <Button Grid.Column="0"
+                                    Content="{Binding SelectedCharacterDescription}"
+                                    Command="{Binding EditDescriptionCommand}"
+                                    HorizontalContentAlignment="Left"
+                                    VerticalContentAlignment="Top"
+                                    Margin="0,2"
+                                    Height="70">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{DynamicResource Theme.TitleBar.BackgroundBrush}"
+                                                BorderBrush="{DynamicResource Theme.Border.Brush}"
+                                                BorderThickness="1"
+                                                CornerRadius="3"
+                                                Padding="5,5">
+                                            <TextBlock Text="{TemplateBinding Content}"
                                                        Foreground="{DynamicResource Theme.Text.PrimaryBrush}"
-                                                       FontSize="12"
-                                                       VerticalAlignment="Center"
-                                                       Margin="5,0"/>
+                                                       VerticalAlignment="Top"
+                                                       TextWrapping="Wrap"
+                                                       TextTrimming="CharacterEllipsis"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Cursor" Value="Hand"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
 
-                                            <Border Grid.Column="2"
-                                                    Background="{DynamicResource Theme.TitleBar.BackgroundBrush}"
-                                                    BorderBrush="{DynamicResource Theme.Border.Brush}"
-                                                    BorderThickness="1"
-                                                    CornerRadius="3"
-                                                    Padding="5,0">
-                                                <TextBlock Text="{TemplateBinding Content}"
-                                                           Foreground="{DynamicResource Theme.Text.PrimaryBrush}"
-                                                           VerticalAlignment="Center"
-                                                           TextTrimming="CharacterEllipsis"/>
-                                            </Border>
-                                        </Grid>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Cursor" Value="Hand"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-                    </StackPanel>
+                            <Button Grid.Column="2"
+                                    Content="Edit with Nyanko"
+                                    Command="{Binding EditWithNyankoCommand}"
+                                    Height="72"
+                                    VerticalAlignment="Center"
+                                    Padding="10,0"
+                                    Background="{DynamicResource Theme.TitleBar.BackgroundBrush}"
+                                    BorderBrush="{DynamicResource Theme.Border.Brush}"
+                                    Foreground="{DynamicResource Theme.Text.PrimaryBrush}"
+                                    BorderThickness="1">
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Background="{TemplateBinding Background}"
+                                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                                            CornerRadius="3"
+                                                            Padding="{TemplateBinding Padding}">
+                                                        <ContentPresenter HorizontalAlignment="Center" 
+                                                                          VerticalAlignment="Center"/>
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Cursor" Value="Hand"/>
+                                                            <Setter Property="Opacity" Value="0.8"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </Grid>
             </ScrollViewer>
         </Border>
