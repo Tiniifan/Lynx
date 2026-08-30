@@ -309,7 +309,6 @@
     <Compile Include="InazumaEleven\Logic\AvatarGrowthStat.cs" />
     <Compile Include="InazumaEleven\Logic\ChallengeRoute.cs" />
     <Compile Include="InazumaEleven\Logic\CoachText.cs" />
-    <Compile Include="InazumaEleven\Logic\IPalpackCard.cs" />
     <Compile Include="InazumaEleven\Logic\IRouteConfig.cs" />
     <Compile Include="InazumaEleven\Logic\ISoccerInfo.cs" />
     <Compile Include="InazumaEleven\Logic\ITeamConfigInfo.cs" />

@@ -508,11 +508,11 @@ namespace Lynx.InazumaEleven.Games.GO
             public int DifferenceLevelPlayer5 { get; set; }
         }
 
-        public class PalpackCard : IPalpackCard
+        public class ItemConfigPalpackCard : IItemPalpackCard
         {
-            public int PalpackCardId { get; set; }
-            public int NameId { get; set; }
-            public int DescriptionId { get; set; }
+            public int ItemID { get; set; }
+            public int NameID { get; set; }
+            public int DescriptionID { get; set; }
             public int Unk1 { get; set; }
             public int ItemCategory { get; set; }
             public int MaxQuantity { get; set; }

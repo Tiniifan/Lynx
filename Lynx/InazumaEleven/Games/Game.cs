@@ -177,6 +177,11 @@ namespace Lynx.InazumaEleven.Games
         public Type TypeItemConfigDirector { get; set; }
 
         /// <summary>
+        /// Gets or sets the type for Item Palpack Card.
+        /// </summary>
+        public Type TypeItemConfigPalpackCard { get; set; }
+
+        /// <summary>
         /// Creates an empty object of the specified type.
         /// </summary>
         /// <typeparam name="T">The type of object to create.</typeparam>
@@ -1314,7 +1319,7 @@ namespace Lynx.InazumaEleven.Games
                     return itemconfigFile.Entries
                         .Where(x => x.GetName() == "ITEM_KIZUNAX_BEGIN")
                         .SelectMany(x => x.Children)
-                        .Select(x => (IItemConfig)x.ToClass(TypeItemConfig))
+                        .Select(x => (IItemConfig)x.ToClass(TypeItemConfigPalpackCard))
                         .ToArray();
                 case "avatar":
                     return itemconfigFile.Entries
@@ -1332,7 +1337,8 @@ namespace Lynx.InazumaEleven.Games
                     string[] itemTypesAvatar = { "ITEM_AVATAR_BEGIN" };
                     string[] itemTypesUniform = { "ITEM_UNIFORM_BEGIN" };
                     string[] itemTypesDirector = { "ITEM_DIRECTOR_BEGIN" };
-                    string[] itemTypesOther = { "ITEM_EQUIPMENT_BEGIN", "ITEM_CONSUME_BEGIN", "ITEM_IMPORTANT_BEGIN", "ITEM_KIZUNAX_BEGIN" };
+                    string[] itemTypesPalpack = { "ITEM_KIZUNAX_BEGIN" };
+                    string[] itemTypesOther = { "ITEM_EQUIPMENT_BEGIN", "ITEM_CONSUME_BEGIN", "ITEM_IMPORTANT_BEGIN" };
 
                     var avatarItems = itemconfigFile.Entries
                         .Where(x => itemTypesAvatar.Contains(x.GetName()))
@@ -1352,6 +1358,12 @@ namespace Lynx.InazumaEleven.Games
                         .Select(x => (IItemConfig)x.ToClass(TypeItemConfigUniform))
                         .ToList();
 
+                    var palpackItems = itemconfigFile.Entries
+                        .Where(x => itemTypesPalpack.Contains(x.GetName()))
+                        .SelectMany(x => x.Children)
+                        .Select(x => (IItemConfig)x.ToClass(TypeItemConfigPalpackCard))
+                        .ToList();
+
                     var otherItems = itemconfigFile.Entries
                         .Where(x => itemTypesOther.Contains(x.GetName()))
                         .SelectMany(x => x.Children)
@@ -1361,6 +1373,7 @@ namespace Lynx.InazumaEleven.Games
                     otherItems.AddRange(avatarItems.Select(x => (IItemConfig)x));
                     otherItems.AddRange(directorItems.Select(x => (IItemConfig)x));
                     otherItems.AddRange(uniformItems.Select(x => (IItemConfig)x));
+                    otherItems.AddRange(palpackItems.Select(x => (IItemConfig)x));
 
                     return otherItems.ToArray();
                 default:
@@ -1368,21 +1381,57 @@ namespace Lynx.InazumaEleven.Games
             }
         }
 
-        public void SaveCoaches(IItemDirector[] coaches)
+        /// <summary>
+        /// Saves items of a given type back into item_config, replacing the existing entries
+        /// under the matching begin-entry. The entry name is inferred from T.
+        /// </summary>
+        /// <typeparam name="T">The concrete item config type, must be a reference type implementing IItemConfig.</typeparam>
+        /// <param name="items">The items to write.</param>
+        public void SaveItems<T>(T[] items) where T : class, IItemConfig
         {
+            string beginName;
+            string prefix;
+
+            if (typeof(T) == TypeItemConfigUniform)
+            {
+                beginName = "ITEM_UNIFORM_BEGIN";
+                prefix = "ITEM_UNIFORM_";
+            }
+            else if (typeof(T) == TypeItemConfigPalpackCard)
+            {
+                beginName = "ITEM_KIZUNAX_BEGIN";
+                prefix = "ITEM_KIZUNAX_";
+            }
+            else if (typeof(T) == TypeItemConfigAvatar)
+            {
+                beginName = "ITEM_AVATAR_BEGIN";
+                prefix = "ITEM_AVATAR_";
+            }
+            else if (typeof(T) == TypeItemConfigDirector)
+            {
+                beginName = "ITEM_DIRECTOR_BEGIN";
+                prefix = "ITEM_DIRECTOR_";
+            }
+            else
+            {
+                throw new ArgumentException($"Unsupported item type: {typeof(T).Name}");
+            }
+
             CfgBin itemConfigFile = new CfgBin();
             itemConfigFile.Open(GetFileContent("item_config"));
 
-            Entry baseBegin = itemConfigFile.Entries.Where(x => x.GetName() == "ITEM_DIRECTOR_BEGIN").FirstOrDefault();
+            Entry baseBegin = itemConfigFile.Entries.FirstOrDefault(x => x.GetName() == beginName);
+            if (baseBegin == null)
+                throw new InvalidOperationException($"Entry '{beginName}' not found in item_config.");
+
             baseBegin.Children.Clear();
+            baseBegin.Variables[0].Value = items.Length;
 
-            baseBegin.Variables[0].Value = coaches.Length;
-
-            for (int i = 0; i < coaches.Count(); i++)
+            for (int i = 0; i < items.Length; i++)
             {
-                Entry newBaseEntry = new Entry("ITEM_DIRECTOR_" + i, new List<Variable>(), Encoding.UTF8);
-                newBaseEntry.SetVariablesFromClass(coaches[i]);
-                baseBegin.Children.Add(newBaseEntry);
+                Entry newEntry = new Entry(prefix + i, new List<Variable>(), Encoding.UTF8);
+                newEntry.SetVariablesFromClass(items[i]);
+                baseBegin.Children.Add(newEntry);
             }
 
             GetFile("item_config").ByteContent = itemConfigFile.Save();

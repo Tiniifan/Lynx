@@ -134,7 +134,7 @@ namespace Lynx.Forms.Coaches
 
         private void Save()
         {
-            GameOpened.SaveCoaches(Coaches.ToArray());
+            GameOpened.SaveItems(Coaches.ToArray());
             GameOpened.SaveTextFile(GameOpened.Files["item_text"], Itemtext);
 
             // Update Systemtext
