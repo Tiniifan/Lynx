@@ -47,6 +47,7 @@ namespace Lynx.InazumaEleven.Games.GO
             TypeItemConfigUniform = typeof(ItemConfigUniform);
             TypeItemConfigAvatar = typeof(ItemConfigAvatar);
             TypeItemConfigDirector = typeof(ItemConfigDirector);
+            TypeItemConfigPalpackCard = typeof(ItemConfigPalpackCard);
         }
 
         public override void GetGameFiles()

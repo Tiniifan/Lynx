@@ -28,8 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.fightingSpiritGroupBox = new System.Windows.Forms.GroupBox();
+            this.palpackGroupBox = new System.Windows.Forms.GroupBox();
+            this.descriptionGroupBox = new System.Windows.Forms.GroupBox();
+            this.descriptionTextBox = new System.Windows.Forms.TextBox();
             this.itemGroupBox = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
@@ -46,77 +50,102 @@
             this.exportAscsvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.searchTextBox = new System.Windows.Forms.TextBox();
             this.palpackListBox = new System.Windows.Forms.ListBox();
+            this.coachVSTabControl = new Lynx.UI.VSTabControl();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.playerNumFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.playerFlatComboBox = new Lynx.UI.FlatComboBox();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.conditionGroupBox4 = new System.Windows.Forms.GroupBox();
+            this.conditionPlayerFlatComboBox4 = new Lynx.UI.FlatComboBox();
+            this.conditionObjectFlatComboBox4 = new Lynx.UI.FlatComboBox();
+            this.conditionTypeFlatComboBox4 = new Lynx.UI.FlatComboBox();
+            this.objectLabel4 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.conditionGroupBox3 = new System.Windows.Forms.GroupBox();
+            this.conditionPlayerFlatComboBox3 = new Lynx.UI.FlatComboBox();
+            this.conditionObjectFlatComboBox3 = new Lynx.UI.FlatComboBox();
+            this.conditionTypeFlatComboBox3 = new Lynx.UI.FlatComboBox();
+            this.objectLabel3 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.conditionGroupBox2 = new System.Windows.Forms.GroupBox();
+            this.conditionPlayerFlatComboBox2 = new Lynx.UI.FlatComboBox();
+            this.conditionObjectFlatComboBox2 = new Lynx.UI.FlatComboBox();
+            this.conditionTypeFlatComboBox2 = new Lynx.UI.FlatComboBox();
+            this.objectLabel2 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.conditionGroupBox1 = new System.Windows.Forms.GroupBox();
+            this.conditionPlayerFlatComboBox1 = new Lynx.UI.FlatComboBox();
+            this.conditionObjectFlatComboBox1 = new Lynx.UI.FlatComboBox();
+            this.conditionTypeFlatComboBox1 = new Lynx.UI.FlatComboBox();
+            this.objectLabel1 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             this.xPositionFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
             this.yPositionFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
             this.boughtPriceFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
             this.soldPriceFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
             this.maxQuantityFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.coachVSTabControl = new Lynx.UI.VSTabControl();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.conditionGroupBox1 = new System.Windows.Forms.GroupBox();
-            this.objectLabel1 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.playerFlatComboBox = new Lynx.UI.FlatComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.playerNumFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
-            this.conditionTypeFlatComboBox1 = new Lynx.UI.FlatComboBox();
-            this.conditionObjectFlatComboBox1 = new Lynx.UI.FlatComboBox();
-            this.conditionGroupBox2 = new System.Windows.Forms.GroupBox();
-            this.conditionObjectFlatComboBox2 = new Lynx.UI.FlatComboBox();
-            this.conditionTypeFlatComboBox2 = new Lynx.UI.FlatComboBox();
-            this.objectLabel2 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.conditionGroupBox3 = new System.Windows.Forms.GroupBox();
-            this.conditionObjectFlatComboBox3 = new Lynx.UI.FlatComboBox();
-            this.conditionTypeFlatComboBox3 = new Lynx.UI.FlatComboBox();
-            this.objectLabel3 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.conditionGroupBox4 = new System.Windows.Forms.GroupBox();
-            this.conditionObjectFlatComboBox4 = new Lynx.UI.FlatComboBox();
-            this.conditionTypeFlatComboBox4 = new Lynx.UI.FlatComboBox();
-            this.objectLabel4 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.descriptionGroupBox = new System.Windows.Forms.GroupBox();
-            this.descriptionTextBox = new System.Windows.Forms.TextBox();
-            this.fightingSpiritGroupBox.SuspendLayout();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.palpackGroupBox.SuspendLayout();
+            this.descriptionGroupBox.SuspendLayout();
             this.itemGroupBox.SuspendLayout();
             this.nameGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.facePictureBox)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            this.coachVSTabControl.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.playerNumFlatNumericUpDown)).BeginInit();
+            this.tabPage3.SuspendLayout();
+            this.conditionGroupBox4.SuspendLayout();
+            this.conditionGroupBox3.SuspendLayout();
+            this.conditionGroupBox2.SuspendLayout();
+            this.conditionGroupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.xPositionFlatNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.yPositionFlatNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.boughtPriceFlatNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.soldPriceFlatNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxQuantityFlatNumericUpDown)).BeginInit();
-            this.coachVSTabControl.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            this.tabPage3.SuspendLayout();
-            this.conditionGroupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.playerNumFlatNumericUpDown)).BeginInit();
-            this.conditionGroupBox2.SuspendLayout();
-            this.conditionGroupBox3.SuspendLayout();
-            this.conditionGroupBox4.SuspendLayout();
-            this.descriptionGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
-            // fightingSpiritGroupBox
+            // palpackGroupBox
             // 
-            this.fightingSpiritGroupBox.Controls.Add(this.descriptionGroupBox);
-            this.fightingSpiritGroupBox.Controls.Add(this.coachVSTabControl);
-            this.fightingSpiritGroupBox.Controls.Add(this.itemGroupBox);
-            this.fightingSpiritGroupBox.Controls.Add(this.nameGroupBox);
-            this.fightingSpiritGroupBox.Enabled = false;
-            this.fightingSpiritGroupBox.ForeColor = System.Drawing.Color.White;
-            this.fightingSpiritGroupBox.Location = new System.Drawing.Point(371, 22);
-            this.fightingSpiritGroupBox.Name = "fightingSpiritGroupBox";
-            this.fightingSpiritGroupBox.Size = new System.Drawing.Size(499, 737);
-            this.fightingSpiritGroupBox.TabIndex = 276;
-            this.fightingSpiritGroupBox.TabStop = false;
-            this.fightingSpiritGroupBox.Text = "Palpack Card";
+            this.palpackGroupBox.Controls.Add(this.descriptionGroupBox);
+            this.palpackGroupBox.Controls.Add(this.coachVSTabControl);
+            this.palpackGroupBox.Controls.Add(this.itemGroupBox);
+            this.palpackGroupBox.Controls.Add(this.nameGroupBox);
+            this.palpackGroupBox.Enabled = false;
+            this.palpackGroupBox.ForeColor = System.Drawing.Color.White;
+            this.palpackGroupBox.Location = new System.Drawing.Point(371, 22);
+            this.palpackGroupBox.Name = "palpackGroupBox";
+            this.palpackGroupBox.Size = new System.Drawing.Size(499, 737);
+            this.palpackGroupBox.TabIndex = 276;
+            this.palpackGroupBox.TabStop = false;
+            this.palpackGroupBox.Text = "Palpack Card";
+            // 
+            // descriptionGroupBox
+            // 
+            this.descriptionGroupBox.Controls.Add(this.descriptionTextBox);
+            this.descriptionGroupBox.ForeColor = System.Drawing.Color.White;
+            this.descriptionGroupBox.Location = new System.Drawing.Point(15, 191);
+            this.descriptionGroupBox.Name = "descriptionGroupBox";
+            this.descriptionGroupBox.Size = new System.Drawing.Size(468, 67);
+            this.descriptionGroupBox.TabIndex = 284;
+            this.descriptionGroupBox.TabStop = false;
+            this.descriptionGroupBox.Text = "Description";
+            // 
+            // descriptionTextBox
+            // 
+            this.descriptionTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.descriptionTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.descriptionTextBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.descriptionTextBox.Location = new System.Drawing.Point(22, 19);
+            this.descriptionTextBox.Multiline = true;
+            this.descriptionTextBox.Name = "descriptionTextBox";
+            this.descriptionTextBox.ReadOnly = true;
+            this.descriptionTextBox.Size = new System.Drawing.Size(429, 34);
+            this.descriptionTextBox.TabIndex = 270;
+            this.descriptionTextBox.Click += new System.EventHandler(this.DescriptionTextBox_Click);
             // 
             // itemGroupBox
             // 
@@ -138,6 +167,26 @@
             this.itemGroupBox.TabIndex = 272;
             this.itemGroupBox.TabStop = false;
             this.itemGroupBox.Text = "Item";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.ForeColor = System.Drawing.Color.White;
+            this.label8.Location = new System.Drawing.Point(13, 46);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(78, 13);
+            this.label8.TabIndex = 291;
+            this.label8.Text = "Purchase price";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(13, 21);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(64, 13);
+            this.label1.TabIndex = 290;
+            this.label1.Text = "Selling price";
             // 
             // label21
             // 
@@ -244,6 +293,7 @@
             this.nameTextBox.ReadOnly = true;
             this.nameTextBox.Size = new System.Drawing.Size(308, 13);
             this.nameTextBox.TabIndex = 58;
+            this.nameTextBox.Click += new System.EventHandler(this.NameTextBox_Click);
             // 
             // menuStrip1
             // 
@@ -273,6 +323,7 @@
             this.exportAsCfgbinToolStripMenuItem.Name = "exportAsCfgbinToolStripMenuItem";
             this.exportAsCfgbinToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.exportAsCfgbinToolStripMenuItem.Text = "Export as .cfg.bin";
+            this.exportAsCfgbinToolStripMenuItem.Click += new System.EventHandler(this.ExportAsCfgbinToolStripMenuItem_Click_1);
             // 
             // exportAscsvToolStripMenuItem
             // 
@@ -281,6 +332,7 @@
             this.exportAscsvToolStripMenuItem.Name = "exportAscsvToolStripMenuItem";
             this.exportAscsvToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.exportAscsvToolStripMenuItem.Text = "Export as .xlsx";
+            this.exportAscsvToolStripMenuItem.Click += new System.EventHandler(this.ExportAscsvToolStripMenuItem_Click_1);
             // 
             // searchTextBox
             // 
@@ -292,6 +344,7 @@
             this.searchTextBox.Size = new System.Drawing.Size(302, 13);
             this.searchTextBox.TabIndex = 283;
             this.searchTextBox.Text = "Search...";
+            this.searchTextBox.TextChanged += new System.EventHandler(this.SearchTextBox_TextChanged);
             // 
             // palpackListBox
             // 
@@ -302,136 +355,7 @@
             this.palpackListBox.Name = "palpackListBox";
             this.palpackListBox.Size = new System.Drawing.Size(353, 732);
             this.palpackListBox.TabIndex = 279;
-            // 
-            // xPositionFlatNumericUpDown
-            // 
-            this.xPositionFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.xPositionFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.xPositionFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.xPositionFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.xPositionFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.xPositionFlatNumericUpDown.Location = new System.Drawing.Point(327, 42);
-            this.xPositionFlatNumericUpDown.Maximum = new decimal(new int[] {
-            2147483647,
-            0,
-            0,
-            0});
-            this.xPositionFlatNumericUpDown.Minimum = new decimal(new int[] {
-            2147483647,
-            0,
-            0,
-            -2147483648});
-            this.xPositionFlatNumericUpDown.Name = "xPositionFlatNumericUpDown";
-            this.xPositionFlatNumericUpDown.Size = new System.Drawing.Size(53, 20);
-            this.xPositionFlatNumericUpDown.TabIndex = 288;
-            // 
-            // yPositionFlatNumericUpDown
-            // 
-            this.yPositionFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.yPositionFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.yPositionFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.yPositionFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.yPositionFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.yPositionFlatNumericUpDown.Location = new System.Drawing.Point(406, 42);
-            this.yPositionFlatNumericUpDown.Maximum = new decimal(new int[] {
-            2147483647,
-            0,
-            0,
-            0});
-            this.yPositionFlatNumericUpDown.Minimum = new decimal(new int[] {
-            2147483647,
-            0,
-            0,
-            -2147483648});
-            this.yPositionFlatNumericUpDown.Name = "yPositionFlatNumericUpDown";
-            this.yPositionFlatNumericUpDown.Size = new System.Drawing.Size(53, 20);
-            this.yPositionFlatNumericUpDown.TabIndex = 286;
-            // 
-            // boughtPriceFlatNumericUpDown
-            // 
-            this.boughtPriceFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.boughtPriceFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.boughtPriceFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.boughtPriceFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.boughtPriceFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.boughtPriceFlatNumericUpDown.Location = new System.Drawing.Point(116, 44);
-            this.boughtPriceFlatNumericUpDown.Maximum = new decimal(new int[] {
-            2147483647,
-            0,
-            0,
-            0});
-            this.boughtPriceFlatNumericUpDown.Minimum = new decimal(new int[] {
-            2147483647,
-            0,
-            0,
-            -2147483648});
-            this.boughtPriceFlatNumericUpDown.Name = "boughtPriceFlatNumericUpDown";
-            this.boughtPriceFlatNumericUpDown.Size = new System.Drawing.Size(98, 20);
-            this.boughtPriceFlatNumericUpDown.TabIndex = 284;
-            // 
-            // soldPriceFlatNumericUpDown
-            // 
-            this.soldPriceFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.soldPriceFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.soldPriceFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.soldPriceFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.soldPriceFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.soldPriceFlatNumericUpDown.Location = new System.Drawing.Point(116, 18);
-            this.soldPriceFlatNumericUpDown.Maximum = new decimal(new int[] {
-            2147483647,
-            0,
-            0,
-            0});
-            this.soldPriceFlatNumericUpDown.Minimum = new decimal(new int[] {
-            2147483647,
-            0,
-            0,
-            -2147483648});
-            this.soldPriceFlatNumericUpDown.Name = "soldPriceFlatNumericUpDown";
-            this.soldPriceFlatNumericUpDown.Size = new System.Drawing.Size(98, 20);
-            this.soldPriceFlatNumericUpDown.TabIndex = 283;
-            // 
-            // maxQuantityFlatNumericUpDown
-            // 
-            this.maxQuantityFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.maxQuantityFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.maxQuantityFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.maxQuantityFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.maxQuantityFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.maxQuantityFlatNumericUpDown.Location = new System.Drawing.Point(327, 18);
-            this.maxQuantityFlatNumericUpDown.Maximum = new decimal(new int[] {
-            2147483647,
-            0,
-            0,
-            0});
-            this.maxQuantityFlatNumericUpDown.Minimum = new decimal(new int[] {
-            2147483647,
-            0,
-            0,
-            -2147483648});
-            this.maxQuantityFlatNumericUpDown.Name = "maxQuantityFlatNumericUpDown";
-            this.maxQuantityFlatNumericUpDown.Size = new System.Drawing.Size(132, 20);
-            this.maxQuantityFlatNumericUpDown.TabIndex = 271;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(13, 21);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(64, 13);
-            this.label1.TabIndex = 290;
-            this.label1.Text = "Selling price";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.Location = new System.Drawing.Point(13, 46);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(78, 13);
-            this.label8.TabIndex = 291;
-            this.label8.Text = "Purchase price";
+            this.palpackListBox.SelectedIndexChanged += new System.EventHandler(this.PalpackListBox_SelectedIndexChanged);
             // 
             // coachVSTabControl
             // 
@@ -470,90 +394,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Recruited Player";
             // 
-            // tabPage3
-            // 
-            this.tabPage3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.tabPage3.Controls.Add(this.conditionGroupBox4);
-            this.tabPage3.Controls.Add(this.conditionGroupBox3);
-            this.tabPage3.Controls.Add(this.conditionGroupBox2);
-            this.tabPage3.Controls.Add(this.conditionGroupBox1);
-            this.tabPage3.Location = new System.Drawing.Point(4, 25);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(460, 426);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Conditions";
-            // 
-            // conditionGroupBox1
-            // 
-            this.conditionGroupBox1.Controls.Add(this.conditionObjectFlatComboBox1);
-            this.conditionGroupBox1.Controls.Add(this.conditionTypeFlatComboBox1);
-            this.conditionGroupBox1.Controls.Add(this.objectLabel1);
-            this.conditionGroupBox1.Controls.Add(this.label14);
-            this.conditionGroupBox1.ForeColor = System.Drawing.Color.White;
-            this.conditionGroupBox1.Location = new System.Drawing.Point(12, 18);
-            this.conditionGroupBox1.Name = "conditionGroupBox1";
-            this.conditionGroupBox1.Size = new System.Drawing.Size(435, 94);
-            this.conditionGroupBox1.TabIndex = 296;
-            this.conditionGroupBox1.TabStop = false;
-            this.conditionGroupBox1.Text = "Condition 1";
-            // 
-            // objectLabel1
-            // 
-            this.objectLabel1.AutoSize = true;
-            this.objectLabel1.Location = new System.Drawing.Point(18, 60);
-            this.objectLabel1.Name = "objectLabel1";
-            this.objectLabel1.Size = new System.Drawing.Size(41, 13);
-            this.objectLabel1.TabIndex = 295;
-            this.objectLabel1.Text = "Object";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(18, 25);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(30, 13);
-            this.label14.TabIndex = 290;
-            this.label14.Text = "Type";
-            // 
-            // playerFlatComboBox
-            // 
-            this.playerFlatComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.playerFlatComboBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.playerFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.playerFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.playerFlatComboBox.FormattingEnabled = true;
-            this.playerFlatComboBox.Items.AddRange(new object[] {
-            "Shoot",
-            "Dribble",
-            "Block",
-            "Save",
-            "Skill"});
-            this.playerFlatComboBox.Location = new System.Drawing.Point(112, 18);
-            this.playerFlatComboBox.Name = "playerFlatComboBox";
-            this.playerFlatComboBox.Size = new System.Drawing.Size(335, 21);
-            this.playerFlatComboBox.TabIndex = 66;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(9, 21);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(37, 13);
-            this.label2.TabIndex = 292;
-            this.label2.Text = "Player";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(9, 51);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(64, 13);
-            this.label3.TabIndex = 293;
-            this.label3.Text = "Player Num";
-            // 
             // playerNumFlatNumericUpDown
             // 
             this.playerNumFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
@@ -575,163 +415,64 @@
             this.playerNumFlatNumericUpDown.Name = "playerNumFlatNumericUpDown";
             this.playerNumFlatNumericUpDown.Size = new System.Drawing.Size(335, 22);
             this.playerNumFlatNumericUpDown.TabIndex = 294;
+            this.playerNumFlatNumericUpDown.ValueChanged += new System.EventHandler(this.PlayerNumFlatNumericUpDown_ValueChanged);
             // 
-            // conditionTypeFlatComboBox1
+            // label3
             // 
-            this.conditionTypeFlatComboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.conditionTypeFlatComboBox1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.conditionTypeFlatComboBox1.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.conditionTypeFlatComboBox1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.conditionTypeFlatComboBox1.FormattingEnabled = true;
-            this.conditionTypeFlatComboBox1.Location = new System.Drawing.Point(77, 25);
-            this.conditionTypeFlatComboBox1.Name = "conditionTypeFlatComboBox1";
-            this.conditionTypeFlatComboBox1.Size = new System.Drawing.Size(344, 21);
-            this.conditionTypeFlatComboBox1.TabIndex = 297;
+            this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(9, 51);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(64, 13);
+            this.label3.TabIndex = 293;
+            this.label3.Text = "Player Num";
             // 
-            // conditionObjectFlatComboBox1
+            // label2
             // 
-            this.conditionObjectFlatComboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.conditionObjectFlatComboBox1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.conditionObjectFlatComboBox1.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.conditionObjectFlatComboBox1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.conditionObjectFlatComboBox1.FormattingEnabled = true;
-            this.conditionObjectFlatComboBox1.Items.AddRange(new object[] {
+            this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(9, 21);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(37, 13);
+            this.label2.TabIndex = 292;
+            this.label2.Text = "Player";
+            // 
+            // playerFlatComboBox
+            // 
+            this.playerFlatComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.playerFlatComboBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.playerFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.playerFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.playerFlatComboBox.FormattingEnabled = true;
+            this.playerFlatComboBox.Items.AddRange(new object[] {
             "Shoot",
             "Dribble",
             "Block",
             "Save",
             "Skill"});
-            this.conditionObjectFlatComboBox1.Location = new System.Drawing.Point(77, 60);
-            this.conditionObjectFlatComboBox1.Name = "conditionObjectFlatComboBox1";
-            this.conditionObjectFlatComboBox1.Size = new System.Drawing.Size(344, 21);
-            this.conditionObjectFlatComboBox1.TabIndex = 298;
+            this.playerFlatComboBox.Location = new System.Drawing.Point(112, 18);
+            this.playerFlatComboBox.Name = "playerFlatComboBox";
+            this.playerFlatComboBox.Size = new System.Drawing.Size(335, 21);
+            this.playerFlatComboBox.TabIndex = 66;
+            this.playerFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.PlayerFlatComboBox_SelectedIndexChanged);
             // 
-            // conditionGroupBox2
+            // tabPage3
             // 
-            this.conditionGroupBox2.Controls.Add(this.conditionObjectFlatComboBox2);
-            this.conditionGroupBox2.Controls.Add(this.conditionTypeFlatComboBox2);
-            this.conditionGroupBox2.Controls.Add(this.objectLabel2);
-            this.conditionGroupBox2.Controls.Add(this.label6);
-            this.conditionGroupBox2.ForeColor = System.Drawing.Color.White;
-            this.conditionGroupBox2.Location = new System.Drawing.Point(11, 118);
-            this.conditionGroupBox2.Name = "conditionGroupBox2";
-            this.conditionGroupBox2.Size = new System.Drawing.Size(435, 94);
-            this.conditionGroupBox2.TabIndex = 297;
-            this.conditionGroupBox2.TabStop = false;
-            this.conditionGroupBox2.Text = "Condition 2";
-            // 
-            // conditionObjectFlatComboBox2
-            // 
-            this.conditionObjectFlatComboBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.conditionObjectFlatComboBox2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.conditionObjectFlatComboBox2.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.conditionObjectFlatComboBox2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.conditionObjectFlatComboBox2.FormattingEnabled = true;
-            this.conditionObjectFlatComboBox2.Items.AddRange(new object[] {
-            "Shoot",
-            "Dribble",
-            "Block",
-            "Save",
-            "Skill"});
-            this.conditionObjectFlatComboBox2.Location = new System.Drawing.Point(77, 60);
-            this.conditionObjectFlatComboBox2.Name = "conditionObjectFlatComboBox2";
-            this.conditionObjectFlatComboBox2.Size = new System.Drawing.Size(344, 21);
-            this.conditionObjectFlatComboBox2.TabIndex = 298;
-            // 
-            // conditionTypeFlatComboBox2
-            // 
-            this.conditionTypeFlatComboBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.conditionTypeFlatComboBox2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.conditionTypeFlatComboBox2.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.conditionTypeFlatComboBox2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.conditionTypeFlatComboBox2.FormattingEnabled = true;
-            this.conditionTypeFlatComboBox2.Location = new System.Drawing.Point(77, 25);
-            this.conditionTypeFlatComboBox2.Name = "conditionTypeFlatComboBox2";
-            this.conditionTypeFlatComboBox2.Size = new System.Drawing.Size(344, 21);
-            this.conditionTypeFlatComboBox2.TabIndex = 297;
-            // 
-            // objectLabel2
-            // 
-            this.objectLabel2.AutoSize = true;
-            this.objectLabel2.Location = new System.Drawing.Point(18, 60);
-            this.objectLabel2.Name = "objectLabel2";
-            this.objectLabel2.Size = new System.Drawing.Size(41, 13);
-            this.objectLabel2.TabIndex = 295;
-            this.objectLabel2.Text = "Object";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(18, 25);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(30, 13);
-            this.label6.TabIndex = 290;
-            this.label6.Text = "Type";
-            // 
-            // conditionGroupBox3
-            // 
-            this.conditionGroupBox3.Controls.Add(this.conditionObjectFlatComboBox3);
-            this.conditionGroupBox3.Controls.Add(this.conditionTypeFlatComboBox3);
-            this.conditionGroupBox3.Controls.Add(this.objectLabel3);
-            this.conditionGroupBox3.Controls.Add(this.label10);
-            this.conditionGroupBox3.ForeColor = System.Drawing.Color.White;
-            this.conditionGroupBox3.Location = new System.Drawing.Point(11, 222);
-            this.conditionGroupBox3.Name = "conditionGroupBox3";
-            this.conditionGroupBox3.Size = new System.Drawing.Size(435, 94);
-            this.conditionGroupBox3.TabIndex = 298;
-            this.conditionGroupBox3.TabStop = false;
-            this.conditionGroupBox3.Text = "Condition 3";
-            // 
-            // conditionObjectFlatComboBox3
-            // 
-            this.conditionObjectFlatComboBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.conditionObjectFlatComboBox3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.conditionObjectFlatComboBox3.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.conditionObjectFlatComboBox3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.conditionObjectFlatComboBox3.FormattingEnabled = true;
-            this.conditionObjectFlatComboBox3.Items.AddRange(new object[] {
-            "Shoot",
-            "Dribble",
-            "Block",
-            "Save",
-            "Skill"});
-            this.conditionObjectFlatComboBox3.Location = new System.Drawing.Point(77, 60);
-            this.conditionObjectFlatComboBox3.Name = "conditionObjectFlatComboBox3";
-            this.conditionObjectFlatComboBox3.Size = new System.Drawing.Size(344, 21);
-            this.conditionObjectFlatComboBox3.TabIndex = 298;
-            // 
-            // conditionTypeFlatComboBox3
-            // 
-            this.conditionTypeFlatComboBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.conditionTypeFlatComboBox3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.conditionTypeFlatComboBox3.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.conditionTypeFlatComboBox3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.conditionTypeFlatComboBox3.FormattingEnabled = true;
-            this.conditionTypeFlatComboBox3.Location = new System.Drawing.Point(77, 25);
-            this.conditionTypeFlatComboBox3.Name = "conditionTypeFlatComboBox3";
-            this.conditionTypeFlatComboBox3.Size = new System.Drawing.Size(344, 21);
-            this.conditionTypeFlatComboBox3.TabIndex = 297;
-            // 
-            // objectLabel3
-            // 
-            this.objectLabel3.AutoSize = true;
-            this.objectLabel3.Location = new System.Drawing.Point(18, 60);
-            this.objectLabel3.Name = "objectLabel3";
-            this.objectLabel3.Size = new System.Drawing.Size(41, 13);
-            this.objectLabel3.TabIndex = 295;
-            this.objectLabel3.Text = "Object";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(18, 25);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(30, 13);
-            this.label10.TabIndex = 290;
-            this.label10.Text = "Type";
+            this.tabPage3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.tabPage3.Controls.Add(this.conditionGroupBox4);
+            this.tabPage3.Controls.Add(this.conditionGroupBox3);
+            this.tabPage3.Controls.Add(this.conditionGroupBox2);
+            this.tabPage3.Controls.Add(this.conditionGroupBox1);
+            this.tabPage3.Location = new System.Drawing.Point(4, 25);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(460, 426);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Conditions";
             // 
             // conditionGroupBox4
             // 
+            this.conditionGroupBox4.Controls.Add(this.conditionPlayerFlatComboBox4);
             this.conditionGroupBox4.Controls.Add(this.conditionObjectFlatComboBox4);
             this.conditionGroupBox4.Controls.Add(this.conditionTypeFlatComboBox4);
             this.conditionGroupBox4.Controls.Add(this.objectLabel4);
@@ -743,6 +484,26 @@
             this.conditionGroupBox4.TabIndex = 299;
             this.conditionGroupBox4.TabStop = false;
             this.conditionGroupBox4.Text = "Condition 4";
+            // 
+            // conditionPlayerFlatComboBox4
+            // 
+            this.conditionPlayerFlatComboBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.conditionPlayerFlatComboBox4.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.conditionPlayerFlatComboBox4.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.conditionPlayerFlatComboBox4.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.conditionPlayerFlatComboBox4.FormattingEnabled = true;
+            this.conditionPlayerFlatComboBox4.Items.AddRange(new object[] {
+            "Shoot",
+            "Dribble",
+            "Block",
+            "Save",
+            "Skill"});
+            this.conditionPlayerFlatComboBox4.Location = new System.Drawing.Point(78, 60);
+            this.conditionPlayerFlatComboBox4.Name = "conditionPlayerFlatComboBox4";
+            this.conditionPlayerFlatComboBox4.Size = new System.Drawing.Size(344, 21);
+            this.conditionPlayerFlatComboBox4.TabIndex = 300;
+            this.conditionPlayerFlatComboBox4.Visible = false;
+            this.conditionPlayerFlatComboBox4.SelectedIndexChanged += new System.EventHandler(this.ConditionObjectFlatComboBoxSelectedIndexChanged);
             // 
             // conditionObjectFlatComboBox4
             // 
@@ -761,6 +522,7 @@
             this.conditionObjectFlatComboBox4.Name = "conditionObjectFlatComboBox4";
             this.conditionObjectFlatComboBox4.Size = new System.Drawing.Size(344, 21);
             this.conditionObjectFlatComboBox4.TabIndex = 298;
+            this.conditionObjectFlatComboBox4.SelectedIndexChanged += new System.EventHandler(this.ConditionObjectFlatComboBoxSelectedIndexChanged);
             // 
             // conditionTypeFlatComboBox4
             // 
@@ -773,6 +535,7 @@
             this.conditionTypeFlatComboBox4.Name = "conditionTypeFlatComboBox4";
             this.conditionTypeFlatComboBox4.Size = new System.Drawing.Size(344, 21);
             this.conditionTypeFlatComboBox4.TabIndex = 297;
+            this.conditionTypeFlatComboBox4.SelectedIndexChanged += new System.EventHandler(this.ConditionTypeFlatComboBoxSelectedIndexChanged);
             // 
             // objectLabel4
             // 
@@ -792,28 +555,375 @@
             this.label12.TabIndex = 290;
             this.label12.Text = "Type";
             // 
-            // descriptionGroupBox
+            // conditionGroupBox3
             // 
-            this.descriptionGroupBox.Controls.Add(this.descriptionTextBox);
-            this.descriptionGroupBox.ForeColor = System.Drawing.Color.White;
-            this.descriptionGroupBox.Location = new System.Drawing.Point(15, 191);
-            this.descriptionGroupBox.Name = "descriptionGroupBox";
-            this.descriptionGroupBox.Size = new System.Drawing.Size(468, 67);
-            this.descriptionGroupBox.TabIndex = 284;
-            this.descriptionGroupBox.TabStop = false;
-            this.descriptionGroupBox.Text = "Description";
+            this.conditionGroupBox3.Controls.Add(this.conditionPlayerFlatComboBox3);
+            this.conditionGroupBox3.Controls.Add(this.conditionObjectFlatComboBox3);
+            this.conditionGroupBox3.Controls.Add(this.conditionTypeFlatComboBox3);
+            this.conditionGroupBox3.Controls.Add(this.objectLabel3);
+            this.conditionGroupBox3.Controls.Add(this.label10);
+            this.conditionGroupBox3.ForeColor = System.Drawing.Color.White;
+            this.conditionGroupBox3.Location = new System.Drawing.Point(11, 222);
+            this.conditionGroupBox3.Name = "conditionGroupBox3";
+            this.conditionGroupBox3.Size = new System.Drawing.Size(435, 94);
+            this.conditionGroupBox3.TabIndex = 298;
+            this.conditionGroupBox3.TabStop = false;
+            this.conditionGroupBox3.Text = "Condition 3";
             // 
-            // descriptionTextBox
+            // conditionPlayerFlatComboBox3
             // 
-            this.descriptionTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.descriptionTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.descriptionTextBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.descriptionTextBox.Location = new System.Drawing.Point(22, 19);
-            this.descriptionTextBox.Multiline = true;
-            this.descriptionTextBox.Name = "descriptionTextBox";
-            this.descriptionTextBox.ReadOnly = true;
-            this.descriptionTextBox.Size = new System.Drawing.Size(429, 34);
-            this.descriptionTextBox.TabIndex = 270;
+            this.conditionPlayerFlatComboBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.conditionPlayerFlatComboBox3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.conditionPlayerFlatComboBox3.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.conditionPlayerFlatComboBox3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.conditionPlayerFlatComboBox3.FormattingEnabled = true;
+            this.conditionPlayerFlatComboBox3.Items.AddRange(new object[] {
+            "Shoot",
+            "Dribble",
+            "Block",
+            "Save",
+            "Skill"});
+            this.conditionPlayerFlatComboBox3.Location = new System.Drawing.Point(78, 60);
+            this.conditionPlayerFlatComboBox3.Name = "conditionPlayerFlatComboBox3";
+            this.conditionPlayerFlatComboBox3.Size = new System.Drawing.Size(344, 21);
+            this.conditionPlayerFlatComboBox3.TabIndex = 300;
+            this.conditionPlayerFlatComboBox3.Visible = false;
+            this.conditionPlayerFlatComboBox3.SelectedIndexChanged += new System.EventHandler(this.ConditionObjectFlatComboBoxSelectedIndexChanged);
+            // 
+            // conditionObjectFlatComboBox3
+            // 
+            this.conditionObjectFlatComboBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.conditionObjectFlatComboBox3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.conditionObjectFlatComboBox3.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.conditionObjectFlatComboBox3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.conditionObjectFlatComboBox3.FormattingEnabled = true;
+            this.conditionObjectFlatComboBox3.Items.AddRange(new object[] {
+            "Shoot",
+            "Dribble",
+            "Block",
+            "Save",
+            "Skill"});
+            this.conditionObjectFlatComboBox3.Location = new System.Drawing.Point(77, 60);
+            this.conditionObjectFlatComboBox3.Name = "conditionObjectFlatComboBox3";
+            this.conditionObjectFlatComboBox3.Size = new System.Drawing.Size(344, 21);
+            this.conditionObjectFlatComboBox3.TabIndex = 298;
+            this.conditionObjectFlatComboBox3.SelectedIndexChanged += new System.EventHandler(this.ConditionObjectFlatComboBoxSelectedIndexChanged);
+            // 
+            // conditionTypeFlatComboBox3
+            // 
+            this.conditionTypeFlatComboBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.conditionTypeFlatComboBox3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.conditionTypeFlatComboBox3.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.conditionTypeFlatComboBox3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.conditionTypeFlatComboBox3.FormattingEnabled = true;
+            this.conditionTypeFlatComboBox3.Location = new System.Drawing.Point(77, 25);
+            this.conditionTypeFlatComboBox3.Name = "conditionTypeFlatComboBox3";
+            this.conditionTypeFlatComboBox3.Size = new System.Drawing.Size(344, 21);
+            this.conditionTypeFlatComboBox3.TabIndex = 297;
+            this.conditionTypeFlatComboBox3.SelectedIndexChanged += new System.EventHandler(this.ConditionTypeFlatComboBoxSelectedIndexChanged);
+            // 
+            // objectLabel3
+            // 
+            this.objectLabel3.AutoSize = true;
+            this.objectLabel3.Location = new System.Drawing.Point(18, 60);
+            this.objectLabel3.Name = "objectLabel3";
+            this.objectLabel3.Size = new System.Drawing.Size(41, 13);
+            this.objectLabel3.TabIndex = 295;
+            this.objectLabel3.Text = "Object";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(18, 25);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(30, 13);
+            this.label10.TabIndex = 290;
+            this.label10.Text = "Type";
+            // 
+            // conditionGroupBox2
+            // 
+            this.conditionGroupBox2.Controls.Add(this.conditionPlayerFlatComboBox2);
+            this.conditionGroupBox2.Controls.Add(this.conditionObjectFlatComboBox2);
+            this.conditionGroupBox2.Controls.Add(this.conditionTypeFlatComboBox2);
+            this.conditionGroupBox2.Controls.Add(this.objectLabel2);
+            this.conditionGroupBox2.Controls.Add(this.label6);
+            this.conditionGroupBox2.ForeColor = System.Drawing.Color.White;
+            this.conditionGroupBox2.Location = new System.Drawing.Point(11, 118);
+            this.conditionGroupBox2.Name = "conditionGroupBox2";
+            this.conditionGroupBox2.Size = new System.Drawing.Size(435, 94);
+            this.conditionGroupBox2.TabIndex = 297;
+            this.conditionGroupBox2.TabStop = false;
+            this.conditionGroupBox2.Text = "Condition 2";
+            // 
+            // conditionPlayerFlatComboBox2
+            // 
+            this.conditionPlayerFlatComboBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.conditionPlayerFlatComboBox2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.conditionPlayerFlatComboBox2.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.conditionPlayerFlatComboBox2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.conditionPlayerFlatComboBox2.FormattingEnabled = true;
+            this.conditionPlayerFlatComboBox2.Items.AddRange(new object[] {
+            "Shoot",
+            "Dribble",
+            "Block",
+            "Save",
+            "Skill"});
+            this.conditionPlayerFlatComboBox2.Location = new System.Drawing.Point(78, 57);
+            this.conditionPlayerFlatComboBox2.Name = "conditionPlayerFlatComboBox2";
+            this.conditionPlayerFlatComboBox2.Size = new System.Drawing.Size(344, 21);
+            this.conditionPlayerFlatComboBox2.TabIndex = 300;
+            this.conditionPlayerFlatComboBox2.Visible = false;
+            this.conditionPlayerFlatComboBox2.SelectedIndexChanged += new System.EventHandler(this.ConditionObjectFlatComboBoxSelectedIndexChanged);
+            // 
+            // conditionObjectFlatComboBox2
+            // 
+            this.conditionObjectFlatComboBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.conditionObjectFlatComboBox2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.conditionObjectFlatComboBox2.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.conditionObjectFlatComboBox2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.conditionObjectFlatComboBox2.FormattingEnabled = true;
+            this.conditionObjectFlatComboBox2.Items.AddRange(new object[] {
+            "Shoot",
+            "Dribble",
+            "Block",
+            "Save",
+            "Skill"});
+            this.conditionObjectFlatComboBox2.Location = new System.Drawing.Point(77, 58);
+            this.conditionObjectFlatComboBox2.Name = "conditionObjectFlatComboBox2";
+            this.conditionObjectFlatComboBox2.Size = new System.Drawing.Size(344, 21);
+            this.conditionObjectFlatComboBox2.TabIndex = 298;
+            this.conditionObjectFlatComboBox2.SelectedIndexChanged += new System.EventHandler(this.ConditionObjectFlatComboBoxSelectedIndexChanged);
+            // 
+            // conditionTypeFlatComboBox2
+            // 
+            this.conditionTypeFlatComboBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.conditionTypeFlatComboBox2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.conditionTypeFlatComboBox2.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.conditionTypeFlatComboBox2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.conditionTypeFlatComboBox2.FormattingEnabled = true;
+            this.conditionTypeFlatComboBox2.Location = new System.Drawing.Point(77, 25);
+            this.conditionTypeFlatComboBox2.Name = "conditionTypeFlatComboBox2";
+            this.conditionTypeFlatComboBox2.Size = new System.Drawing.Size(344, 21);
+            this.conditionTypeFlatComboBox2.TabIndex = 297;
+            this.conditionTypeFlatComboBox2.SelectedIndexChanged += new System.EventHandler(this.ConditionTypeFlatComboBoxSelectedIndexChanged);
+            // 
+            // objectLabel2
+            // 
+            this.objectLabel2.AutoSize = true;
+            this.objectLabel2.Location = new System.Drawing.Point(18, 60);
+            this.objectLabel2.Name = "objectLabel2";
+            this.objectLabel2.Size = new System.Drawing.Size(41, 13);
+            this.objectLabel2.TabIndex = 295;
+            this.objectLabel2.Text = "Object";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(18, 25);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(30, 13);
+            this.label6.TabIndex = 290;
+            this.label6.Text = "Type";
+            // 
+            // conditionGroupBox1
+            // 
+            this.conditionGroupBox1.Controls.Add(this.conditionPlayerFlatComboBox1);
+            this.conditionGroupBox1.Controls.Add(this.conditionObjectFlatComboBox1);
+            this.conditionGroupBox1.Controls.Add(this.conditionTypeFlatComboBox1);
+            this.conditionGroupBox1.Controls.Add(this.objectLabel1);
+            this.conditionGroupBox1.Controls.Add(this.label14);
+            this.conditionGroupBox1.ForeColor = System.Drawing.Color.White;
+            this.conditionGroupBox1.Location = new System.Drawing.Point(12, 18);
+            this.conditionGroupBox1.Name = "conditionGroupBox1";
+            this.conditionGroupBox1.Size = new System.Drawing.Size(435, 94);
+            this.conditionGroupBox1.TabIndex = 296;
+            this.conditionGroupBox1.TabStop = false;
+            this.conditionGroupBox1.Text = "Condition 1";
+            // 
+            // conditionPlayerFlatComboBox1
+            // 
+            this.conditionPlayerFlatComboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.conditionPlayerFlatComboBox1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.conditionPlayerFlatComboBox1.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.conditionPlayerFlatComboBox1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.conditionPlayerFlatComboBox1.FormattingEnabled = true;
+            this.conditionPlayerFlatComboBox1.Items.AddRange(new object[] {
+            "Shoot",
+            "Dribble",
+            "Block",
+            "Save",
+            "Skill"});
+            this.conditionPlayerFlatComboBox1.Location = new System.Drawing.Point(77, 60);
+            this.conditionPlayerFlatComboBox1.Name = "conditionPlayerFlatComboBox1";
+            this.conditionPlayerFlatComboBox1.Size = new System.Drawing.Size(344, 21);
+            this.conditionPlayerFlatComboBox1.TabIndex = 299;
+            this.conditionPlayerFlatComboBox1.Visible = false;
+            this.conditionPlayerFlatComboBox1.SelectedIndexChanged += new System.EventHandler(this.ConditionObjectFlatComboBoxSelectedIndexChanged);
+            // 
+            // conditionObjectFlatComboBox1
+            // 
+            this.conditionObjectFlatComboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.conditionObjectFlatComboBox1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.conditionObjectFlatComboBox1.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.conditionObjectFlatComboBox1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.conditionObjectFlatComboBox1.FormattingEnabled = true;
+            this.conditionObjectFlatComboBox1.Items.AddRange(new object[] {
+            "Shoot",
+            "Dribble",
+            "Block",
+            "Save",
+            "Skill"});
+            this.conditionObjectFlatComboBox1.Location = new System.Drawing.Point(77, 60);
+            this.conditionObjectFlatComboBox1.Name = "conditionObjectFlatComboBox1";
+            this.conditionObjectFlatComboBox1.Size = new System.Drawing.Size(344, 21);
+            this.conditionObjectFlatComboBox1.TabIndex = 298;
+            this.conditionObjectFlatComboBox1.SelectedIndexChanged += new System.EventHandler(this.ConditionObjectFlatComboBoxSelectedIndexChanged);
+            // 
+            // conditionTypeFlatComboBox1
+            // 
+            this.conditionTypeFlatComboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.conditionTypeFlatComboBox1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.conditionTypeFlatComboBox1.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.conditionTypeFlatComboBox1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.conditionTypeFlatComboBox1.FormattingEnabled = true;
+            this.conditionTypeFlatComboBox1.Location = new System.Drawing.Point(77, 25);
+            this.conditionTypeFlatComboBox1.Name = "conditionTypeFlatComboBox1";
+            this.conditionTypeFlatComboBox1.Size = new System.Drawing.Size(344, 21);
+            this.conditionTypeFlatComboBox1.TabIndex = 297;
+            this.conditionTypeFlatComboBox1.SelectedIndexChanged += new System.EventHandler(this.ConditionTypeFlatComboBoxSelectedIndexChanged);
+            // 
+            // objectLabel1
+            // 
+            this.objectLabel1.AutoSize = true;
+            this.objectLabel1.Location = new System.Drawing.Point(18, 60);
+            this.objectLabel1.Name = "objectLabel1";
+            this.objectLabel1.Size = new System.Drawing.Size(41, 13);
+            this.objectLabel1.TabIndex = 295;
+            this.objectLabel1.Text = "Object";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(18, 25);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(30, 13);
+            this.label14.TabIndex = 290;
+            this.label14.Text = "Type";
+            // 
+            // xPositionFlatNumericUpDown
+            // 
+            this.xPositionFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.xPositionFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.xPositionFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.xPositionFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.xPositionFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.xPositionFlatNumericUpDown.Location = new System.Drawing.Point(327, 42);
+            this.xPositionFlatNumericUpDown.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.xPositionFlatNumericUpDown.Minimum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            -2147483648});
+            this.xPositionFlatNumericUpDown.Name = "xPositionFlatNumericUpDown";
+            this.xPositionFlatNumericUpDown.Size = new System.Drawing.Size(53, 20);
+            this.xPositionFlatNumericUpDown.TabIndex = 288;
+            this.xPositionFlatNumericUpDown.ValueChanged += new System.EventHandler(this.XPositionFlatNumericUpDown_ValueChanged);
+            // 
+            // yPositionFlatNumericUpDown
+            // 
+            this.yPositionFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.yPositionFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.yPositionFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.yPositionFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.yPositionFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.yPositionFlatNumericUpDown.Location = new System.Drawing.Point(406, 42);
+            this.yPositionFlatNumericUpDown.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.yPositionFlatNumericUpDown.Minimum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            -2147483648});
+            this.yPositionFlatNumericUpDown.Name = "yPositionFlatNumericUpDown";
+            this.yPositionFlatNumericUpDown.Size = new System.Drawing.Size(53, 20);
+            this.yPositionFlatNumericUpDown.TabIndex = 286;
+            this.yPositionFlatNumericUpDown.ValueChanged += new System.EventHandler(this.YPositionFlatNumericUpDown_ValueChanged);
+            // 
+            // boughtPriceFlatNumericUpDown
+            // 
+            this.boughtPriceFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.boughtPriceFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.boughtPriceFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.boughtPriceFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.boughtPriceFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.boughtPriceFlatNumericUpDown.Location = new System.Drawing.Point(116, 44);
+            this.boughtPriceFlatNumericUpDown.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.boughtPriceFlatNumericUpDown.Minimum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            -2147483648});
+            this.boughtPriceFlatNumericUpDown.Name = "boughtPriceFlatNumericUpDown";
+            this.boughtPriceFlatNumericUpDown.Size = new System.Drawing.Size(98, 20);
+            this.boughtPriceFlatNumericUpDown.TabIndex = 284;
+            this.boughtPriceFlatNumericUpDown.ValueChanged += new System.EventHandler(this.BoughtPriceFlatNumericUpDown_ValueChanged);
+            // 
+            // soldPriceFlatNumericUpDown
+            // 
+            this.soldPriceFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.soldPriceFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.soldPriceFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.soldPriceFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.soldPriceFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.soldPriceFlatNumericUpDown.Location = new System.Drawing.Point(116, 18);
+            this.soldPriceFlatNumericUpDown.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.soldPriceFlatNumericUpDown.Minimum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            -2147483648});
+            this.soldPriceFlatNumericUpDown.Name = "soldPriceFlatNumericUpDown";
+            this.soldPriceFlatNumericUpDown.Size = new System.Drawing.Size(98, 20);
+            this.soldPriceFlatNumericUpDown.TabIndex = 283;
+            this.soldPriceFlatNumericUpDown.ValueChanged += new System.EventHandler(this.SoldPriceFlatNumericUpDown_ValueChanged);
+            // 
+            // maxQuantityFlatNumericUpDown
+            // 
+            this.maxQuantityFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.maxQuantityFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.maxQuantityFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.maxQuantityFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.maxQuantityFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.maxQuantityFlatNumericUpDown.Location = new System.Drawing.Point(327, 18);
+            this.maxQuantityFlatNumericUpDown.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.maxQuantityFlatNumericUpDown.Minimum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            -2147483648});
+            this.maxQuantityFlatNumericUpDown.Name = "maxQuantityFlatNumericUpDown";
+            this.maxQuantityFlatNumericUpDown.Size = new System.Drawing.Size(132, 20);
+            this.maxQuantityFlatNumericUpDown.TabIndex = 271;
+            this.maxQuantityFlatNumericUpDown.ValueChanged += new System.EventHandler(this.MaxQuantityFlatNumericUpDown_ValueChanged);
             // 
             // PalpackCardsWindow
             // 
@@ -823,11 +933,14 @@
             this.ClientSize = new System.Drawing.Size(884, 766);
             this.Controls.Add(this.palpackListBox);
             this.Controls.Add(this.searchTextBox);
-            this.Controls.Add(this.fightingSpiritGroupBox);
+            this.Controls.Add(this.palpackGroupBox);
             this.Controls.Add(this.menuStrip1);
             this.Name = "PalpackCardsWindow";
             this.Text = "PalpackCardsWindow";
-            this.fightingSpiritGroupBox.ResumeLayout(false);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.PalpackCardsWindow_FormClosed);
+            this.palpackGroupBox.ResumeLayout(false);
+            this.descriptionGroupBox.ResumeLayout(false);
+            this.descriptionGroupBox.PerformLayout();
             this.itemGroupBox.ResumeLayout(false);
             this.itemGroupBox.PerformLayout();
             this.nameGroupBox.ResumeLayout(false);
@@ -835,33 +948,31 @@
             ((System.ComponentModel.ISupportInitialize)(this.facePictureBox)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.coachVSTabControl.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.playerNumFlatNumericUpDown)).EndInit();
+            this.tabPage3.ResumeLayout(false);
+            this.conditionGroupBox4.ResumeLayout(false);
+            this.conditionGroupBox4.PerformLayout();
+            this.conditionGroupBox3.ResumeLayout(false);
+            this.conditionGroupBox3.PerformLayout();
+            this.conditionGroupBox2.ResumeLayout(false);
+            this.conditionGroupBox2.PerformLayout();
+            this.conditionGroupBox1.ResumeLayout(false);
+            this.conditionGroupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.xPositionFlatNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.yPositionFlatNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.boughtPriceFlatNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.soldPriceFlatNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxQuantityFlatNumericUpDown)).EndInit();
-            this.coachVSTabControl.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
-            this.tabPage3.ResumeLayout(false);
-            this.conditionGroupBox1.ResumeLayout(false);
-            this.conditionGroupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.playerNumFlatNumericUpDown)).EndInit();
-            this.conditionGroupBox2.ResumeLayout(false);
-            this.conditionGroupBox2.PerformLayout();
-            this.conditionGroupBox3.ResumeLayout(false);
-            this.conditionGroupBox3.PerformLayout();
-            this.conditionGroupBox4.ResumeLayout(false);
-            this.conditionGroupBox4.PerformLayout();
-            this.descriptionGroupBox.ResumeLayout(false);
-            this.descriptionGroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.GroupBox fightingSpiritGroupBox;
+        private System.Windows.Forms.GroupBox palpackGroupBox;
         private System.Windows.Forms.GroupBox itemGroupBox;
         private System.Windows.Forms.Label label21;
         private UI.FlatNumericUpDown xPositionFlatNumericUpDown;
@@ -915,5 +1026,10 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.GroupBox descriptionGroupBox;
         private System.Windows.Forms.TextBox descriptionTextBox;
+        private UI.FlatComboBox conditionPlayerFlatComboBox1;
+        private UI.FlatComboBox conditionPlayerFlatComboBox4;
+        private UI.FlatComboBox conditionPlayerFlatComboBox3;
+        private UI.FlatComboBox conditionPlayerFlatComboBox2;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }

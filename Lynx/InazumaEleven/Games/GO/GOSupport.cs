@@ -531,9 +531,9 @@ namespace Lynx.InazumaEleven.Games.GO
             public int Unk3 { get; set; }
             public int Unk4 { get; set; }
             public int CharacterFlag { get; set; }
+            public int RecrutedCharacterId { get; set; }
             public int Unk5 { get; set; }
             public int Unk6 { get; set; }
-            public int RecrutedCharacterId { get; set; }
             public int ItemPosX { get; set; }
             public int ItemPosY { get; set; }
             public int Unk7 { get; set; }
