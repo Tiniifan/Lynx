@@ -18,7 +18,7 @@ namespace Lynx.InazumaEleven.Common
     public enum Skins
     {
         [Color(0, 0, 0)]
-        [Description("Unused")]
+        [Description("NPC")]
         Color0 = 0,
 
         [Color(241, 182, 123)]

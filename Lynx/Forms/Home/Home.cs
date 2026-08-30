@@ -22,6 +22,7 @@ using Lynx.Forms.ChallengeRoute;
 using Lynx.Forms.Soccers;
 using Lynx.Forms.Coaches;
 using Lynx.Forms.TranslationHelper;
+using Lynx.Forms.PalpackCards;
 
 namespace Lynx.Forms.Home
 {
@@ -142,6 +143,9 @@ namespace Lynx.Forms.Home
                 case "Translation Helper":
                     TranslationHelperButton_Click(sender, e);
                     break;
+                case "Palpack Card Editor":
+                    PalpackButton_Click(sender, e);
+                    break;
             }
         }
 
@@ -222,6 +226,12 @@ namespace Lynx.Forms.Home
         {
             TranslationHelperWindow translationHelperWindow = new TranslationHelperWindow(GameOpened);
             translationHelperWindow.ShowDialog();
+        }
+
+        private void PalpackButton_Click(object sender, EventArgs e)
+        {
+            PalpackCardsWindow palpackCardsWindow = new PalpackCardsWindow(GameOpened);
+            palpackCardsWindow.ShowDialog();
         }
     }
 }
