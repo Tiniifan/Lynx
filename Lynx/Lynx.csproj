@@ -296,6 +296,7 @@
     <Compile Include="InazumaEleven\Common\ItemTypes.cs" />
     <Compile Include="InazumaEleven\Common\MatchRestrictions.cs" />
     <Compile Include="InazumaEleven\Common\MovePositions.cs" />
+    <Compile Include="InazumaEleven\Common\PalpackConditionTypes.cs" />
     <Compile Include="InazumaEleven\Common\PlayerPositions.cs" />
     <Compile Include="InazumaEleven\Common\Genders.cs" />
     <Compile Include="InazumaEleven\Common\Skins.cs" />
@@ -308,6 +309,7 @@
     <Compile Include="InazumaEleven\Logic\AvatarGrowthStat.cs" />
     <Compile Include="InazumaEleven\Logic\ChallengeRoute.cs" />
     <Compile Include="InazumaEleven\Logic\CoachText.cs" />
+    <Compile Include="InazumaEleven\Logic\IPalpackCard.cs" />
     <Compile Include="InazumaEleven\Logic\IRouteConfig.cs" />
     <Compile Include="InazumaEleven\Logic\ISoccerInfo.cs" />
     <Compile Include="InazumaEleven\Logic\ITeamConfigInfo.cs" />

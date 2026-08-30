@@ -583,10 +583,6 @@
             this.conditionTypeFlatComboBox1.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.conditionTypeFlatComboBox1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.conditionTypeFlatComboBox1.FormattingEnabled = true;
-            this.conditionTypeFlatComboBox1.Items.AddRange(new object[] {
-            "None",
-            "Item",
-            "Player"});
             this.conditionTypeFlatComboBox1.Location = new System.Drawing.Point(77, 25);
             this.conditionTypeFlatComboBox1.Name = "conditionTypeFlatComboBox1";
             this.conditionTypeFlatComboBox1.Size = new System.Drawing.Size(344, 21);
@@ -649,10 +645,6 @@
             this.conditionTypeFlatComboBox2.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.conditionTypeFlatComboBox2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.conditionTypeFlatComboBox2.FormattingEnabled = true;
-            this.conditionTypeFlatComboBox2.Items.AddRange(new object[] {
-            "None",
-            "Item",
-            "Player"});
             this.conditionTypeFlatComboBox2.Location = new System.Drawing.Point(77, 25);
             this.conditionTypeFlatComboBox2.Name = "conditionTypeFlatComboBox2";
             this.conditionTypeFlatComboBox2.Size = new System.Drawing.Size(344, 21);
@@ -715,10 +707,6 @@
             this.conditionTypeFlatComboBox3.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.conditionTypeFlatComboBox3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.conditionTypeFlatComboBox3.FormattingEnabled = true;
-            this.conditionTypeFlatComboBox3.Items.AddRange(new object[] {
-            "None",
-            "Item",
-            "Player"});
             this.conditionTypeFlatComboBox3.Location = new System.Drawing.Point(77, 25);
             this.conditionTypeFlatComboBox3.Name = "conditionTypeFlatComboBox3";
             this.conditionTypeFlatComboBox3.Size = new System.Drawing.Size(344, 21);
@@ -781,10 +769,6 @@
             this.conditionTypeFlatComboBox4.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.conditionTypeFlatComboBox4.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.conditionTypeFlatComboBox4.FormattingEnabled = true;
-            this.conditionTypeFlatComboBox4.Items.AddRange(new object[] {
-            "None",
-            "Item",
-            "Player"});
             this.conditionTypeFlatComboBox4.Location = new System.Drawing.Point(77, 25);
             this.conditionTypeFlatComboBox4.Name = "conditionTypeFlatComboBox4";
             this.conditionTypeFlatComboBox4.Size = new System.Drawing.Size(344, 21);

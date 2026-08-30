@@ -507,5 +507,36 @@ namespace Lynx.InazumaEleven.Games.GO
             public int DifferenceLevelPlayer4 { get; set; }
             public int DifferenceLevelPlayer5 { get; set; }
         }
+
+        public class PalpackCard : IPalpackCard
+        {
+            public int PalpackCardId { get; set; }
+            public int NameId { get; set; }
+            public int DescriptionId { get; set; }
+            public int Unk1 { get; set; }
+            public int ItemCategory { get; set; }
+            public int MaxQuantity { get; set; }
+            public int Unk2 { get; set; }
+            public int SellingPrice { get; set; }
+            public int PurchasePrice { get; set; }
+            public int ItemSubCategory { get; set; }
+            public int PrerequisitesType1 { get; set; }
+            public int PrerequisitesId1 { get; set; }
+            public int PrerequisitesType2 { get; set; }
+            public int PrerequisitesId2 { get; set; }
+            public int PrerequisitesType3 { get; set; }
+            public int PrerequisitesId3 { get; set; }
+            public int PrerequisitesType4 { get; set; }
+            public int PrerequisitesId4 { get; set; }
+            public int Unk3 { get; set; }
+            public int Unk4 { get; set; }
+            public int CharacterFlag { get; set; }
+            public int Unk5 { get; set; }
+            public int Unk6 { get; set; }
+            public int RecrutedCharacterId { get; set; }
+            public int ItemPosX { get; set; }
+            public int ItemPosY { get; set; }
+            public int Unk7 { get; set; }
+        }
     }
 }
