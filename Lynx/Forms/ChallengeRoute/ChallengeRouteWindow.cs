@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using Lynx.Tools;
-using Lynx.Level5.Text;
-using Lynx.Level5.Image;
+using StudioElevenLib.Tools;
+using StudioElevenLib.Level5.Text;
+using StudioElevenLib.Level5.Image;
 using Lynx.InazumaEleven.Games;
 using Lynx.InazumaEleven.Logic;
 using Lynx.InazumaEleven.Common;
@@ -19,7 +19,7 @@ using Control = System.Windows.Forms.Control;
 using ChallengeRouteClass = Lynx.InazumaEleven.Logic.ChallengeRoute;
 using Team = Lynx.InazumaEleven.Logic.Team;
 using System.Text.RegularExpressions;
-using Lynx.Level5.Base64;
+using Lynx.InazumaEleven.Base64;
 using Lynx.UI;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
@@ -229,7 +229,7 @@ namespace Lynx.Forms.ChallengeRoute
                             try
                             {
                                 byte[] imageData = emblemInfo.File.Directory.GetFileFromFullPath(emblemInfo.Path + "/" + emblemFileName);
-                                emblemPicture = IMGC.ToBitmap(imageData);
+                                emblemPicture = Imager.Open(imageData).Bitmap;
                             }
                             catch
                             {

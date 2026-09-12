@@ -3,9 +3,9 @@ using System.Text;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using Microsoft.VisualBasic;
-using Lynx.Tools;
-using Lynx.Level5.Text;
-using Lynx.Level5.Text.Logic;
+using StudioElevenLib.Tools;
+using StudioElevenLib.Level5.Text;
+using StudioElevenLib.Level5.Text.Logic;
 
 namespace Lynx.Forms.Nyanko
 {

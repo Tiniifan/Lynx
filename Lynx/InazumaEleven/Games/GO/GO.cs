@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using Lynx.Level5.Archive.ARC0;
+using StudioElevenLib.Level5.Archive.ARC0;
 using Lynx.InazumaEleven.Logic;
 using static Lynx.InazumaEleven.Games.GO.GOSupport;
 
@@ -107,7 +107,7 @@ namespace Lynx.InazumaEleven.Games.GO
             IE_A.Save(tempPath + Path.GetFileName(FileName));
 
             // Close File
-            IE_A = (ARC0)IE_A.Close();
+            IE_A.Close();
 
             if (File.Exists(FileName))
             {

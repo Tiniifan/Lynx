@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Drawing;
-using Lynx.Level5.Archive.ARC0;
+using StudioElevenLib.Level5.Archive.ARC0;
 using Lynx.InazumaEleven.Common;
 
 namespace Lynx.InazumaEleven.Games

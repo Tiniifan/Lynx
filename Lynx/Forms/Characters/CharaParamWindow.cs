@@ -5,15 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using Lynx.Tools;
-using Lynx.Level5.Text;
-using Lynx.Level5.Image;
+using StudioElevenLib.Tools;
+using StudioElevenLib.Level5.Text;
+using StudioElevenLib.Level5.Image;
 using Lynx.InazumaEleven.Games;
 using Lynx.InazumaEleven.Logic;
 using Lynx.InazumaEleven.Common;
 using Lynx.InazumaEleven.Games.GO;
 using OfficeOpenXml;
-using Lynx.Level5.Save.Logic;
+using Lynx.InazumaEleven.Save.Logic;
 using static Lynx.InazumaEleven.Games.GO.GOSupport;
 using Player = Lynx.InazumaEleven.Logic.Player;
 using Microsoft.WindowsAPICodePack.Dialogs;
@@ -165,7 +165,7 @@ namespace Lynx.Forms.Characters
                 try
                 {
                     byte[] imageData = faceInfo.File.Directory.GetFileFromFullPath(faceInfo.Path + "/" + faceFileName);
-                    facePictureBox.Image = IMGC.ToBitmap(imageData);
+                    facePictureBox.Image = Imager.Open(imageData).Bitmap;
                 }
                 catch
                 {

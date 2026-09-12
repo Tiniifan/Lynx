@@ -9,11 +9,13 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Lynx.Tools;
-using Lynx.Level5.Text;
-using Lynx.Level5.Image;
-using Lynx.Level5.Binary;
-using Lynx.Level5.Base64;
-using Lynx.Level5.Binary.Logic;
+using StudioElevenLib.Tools;
+using StudioElevenLib.Level5.Text;
+using StudioElevenLib.Level5.Image;
+using StudioElevenLib.Level5.Binary;
+using Lynx.InazumaEleven.Base64;
+using StudioElevenLib.Level5.Binary.Logic;
+using StudioElevenLib.Level5.Binary.Collections;
 using Lynx.InazumaEleven.Games;
 using Lynx.InazumaEleven.Logic;
 using Lynx.InazumaEleven.Common;
@@ -23,9 +25,9 @@ using System.Threading;
 using DocumentFormat.OpenXml.Wordprocessing;
 using static Lynx.InazumaEleven.Games.GO.GOSupport;
 using System.Xml.Linq;
-using Lynx.Level5.Save.Logic;
+using Lynx.InazumaEleven.Save.Logic;
 using DocumentFormat.OpenXml.Spreadsheet;
-using Lynx.Level5.Text.Logic;
+using StudioElevenLib.Level5.Text.Logic;
 using Lynx.Forms.Characters;
 
 namespace Lynx.Forms.Maps
@@ -58,7 +60,7 @@ namespace Lynx.Forms.Maps
 
         private Dictionary<ITalkInfo, List<ITalkConfig>> NPCEvents;
 
-        private CfgBin Mapenv;
+        private CfgBin<CfgTreeNode> Mapenv;
 
         private T2bþ MapText;
 
@@ -335,17 +337,19 @@ namespace Lynx.Forms.Maps
 
             // Get bounder box
             BounderBox = new int[4];
-            Entry modelPos = Mapenv.Entries[0].Children.FirstOrDefault(
-                x => x.GetName() == "PTREE" && x.Variables.Any(
-                    y => y.Type == Level5.Binary.Logic.Type.String && y.Value is OffsetTextPair offsetTextPair && offsetTextPair.Text == "MMModelPos"
-                )
-            );
+            CfgTreeNode modelPos = Mapenv.Entries.Children.FirstOrDefault()?.Children
+                .OfType<CfgTreeNode>()
+                .FirstOrDefault(
+                    x => x.Item.Name == "PTREE" && x.Item.Variables.Any(
+                        y => y.Type == CfgValueType.String && Convert.ToString(y.Value) == "MMModelPos"
+                    )
+                );
             if (modelPos != null)
             {
-                BounderBox[0] = Convert.ToInt32(modelPos.Children[0].Variables[0].Value);
-                BounderBox[1] = Convert.ToInt32(modelPos.Children[1].Variables[0].Value);
-                BounderBox[2] = Convert.ToInt32(modelPos.Children[2].Variables[0].Value);
-                BounderBox[3] = Convert.ToInt32(modelPos.Children[3].Variables[0].Value);
+                BounderBox[0] = Convert.ToInt32(modelPos.Children[0].Item.Variables[0].Value);
+                BounderBox[1] = Convert.ToInt32(modelPos.Children[1].Item.Variables[0].Value);
+                BounderBox[2] = Convert.ToInt32(modelPos.Children[2].Item.Variables[0].Value);
+                BounderBox[3] = Convert.ToInt32(modelPos.Children[3].Item.Variables[0].Value);
             }
 
             // Fill tree view
@@ -355,7 +359,7 @@ namespace Lynx.Forms.Maps
             {
                 GameSupports.GameFile mapFolder = GameOpened.Files["map"];
                 byte[] imageData = mapFolder.File.Directory.GetFileFromFullPath($"{mapFolder.Path}{MapID}/{MapID}.xi");
-                MiniMapImage = IMGC.ToBitmap(imageData);
+                MiniMapImage = Imager.Open(imageData).Bitmap;
             }
             catch
             {
@@ -1020,7 +1024,7 @@ namespace Lynx.Forms.Maps
                 // Reorganise variance
                 for (int i = 0; i < textConfig.Strings.Count; i++)
                 {
-                    textConfig.Strings[i].Variance = i;
+                    textConfig.Strings[i].TextNumber = i;
                 }
             }
         }

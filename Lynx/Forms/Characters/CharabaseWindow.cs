@@ -6,15 +6,15 @@ using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using Lynx.Tools;
-using Lynx.Level5.Text;
-using Lynx.Level5.Image;
+using StudioElevenLib.Tools;
+using StudioElevenLib.Level5.Text;
+using StudioElevenLib.Level5.Image;
 using Lynx.InazumaEleven.Games;
 using Lynx.InazumaEleven.Logic;
 using Lynx.InazumaEleven.Common;
 using Lynx.InazumaEleven.Games.GO;
 using Microsoft.WindowsAPICodePack.Dialogs;
-using Lynx.Level5.Save.Saves;
+using Lynx.InazumaEleven.Save.Saves;
 
 namespace Lynx.Forms.Characters
 {
@@ -133,7 +133,7 @@ namespace Lynx.Forms.Characters
                 try
                 {
                     byte[] imageData = faceInfo.File.Directory.GetFileFromFullPath(faceInfo.Path + "/" + faceFileName);
-                    facePictureBox.Image = IMGC.ToBitmap(imageData);
+                    facePictureBox.Image = Imager.Open(imageData).Bitmap;
                 }
                 catch
                 {

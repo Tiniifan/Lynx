@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using Lynx.Tools;
-using Lynx.Level5.Text;
-using Lynx.Level5.Image;
-using Lynx.Level5.Binary;
+using StudioElevenLib.Tools;
+using StudioElevenLib.Level5.Text;
+using StudioElevenLib.Level5.Image;
+using StudioElevenLib.Level5.Binary;
+using StudioElevenLib.Level5.Binary.Collections;
 using Lynx.InazumaEleven.Games;
 using Lynx.InazumaEleven.Logic;
 using Lynx.InazumaEleven.Common;
@@ -544,7 +545,7 @@ namespace Lynx.Forms.Shops
             Shops.Add(shopName, new List<IShopConfig>());
 
             // Create shop file
-            CfgBin newShopCfgBin = new CfgBin();
+            CfgBin<CfgTreeNode> newShopCfgBin = new CfgBin<CfgTreeNode>();
             ShopDirectory.AddFile(newFileName, new SubMemoryStream(newShopCfgBin.Save()));
             
             // Add Community

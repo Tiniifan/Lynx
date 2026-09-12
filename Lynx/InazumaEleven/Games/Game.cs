@@ -3,14 +3,16 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Lynx.Level5.Archive.ARC0;
-using Lynx.Tools;
-using Lynx.Level5.Binary;
+using StudioElevenLib.Level5.Archive.ARC0;
+using StudioElevenLib.Tools;
+using StudioElevenLib.Level5.Binary;
 using Lynx.InazumaEleven.Logic;
-using Lynx.Level5.Text;
-using Lynx.Level5.Binary.Logic;
+using StudioElevenLib.Level5.Text;
+using StudioElevenLib.Level5.Binary.Logic;
+using StudioElevenLib.Level5.Binary.Mapper;
+using StudioElevenLib.Level5.Binary.Collections;
 using static Lynx.InazumaEleven.Games.GO.GOSupport;
-using Lynx.Level5.Archive.XPCK;
+using StudioElevenLib.Level5.Archive.XPCK;
 using Type = System.Type;
 using System.Reflection;
 
@@ -365,13 +367,12 @@ namespace Lynx.InazumaEleven.Games
         /// <returns>An array of ICharabase objects.</returns>
         public ICharabase[] GetCharabase()
         {
-            CfgBin charaBaseFile = new CfgBin();
+            CfgBin<CfgTreeNode> charaBaseFile = new CfgBin<CfgTreeNode>();
             charaBaseFile.Open(GetFileContent("chara_base"));
 
             return charaBaseFile.Entries
-                .Where(x => x.GetName() == "CHARA_BASE_INFO_BEGIN")
-                .SelectMany(x => x.Children)
-                .Select(x => (ICharabase)x.ToClass(TypeCharabase))
+                .FlattenEntryToClassList(TypeCharabase, "CHARA_BASE_INFO")
+                .Cast<ICharabase>()
                 .ToArray();
         }
 
@@ -381,19 +382,18 @@ namespace Lynx.InazumaEleven.Games
         /// <param name="charabases">The array of ICharabase objects to save.</param>
         public void SaveCharaBase(ICharabase[] charabases)
         {
-            CfgBin charaBaseFile = new CfgBin();
+            CfgBin<CfgTreeNode> charaBaseFile = new CfgBin<CfgTreeNode>();
             charaBaseFile.Open(GetFileContent("chara_base"));
 
-            Entry baseBegin = charaBaseFile.Entries.Where(x => x.GetName() == "CHARA_BASE_INFO_BEGIN").FirstOrDefault();
+            CfgTreeNode baseBegin = charaBaseFile.Entries.FindByName("CHARA_BASE_INFO_BEGIN");
             baseBegin.Children.Clear();
 
-            baseBegin.Variables[0].Value = charabases.Length;
+            baseBegin.Item.Variables[0].Value = charabases.Length;
 
             for (int i = 0; i < charabases.Count(); i++)
             {
-                Entry newBaseEntry = new Entry("CHARA_BASE_INFO_" + i, new List<Variable>(), Encoding.UTF8);
-                newBaseEntry.SetVariablesFromClass(charabases[i]);
-                baseBegin.Children.Add(newBaseEntry);
+                Entry newBaseEntry = new Entry("CHARA_BASE_INFO", CfgBinMapper.GetVariablesFromInstance(charabases[i]));
+                baseBegin.AddChild(new CfgTreeNode(newBaseEntry));
             }
 
             GetFile("chara_base").ByteContent = charaBaseFile.Save();
@@ -405,13 +405,12 @@ namespace Lynx.InazumaEleven.Games
         /// <returns>An array of ICharaparam objects.</returns>
         public ICharaparam[] GetCharaparams()
         {
-            CfgBin charaparamFile = new CfgBin();
+            CfgBin<CfgTreeNode> charaparamFile = new CfgBin<CfgTreeNode>();
             charaparamFile.Open(GetFileContent("chara_param"));
 
             return charaparamFile.Entries
-                .Where(x => x.GetName() == "CHARA_PARAM_INFO_BEGIN")
-                .SelectMany(x => x.Children)
-                .Select(x => (ICharaparam)x.ToClass(TypeCharaparam))
+                .FlattenEntryToClassList(TypeCharaparam, "CHARA_PARAM_INFO")
+                .Cast<ICharaparam>()
                 .ToArray();
         }
 
@@ -421,19 +420,18 @@ namespace Lynx.InazumaEleven.Games
         /// <param name="charaparams">The array of ICharaparam objects to save.</param>
         public void SaveCharaparams(ICharaparam[] charaparams)
         {
-            CfgBin charaparamFile = new CfgBin();
+            CfgBin<CfgTreeNode> charaparamFile = new CfgBin<CfgTreeNode>();
             charaparamFile.Open(GetFileContent("chara_param"));
 
-            Entry baseBegin = charaparamFile.Entries.Where(x => x.GetName() == "CHARA_PARAM_INFO_BEGIN").FirstOrDefault();
+            CfgTreeNode baseBegin = charaparamFile.Entries.FindByName("CHARA_PARAM_INFO_BEGIN");
             baseBegin.Children.Clear();
 
-            baseBegin.Variables[0].Value = charaparams.Length;
+            baseBegin.Item.Variables[0].Value = charaparams.Length;
 
             for (int i = 0; i < charaparams.Count(); i++)
             {
-                Entry newBaseEntry = new Entry("CHARA_PARAM_INFO_" + i, new List<Variable>(), Encoding.UTF8);
-                newBaseEntry.SetVariablesFromClass(charaparams[i]);
-                baseBegin.Children.Add(newBaseEntry);
+                Entry newBaseEntry = new Entry("CHARA_PARAM_INFO", CfgBinMapper.GetVariablesFromInstance(charaparams[i]));
+                baseBegin.AddChild(new CfgTreeNode(newBaseEntry));
             }
 
             GetFile("chara_param").ByteContent = charaparamFile.Save();
@@ -445,13 +443,12 @@ namespace Lynx.InazumaEleven.Games
         /// <returns>An array of ITrainingUD objects.</returns>
         public ITrainingUD[] GetTrainingUDs()
         {
-            CfgBin charaparamFile = new CfgBin();
+            CfgBin<CfgTreeNode> charaparamFile = new CfgBin<CfgTreeNode>();
             charaparamFile.Open(GetFileContent("chara_param"));
 
             return charaparamFile.Entries
-                .Where(x => x.GetName() == "TRAINING_UD_BEGIN")
-                .SelectMany(x => x.Children)
-                .Select(x => (ITrainingUD)x.ToClass(TypeTrainingUID))
+                .FlattenEntryToClassList(TypeTrainingUID, "TRAINING_UD")
+                .Cast<ITrainingUD>()
                 .ToArray();
         }
 
@@ -461,17 +458,16 @@ namespace Lynx.InazumaEleven.Games
         /// <param name="trainingUDs">The array of ITrainingUD objects to save.</param>
         public void SaveTrainingUD(ITrainingUD[] trainingUDs)
         {
-            CfgBin charaparamFile = new CfgBin();
+            CfgBin<CfgTreeNode> charaparamFile = new CfgBin<CfgTreeNode>();
             charaparamFile.Open(GetFileContent("chara_param"));
 
-            Entry baseBegin = charaparamFile.Entries.Where(x => x.GetName() == "TRAINING_UD_BEGIN").FirstOrDefault();
+            CfgTreeNode baseBegin = charaparamFile.Entries.FindByName("TRAINING_UD_BEGIN");
             baseBegin.Children.Clear();
 
             for (int i = 0; i < trainingUDs.Count(); i++)
             {
-                Entry newBaseEntry = new Entry("TRAINING_UD_INFO_" + i, new List<Variable>(), Encoding.UTF8);
-                newBaseEntry.SetVariablesFromClass(trainingUDs[i]);
-                baseBegin.Children.Add(newBaseEntry);
+                Entry newBaseEntry = new Entry("TRAINING_UD", CfgBinMapper.GetVariablesFromInstance(trainingUDs[i]));
+                baseBegin.AddChild(new CfgTreeNode(newBaseEntry));
             }
 
             GetFile("chara_param").ByteContent = charaparamFile.Save();
@@ -484,13 +480,12 @@ namespace Lynx.InazumaEleven.Games
         /// <returns>An array of IAvatar objects.</returns>
         public IAvatar[] GetAvatars(bool emptyAvatar)
         {
-            CfgBin itemconfigFile = new CfgBin();
+            CfgBin<CfgTreeNode> itemconfigFile = new CfgBin<CfgTreeNode>();
             itemconfigFile.Open(GetFileContent("item_config"));
 
             List<IAvatar> avatars = itemconfigFile.Entries
-                .Where(x => x.GetName() == "ITEM_AVATAR_BEGIN")
-                .SelectMany(x => x.Children)
-                .Select(x => (IAvatar)x.ToClass(TypeAvatar))
+                .FlattenEntryToClassList(TypeAvatar, "ITEM_AVATAR")
+                .Cast<IAvatar>()
                 .ToList();
 
             if (emptyAvatar)
@@ -507,19 +502,18 @@ namespace Lynx.InazumaEleven.Games
         /// <param name="avatars">The array of IAvatar objects to save.</param>
         public void SaveAvatars(IAvatar[] avatars)
         {
-            CfgBin itemconfigFile = new CfgBin();
+            CfgBin<CfgTreeNode> itemconfigFile = new CfgBin<CfgTreeNode>();
             itemconfigFile.Open(GetFileContent("item_config"));
 
-            Entry baseBegin = itemconfigFile.Entries.Where(x => x.GetName() == "ITEM_AVATAR_BEGIN").FirstOrDefault();
+            CfgTreeNode baseBegin = itemconfigFile.Entries.FindByName("ITEM_AVATAR_BEGIN");
             baseBegin.Children.Clear();
 
-            baseBegin.Variables[0].Value = avatars.Length;
+            baseBegin.Item.Variables[0].Value = avatars.Length;
 
             for (int i = 0; i < avatars.Count(); i++)
             {
-                Entry newBaseEntry = new Entry("ITEM_AVATAR_" + i, new List<Variable>(), Encoding.UTF8);
-                newBaseEntry.SetVariablesFromClass(avatars[i]);
-                baseBegin.Children.Add(newBaseEntry);
+                Entry newBaseEntry = new Entry("ITEM_AVATAR", CfgBinMapper.GetVariablesFromInstance(avatars[i]));
+                baseBegin.AddChild(new CfgTreeNode(newBaseEntry));
             }
 
             GetFile("item_config").ByteContent = itemconfigFile.Save();
@@ -531,13 +525,12 @@ namespace Lynx.InazumaEleven.Games
         /// <returns>An array of IAvatarTimeGrowth objects.</returns>
         public IAvatarTimeGrowth[] GetAvatarGrowthTable()
         {
-            CfgBin itemconfigFile = new CfgBin();
+            CfgBin<CfgTreeNode> itemconfigFile = new CfgBin<CfgTreeNode>();
             itemconfigFile.Open(GetFileContent("item_config"));
 
             return itemconfigFile.Entries
-                .Where(x => x.GetName() == "AVATAR_INDEX_BEGIN")
-                .SelectMany(x => x.Children)
-                .Select(x => (IAvatarTimeGrowth)x.ToClass(TypeAvatarTimeGrowth))
+                .FlattenEntryToClassList(TypeAvatarTimeGrowth, "AVATAR_INDEX")
+                .Cast<IAvatarTimeGrowth>()
                 .ToArray();
         }
 
@@ -547,19 +540,18 @@ namespace Lynx.InazumaEleven.Games
         /// <param name="avatars">The array of IAvatarTimeGrowth objects to save.</param>
         public void SaveAvatarGrowthTable(IAvatarTimeGrowth[] avatars)
         {
-            CfgBin itemconfigFile = new CfgBin();
+            CfgBin<CfgTreeNode> itemconfigFile = new CfgBin<CfgTreeNode>();
             itemconfigFile.Open(GetFileContent("item_config"));
 
-            Entry baseBegin = itemconfigFile.Entries.Where(x => x.GetName() == "AVATAR_INDEX_BEGIN").FirstOrDefault();
+            CfgTreeNode baseBegin = itemconfigFile.Entries.FindByName("AVATAR_INDEX_BEGIN");
             baseBegin.Children.Clear();
 
-            baseBegin.Variables[0].Value = avatars.Length;
+            baseBegin.Item.Variables[0].Value = avatars.Length;
 
             for (int i = 0; i < avatars.Count(); i++)
             {
-                Entry newBaseEntry = new Entry("AVATAR_INDEX_" + i, new List<Variable>(), Encoding.UTF8);
-                newBaseEntry.SetVariablesFromClass(avatars[i]);
-                baseBegin.Children.Add(newBaseEntry);
+                Entry newBaseEntry = new Entry("AVATAR_INDEX", CfgBinMapper.GetVariablesFromInstance(avatars[i]));
+                baseBegin.AddChild(new CfgTreeNode(newBaseEntry));
             }
 
             GetFile("item_config").ByteContent = itemconfigFile.Save();
@@ -572,13 +564,12 @@ namespace Lynx.InazumaEleven.Games
         /// <returns>An array of ISkillConfig objects.</returns>
         public ISkillConfig[] GetSkillConfigs(bool emptySkillConfig)
         {
-            CfgBin skillconfigFile = new CfgBin();
+            CfgBin<CfgTreeNode> skillconfigFile = new CfgBin<CfgTreeNode>();
             skillconfigFile.Open(GetFileContent("skill_config"));
 
             List<ISkillConfig> skills = skillconfigFile.Entries
-                .Where(x => x.GetName() == "SKILL_CONFIG_INFO_BEGIN")
-                .SelectMany(x => x.Children)
-                .Select(x => (ISkillConfig)x.ToClass(TypeSkillConfig))
+                .FlattenEntryToClassList(TypeSkillConfig, "SKILL_CONFIG_INFO")
+                .Cast<ISkillConfig>()
                 .ToList();
 
             if (emptySkillConfig)
@@ -595,19 +586,18 @@ namespace Lynx.InazumaEleven.Games
         /// <param name="skills">The array of ISkillConfig objects to save.</param>
         public void SaveSkillConfigs(ISkillConfig[] skills)
         {
-            CfgBin skillconfigFile = new CfgBin();
+            CfgBin<CfgTreeNode> skillconfigFile = new CfgBin<CfgTreeNode>();
             skillconfigFile.Open(GetFileContent("skill_config"));
 
-            Entry baseBegin = skillconfigFile.Entries.Where(x => x.GetName() == "SKILL_CONFIG_INFO_BEGIN").FirstOrDefault();
+            CfgTreeNode baseBegin = skillconfigFile.Entries.FindByName("SKILL_CONFIG_INFO_BEGIN");
             baseBegin.Children.Clear();
 
-            baseBegin.Variables[0].Value = skills.Length;
+            baseBegin.Item.Variables[0].Value = skills.Length;
 
             for (int i = 0; i < skills.Count(); i++)
             {
-                Entry newBaseEntry = new Entry("SKILL_CONFIG_INFO_" + i, new List<Variable>(), Encoding.UTF8);
-                newBaseEntry.SetVariablesFromClass(skills[i]);
-                baseBegin.Children.Add(newBaseEntry);
+                Entry newBaseEntry = new Entry("SKILL_CONFIG_INFO", CfgBinMapper.GetVariablesFromInstance(skills[i]));
+                baseBegin.AddChild(new CfgTreeNode(newBaseEntry));
             }
 
             GetFile("skill_config").ByteContent = skillconfigFile.Save();
@@ -619,13 +609,12 @@ namespace Lynx.InazumaEleven.Games
         /// <returns>An array of ISkillTable objects.</returns>
         public ISkillTable[] GetSkillTable()
         {
-            CfgBin skilltableFile = new CfgBin();
+            CfgBin<CfgTreeNode> skilltableFile = new CfgBin<CfgTreeNode>();
             skilltableFile.Open(GetFileContent("skill_table"));
 
             return skilltableFile.Entries
-                .Where(x => x.GetName() == "SKILL_TABLE_BEGIN")
-                .SelectMany(x => x.Children)
-                .Select(x => (ISkillTable)x.ToClass(TypeSkillTable))
+                .FlattenEntryToClassList(TypeSkillTable, "SKILL_TABLE")
+                .Cast<ISkillTable>()
                 .ToArray();
         }
 
@@ -635,19 +624,18 @@ namespace Lynx.InazumaEleven.Games
         /// <param name="skills">The array of ISkillTable objects to save.</param>
         public void SaveSkillTable(ISkillTable[] skills)
         {
-            CfgBin skilltableFile = new CfgBin();
+            CfgBin<CfgTreeNode> skilltableFile = new CfgBin<CfgTreeNode>();
             skilltableFile.Open(GetFileContent("skill_table"));
 
-            Entry baseBegin = skilltableFile.Entries.Where(x => x.GetName() == "SKILL_TABLE_BEGIN").FirstOrDefault();
+            CfgTreeNode baseBegin = skilltableFile.Entries.FindByName("SKILL_TABLE_BEGIN");
             baseBegin.Children.Clear();
 
-            baseBegin.Variables[0].Value = skills.Length;
+            baseBegin.Item.Variables[0].Value = skills.Length;
 
             for (int i = 0; i < skills.Count(); i++)
             {
-                Entry newBaseEntry = new Entry("SKILL_TABLE_" + i, new List<Variable>(), Encoding.UTF8);
-                newBaseEntry.SetVariablesFromClass(skills[i]);
-                baseBegin.Children.Add(newBaseEntry);
+                Entry newBaseEntry = new Entry("SKILL_TABLE", CfgBinMapper.GetVariablesFromInstance(skills[i]));
+                baseBegin.AddChild(new CfgTreeNode(newBaseEntry));
             }
 
             GetFile("skill_table").ByteContent = skilltableFile.Save();
@@ -660,7 +648,7 @@ namespace Lynx.InazumaEleven.Games
         /// <returns>A dictionary where the key is an INPCBase object and the value is a list of INPCAppear objects.</returns>
         public Dictionary<INPCBase, List<INPCAppear>> GetNPCs(string mapID)
         {
-            CfgBin npcFile = new CfgBin();
+            CfgBin<CfgTreeNode> npcFile = new CfgBin<CfgTreeNode>();
 
             VirtualDirectory mapDirectory = GetDirectory("map");
 
@@ -669,21 +657,18 @@ namespace Lynx.InazumaEleven.Games
                 npcFile.Open(mapDirectory.GetFileFromFullPath($"/{mapID}/{mapID}.npc.bin"));
 
                 INPCBase[] npcBases = npcFile.Entries
-                    .Where(x => x.GetName() == "NPC_BASE_BEGIN")
-                    .SelectMany(x => x.Children)
-                    .Select(x => (INPCBase)x.ToClass(TypeNPCBase))
+                    .FlattenEntryToClassList(TypeNPCBase, "NPC_BASE")
+                    .Cast<INPCBase>()
                     .ToArray();
 
                 INPCPreset[] npcPresets = npcFile.Entries
-                    .Where(x => x.GetName() == "NPC_PRESET_BEGIN")
-                    .SelectMany(x => x.Children)
-                    .Select(x => (INPCPreset)x.ToClass(TypeNPCPreset))
+                    .FlattenEntryToClassList(TypeNPCPreset, "NPC_PRESET")
+                    .Cast<INPCPreset>()
                     .ToArray();
 
                 INPCAppear[] npcAppears = npcFile.Entries
-                    .Where(x => x.GetName() == "NPC_APPEAR_BEGIN")
-                    .SelectMany(x => x.Children)
-                    .Select(x => (INPCAppear)x.ToClass(TypeNPCAppear))
+                    .FlattenEntryToClassList(TypeNPCAppear, "NPC_APPEAR")
+                    .Cast<INPCAppear>()
                     .ToArray();
 
                 return npcBases.ToDictionary(
@@ -718,7 +703,7 @@ namespace Lynx.InazumaEleven.Games
             string fileName = $"{mapID}.npc.bin";
             string filePath = $"{mapID}/{fileName}";
 
-            CfgBin npcFile = new CfgBin();
+            CfgBin<CfgTreeNode> npcFile = new CfgBin<CfgTreeNode>();
 
             // Set encoding
             Encoding shiftJIS = Encoding.GetEncoding("SHIFT-JIS");
@@ -733,77 +718,74 @@ namespace Lynx.InazumaEleven.Games
             }
 
             // Get NPCBase
-            Entry npcBaseBegin = npcFile.Entries.Where(x => x.GetName() == "NPC_BASE_BEGIN").FirstOrDefault();
+            CfgTreeNode npcBaseBegin = npcFile.Entries.FindByName("NPC_BASE_BEGIN");
             if (npcBaseBegin != null)
             {
                 // resets items if it already exists
                 npcBaseBegin.Children.Clear();
-                npcBaseBegin.Variables[0].Value = npcs.Count;
+                npcBaseBegin.Item.Variables[0].Value = npcs.Count;
             }
             else
             {
                 // adds the entry to the npc file if it doesn't exists
-                npcBaseBegin = new Entry("NPC_BASE_BEGIN_0", new List<Variable>() { new Variable(Level5.Binary.Logic.Type.Int, npcs.Count) }, Encoding.UTF8, true);
-                npcFile.Entries.Add(npcBaseBegin);
+                npcBaseBegin = new CfgTreeNode(new Entry("NPC_BASE_BEGIN", new List<Variable>() { new Variable(StudioElevenLib.Level5.Binary.Logic.CfgValueType.Int, npcs.Count) }));
+                npcFile.Entries.AddChild(npcBaseBegin);
+                npcFile.Entries.AddChild(new CfgTreeNode(new Entry("NPC_BASE_END")));
             }
 
             // Get NPCPreset
-            Entry npcPresetBegin = npcFile.Entries.Where(x => x.GetName() == "NPC_PRESET_BEGIN").FirstOrDefault();
+            CfgTreeNode npcPresetBegin = npcFile.Entries.FindByName("NPC_PRESET_BEGIN");
             if (npcPresetBegin != null)
             {
                 // resets items if it already exists
                 npcPresetBegin.Children.Clear();
-                npcPresetBegin.Variables[0].Value = npcs.Count;
+                npcPresetBegin.Item.Variables[0].Value = npcs.Count;
             }
             else
             {
                 // adds the entry to the npc file if it doesn't exists
-                npcPresetBegin = new Entry("NPC_PRESET_BEGIN_0", new List<Variable>() { new Variable(Level5.Binary.Logic.Type.Int, npcs.Count) }, Encoding.UTF8, true);
-                npcFile.Entries.Add(npcPresetBegin);
+                npcPresetBegin = new CfgTreeNode(new Entry("NPC_PRESET_BEGIN", new List<Variable>() { new Variable(StudioElevenLib.Level5.Binary.Logic.CfgValueType.Int, npcs.Count) }));
+                npcFile.Entries.AddChild(npcPresetBegin);
+                npcFile.Entries.AddChild(new CfgTreeNode(new Entry("NPC_PRESET_END")));
             }
 
             // Get NPCAppear
-            Entry npcAppearBegin = npcFile.Entries.Where(x => x.GetName() == "NPC_APPEAR_BEGIN").FirstOrDefault();
+            CfgTreeNode npcAppearBegin = npcFile.Entries.FindByName("NPC_APPEAR_BEGIN");
             if (npcAppearBegin != null)
             {
                 // resets items if it already exists
                 npcAppearBegin.Children.Clear();
-                npcAppearBegin.Variables[0].Value = npcs.Values.Sum(list => list.Count);
+                npcAppearBegin.Item.Variables[0].Value = npcs.Values.Sum(list => list.Count);
             }
             else
             {
                 // adds the entry to the npc file if it doesn't exists
-                npcAppearBegin = new Entry("NPC_APPEAR_BEGIN_0", new List<Variable>() { new Variable(Level5.Binary.Logic.Type.Int, npcs.Values.Sum(list => list.Count)) }, Encoding.UTF8, true);
-                npcFile.Entries.Add(npcAppearBegin);
+                npcAppearBegin = new CfgTreeNode(new Entry("NPC_APPEAR_BEGIN", new List<Variable>() { new Variable(StudioElevenLib.Level5.Binary.Logic.CfgValueType.Int, npcs.Values.Sum(list => list.Count)) }));
+                npcFile.Entries.AddChild(npcAppearBegin);
+                npcFile.Entries.AddChild(new CfgTreeNode(new Entry("NPC_APPEAR_END")));
             }
 
-            int npcIndex = 0;
             int npcCount = 0;
 
             // Loop on each npc data
             foreach (KeyValuePair<INPCBase, List<INPCAppear>> npc in npcs)
             {
                 // Add new item on NPCBase entry
-                Entry newNPCBaseEntry = new Entry("NPC_BASE_" + npcIndex, new List<Variable>(), shiftJIS);
-                newNPCBaseEntry.SetVariablesFromClass(npc.Key);
-                npcBaseBegin.Children.Add(newNPCBaseEntry);
+                Entry newNPCBaseEntry = new Entry("NPC_BASE", CfgBinMapper.GetVariablesFromInstance(npc.Key));
+                npcBaseBegin.AddChild(new CfgTreeNode(newNPCBaseEntry));
 
                 // Add an NPCPreset based on NPCID and NPCAppear
                 NPCPreset newNPCPreset = new NPCPreset(npc.Key.NPCID, npcCount, npc.Value.Count);
-                Entry newNPresetEntry = new Entry("NPC_PRESET_" + npcIndex, new List<Variable>(), shiftJIS);
-                newNPresetEntry.SetVariablesFromClass(newNPCPreset);
-                npcPresetBegin.Children.Add(newNPresetEntry);
+                Entry newNPresetEntry = new Entry("NPC_PRESET", CfgBinMapper.GetVariablesFromInstance(newNPCPreset));
+                npcPresetBegin.AddChild(new CfgTreeNode(newNPresetEntry));
 
                 // Add all NPCAppear items linked to this NPCBase
                 for (int i = 0; i < npc.Value.Count; i++)
                 {
-                    Entry newNPCAppearEntry = new Entry("NPC_APPEAR_" + npcCount, new List<Variable>(), shiftJIS);
-                    newNPCAppearEntry.SetVariablesFromClass(npc.Value[i]);
-                    npcAppearBegin.Children.Add(newNPCAppearEntry);
+                    Entry newNPCAppearEntry = new Entry("NPC_APPEAR", CfgBinMapper.GetVariablesFromInstance(npc.Value[i]));
+                    npcAppearBegin.AddChild(new CfgTreeNode(newNPCAppearEntry));
                     npcCount++;
                 }
-
-                npcIndex++;
             }
 
             // Save the file
@@ -817,7 +799,7 @@ namespace Lynx.InazumaEleven.Games
         /// <returns>A dictionary where the key is an ITalkInfo object and the value is a list of ITalkConfig objects.</returns>
         public Dictionary<ITalkInfo, List<ITalkConfig>> GetEvents(string mapID)
         {
-            CfgBin npcFile = new CfgBin();
+            CfgBin<CfgTreeNode> npcFile = new CfgBin<CfgTreeNode>();
 
             VirtualDirectory mapDirectory = GetDirectory("map");
 
@@ -826,15 +808,13 @@ namespace Lynx.InazumaEleven.Games
                 npcFile.Open(mapDirectory.GetFileFromFullPath($"/{mapID}/{mapID}.talk.bin"));
 
                 ITalkInfo[] talkInfos = npcFile.Entries
-                    .Where(x => x.GetName() == "TALK_INFO_BEGIN")
-                    .SelectMany(x => x.Children)
-                    .Select(x => (ITalkInfo)x.ToClass(TypeTalkInfo))
+                    .FlattenEntryToClassList(TypeTalkInfo, "TALK_INFO")
+                    .Cast<ITalkInfo>()
                     .ToArray();
 
                 ITalkConfig[] talkConfigs = npcFile.Entries
-                    .Where(x => x.GetName() == "TALK_CONFIG_BEGIN")
-                    .SelectMany(x => x.Children)
-                    .Select(x => (ITalkConfig)x.ToClass(TypeTalkConfig))
+                    .FlattenEntryToClassList(TypeTalkConfig, "TALK_CONFIG")
+                    .Cast<ITalkConfig>()
                     .ToArray();
 
                 return talkInfos.ToDictionary(
@@ -857,7 +837,7 @@ namespace Lynx.InazumaEleven.Games
             string fileName = $"{mapID}.talk.bin";
             string filePath = $"{mapID}/{fileName}";
 
-            CfgBin npcFile = new CfgBin();
+            CfgBin<CfgTreeNode> npcFile = new CfgBin<CfgTreeNode>();
 
             // Set encoding
             Encoding shiftJIS = Encoding.GetEncoding("SHIFT-JIS");
@@ -872,36 +852,37 @@ namespace Lynx.InazumaEleven.Games
             }
 
             // Get TalkInfo
-            Entry talkInfoBegin = npcFile.Entries.Where(x => x.GetName() == "TALK_INFO_BEGIN").FirstOrDefault();
+            CfgTreeNode talkInfoBegin = npcFile.Entries.FindByName("TALK_INFO_BEGIN");
             if (talkInfoBegin != null)
             {
                 // resets items if it already exists
                 talkInfoBegin.Children.Clear();
-                talkInfoBegin.Variables[0].Value = events.Count;
+                talkInfoBegin.Item.Variables[0].Value = events.Count;
             }
             else
             {
                 // adds the entry to the npc file if it doesn't exists
-                talkInfoBegin = new Entry("TALK_INFO_BEGIN_0", new List<Variable>() { new Variable(Level5.Binary.Logic.Type.Int, events.Count) }, Encoding.UTF8, true);
-                npcFile.Entries.Add(talkInfoBegin);
+                talkInfoBegin = new CfgTreeNode(new Entry("TALK_INFO_BEGIN", new List<Variable>() { new Variable(StudioElevenLib.Level5.Binary.Logic.CfgValueType.Int, events.Count) }));
+                npcFile.Entries.AddChild(talkInfoBegin);
+                npcFile.Entries.AddChild(new CfgTreeNode(new Entry("TALK_INFO_END")));
             }
 
             // Get TalkConfig
-            Entry talkConfigBegin = npcFile.Entries.Where(x => x.GetName() == "TALK_CONFIG_BEGIN").FirstOrDefault();
+            CfgTreeNode talkConfigBegin = npcFile.Entries.FindByName("TALK_CONFIG_BEGIN");
             if (talkConfigBegin != null)
             {
                 // resets items if it already exists
                 talkConfigBegin.Children.Clear();
-                talkConfigBegin.Variables[0].Value = events.Values.Sum(list => list.Count);
+                talkConfigBegin.Item.Variables[0].Value = events.Values.Sum(list => list.Count);
             }
             else
             {
                 // adds the entry to the npc file if it doesn't exists
-                talkConfigBegin = new Entry("TALK_CONFIG_BEGIN_0", new List<Variable>() { new Variable(Level5.Binary.Logic.Type.Int, events.Values.Sum(list => list.Count)) }, Encoding.UTF8, true);
-                npcFile.Entries.Add(talkConfigBegin);
+                talkConfigBegin = new CfgTreeNode(new Entry("TALK_CONFIG_BEGIN", new List<Variable>() { new Variable(StudioElevenLib.Level5.Binary.Logic.CfgValueType.Int, events.Values.Sum(list => list.Count)) }));
+                npcFile.Entries.AddChild(talkConfigBegin);
+                npcFile.Entries.AddChild(new CfgTreeNode(new Entry("TALK_CONFIG_END")));
             }
 
-            int eventIndex = 0;
             int eventCount = 0;
 
             // Loop on each npc data
@@ -909,20 +890,16 @@ namespace Lynx.InazumaEleven.Games
             {
                 // Add a TalkInfo based on TalkConfig
                 TalkInfo newTalkInfo = new TalkInfo(myEvent.Key.TalkID, eventCount, myEvent.Value.Count);
-                Entry newTalkInfoEntry = new Entry("TALK_INFO_" + eventIndex, new List<Variable>(), shiftJIS);
-                newTalkInfoEntry.SetVariablesFromClass(newTalkInfo);
-                talkInfoBegin.Children.Add(newTalkInfoEntry);
+                Entry newTalkInfoEntry = new Entry("TALK_INFO", CfgBinMapper.GetVariablesFromInstance(newTalkInfo));
+                talkInfoBegin.AddChild(new CfgTreeNode(newTalkInfoEntry));
 
                 // Add all TalkConfig items linked to this TalkInfo
                 for (int i = 0; i < myEvent.Value.Count; i++)
                 {
-                    Entry newNPCTalkConfigEntry = new Entry("TALK_CONFIG_" + eventCount, new List<Variable>(), shiftJIS);
-                    newNPCTalkConfigEntry.SetVariablesFromClass(myEvent.Value[i]);
-                    talkConfigBegin.Children.Add(newNPCTalkConfigEntry);
+                    Entry newNPCTalkConfigEntry = new Entry("TALK_CONFIG", CfgBinMapper.GetVariablesFromInstance(myEvent.Value[i]));
+                    talkConfigBegin.AddChild(new CfgTreeNode(newNPCTalkConfigEntry));
                     eventCount++;
                 }
-
-                eventIndex++;
             }
 
             // Save the file
@@ -967,13 +944,12 @@ namespace Lynx.InazumaEleven.Games
         {
             VirtualDirectory shopDirectory = GetDirectory("shop");
 
-            CfgBin shopFile = new CfgBin();
+            CfgBin<CfgTreeNode> shopFile = new CfgBin<CfgTreeNode>();
             shopFile.Open(shopDirectory.GetFileFromFullPath($"/shop_{shopID}.cfg.bin"));
 
             return shopFile.Entries
-                .Where(x => x.GetName() == "SHOP_CONFIG_INFO_BEGIN")
-                .SelectMany(x => x.Children)
-                .Select(x => (IShopConfig)x.ToClass(TypeShopConfig))
+                .FlattenEntryToClassList(TypeShopConfig, "SHOP_CONFIG_INFO")
+                .Cast<IShopConfig>()
                 .ToArray();
         }
 
@@ -986,10 +962,10 @@ namespace Lynx.InazumaEleven.Games
         {
             VirtualDirectory shopDirectory = GetDirectory("shop");
 
-            CfgBin shopFile = new CfgBin();
+            CfgBin<CfgTreeNode> shopFile = new CfgBin<CfgTreeNode>();
             shopFile.Open(shopDirectory.GetFileFromFullPath($"/shop_{shopID}.cfg.bin"));
 
-            Entry baseBegin = shopFile.Entries.Where(x => x.GetName() == "SHOP_CONFIG_INFO_BEGIN").FirstOrDefault();
+            CfgTreeNode baseBegin = shopFile.Entries.FindByName("SHOP_CONFIG_INFO_BEGIN");
             int crc32ShopID = unchecked((int)Crc32.Compute(Encoding.UTF8.GetBytes(shopID)));
 
             if (baseBegin != null)
@@ -998,27 +974,26 @@ namespace Lynx.InazumaEleven.Games
             }
             else
             {
-                baseBegin = new Entry("SHOP_CONFIG_INFO_BEGIN_0", new List<Variable>() {
-                    new Variable(Level5.Binary.Logic.Type.Int, crc32ShopID),
-                    new Variable(Level5.Binary.Logic.Type.Int, shop.Length)
-                }, Encoding.UTF8, true);
-                shopFile.Entries.Add(baseBegin);
+                baseBegin = new CfgTreeNode(new Entry("SHOP_CONFIG_INFO_BEGIN", new List<Variable>() {
+                    new Variable(StudioElevenLib.Level5.Binary.Logic.CfgValueType.Int, crc32ShopID),
+                    new Variable(StudioElevenLib.Level5.Binary.Logic.CfgValueType.Int, shop.Length)
+                }));
+                shopFile.Entries.AddChild(baseBegin);
+                shopFile.Entries.AddChild(new CfgTreeNode(new Entry("SHOP_CONFIG_INFO_END")));
             }
 
-            baseBegin.Variables[0].Value = crc32ShopID;
-            baseBegin.Variables[1].Value = shop.Length;
+            baseBegin.Item.Variables[0].Value = crc32ShopID;
+            baseBegin.Item.Variables[1].Value = shop.Length;
 
             for (int i = 0; i < shop.Count(); i++)
             {
-                Entry newBaseEntry = new Entry("SHOP_CONFIG_INFO_" + i, new List<Variable>(), Encoding.UTF8);
-
                 if (shop[i].Condition.ToString() == "0" || shop[i].Condition.ToString() == "")
                 {
                     shop[i].Condition = 0;
                 }
 
-                newBaseEntry.SetVariablesFromClass(shop[i]);
-                baseBegin.Children.Add(newBaseEntry);
+                Entry newBaseEntry = new Entry("SHOP_CONFIG_INFO", CfgBinMapper.GetVariablesFromInstance(shop[i]));
+                baseBegin.AddChild(new CfgTreeNode(newBaseEntry));
             }
 
             shopDirectory.Files[$"shop_{shopID}.cfg.bin"].ByteContent = shopFile.Save();
@@ -1030,13 +1005,12 @@ namespace Lynx.InazumaEleven.Games
         /// <returns>An array of ICommunityInfo objects representing the community information.</returns>
         public ICommunityInfo[] GetCommunities()
         {
-            CfgBin communityFile = new CfgBin();
+            CfgBin<CfgTreeNode> communityFile = new CfgBin<CfgTreeNode>();
             communityFile.Open(GetFileContent("community_config"));
 
             return communityFile.Entries
-                .Where(x => x.GetName() == "COMMUNITY_INFO_BEGIN")
-                .SelectMany(x => x.Children)
-                .Select(x => (ICommunityInfo)x.ToClass(TypeCommunityInfo))
+                .FlattenEntryToClassList(TypeCommunityInfo, "COMMUNITY_INFO")
+                .Cast<ICommunityInfo>()
                 .ToArray();
         }
 
@@ -1046,19 +1020,18 @@ namespace Lynx.InazumaEleven.Games
         /// <param name="communities">An array of ICommunityInfo objects representing the community information.</param>
         public void SaveCommunities(ICommunityInfo[] communities)
         {
-            CfgBin communityFile = new CfgBin();
+            CfgBin<CfgTreeNode> communityFile = new CfgBin<CfgTreeNode>();
             communityFile.Open(GetFileContent("community_config"));
 
-            Entry baseBegin = communityFile.Entries.Where(x => x.GetName() == "COMMUNITY_INFO_BEGIN").FirstOrDefault();
+            CfgTreeNode baseBegin = communityFile.Entries.FindByName("COMMUNITY_INFO_BEGIN");
             baseBegin.Children.Clear();
 
-            baseBegin.Variables[0].Value = communities.Length;
+            baseBegin.Item.Variables[0].Value = communities.Length;
 
             for (int i = 0; i < communities.Count(); i++)
             {
-                Entry newBaseEntry = new Entry("COMMUNITY_INFO_" + i, new List<Variable>(), Encoding.UTF8);
-                newBaseEntry.SetVariablesFromClass(communities[i]);
-                baseBegin.Children.Add(newBaseEntry);
+                Entry newBaseEntry = new Entry("COMMUNITY_INFO", CfgBinMapper.GetVariablesFromInstance(communities[i]));
+                baseBegin.AddChild(new CfgTreeNode(newBaseEntry));
             }
 
             GetFile("community_config").ByteContent = communityFile.Save();
@@ -1073,16 +1046,15 @@ namespace Lynx.InazumaEleven.Games
         {
             VirtualDirectory soccerDirectory = GetDirectory("soccer");
 
-            CfgBin routeFile = new CfgBin();
+            CfgBin<CfgTreeNode> routeFile = new CfgBin<CfgTreeNode>();
             routeFile.Open(soccerDirectory.GetFileFromFullPath(filename));
 
             var routes = routeFile.Entries
-                .Where(x => x.GetName() == "ROUTE_CONFIG_BEGIN")
-                .SelectMany(x => x.Children)
-                .Select(x => (IRouteConfig)x.ToClass(TypeRouteConfig))
+                .FlattenEntryToClassList(TypeRouteConfig, "ROUTE_CONFIG")
+                .Cast<IRouteConfig>()
                 .ToArray();
 
-            int nameID = Convert.ToInt32(routeFile.Entries[0].Variables[1].Value);
+            int nameID = Convert.ToInt32(routeFile.Entries.Children[0].Item.Variables[1].Value);
 
             return (routes, nameID);
         }
@@ -1097,7 +1069,7 @@ namespace Lynx.InazumaEleven.Games
         {
             VirtualDirectory soccerDirectory = GetDirectory("soccer");
 
-            CfgBin routeFile = new CfgBin();
+            CfgBin<CfgTreeNode> routeFile = new CfgBin<CfgTreeNode>();
 
             // Set encoding
             Encoding shiftJIS = Encoding.GetEncoding("SHIFT-JIS");
@@ -1111,27 +1083,27 @@ namespace Lynx.InazumaEleven.Games
             else
             {
                 // Create the entry
-                Entry communityHeader = new Entry("ROUTE_CONFIG_BEGIN_0",
+                CfgTreeNode communityHeader = new CfgTreeNode(new Entry("ROUTE_CONFIG_BEGIN",
                     new List<Variable>() {
-                        new Variable(Level5.Binary.Logic.Type.Int, routes.Count()),
-                        new Variable(Level5.Binary.Logic.Type.Int, nameCRC32)
-                    }, shiftJIS, true);
+                        new Variable(StudioElevenLib.Level5.Binary.Logic.CfgValueType.Int, routes.Count()),
+                        new Variable(StudioElevenLib.Level5.Binary.Logic.CfgValueType.Int, nameCRC32)
+                    }));
 
                 // Insert
-                routeFile.Entries.Add(communityHeader);
+                routeFile.Entries.AddChild(communityHeader);
+                routeFile.Entries.AddChild(new CfgTreeNode(new Entry("ROUTE_CONFIG_END")));
             }
 
-            Entry baseBegin = routeFile.Entries.Where(x => x.GetName() == "ROUTE_CONFIG_BEGIN").FirstOrDefault();
+            CfgTreeNode baseBegin = routeFile.Entries.FindByName("ROUTE_CONFIG_BEGIN");
             baseBegin.Children.Clear();
 
-            baseBegin.Variables[0].Value = routes.Length;
-            baseBegin.Variables[1].Value = nameCRC32;
+            baseBegin.Item.Variables[0].Value = routes.Length;
+            baseBegin.Item.Variables[1].Value = nameCRC32;
 
             for (int i = 0; i < routes.Count(); i++)
             {
-                Entry newBaseEntry = new Entry("ROUTE_CONFIG_" + i, new List<Variable>(), shiftJIS);
-                newBaseEntry.SetVariablesFromClass(routes[i]);
-                baseBegin.Children.Add(newBaseEntry);
+                Entry newBaseEntry = new Entry("ROUTE_CONFIG", CfgBinMapper.GetVariablesFromInstance(routes[i]));
+                baseBegin.AddChild(new CfgTreeNode(newBaseEntry));
             }
 
             soccerDirectory.Files[filename].ByteContent = routeFile.Save();
@@ -1143,13 +1115,12 @@ namespace Lynx.InazumaEleven.Games
         /// <returns>An array of ISoccerInfo objects representing the soccer information.</returns>
         public ISoccerInfo[] GetSoccers()
         {
-            CfgBin soccerFile = new CfgBin();
+            CfgBin<CfgTreeNode> soccerFile = new CfgBin<CfgTreeNode>();
             soccerFile.Open(GetFileContent("soccer_config"));
 
             return soccerFile.Entries
-                .Where(x => x.GetName() == "SOCCER_INFO_BEGIN")
-                .SelectMany(x => x.Children)
-                .Select(x => (ISoccerInfo)x.ToClass(TypeSoccerInfo))
+                .FlattenEntryToClassList(TypeSoccerInfo, "SOCCER_INFO")
+                .Cast<ISoccerInfo>()
                 .ToArray();
         }
 
@@ -1159,19 +1130,18 @@ namespace Lynx.InazumaEleven.Games
         /// <param name="soccers">An array of ISoccerInfo objects representing the soccer information.</param>
         public void SaveSoccers(ISoccerInfo[] soccers)
         {
-            CfgBin soccerFile = new CfgBin();
+            CfgBin<CfgTreeNode> soccerFile = new CfgBin<CfgTreeNode>();
             soccerFile.Open(GetFileContent("soccer_config"));
 
-            Entry baseBegin = soccerFile.Entries.Where(x => x.GetName() == "SOCCER_INFO_BEGIN").FirstOrDefault();
+            CfgTreeNode baseBegin = soccerFile.Entries.FindByName("SOCCER_INFO_BEGIN");
             baseBegin.Children.Clear();
 
-            baseBegin.Variables[0].Value = soccers.Length;
+            baseBegin.Item.Variables[0].Value = soccers.Length;
 
             for (int i = 0; i < soccers.Count(); i++)
             {
-                Entry newBaseEntry = new Entry("SOCCER_INFO_" + i, new List<Variable>(), Encoding.UTF8);
-                newBaseEntry.SetVariablesFromClass(soccers[i]);
-                baseBegin.Children.Add(newBaseEntry);
+                Entry newBaseEntry = new Entry("SOCCER_INFO", CfgBinMapper.GetVariablesFromInstance(soccers[i]));
+                baseBegin.AddChild(new CfgTreeNode(newBaseEntry));
             }
 
             GetFile("soccer_config").ByteContent = soccerFile.Save();
@@ -1183,13 +1153,12 @@ namespace Lynx.InazumaEleven.Games
         /// <returns>An array of ITeamParamInfo objects representing the team parameters.</returns>
         public ITeamParamInfo[] GetTeamParams()
         {
-            CfgBin teamParamFile = new CfgBin();
+            CfgBin<CfgTreeNode> teamParamFile = new CfgBin<CfgTreeNode>();
             teamParamFile.Open(GetFileContent("team_param"));
 
             return teamParamFile.Entries
-                .Where(x => x.GetName() == "TEAM_PARAM_INFO_BEGIN")
-                .SelectMany(x => x.Children)
-                .Select(x => (ITeamParamInfo)x.ToClass(TypeTeamParamInfo))
+                .FlattenEntryToClassList(TypeTeamParamInfo, "TEAM_PARAM_INFO")
+                .Cast<ITeamParamInfo>()
                 .ToArray();
         }
 
@@ -1199,19 +1168,18 @@ namespace Lynx.InazumaEleven.Games
         /// <param name="teams">An array of ITeamParamInfo objects representing the team parameters.</param>
         public void SaveTeamParams(ITeamParamInfo[] teams)
         {
-            CfgBin teamParamFile = new CfgBin();
+            CfgBin<CfgTreeNode> teamParamFile = new CfgBin<CfgTreeNode>();
             teamParamFile.Open(GetFileContent("team_param"));
 
-            Entry baseBegin = teamParamFile.Entries.Where(x => x.GetName() == "TEAM_PARAM_INFO_BEGIN").FirstOrDefault();
+            CfgTreeNode baseBegin = teamParamFile.Entries.FindByName("TEAM_PARAM_INFO_BEGIN");
             baseBegin.Children.Clear();
 
-            baseBegin.Variables[0].Value = teams.Length;
+            baseBegin.Item.Variables[0].Value = teams.Length;
 
             for (int i = 0; i < teams.Count(); i++)
             {
-                Entry newBaseEntry = new Entry("TEAM_PARAM_INFO_" + i, new List<Variable>(), Encoding.UTF8);
-                newBaseEntry.SetVariablesFromClass(teams[i]);
-                baseBegin.Children.Add(newBaseEntry);
+                Entry newBaseEntry = new Entry("TEAM_PARAM_INFO", CfgBinMapper.GetVariablesFromInstance(teams[i]));
+                baseBegin.AddChild(new CfgTreeNode(newBaseEntry));
             }
 
             GetFile("team_param").ByteContent = teamParamFile.Save();
@@ -1223,22 +1191,15 @@ namespace Lynx.InazumaEleven.Games
         /// <returns>An array of objects representing the team configurations (IStoryTeamInfo or IEncountTeamInfo).</returns>
         public object[] GetTeamConfig()
         {
-            CfgBin teamConfigFile = new CfgBin();
+            CfgBin<CfgTreeNode> teamConfigFile = new CfgBin<CfgTreeNode>();
             teamConfigFile.Open(GetFileContent("team_config"));
 
             return teamConfigFile.Entries
-                .Where(x => x.GetName() == "STORY_TEAM_INFO_BEGIN" || x.GetName() == "ENCOUNT_TEAM_INFO_BEGIN")
-                .SelectMany(x => x.Children)
-                .Select(x =>
-                {
-                    if (x.Variables.Count == 53)
-                        return (IStoryTeamInfo)x.ToClass(TypeStoryTeamInfo) as object;
-                    else if (x.Variables.Count == 20)
-                        return (IEncountTeamInfo)x.ToClass(TypeEncountTeamInfo) as object;
-                    else
-                        return null;
-                })
-                .Where(x => x != null)
+                .FlattenEntryToClassList(TypeStoryTeamInfo, "STORY_TEAM_INFO")
+                .Cast<object>()
+                .Concat(teamConfigFile.Entries
+                    .FlattenEntryToClassList(TypeEncountTeamInfo, "ENCOUNT_TEAM_INFO")
+                    .Cast<object>())
                 .ToArray();
         }
 
@@ -1249,31 +1210,29 @@ namespace Lynx.InazumaEleven.Games
         /// <param name="encounterTeams">An array of IEncountTeamInfo objects representing the encounter teams.</param>
         public void SaveTeamConfig(IStoryTeamInfo[] storyTeams, IEncountTeamInfo[] encounterTeams)
         {
-            CfgBin teamConfigFile = new CfgBin();
+            CfgBin<CfgTreeNode> teamConfigFile = new CfgBin<CfgTreeNode>();
             teamConfigFile.Open(GetFileContent("team_config"));
 
-            Entry storyBaseBegin = teamConfigFile.Entries.Where(x => x.GetName() == "STORY_TEAM_INFO_BEGIN").FirstOrDefault();
+            CfgTreeNode storyBaseBegin = teamConfigFile.Entries.FindByName("STORY_TEAM_INFO_BEGIN");
             storyBaseBegin.Children.Clear();
 
-            storyBaseBegin.Variables[0].Value = storyTeams.Length;
+            storyBaseBegin.Item.Variables[0].Value = storyTeams.Length;
 
             for (int i = 0; i < storyTeams.Count(); i++)
             {
-                Entry newBaseEntry = new Entry("STORY_TEAM_INFO_" + i, new List<Variable>(), Encoding.UTF8);
-                newBaseEntry.SetVariablesFromClass(storyTeams[i]);
-                storyBaseBegin.Children.Add(newBaseEntry);
+                Entry newBaseEntry = new Entry("STORY_TEAM_INFO", CfgBinMapper.GetVariablesFromInstance(storyTeams[i]));
+                storyBaseBegin.AddChild(new CfgTreeNode(newBaseEntry));
             }
 
-            Entry encountBaseBegin = teamConfigFile.Entries.Where(x => x.GetName() == "ENCOUNT_TEAM_INFO_BEGIN").FirstOrDefault();
+            CfgTreeNode encountBaseBegin = teamConfigFile.Entries.FindByName("ENCOUNT_TEAM_INFO_BEGIN");
             encountBaseBegin.Children.Clear();
 
-            encountBaseBegin.Variables[0].Value = encounterTeams.Length;
+            encountBaseBegin.Item.Variables[0].Value = encounterTeams.Length;
 
             for (int i = 0; i < encounterTeams.Count(); i++)
             {
-                Entry newBaseEntry = new Entry("ENCOUNT_TEAM_INFO_" + i, new List<Variable>(), Encoding.UTF8);
-                newBaseEntry.SetVariablesFromClass(encounterTeams[i]);
-                encountBaseBegin.Children.Add(newBaseEntry);
+                Entry newBaseEntry = new Entry("ENCOUNT_TEAM_INFO", CfgBinMapper.GetVariablesFromInstance(encounterTeams[i]));
+                encountBaseBegin.AddChild(new CfgTreeNode(newBaseEntry));
             }
 
             GetFile("team_config").ByteContent = teamConfigFile.Save();
@@ -1286,88 +1245,73 @@ namespace Lynx.InazumaEleven.Games
         /// <returns>An array of IItemConfig objects representing the items.</returns>
         public IItemConfig[] GetItems(string itemType)
         {
-            CfgBin itemconfigFile = new CfgBin();
+            CfgBin<CfgTreeNode> itemconfigFile = new CfgBin<CfgTreeNode>();
             itemconfigFile.Open(GetFileContent("item_config"));
 
             switch (itemType)
             {
                 case "equipment":
                     return itemconfigFile.Entries
-                        .Where(x => x.GetName() == "ITEM_EQUIPMENT_BEGIN")
-                        .SelectMany(x => x.Children)
-                        .Select(x => (IItemConfig)x.ToClass(TypeItemConfig))
+                        .FlattenEntryToClassList(TypeItemConfig, "ITEM_EQUIPMENT")
+                        .Cast<IItemConfig>()
                         .ToArray();
                 case "consumable":
                     return itemconfigFile.Entries
-                        .Where(x => x.GetName() == "ITEM_CONSUME_BEGIN")
-                        .SelectMany(x => x.Children)
-                        .Select(x => (IItemConfig)x.ToClass(TypeItemConfig))
+                        .FlattenEntryToClassList(TypeItemConfig, "ITEM_CONSUME")
+                        .Cast<IItemConfig>()
                         .ToArray();
                 case "important":
                     return itemconfigFile.Entries
-                        .Where(x => x.GetName() == "ITEM_IMPORTANT_BEGIN")
-                        .SelectMany(x => x.Children)
-                        .Select(x => (IItemConfig)x.ToClass(TypeItemConfig))
+                        .FlattenEntryToClassList(TypeItemConfig, "ITEM_IMPORTANT")
+                        .Cast<IItemConfig>()
                         .ToArray();
                 case "uniform":
                     return itemconfigFile.Entries
-                        .Where(x => x.GetName() == "ITEM_UNIFORM_BEGIN")
-                        .SelectMany(x => x.Children)
-                        .Select(x => (IItemConfig)x.ToClass(TypeItemConfigUniform))
+                        .FlattenEntryToClassList(TypeItemConfigUniform, "ITEM_UNIFORM")
+                        .Cast<IItemConfig>()
                         .ToArray();
                 case "kizunax":
                     return itemconfigFile.Entries
-                        .Where(x => x.GetName() == "ITEM_KIZUNAX_BEGIN")
-                        .SelectMany(x => x.Children)
-                        .Select(x => (IItemConfig)x.ToClass(TypeItemConfigPalpackCard))
+                        .FlattenEntryToClassList(TypeItemConfigPalpackCard, "ITEM_KIZUNAX")
+                        .Cast<IItemConfig>()
                         .ToArray();
                 case "avatar":
                     return itemconfigFile.Entries
-                        .Where(x => x.GetName() == "ITEM_AVATAR_BEGIN")
-                        .SelectMany(x => x.Children)
-                        .Select(x => (IItemConfig)x.ToClass(TypeItemConfigAvatar))
+                        .FlattenEntryToClassList(TypeItemConfigAvatar, "ITEM_AVATAR")
+                        .Cast<IItemConfig>()
                         .ToArray();
                 case "director":
                     return itemconfigFile.Entries
-                        .Where(x => x.GetName() == "ITEM_DIRECTOR_BEGIN")
-                        .SelectMany(x => x.Children)
-                        .Select(x => (IItemConfig)x.ToClass(TypeItemConfigDirector))
+                        .FlattenEntryToClassList(TypeItemConfigDirector, "ITEM_DIRECTOR")
+                        .Cast<IItemConfig>()
                         .ToArray();
                 case "all":
-                    string[] itemTypesAvatar = { "ITEM_AVATAR_BEGIN" };
-                    string[] itemTypesUniform = { "ITEM_UNIFORM_BEGIN" };
-                    string[] itemTypesDirector = { "ITEM_DIRECTOR_BEGIN" };
-                    string[] itemTypesPalpack = { "ITEM_KIZUNAX_BEGIN" };
-                    string[] itemTypesOther = { "ITEM_EQUIPMENT_BEGIN", "ITEM_CONSUME_BEGIN", "ITEM_IMPORTANT_BEGIN" };
+                    string[] itemTypesOther = { "ITEM_EQUIPMENT", "ITEM_CONSUME", "ITEM_IMPORTANT" };
 
                     var avatarItems = itemconfigFile.Entries
-                        .Where(x => itemTypesAvatar.Contains(x.GetName()))
-                        .SelectMany(x => x.Children)
-                        .Select(x => (IItemConfig)x.ToClass(TypeItemConfigAvatar))
+                        .FlattenEntryToClassList(TypeItemConfigAvatar, "ITEM_AVATAR")
+                        .Cast<IItemConfig>()
                         .ToList();
 
                     var directorItems = itemconfigFile.Entries
-                        .Where(x => itemTypesDirector.Contains(x.GetName()))
-                        .SelectMany(x => x.Children)
-                        .Select(x => (IItemConfig)x.ToClass(TypeItemConfigDirector))
+                        .FlattenEntryToClassList(TypeItemConfigDirector, "ITEM_DIRECTOR")
+                        .Cast<IItemConfig>()
                         .ToList();
 
                     var uniformItems = itemconfigFile.Entries
-                        .Where(x => itemTypesUniform.Contains(x.GetName()))
-                        .SelectMany(x => x.Children)
-                        .Select(x => (IItemConfig)x.ToClass(TypeItemConfigUniform))
+                        .FlattenEntryToClassList(TypeItemConfigUniform, "ITEM_UNIFORM")
+                        .Cast<IItemConfig>()
                         .ToList();
 
                     var palpackItems = itemconfigFile.Entries
-                        .Where(x => itemTypesPalpack.Contains(x.GetName()))
-                        .SelectMany(x => x.Children)
-                        .Select(x => (IItemConfig)x.ToClass(TypeItemConfigPalpackCard))
+                        .FlattenEntryToClassList(TypeItemConfigPalpackCard, "ITEM_KIZUNAX")
+                        .Cast<IItemConfig>()
                         .ToList();
 
-                    var otherItems = itemconfigFile.Entries
-                        .Where(x => itemTypesOther.Contains(x.GetName()))
-                        .SelectMany(x => x.Children)
-                        .Select(x => (IItemConfig)x.ToClass(TypeItemConfig))
+                    var otherItems = itemTypesOther
+                        .SelectMany(name => itemconfigFile.Entries
+                            .FlattenEntryToClassList(TypeItemConfig, name)
+                            .Cast<IItemConfig>())
                         .ToList();
 
                     otherItems.AddRange(avatarItems.Select(x => (IItemConfig)x));
@@ -1390,48 +1334,47 @@ namespace Lynx.InazumaEleven.Games
         public void SaveItems<T>(T[] items) where T : class, IItemConfig
         {
             string beginName;
-            string prefix;
+            string childName;
 
             if (typeof(T) == TypeItemConfigUniform)
             {
                 beginName = "ITEM_UNIFORM_BEGIN";
-                prefix = "ITEM_UNIFORM_";
+                childName = "ITEM_UNIFORM";
             }
             else if (typeof(T) == TypeItemConfigPalpackCard)
             {
                 beginName = "ITEM_KIZUNAX_BEGIN";
-                prefix = "ITEM_KIZUNAX_";
+                childName = "ITEM_KIZUNAX";
             }
             else if (typeof(T) == TypeItemConfigAvatar)
             {
                 beginName = "ITEM_AVATAR_BEGIN";
-                prefix = "ITEM_AVATAR_";
+                childName = "ITEM_AVATAR";
             }
             else if (typeof(T) == TypeItemConfigDirector)
             {
                 beginName = "ITEM_DIRECTOR_BEGIN";
-                prefix = "ITEM_DIRECTOR_";
+                childName = "ITEM_DIRECTOR";
             }
             else
             {
                 throw new ArgumentException($"Unsupported item type: {typeof(T).Name}");
             }
 
-            CfgBin itemConfigFile = new CfgBin();
+            CfgBin<CfgTreeNode> itemConfigFile = new CfgBin<CfgTreeNode>();
             itemConfigFile.Open(GetFileContent("item_config"));
 
-            Entry baseBegin = itemConfigFile.Entries.FirstOrDefault(x => x.GetName() == beginName);
+            CfgTreeNode baseBegin = itemConfigFile.Entries.FindByName(beginName);
             if (baseBegin == null)
                 throw new InvalidOperationException($"Entry '{beginName}' not found in item_config.");
 
             baseBegin.Children.Clear();
-            baseBegin.Variables[0].Value = items.Length;
+            baseBegin.Item.Variables[0].Value = items.Length;
 
             for (int i = 0; i < items.Length; i++)
             {
-                Entry newEntry = new Entry(prefix + i, new List<Variable>(), Encoding.UTF8);
-                newEntry.SetVariablesFromClass(items[i]);
-                baseBegin.Children.Add(newEntry);
+                Entry newEntry = new Entry(childName, CfgBinMapper.GetVariablesFromInstance(items[i]));
+                baseBegin.AddChild(new CfgTreeNode(newEntry));
             }
 
             GetFile("item_config").ByteContent = itemConfigFile.Save();
@@ -1442,11 +1385,11 @@ namespace Lynx.InazumaEleven.Games
         /// </summary>
         /// <param name="mapID">The ID of the map.</param>
         /// <returns>The CfgBin containing the map environment configuration, or null if not found.</returns>
-        public CfgBin GetMapenv(string mapID)
+        public CfgBin<CfgTreeNode> GetMapenv(string mapID)
         {
             VirtualDirectory mapDirectory = GetDirectory("map");
 
-            CfgBin npcFile = new CfgBin();
+            CfgBin<CfgTreeNode> npcFile = new CfgBin<CfgTreeNode>();
 
             if (mapDirectory.IsFullPathExists($"/{mapID}/{mapID}_mapenv.bin"))
             {

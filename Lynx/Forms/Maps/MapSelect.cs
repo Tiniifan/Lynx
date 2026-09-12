@@ -3,8 +3,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using Lynx.Tools;
-using Lynx.Level5.Text;
+using StudioElevenLib.Tools;
+using StudioElevenLib.Level5.Text;
 using Lynx.InazumaEleven.Games;
 
 namespace Lynx.Forms.Maps

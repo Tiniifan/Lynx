@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Lynx.Tools;
-using Lynx.Level5.Text;
-using Lynx.Level5.Image;
+using StudioElevenLib.Tools;
+using StudioElevenLib.Level5.Text;
+using StudioElevenLib.Level5.Image;
 using Lynx.InazumaEleven.Games;
 using Lynx.InazumaEleven.Logic;
 using Lynx.InazumaEleven.Common;
@@ -300,7 +300,7 @@ namespace Lynx.Forms.PalpackCards
                 try
                 {
                     byte[] imageData = faceInfo.File.Directory.GetFileFromFullPath(faceInfo.Path + "/" + faceFileName);
-                    facePictureBox.Image = IMGC.ToBitmap(imageData);
+                    facePictureBox.Image = Imager.Open(imageData).Bitmap;
                 }
                 catch
                 {

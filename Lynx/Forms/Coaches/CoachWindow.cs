@@ -5,17 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using Lynx.Tools;
-using Lynx.Level5.Text;
-using Lynx.Level5.Image;
+using StudioElevenLib.Tools;
+using StudioElevenLib.Level5.Text;
+using StudioElevenLib.Level5.Image;
 using Lynx.InazumaEleven.Games;
 using Lynx.InazumaEleven.Logic;
 using Lynx.InazumaEleven.Common;
 using OfficeOpenXml;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using static Lynx.InazumaEleven.Games.GO.GOSupport;
-using Lynx.Level5.Save.Logic;
-using Lynx.Level5.Text.Logic;
+using Lynx.InazumaEleven.Save.Logic;
+using StudioElevenLib.Level5.Text.Logic;
 
 namespace Lynx.Forms.Coaches
 {
@@ -279,7 +279,7 @@ namespace Lynx.Forms.Coaches
             //    try
             //    {
             //        byte[] imageData = faceInfo.File.Directory.GetFileFromFullPath(faceInfo.Path + "/" + faceFileName);
-            //        facePictureBox.Image = IMGC.ToBitmap(imageData);
+            //        facePictureBox.Image = Imager.Open(imageData).Bitmap;
             //    }
             //    catch
             //    {

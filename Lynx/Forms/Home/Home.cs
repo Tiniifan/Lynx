@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Lynx.Level5.Archive.ARC0;
+using StudioElevenLib.Level5.Archive.ARC0;
 using Lynx.InazumaEleven.Games;
 using Lynx.InazumaEleven.Games.GO;
 using Lynx.Forms.Characters;

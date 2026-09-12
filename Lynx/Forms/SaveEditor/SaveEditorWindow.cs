@@ -5,15 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using Lynx.Tools;
-using Lynx.Level5.Text;
+using StudioElevenLib.Tools;
+using StudioElevenLib.Level5.Text;
 using Lynx.InazumaEleven.Games;
-using Lynx.Level5.Save;
-using Lynx.Level5.Save.Games;
-using Lynx.Level5.Save.Saves;
-using Lynx.Level5.Save.Logic;
+using Lynx.InazumaEleven.Save;
+using Lynx.InazumaEleven.Save.Games;
+using Lynx.InazumaEleven.Save.Saves;
+using Lynx.InazumaEleven.Save.Logic;
 using Lynx.InazumaEleven.Logic;
-using Lynx.Level5.Save.Saves.IE;
+using Lynx.InazumaEleven.Save.Saves.IE;
 
 namespace Lynx.Forms.SaveEditor
 {
@@ -21,13 +21,13 @@ namespace Lynx.Forms.SaveEditor
     {
         private ISave Save;
 
-        private Level5.Save.Logic.Player SelectedPlayer;
+        private InazumaEleven.Save.Logic.Player SelectedPlayer;
 
-        private Dictionary<int, Level5.Save.Logic.Player> Players;
+        private Dictionary<int, InazumaEleven.Save.Logic.Player> Players;
 
-        private Dictionary<int, Level5.Save.Logic.Avatar> Avatars;
+        private Dictionary<int, InazumaEleven.Save.Logic.Avatar> Avatars;
 
-        private Dictionary<int, Level5.Save.Logic.Move> Moves;
+        private Dictionary<int, InazumaEleven.Save.Logic.Move> Moves;
 
         private InazumaEleven.Games.Game GameOpened;
 
@@ -208,7 +208,7 @@ namespace Lynx.Forms.SaveEditor
                     return new
                     {
                         x.ParamHash,
-                        Player = new Level5.Save.Logic.Player(
+                        Player = new InazumaEleven.Save.Logic.Player(
                             names[index],
                             GetPosition(x.PlayerPosition),
                             GetElement(x.Element),
@@ -232,7 +232,7 @@ namespace Lynx.Forms.SaveEditor
             Moves = skillConfigs
                 .Select((x, index) => new {
                     x.SkillHash,
-                    Move = new Level5.Save.Logic.Move(
+                    Move = new InazumaEleven.Save.Logic.Move(
                         skillnames[index],
                         null, 
                         null, 
@@ -263,7 +263,7 @@ namespace Lynx.Forms.SaveEditor
             Avatars = avatars
                 .Select((x, index) => new {
                     x.AvatarHash,
-                    Avatar = new Level5.Save.Logic.Avatar(
+                    Avatar = new InazumaEleven.Save.Logic.Avatar(
                         avatarnames[index],
                         true
                     )
@@ -416,7 +416,7 @@ namespace Lynx.Forms.SaveEditor
             int selectedIndex = reserveListBox.SelectedIndex;
             int reserveIndex = Save.Game.Reserve.IndexOf(SelectedPlayer);
 
-            KeyValuePair<int, Level5.Save.Logic.Player> newPlayer = Players.FirstOrDefault(x => x.Value.Name == playerFlatComboBox.SelectedItem.ToString());
+            KeyValuePair<int, InazumaEleven.Save.Logic.Player> newPlayer = Players.FirstOrDefault(x => x.Value.Name == playerFlatComboBox.SelectedItem.ToString());
             newPlayer.Value.ID = newPlayer.Key;
             Save.Game.Reserve[reserveIndex] = Save.Game.ChangePlayer(SelectedPlayer, newPlayer.Value, true);
 

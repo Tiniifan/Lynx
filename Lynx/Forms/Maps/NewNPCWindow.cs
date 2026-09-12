@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Lynx.Tools;
+using StudioElevenLib.Tools;
 
 namespace Lynx.Forms.Maps
 {

@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using Lynx.Tools;
-using Lynx.Level5.Text;
-using Lynx.Level5.Image;
+using StudioElevenLib.Tools;
+using StudioElevenLib.Level5.Text;
+using StudioElevenLib.Level5.Image;
 using Lynx.InazumaEleven.Games;
 using Lynx.InazumaEleven.Logic;
 using Lynx.InazumaEleven.Common;
@@ -25,13 +25,13 @@ using Control = System.Windows.Forms.Control;
 using ChallengeRouteClass = Lynx.InazumaEleven.Logic.ChallengeRoute;
 using Team = Lynx.InazumaEleven.Logic.Team;
 using System.Text.RegularExpressions;
-using Lynx.Level5.Save.Logic.Competition_Route;
-using Lynx.Level5.Base64;
+using Lynx.InazumaEleven.Save.Logic.Competition_Route;
+using Lynx.InazumaEleven.Base64;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Lynx.UI;
 using System.Reflection;
 using Lynx.Forms.Characters;
-using Lynx.Level5.Save.Logic;
+using Lynx.InazumaEleven.Save.Logic;
 using System.Runtime.Remoting.Lifetime;
 using System.Xml.Linq;
 using Lynx.Forms.Skills;
@@ -451,7 +451,7 @@ namespace Lynx.Forms.Soccers
                 try
                 {
                     byte[] imageData = faceInfo.File.Directory.GetFileFromFullPath(faceInfo.Path + "/" + faceFileName);
-                    emblemPictureBox.Image = IMGC.ToBitmap(imageData);
+                    emblemPictureBox.Image = Imager.Open(imageData).Bitmap;
                 }
                 catch
                 {
