@@ -3,9 +3,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using StudioElevenLib.Tools;
 using StudioElevenLib.Level5.Text;
+using StudioElevenLib.Level5.Text.Logic;
 using StudioElevenLib.Level5.Image;
 using Lynx.InazumaEleven.Games;
 using Lynx.InazumaEleven.Logic;
@@ -19,6 +21,8 @@ namespace Lynx.Forms.PalpackCards
 {
     public partial class PalpackCardsWindow : Form
     {
+        private const string NicknameToken = "{nickname}";
+
         private Game GameOpened;
 
         private List<IItemPalpackCard> PalpackCards;
@@ -266,18 +270,15 @@ namespace Lynx.Forms.PalpackCards
 
         private void SetFace(Player player)
         {
-            if (player == null)
-            {
-                facePictureBox.Image = null;
-                return;
-            }
+            facePictureBox.Image = GetFaceImage(player);
+        }
+
+        private Image GetFaceImage(Player player)
+        {
+            if (player == null) return null;
 
             ICharabase charabase = Charabases.FirstOrDefault(cb => cb.BaseHash == player.Charaparam.BaseHash);
-            if (charabase == null)
-            {
-                facePictureBox.Image = null;
-                return;
-            }
+            if (charabase == null) return null;
 
             string fileCode;
             switch (charabase.CharaBaseType)
@@ -285,9 +286,7 @@ namespace Lynx.Forms.PalpackCards
                 case 1: fileCode = "cp"; break;
                 case 3: fileCode = "cn"; break;
                 case 4: fileCode = "ca"; break;
-                default:
-                    facePictureBox.Image = null;
-                    return;
+                default: return null;
             }
 
             GameSupports.GameFile faceInfo = GameOpened.Files["face"];
@@ -295,21 +294,16 @@ namespace Lynx.Forms.PalpackCards
 
             string faceFileName = fileCode + charabase.ModelNumber.ToString().PadLeft(4, '0') + "a.xi";
 
-            if (faceFolder.Files.ContainsKey(faceFileName))
+            if (!faceFolder.Files.ContainsKey(faceFileName)) return null;
+
+            try
             {
-                try
-                {
-                    byte[] imageData = faceInfo.File.Directory.GetFileFromFullPath(faceInfo.Path + "/" + faceFileName);
-                    facePictureBox.Image = Imager.Open(imageData).Bitmap;
-                }
-                catch
-                {
-                    facePictureBox.Image = null;
-                }
+                byte[] imageData = faceInfo.File.Directory.GetFileFromFullPath(faceInfo.Path + "/" + faceFileName);
+                return Imager.Open(imageData).Bitmap;
             }
-            else
+            catch
             {
-                facePictureBox.Image = null;
+                return null;
             }
         }
 
@@ -948,6 +942,180 @@ namespace Lynx.Forms.PalpackCards
             }
 
             palpackGroupBox.Enabled = true;
+        }
+
+        private void InsertToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NewPalpackCardWindow newPalpackCardWindow = new NewPalpackCardWindow(GetPlayersWithoutCard(), GetFaceImage);
+            if (newPalpackCardWindow.ShowDialog() != DialogResult.OK || newPalpackCardWindow.SelectedCandidate == null) return;
+
+            AddPalpackCard(newPalpackCardWindow.SelectedCandidate);
+
+            PalpackCardsFiltred = null;
+            searchTextBox.Text = "Search...";
+            SetPalpackNames();
+
+            palpackListBox.SelectedIndex = PalpackCards.Count - 1;
+        }
+
+        private void AddPalpackCard(PalpackCardCandidate candidate)
+        {
+            string number = candidate.Number.ToString().PadLeft(4, '0');
+
+            IItemPalpackCard newCard = NewPalpackCard(candidate);
+
+            // The card name and description are looked up by their own hashes (name_ikaXXXX / desc_ikaXXXX) in item_text
+            GetPalpackTextTemplates(out string nameTemplate, out string descriptionTemplate);
+            string nickname = GetPlayerNickname(candidate.Player) ?? candidate.Name;
+
+            if (!Itemtext.Nouns.ContainsKey(newCard.NameID))
+            {
+                Itemtext.Nouns.Add(newCard.NameID, new TextConfig(new List<StringLevel5>() { new StringLevel5(0, nameTemplate.Replace(NicknameToken, nickname)) }));
+            }
+
+            if (!Itemtext.Texts.ContainsKey(newCard.DescriptionID))
+            {
+                Itemtext.Texts.Add(newCard.DescriptionID, new TextConfig(new List<StringLevel5>() { new StringLevel5(0, descriptionTemplate.Replace(NicknameToken, nickname)) }));
+            }
+
+            PalpackCards.Add(newCard);
+            PalpackIdsDict[newCard.ItemID] = "ika" + number;
+        }
+
+        private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (palpackListBox.SelectedIndex == -1 || SelectedPalpackCard == null) return;
+
+            string cardName = palpackListBox.SelectedItem.ToString();
+
+            DialogResult dialogResult = MessageBox.Show("Do you want to delete " + cardName + "?", "Delete palpack card", MessageBoxButtons.YesNo);
+            if (dialogResult != DialogResult.Yes) return;
+
+            palpackGroupBox.Enabled = false;
+
+            PalpackCards.Remove(SelectedPalpackCard);
+            PalpackIdsDict.Remove(SelectedPalpackCard.ItemID);
+
+            if (PalpackCardsFiltred != null)
+            {
+                PalpackCardsFiltred.Remove(SelectedPalpackCard);
+            }
+
+            SelectedPalpackCard = null;
+            SetFace(null);
+
+            // Rebuild the names so the list indexes keep matching PalpackCards / PalpackCardsFiltred
+            PalpackNamesDict = GetNames(PalpackCards.ToArray());
+            palpackListBox.Items.Clear();
+
+            if (PalpackCardsFiltred != null)
+            {
+                palpackListBox.Items.AddRange(PalpackCardsFiltred.Select(card => PalpackNamesDict.ContainsKey(card.ItemID) ? PalpackNamesDict[card.ItemID] : "").ToArray());
+            }
+            else
+            {
+                palpackListBox.Items.AddRange(PalpackNamesDict.Where(x => x.Key != 0x0).Select(x => x.Value).ToArray());
+            }
+
+            MessageBox.Show(cardName + " has been removed!");
+        }
+
+        private List<PalpackCardCandidate> GetPlayersWithoutCard()
+        {
+            // A card id is ikaXXXX where XXXX comes from the recruited player's para_cpXXXX, so only those
+            // players can get a card, and only when neither the player nor the ikaXXXX id is already used
+
+            Dictionary<int, int> paraNumbers = new Dictionary<int, int>();
+            for (int i = 0; i < 10000; i++)
+            {
+                paraNumbers[ComputeHash($"para_cp{i.ToString().PadLeft(4, '0')}")] = i;
+            }
+
+            HashSet<int> recruitedPlayers = new HashSet<int>(PalpackCards.Select(card => card.RecrutedCharacterId));
+            HashSet<int> usedItemIds = new HashSet<int>(GameOpened.GetItems("all").Where(x => !(x is IItemPalpackCard)).Select(x => x.ItemID));
+            usedItemIds.UnionWith(PalpackCards.Select(card => card.ItemID));
+
+            List<PalpackCardCandidate> candidates = new List<PalpackCardCandidate>();
+            HashSet<int> addedPlayers = new HashSet<int>();
+
+            for (int i = 0; i < Players.Count; i++)
+            {
+                int paramHash = Players[i].Charaparam.ParamHash;
+
+                if (!paraNumbers.TryGetValue(paramHash, out int number)) continue;
+                if (recruitedPlayers.Contains(paramHash) || !addedPlayers.Add(paramHash)) continue;
+                if (usedItemIds.Contains(ComputeHash($"ika{number.ToString().PadLeft(4, '0')}"))) continue;
+
+                candidates.Add(new PalpackCardCandidate
+                {
+                    Player = Players[i],
+                    Number = number,
+                    Name = PlayerNames[i],
+                });
+            }
+
+            return candidates.OrderBy(x => x.Number).ToList();
+        }
+
+        private string GetPlayerNickname(Player player)
+        {
+            if (player == null) return null;
+
+            ICharabase charabase = Charabases.FirstOrDefault(cb => cb.BaseHash == player.Charaparam.BaseHash);
+
+            return charabase != null && Charanames.Nouns.TryGetValue(charabase.NicknameHash, out var noun) && noun.Strings.Count > 0
+                ? noun.Strings[0].Text
+                : null;
+        }
+
+        private void GetPalpackTextTemplates(out string nameTemplate, out string descriptionTemplate)
+        {
+            // Generate name and description - Not visible in game
+            nameTemplate = NicknameToken + "'s PalPack";
+            descriptionTemplate = NicknameToken + "'s PalPack Card";
+
+            foreach (IItemPalpackCard card in PalpackCards)
+            {
+                if (!Itemtext.Nouns.TryGetValue(card.NameID, out var name) || name.Strings.Count == 0) continue;
+                if (!Itemtext.Texts.TryGetValue(card.DescriptionID, out var description) || description.Strings.Count == 0) continue;
+
+                string nickname = GetPlayerNickname(Players.FirstOrDefault(p => p.Charaparam.ParamHash == card.RecrutedCharacterId));
+                if (string.IsNullOrEmpty(nickname)) continue;
+
+                string nameText = name.Strings[0].Text;
+                string descriptionText = description.Strings[0].Text;
+
+                if (nameText.Contains(nickname) && descriptionText.Contains(nickname))
+                {
+                    nameTemplate = nameText.Replace(nickname, NicknameToken);
+                    descriptionTemplate = descriptionText.Replace(nickname, NicknameToken);
+                    return;
+                }
+            }
+        }
+
+        private IItemPalpackCard NewPalpackCard(PalpackCardCandidate candidate)
+        {
+            string number = candidate.Number.ToString().PadLeft(4, '0');
+
+            // Create default PalpackCard
+            return new ItemConfigPalpackCard
+            {
+                ItemID = ComputeHash("ika" + number),
+                NameID = ComputeHash("name_ika" + number),
+                DescriptionID = ComputeHash("desc_ika" + number),
+                ItemRef = 90,
+                ItemCategory = 17,
+                MaxQuantity = 1,
+                SellingPrice = 100,
+                PurchasePrice = 480,
+                ItemSubCategory = 2701,
+                CharacterFlag = candidate.Number,
+                RecrutedCharacterId = candidate.Player.Charaparam.ParamHash,
+                Unk5 = 1,
+                ItemPosX = 456,
+                ItemPosY = 264,
+            };
         }
 
         private void PalpackCardsWindow_FormClosed(object sender, FormClosedEventArgs e)

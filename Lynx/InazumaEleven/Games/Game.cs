@@ -190,6 +190,11 @@ namespace Lynx.InazumaEleven.Games
         public Type TypeItemConfigPalpackCard { get; set; }
 
         /// <summary>
+        /// Gets or sets the type for Item Reference (ITEM_REF).
+        /// </summary>
+        public Type TypeItemReference { get; set; }
+
+        /// <summary>
         /// Creates an empty object of the specified type.
         /// </summary>
         /// <typeparam name="T">The type of object to create.</typeparam>
@@ -241,6 +246,14 @@ namespace Lynx.InazumaEleven.Games
             else if (typeof(T) == typeof(ISoccerInfo))
             {
                 targetType = TypeSoccerInfo;
+            }
+            else if (typeof(T) == typeof(IItemPalpackCard))
+            {
+                targetType = TypeItemConfigPalpackCard;
+            }
+            else if (typeof(T) == typeof(IItemReference))
+            {
+                targetType = TypeItemReference;
             }
             else
             {
@@ -521,6 +534,8 @@ namespace Lynx.InazumaEleven.Games
                 Entry newBaseEntry = new Entry("ITEM_AVATAR", CfgBinMapper.GetVariablesFromInstance(avatars[i]));
                 baseBegin.AddChild(new CfgTreeNode(newBaseEntry));
             }
+
+            RebuildItemReferences(itemconfigFile);
 
             GetFile("item_config").ByteContent = itemconfigFile.Save();
         }
@@ -1383,7 +1398,92 @@ namespace Lynx.InazumaEleven.Games
                 baseBegin.AddChild(new CfgTreeNode(newEntry));
             }
 
+            RebuildItemReferences(itemConfigFile);
+
             GetFile("item_config").ByteContent = itemConfigFile.Save();
+        }
+
+        /// <summary>
+        /// Regenerates the ITEM_REF section of item_config from the item sections.
+        /// </summary>
+        /// <param name="itemConfigFile">The opened item_config file, already holding the edited sections.</param>
+        private void RebuildItemReferences(CfgBin<CfgTreeNode> itemConfigFile)
+        {
+            CfgTreeNode referenceBegin = itemConfigFile.Entries.FindByName("ITEM_REF_BEGIN");
+            if (referenceBegin == null)
+                throw new InvalidOperationException("Entry 'ITEM_REF_BEGIN' not found in item_config.");
+
+            // Same order as the sections in the vanilla file
+            (string, Type)[] sections =
+            {
+                ("ITEM_EQUIPMENT", TypeItemConfig),
+                ("ITEM_CONSUME", TypeItemConfig),
+                ("ITEM_IMPORTANT", TypeItemConfig),
+                ("ITEM_UNIFORM", TypeItemConfigUniform),
+                ("ITEM_KIZUNAX", TypeItemConfigPalpackCard),
+                ("ITEM_AVATAR", TypeItemConfigAvatar),
+                ("ITEM_DIRECTOR", TypeItemConfigDirector),
+            };
+
+            List<IItemReference> references = new List<IItemReference>();
+
+            foreach ((string sectionName, Type sectionType) in sections)
+            {
+                IItemConfig[] items = itemConfigFile.Entries
+                    .FlattenEntryToClassList(sectionType, sectionName)
+                    .Cast<IItemConfig>()
+                    .ToArray();
+
+                for (int i = 0; i < items.Length; i++)
+                {
+                    IItemReference reference = GetEmptyObject<IItemReference>();
+                    reference.ItemID = items[i].ItemID;
+                    reference.ItemRef = items[i].ItemRef;
+                    reference.Index = i;
+                    references.Add(reference);
+                }
+            }
+
+            Dictionary<int, IItemReference> referencesById = new Dictionary<int, IItemReference>();
+            foreach (IItemReference reference in references)
+            {
+                if (!referencesById.ContainsKey(reference.ItemID))
+                {
+                    referencesById.Add(reference.ItemID, reference);
+                }
+            }
+
+            List<IItemReference> orderedReferences = new List<IItemReference>();
+            HashSet<IItemReference> emitted = new HashSet<IItemReference>();
+
+            IItemReference[] existingReferences = itemConfigFile.Entries
+                .FlattenEntryToClassList(TypeItemReference, "ITEM_REF")
+                .Cast<IItemReference>()
+                .ToArray();
+
+            foreach (IItemReference existingReference in existingReferences)
+            {
+                if (referencesById.TryGetValue(existingReference.ItemID, out IItemReference reference) && emitted.Add(reference))
+                {
+                    orderedReferences.Add(reference);
+                }
+            }
+
+            foreach (IItemReference reference in references)
+            {
+                if (emitted.Add(reference))
+                {
+                    orderedReferences.Add(reference);
+                }
+            }
+
+            referenceBegin.Children.Clear();
+            referenceBegin.Item.Variables[0].Value = orderedReferences.Count;
+
+            foreach (IItemReference reference in orderedReferences)
+            {
+                referenceBegin.AddChild(new CfgTreeNode(new Entry("ITEM_REF", CfgBinMapper.GetVariablesFromInstance(reference))));
+            }
         }
 
         /// <summary>

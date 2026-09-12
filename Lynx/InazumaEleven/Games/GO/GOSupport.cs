@@ -510,6 +510,17 @@ namespace Lynx.InazumaEleven.Games.GO
             public int DifferenceLevelPlayer5 { get; set; }
         }
 
+        // One ITEM_REF entry per item of item_config, in section order (equipment, consume, important,
+        // uniform, kizunax, avatar, director). The game resolves an item id through this table, then
+        // switches on ItemRef (90 = kizunax, 100 = avatar, 120 = director...) to pick the section and
+        // reads the record at Index, which is the item's position inside its own section.
+        public class ItemReference : IItemReference
+        {
+            public int ItemID { get; set; }
+            public int ItemRef { get; set; }
+            public int Index { get; set; }
+        }
+
         public class ItemConfigPalpackCard : IItemPalpackCard
         {
             public int ItemID { get; set; }

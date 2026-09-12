@@ -28,6 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            this.palpackContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.insertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.palpackGroupBox = new System.Windows.Forms.GroupBox();
             this.descriptionGroupBox = new System.Windows.Forms.GroupBox();
             this.descriptionTextBox = new System.Windows.Forms.TextBox();
@@ -87,6 +91,7 @@
             this.soldPriceFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
             this.maxQuantityFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.palpackContextMenuStrip.SuspendLayout();
             this.palpackGroupBox.SuspendLayout();
             this.descriptionGroupBox.SuspendLayout();
             this.itemGroupBox.SuspendLayout();
@@ -349,6 +354,7 @@
             // palpackListBox
             // 
             this.palpackListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.palpackListBox.ContextMenuStrip = this.palpackContextMenuStrip;
             this.palpackListBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.palpackListBox.FormattingEnabled = true;
             this.palpackListBox.Location = new System.Drawing.Point(12, 27);
@@ -356,7 +362,33 @@
             this.palpackListBox.Size = new System.Drawing.Size(353, 732);
             this.palpackListBox.TabIndex = 279;
             this.palpackListBox.SelectedIndexChanged += new System.EventHandler(this.PalpackListBox_SelectedIndexChanged);
-            // 
+            //
+            // palpackContextMenuStrip
+            //
+            this.palpackContextMenuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.palpackContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.insertToolStripMenuItem,
+            this.deleteToolStripMenuItem});
+            this.palpackContextMenuStrip.Name = "palpackContextMenuStrip";
+            this.palpackContextMenuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.palpackContextMenuStrip.Size = new System.Drawing.Size(108, 48);
+            //
+            // insertToolStripMenuItem
+            //
+            this.insertToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.insertToolStripMenuItem.Name = "insertToolStripMenuItem";
+            this.insertToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.insertToolStripMenuItem.Text = "Insert";
+            this.insertToolStripMenuItem.Click += new System.EventHandler(this.InsertToolStripMenuItem_Click);
+            //
+            // deleteToolStripMenuItem
+            //
+            this.deleteToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.DeleteToolStripMenuItem_Click);
+            //
             // coachVSTabControl
             // 
             this.coachVSTabControl.ActiveIndicator = System.Drawing.Color.White;
@@ -938,6 +970,7 @@
             this.Name = "PalpackCardsWindow";
             this.Text = "PalpackCardsWindow";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.PalpackCardsWindow_FormClosed);
+            this.palpackContextMenuStrip.ResumeLayout(false);
             this.palpackGroupBox.ResumeLayout(false);
             this.descriptionGroupBox.ResumeLayout(false);
             this.descriptionGroupBox.PerformLayout();
@@ -995,6 +1028,9 @@
         private System.Windows.Forms.ToolStripMenuItem exportAscsvToolStripMenuItem;
         private System.Windows.Forms.TextBox searchTextBox;
         private System.Windows.Forms.ListBox palpackListBox;
+        private System.Windows.Forms.ContextMenuStrip palpackContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem insertToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label8;
         private UI.VSTabControl coachVSTabControl;

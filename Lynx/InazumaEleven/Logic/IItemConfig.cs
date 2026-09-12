@@ -9,6 +9,13 @@
         int ItemCategory { get; set; }
     }
 
+    public interface IItemReference
+    {
+        int ItemID { get; set; }
+        int ItemRef { get; set; }
+        int Index { get; set; }
+    }
+
     public interface IItemDirector : IItemConfig
     {
         new int ItemID { get; set; }
