@@ -48,7 +48,35 @@ namespace Lynx.Forms.Characters
             this.label3 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.statsGroupBox = new System.Windows.Forms.GroupBox();
-            this.varianceFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
+            this.levelLabel = new System.Windows.Forms.Label();
+            this.levelFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
+            this.baseHeaderLabel = new System.Windows.Forms.Label();
+            this.previewHeaderLabel = new System.Windows.Forms.Label();
+            this.curveHeaderLabel = new System.Windows.Forms.Label();
+            this.fpPreviewFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
+            this.tpPreviewFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
+            this.kickPreviewFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
+            this.dribblePreviewFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
+            this.techniquePreviewFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
+            this.blockPreviewFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
+            this.speedPreviewFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
+            this.staminaPreviewFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
+            this.catchPreviewFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
+            this.luckPreviewFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
+            this.fpCurveButton = new System.Windows.Forms.Button();
+            this.tpCurveButton = new System.Windows.Forms.Button();
+            this.kickCurveButton = new System.Windows.Forms.Button();
+            this.dribbleCurveButton = new System.Windows.Forms.Button();
+            this.techniqueCurveButton = new System.Windows.Forms.Button();
+            this.blockCurveButton = new System.Windows.Forms.Button();
+            this.speedCurveButton = new System.Windows.Forms.Button();
+            this.staminaCurveButton = new System.Windows.Forms.Button();
+            this.catchCurveButton = new System.Windows.Forms.Button();
+            this.luckCurveButton = new System.Windows.Forms.Button();
+            this.profileLabel = new System.Windows.Forms.Label();
+            this.profileFlatComboBox = new Lynx.UI.FlatComboBox();
+            this.profileButton = new System.Windows.Forms.Button();
+            this.generateButton = new System.Windows.Forms.Button();
             this.fpFlatNumericUpDown = new Lynx.UI.FlatNumericUpDown();
             this.luckGrowFlatComboBox = new Lynx.UI.FlatComboBox();
             this.label13 = new System.Windows.Forms.Label();
@@ -134,7 +162,17 @@ namespace Lynx.Forms.Characters
             this.tabPage1.SuspendLayout();
             this.traitGroupBox.SuspendLayout();
             this.statsGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.varianceFlatNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.levelFlatNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fpPreviewFlatNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tpPreviewFlatNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kickPreviewFlatNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dribblePreviewFlatNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.techniquePreviewFlatNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.blockPreviewFlatNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.speedPreviewFlatNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.staminaPreviewFlatNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.catchPreviewFlatNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.luckPreviewFlatNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fpFlatNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.kickFlatNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.freedomFlatNumericUpDown)).BeginInit();
@@ -175,7 +213,7 @@ namespace Lynx.Forms.Characters
             this.characterListBox.FormattingEnabled = true;
             this.characterListBox.Location = new System.Drawing.Point(12, 27);
             this.characterListBox.Name = "characterListBox";
-            this.characterListBox.Size = new System.Drawing.Size(236, 602);
+            this.characterListBox.Size = new System.Drawing.Size(236, 660);
             this.characterListBox.TabIndex = 1;
             this.characterListBox.SelectedIndexChanged += new System.EventHandler(this.CharacterListBox_SelectedIndexChanged);
             // 
@@ -231,7 +269,7 @@ namespace Lynx.Forms.Characters
             this.characterGroupBox.ForeColor = System.Drawing.Color.White;
             this.characterGroupBox.Location = new System.Drawing.Point(254, 21);
             this.characterGroupBox.Name = "characterGroupBox";
-            this.characterGroupBox.Size = new System.Drawing.Size(417, 608);
+            this.characterGroupBox.Size = new System.Drawing.Size(439, 666);
             this.characterGroupBox.TabIndex = 5;
             this.characterGroupBox.TabStop = false;
             this.characterGroupBox.Text = "Character";
@@ -256,7 +294,7 @@ namespace Lynx.Forms.Characters
             this.charaVSTabControl.Name = "charaVSTabControl";
             this.charaVSTabControl.Padding = new System.Drawing.Point(0, 0);
             this.charaVSTabControl.SelectedIndex = 0;
-            this.charaVSTabControl.Size = new System.Drawing.Size(387, 485);
+            this.charaVSTabControl.Size = new System.Drawing.Size(409, 543);
             this.charaVSTabControl.TabIndex = 49;
             // 
             // tabPage1
@@ -267,7 +305,7 @@ namespace Lynx.Forms.Characters
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(379, 456);
+            this.tabPage1.Size = new System.Drawing.Size(401, 514);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Trait and Stats";
             // 
@@ -286,7 +324,7 @@ namespace Lynx.Forms.Characters
             this.traitGroupBox.ForeColor = System.Drawing.Color.White;
             this.traitGroupBox.Location = new System.Drawing.Point(19, 6);
             this.traitGroupBox.Name = "traitGroupBox";
-            this.traitGroupBox.Size = new System.Drawing.Size(350, 106);
+            this.traitGroupBox.Size = new System.Drawing.Size(372, 106);
             this.traitGroupBox.TabIndex = 264;
             this.traitGroupBox.TabStop = false;
             this.traitGroupBox.Text = "Trait";
@@ -381,8 +419,36 @@ namespace Lynx.Forms.Characters
             // 
             // statsGroupBox
             // 
-            this.statsGroupBox.Controls.Add(this.varianceFlatNumericUpDown);
             this.statsGroupBox.Controls.Add(this.fpFlatNumericUpDown);
+            this.statsGroupBox.Controls.Add(this.levelLabel);
+            this.statsGroupBox.Controls.Add(this.levelFlatNumericUpDown);
+            this.statsGroupBox.Controls.Add(this.baseHeaderLabel);
+            this.statsGroupBox.Controls.Add(this.previewHeaderLabel);
+            this.statsGroupBox.Controls.Add(this.curveHeaderLabel);
+            this.statsGroupBox.Controls.Add(this.fpPreviewFlatNumericUpDown);
+            this.statsGroupBox.Controls.Add(this.tpPreviewFlatNumericUpDown);
+            this.statsGroupBox.Controls.Add(this.kickPreviewFlatNumericUpDown);
+            this.statsGroupBox.Controls.Add(this.dribblePreviewFlatNumericUpDown);
+            this.statsGroupBox.Controls.Add(this.techniquePreviewFlatNumericUpDown);
+            this.statsGroupBox.Controls.Add(this.blockPreviewFlatNumericUpDown);
+            this.statsGroupBox.Controls.Add(this.speedPreviewFlatNumericUpDown);
+            this.statsGroupBox.Controls.Add(this.staminaPreviewFlatNumericUpDown);
+            this.statsGroupBox.Controls.Add(this.catchPreviewFlatNumericUpDown);
+            this.statsGroupBox.Controls.Add(this.luckPreviewFlatNumericUpDown);
+            this.statsGroupBox.Controls.Add(this.fpCurveButton);
+            this.statsGroupBox.Controls.Add(this.tpCurveButton);
+            this.statsGroupBox.Controls.Add(this.kickCurveButton);
+            this.statsGroupBox.Controls.Add(this.dribbleCurveButton);
+            this.statsGroupBox.Controls.Add(this.techniqueCurveButton);
+            this.statsGroupBox.Controls.Add(this.blockCurveButton);
+            this.statsGroupBox.Controls.Add(this.speedCurveButton);
+            this.statsGroupBox.Controls.Add(this.staminaCurveButton);
+            this.statsGroupBox.Controls.Add(this.catchCurveButton);
+            this.statsGroupBox.Controls.Add(this.luckCurveButton);
+            this.statsGroupBox.Controls.Add(this.profileLabel);
+            this.statsGroupBox.Controls.Add(this.profileFlatComboBox);
+            this.statsGroupBox.Controls.Add(this.profileButton);
+            this.statsGroupBox.Controls.Add(this.generateButton);
             this.statsGroupBox.Controls.Add(this.luckGrowFlatComboBox);
             this.statsGroupBox.Controls.Add(this.label13);
             this.statsGroupBox.Controls.Add(this.catchGrowFlatComboBox);
@@ -415,30 +481,12 @@ namespace Lynx.Forms.Characters
             this.statsGroupBox.Controls.Add(this.staminaFlatNumericUpDown);
             this.statsGroupBox.Controls.Add(this.catchFlatNumericUpDown);
             this.statsGroupBox.ForeColor = System.Drawing.Color.White;
-            this.statsGroupBox.Location = new System.Drawing.Point(19, 118);
+            this.statsGroupBox.Location = new System.Drawing.Point(19, 116);
             this.statsGroupBox.Name = "statsGroupBox";
-            this.statsGroupBox.Size = new System.Drawing.Size(350, 329);
+            this.statsGroupBox.Size = new System.Drawing.Size(372, 392);
             this.statsGroupBox.TabIndex = 259;
             this.statsGroupBox.TabStop = false;
             this.statsGroupBox.Text = "Stats";
-            // 
-            // varianceFlatNumericUpDown
-            // 
-            this.varianceFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.varianceFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.varianceFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.varianceFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.varianceFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.varianceFlatNumericUpDown.Location = new System.Drawing.Point(202, 300);
-            this.varianceFlatNumericUpDown.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.varianceFlatNumericUpDown.Name = "varianceFlatNumericUpDown";
-            this.varianceFlatNumericUpDown.Size = new System.Drawing.Size(66, 22);
-            this.varianceFlatNumericUpDown.TabIndex = 260;
-            this.varianceFlatNumericUpDown.ValueChanged += new System.EventHandler(this.VarianceFlatNumericUpDown_ValueChanged);
             // 
             // fpFlatNumericUpDown
             // 
@@ -447,14 +495,14 @@ namespace Lynx.Forms.Characters
             this.fpFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.fpFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.fpFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.fpFlatNumericUpDown.Location = new System.Drawing.Point(128, 21);
+            this.fpFlatNumericUpDown.Location = new System.Drawing.Point(80, 65);
             this.fpFlatNumericUpDown.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.fpFlatNumericUpDown.Name = "fpFlatNumericUpDown";
-            this.fpFlatNumericUpDown.Size = new System.Drawing.Size(66, 22);
+            this.fpFlatNumericUpDown.Size = new System.Drawing.Size(60, 22);
             this.fpFlatNumericUpDown.TabIndex = 244;
             this.fpFlatNumericUpDown.ValueChanged += new System.EventHandler(this.FpFlatNumericUpDown_ValueChanged);
             // 
@@ -465,16 +513,16 @@ namespace Lynx.Forms.Characters
             this.luckGrowFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.luckGrowFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.luckGrowFlatComboBox.FormattingEnabled = true;
-            this.luckGrowFlatComboBox.Location = new System.Drawing.Point(202, 274);
+            this.luckGrowFlatComboBox.Location = new System.Drawing.Point(216, 299);
             this.luckGrowFlatComboBox.Name = "luckGrowFlatComboBox";
-            this.luckGrowFlatComboBox.Size = new System.Drawing.Size(65, 21);
+            this.luckGrowFlatComboBox.Size = new System.Drawing.Size(118, 21);
             this.luckGrowFlatComboBox.TabIndex = 258;
             this.luckGrowFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.LuckGrowFlatComboBox_SelectedIndexChanged);
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(63, 79);
+            this.label13.Location = new System.Drawing.Point(12, 121);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(27, 13);
             this.label13.TabIndex = 217;
@@ -487,16 +535,16 @@ namespace Lynx.Forms.Characters
             this.catchGrowFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.catchGrowFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.catchGrowFlatComboBox.FormattingEnabled = true;
-            this.catchGrowFlatComboBox.Location = new System.Drawing.Point(202, 246);
+            this.catchGrowFlatComboBox.Location = new System.Drawing.Point(216, 273);
             this.catchGrowFlatComboBox.Name = "catchGrowFlatComboBox";
-            this.catchGrowFlatComboBox.Size = new System.Drawing.Size(65, 21);
+            this.catchGrowFlatComboBox.Size = new System.Drawing.Size(118, 21);
             this.catchGrowFlatComboBox.TabIndex = 257;
             this.catchGrowFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.CatchGrowFlatComboBox_SelectedIndexChanged);
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(63, 107);
+            this.label11.Location = new System.Drawing.Point(12, 147);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(45, 13);
             this.label11.TabIndex = 218;
@@ -509,16 +557,16 @@ namespace Lynx.Forms.Characters
             this.staminaGrowFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.staminaGrowFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.staminaGrowFlatComboBox.FormattingEnabled = true;
-            this.staminaGrowFlatComboBox.Location = new System.Drawing.Point(202, 218);
+            this.staminaGrowFlatComboBox.Location = new System.Drawing.Point(216, 247);
             this.staminaGrowFlatComboBox.Name = "staminaGrowFlatComboBox";
-            this.staminaGrowFlatComboBox.Size = new System.Drawing.Size(65, 21);
+            this.staminaGrowFlatComboBox.Size = new System.Drawing.Size(118, 21);
             this.staminaGrowFlatComboBox.TabIndex = 256;
             this.staminaGrowFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.StaminaGrowFlatComboBox_SelectedIndexChanged);
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(63, 163);
+            this.label10.Location = new System.Drawing.Point(12, 199);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(35, 13);
             this.label10.TabIndex = 219;
@@ -531,16 +579,16 @@ namespace Lynx.Forms.Characters
             this.speedGrowFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.speedGrowFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.speedGrowFlatComboBox.FormattingEnabled = true;
-            this.speedGrowFlatComboBox.Location = new System.Drawing.Point(202, 190);
+            this.speedGrowFlatComboBox.Location = new System.Drawing.Point(216, 221);
             this.speedGrowFlatComboBox.Name = "speedGrowFlatComboBox";
-            this.speedGrowFlatComboBox.Size = new System.Drawing.Size(65, 21);
+            this.speedGrowFlatComboBox.Size = new System.Drawing.Size(118, 21);
             this.speedGrowFlatComboBox.TabIndex = 255;
             this.speedGrowFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.SpeedGrowFlatComboBox_SelectedIndexChanged);
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(63, 247);
+            this.label9.Location = new System.Drawing.Point(12, 277);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(36, 13);
             this.label9.TabIndex = 220;
@@ -553,16 +601,16 @@ namespace Lynx.Forms.Characters
             this.blockGrowFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.blockGrowFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.blockGrowFlatComboBox.FormattingEnabled = true;
-            this.blockGrowFlatComboBox.Location = new System.Drawing.Point(202, 161);
+            this.blockGrowFlatComboBox.Location = new System.Drawing.Point(216, 195);
             this.blockGrowFlatComboBox.Name = "blockGrowFlatComboBox";
-            this.blockGrowFlatComboBox.Size = new System.Drawing.Size(65, 21);
+            this.blockGrowFlatComboBox.Size = new System.Drawing.Size(118, 21);
             this.blockGrowFlatComboBox.TabIndex = 254;
             this.blockGrowFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.BlockGrowFlatComboBox_SelectedIndexChanged);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(63, 135);
+            this.label4.Location = new System.Drawing.Point(12, 173);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(60, 13);
             this.label4.TabIndex = 221;
@@ -575,16 +623,16 @@ namespace Lynx.Forms.Characters
             this.techniqueGrowFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.techniqueGrowFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.techniqueGrowFlatComboBox.FormattingEnabled = true;
-            this.techniqueGrowFlatComboBox.Location = new System.Drawing.Point(202, 134);
+            this.techniqueGrowFlatComboBox.Location = new System.Drawing.Point(216, 169);
             this.techniqueGrowFlatComboBox.Name = "techniqueGrowFlatComboBox";
-            this.techniqueGrowFlatComboBox.Size = new System.Drawing.Size(65, 21);
+            this.techniqueGrowFlatComboBox.Size = new System.Drawing.Size(118, 21);
             this.techniqueGrowFlatComboBox.TabIndex = 253;
             this.techniqueGrowFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.TechniqueGrowFlatComboBox_SelectedIndexChanged);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(63, 191);
+            this.label6.Location = new System.Drawing.Point(12, 225);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(39, 13);
             this.label6.TabIndex = 222;
@@ -597,16 +645,16 @@ namespace Lynx.Forms.Characters
             this.dribbleGrowFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.dribbleGrowFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.dribbleGrowFlatComboBox.FormattingEnabled = true;
-            this.dribbleGrowFlatComboBox.Location = new System.Drawing.Point(202, 106);
+            this.dribbleGrowFlatComboBox.Location = new System.Drawing.Point(216, 143);
             this.dribbleGrowFlatComboBox.Name = "dribbleGrowFlatComboBox";
-            this.dribbleGrowFlatComboBox.Size = new System.Drawing.Size(65, 21);
+            this.dribbleGrowFlatComboBox.Size = new System.Drawing.Size(118, 21);
             this.dribbleGrowFlatComboBox.TabIndex = 252;
             this.dribbleGrowFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.DribbleGrowFlatComboBox_SelectedIndexChanged);
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(63, 275);
+            this.label8.Location = new System.Drawing.Point(12, 303);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(30, 13);
             this.label8.TabIndex = 224;
@@ -619,16 +667,16 @@ namespace Lynx.Forms.Characters
             this.kickGrowFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.kickGrowFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.kickGrowFlatComboBox.FormattingEnabled = true;
-            this.kickGrowFlatComboBox.Location = new System.Drawing.Point(202, 78);
+            this.kickGrowFlatComboBox.Location = new System.Drawing.Point(216, 117);
             this.kickGrowFlatComboBox.Name = "kickGrowFlatComboBox";
-            this.kickGrowFlatComboBox.Size = new System.Drawing.Size(65, 21);
+            this.kickGrowFlatComboBox.Size = new System.Drawing.Size(118, 21);
             this.kickGrowFlatComboBox.TabIndex = 251;
             this.kickGrowFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.KickGrowFlatComboBox_SelectedIndexChanged);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(63, 219);
+            this.label7.Location = new System.Drawing.Point(12, 251);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(48, 13);
             this.label7.TabIndex = 223;
@@ -641,9 +689,9 @@ namespace Lynx.Forms.Characters
             this.tpGrowFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.tpGrowFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.tpGrowFlatComboBox.FormattingEnabled = true;
-            this.tpGrowFlatComboBox.Location = new System.Drawing.Point(202, 50);
+            this.tpGrowFlatComboBox.Location = new System.Drawing.Point(216, 91);
             this.tpGrowFlatComboBox.Name = "tpGrowFlatComboBox";
-            this.tpGrowFlatComboBox.Size = new System.Drawing.Size(65, 21);
+            this.tpGrowFlatComboBox.Size = new System.Drawing.Size(118, 21);
             this.tpGrowFlatComboBox.TabIndex = 250;
             this.tpGrowFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.TpGrowFlatComboBox_SelectedIndexChanged);
             // 
@@ -654,9 +702,9 @@ namespace Lynx.Forms.Characters
             this.fpGrowFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.fpGrowFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.fpGrowFlatComboBox.FormattingEnabled = true;
-            this.fpGrowFlatComboBox.Location = new System.Drawing.Point(202, 22);
+            this.fpGrowFlatComboBox.Location = new System.Drawing.Point(216, 65);
             this.fpGrowFlatComboBox.Name = "fpGrowFlatComboBox";
-            this.fpGrowFlatComboBox.Size = new System.Drawing.Size(65, 21);
+            this.fpGrowFlatComboBox.Size = new System.Drawing.Size(118, 21);
             this.fpGrowFlatComboBox.TabIndex = 249;
             this.fpGrowFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.FpGrowFlatComboBox_SelectedIndexChanged);
             // 
@@ -667,14 +715,14 @@ namespace Lynx.Forms.Characters
             this.kickFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.kickFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.kickFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.kickFlatNumericUpDown.Location = new System.Drawing.Point(128, 77);
+            this.kickFlatNumericUpDown.Location = new System.Drawing.Point(80, 117);
             this.kickFlatNumericUpDown.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.kickFlatNumericUpDown.Name = "kickFlatNumericUpDown";
-            this.kickFlatNumericUpDown.Size = new System.Drawing.Size(66, 22);
+            this.kickFlatNumericUpDown.Size = new System.Drawing.Size(60, 22);
             this.kickFlatNumericUpDown.TabIndex = 226;
             this.kickFlatNumericUpDown.ValueChanged += new System.EventHandler(this.KickFlatNumericUpDown_ValueChanged);
             // 
@@ -685,21 +733,21 @@ namespace Lynx.Forms.Characters
             this.freedomFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.freedomFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.freedomFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.freedomFlatNumericUpDown.Location = new System.Drawing.Point(128, 300);
+            this.freedomFlatNumericUpDown.Location = new System.Drawing.Point(80, 331);
             this.freedomFlatNumericUpDown.Maximum = new decimal(new int[] {
             500,
             0,
             0,
             0});
             this.freedomFlatNumericUpDown.Name = "freedomFlatNumericUpDown";
-            this.freedomFlatNumericUpDown.Size = new System.Drawing.Size(66, 22);
+            this.freedomFlatNumericUpDown.Size = new System.Drawing.Size(60, 22);
             this.freedomFlatNumericUpDown.TabIndex = 248;
             this.freedomFlatNumericUpDown.ValueChanged += new System.EventHandler(this.FreedomFlatNumericUpDown_ValueChanged);
             // 
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(63, 302);
+            this.label17.Location = new System.Drawing.Point(12, 335);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(52, 13);
             this.label17.TabIndex = 247;
@@ -712,21 +760,21 @@ namespace Lynx.Forms.Characters
             this.dribbleFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.dribbleFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.dribbleFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.dribbleFlatNumericUpDown.Location = new System.Drawing.Point(128, 105);
+            this.dribbleFlatNumericUpDown.Location = new System.Drawing.Point(80, 143);
             this.dribbleFlatNumericUpDown.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.dribbleFlatNumericUpDown.Name = "dribbleFlatNumericUpDown";
-            this.dribbleFlatNumericUpDown.Size = new System.Drawing.Size(66, 22);
+            this.dribbleFlatNumericUpDown.Size = new System.Drawing.Size(60, 22);
             this.dribbleFlatNumericUpDown.TabIndex = 228;
             this.dribbleFlatNumericUpDown.ValueChanged += new System.EventHandler(this.DribbleFlatNumericUpDown_ValueChanged);
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(63, 51);
+            this.label16.Location = new System.Drawing.Point(12, 95);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(18, 13);
             this.label16.TabIndex = 246;
@@ -735,7 +783,7 @@ namespace Lynx.Forms.Characters
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(63, 23);
+            this.label15.Location = new System.Drawing.Point(12, 69);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(19, 13);
             this.label15.TabIndex = 245;
@@ -748,14 +796,14 @@ namespace Lynx.Forms.Characters
             this.techniqueFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.techniqueFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.techniqueFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.techniqueFlatNumericUpDown.Location = new System.Drawing.Point(128, 133);
+            this.techniqueFlatNumericUpDown.Location = new System.Drawing.Point(80, 169);
             this.techniqueFlatNumericUpDown.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.techniqueFlatNumericUpDown.Name = "techniqueFlatNumericUpDown";
-            this.techniqueFlatNumericUpDown.Size = new System.Drawing.Size(66, 22);
+            this.techniqueFlatNumericUpDown.Size = new System.Drawing.Size(60, 22);
             this.techniqueFlatNumericUpDown.TabIndex = 230;
             this.techniqueFlatNumericUpDown.ValueChanged += new System.EventHandler(this.TechniqueFlatNumericUpDown_ValueChanged);
             // 
@@ -766,14 +814,14 @@ namespace Lynx.Forms.Characters
             this.blockFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.blockFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.blockFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.blockFlatNumericUpDown.Location = new System.Drawing.Point(128, 161);
+            this.blockFlatNumericUpDown.Location = new System.Drawing.Point(80, 195);
             this.blockFlatNumericUpDown.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.blockFlatNumericUpDown.Name = "blockFlatNumericUpDown";
-            this.blockFlatNumericUpDown.Size = new System.Drawing.Size(66, 22);
+            this.blockFlatNumericUpDown.Size = new System.Drawing.Size(60, 22);
             this.blockFlatNumericUpDown.TabIndex = 232;
             this.blockFlatNumericUpDown.ValueChanged += new System.EventHandler(this.BlockFlatNumericUpDown_ValueChanged);
             // 
@@ -784,14 +832,14 @@ namespace Lynx.Forms.Characters
             this.tpFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tpFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.tpFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.tpFlatNumericUpDown.Location = new System.Drawing.Point(128, 49);
+            this.tpFlatNumericUpDown.Location = new System.Drawing.Point(80, 91);
             this.tpFlatNumericUpDown.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.tpFlatNumericUpDown.Name = "tpFlatNumericUpDown";
-            this.tpFlatNumericUpDown.Size = new System.Drawing.Size(66, 22);
+            this.tpFlatNumericUpDown.Size = new System.Drawing.Size(60, 22);
             this.tpFlatNumericUpDown.TabIndex = 242;
             this.tpFlatNumericUpDown.ValueChanged += new System.EventHandler(this.TpFlatNumericUpDown_ValueChanged);
             // 
@@ -802,14 +850,14 @@ namespace Lynx.Forms.Characters
             this.speedFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.speedFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.speedFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.speedFlatNumericUpDown.Location = new System.Drawing.Point(128, 189);
+            this.speedFlatNumericUpDown.Location = new System.Drawing.Point(80, 221);
             this.speedFlatNumericUpDown.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.speedFlatNumericUpDown.Name = "speedFlatNumericUpDown";
-            this.speedFlatNumericUpDown.Size = new System.Drawing.Size(66, 22);
+            this.speedFlatNumericUpDown.Size = new System.Drawing.Size(60, 22);
             this.speedFlatNumericUpDown.TabIndex = 234;
             this.speedFlatNumericUpDown.ValueChanged += new System.EventHandler(this.SpeedFlatNumericUpDown_ValueChanged);
             // 
@@ -820,14 +868,14 @@ namespace Lynx.Forms.Characters
             this.luckFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.luckFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.luckFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.luckFlatNumericUpDown.Location = new System.Drawing.Point(128, 273);
+            this.luckFlatNumericUpDown.Location = new System.Drawing.Point(80, 299);
             this.luckFlatNumericUpDown.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.luckFlatNumericUpDown.Name = "luckFlatNumericUpDown";
-            this.luckFlatNumericUpDown.Size = new System.Drawing.Size(66, 22);
+            this.luckFlatNumericUpDown.Size = new System.Drawing.Size(60, 22);
             this.luckFlatNumericUpDown.TabIndex = 240;
             this.luckFlatNumericUpDown.ValueChanged += new System.EventHandler(this.LuckFlatNumericUpDown_ValueChanged);
             // 
@@ -838,14 +886,14 @@ namespace Lynx.Forms.Characters
             this.staminaFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.staminaFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.staminaFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.staminaFlatNumericUpDown.Location = new System.Drawing.Point(128, 217);
+            this.staminaFlatNumericUpDown.Location = new System.Drawing.Point(80, 247);
             this.staminaFlatNumericUpDown.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.staminaFlatNumericUpDown.Name = "staminaFlatNumericUpDown";
-            this.staminaFlatNumericUpDown.Size = new System.Drawing.Size(66, 22);
+            this.staminaFlatNumericUpDown.Size = new System.Drawing.Size(60, 22);
             this.staminaFlatNumericUpDown.TabIndex = 236;
             this.staminaFlatNumericUpDown.ValueChanged += new System.EventHandler(this.StaminaFlatNumericUpDown_ValueChanged);
             // 
@@ -856,14 +904,14 @@ namespace Lynx.Forms.Characters
             this.catchFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.catchFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.catchFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.catchFlatNumericUpDown.Location = new System.Drawing.Point(128, 245);
+            this.catchFlatNumericUpDown.Location = new System.Drawing.Point(80, 273);
             this.catchFlatNumericUpDown.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.catchFlatNumericUpDown.Name = "catchFlatNumericUpDown";
-            this.catchFlatNumericUpDown.Size = new System.Drawing.Size(66, 22);
+            this.catchFlatNumericUpDown.Size = new System.Drawing.Size(60, 22);
             this.catchFlatNumericUpDown.TabIndex = 238;
             this.catchFlatNumericUpDown.ValueChanged += new System.EventHandler(this.CatchFlatNumericUpDown_ValueChanged);
             // 
@@ -876,7 +924,7 @@ namespace Lynx.Forms.Characters
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(379, 424);
+            this.tabPage2.Size = new System.Drawing.Size(401, 482);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Fighting Spirit and Special Moves";
             // 
@@ -1458,18 +1506,528 @@ namespace Lynx.Forms.Characters
             this.label12.TabIndex = 265;
             this.label12.Text = "Group";
             // 
+            // levelLabel
+            // 
+            this.levelLabel.AutoSize = true;
+            this.levelLabel.Location = new System.Drawing.Point(12, 23);
+            this.levelLabel.Name = "levelLabel";
+            this.levelLabel.Text = "Level";
+            // 
+            // levelFlatNumericUpDown
+            // 
+            this.levelFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.levelFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.levelFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.levelFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.levelFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.levelFlatNumericUpDown.Location = new System.Drawing.Point(80, 19);
+            this.levelFlatNumericUpDown.Maximum = new decimal(new int[] {
+            99,
+            0,
+            0,
+            0});
+            this.levelFlatNumericUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.levelFlatNumericUpDown.Name = "levelFlatNumericUpDown";
+            this.levelFlatNumericUpDown.Size = new System.Drawing.Size(60, 22);
+            this.levelFlatNumericUpDown.TabIndex = 300;
+            this.levelFlatNumericUpDown.Value = new decimal(new int[] {
+            99,
+            0,
+            0,
+            0});
+            this.levelFlatNumericUpDown.ValueChanged += new System.EventHandler(this.LevelFlatNumericUpDown_ValueChanged);
+            // 
+            // baseHeaderLabel
+            // 
+            this.baseHeaderLabel.AutoSize = true;
+            this.baseHeaderLabel.Location = new System.Drawing.Point(77, 48);
+            this.baseHeaderLabel.Name = "baseHeaderLabel";
+            this.baseHeaderLabel.Text = "Base stat";
+            // 
+            // previewHeaderLabel
+            // 
+            this.previewHeaderLabel.AutoSize = true;
+            this.previewHeaderLabel.Location = new System.Drawing.Point(145, 48);
+            this.previewHeaderLabel.Name = "previewHeaderLabel";
+            this.previewHeaderLabel.Text = "Preview";
+            // 
+            // curveHeaderLabel
+            // 
+            this.curveHeaderLabel.AutoSize = true;
+            this.curveHeaderLabel.Location = new System.Drawing.Point(213, 48);
+            this.curveHeaderLabel.Name = "curveHeaderLabel";
+            this.curveHeaderLabel.Text = "Curve";
+            // 
+            // fpPreviewFlatNumericUpDown
+            // 
+            this.fpPreviewFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.fpPreviewFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.fpPreviewFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.fpPreviewFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.fpPreviewFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.fpPreviewFlatNumericUpDown.Increment = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.fpPreviewFlatNumericUpDown.Location = new System.Drawing.Point(148, 65);
+            this.fpPreviewFlatNumericUpDown.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.fpPreviewFlatNumericUpDown.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.fpPreviewFlatNumericUpDown.Name = "fpPreviewFlatNumericUpDown";
+            this.fpPreviewFlatNumericUpDown.ReadOnly = true;
+            this.fpPreviewFlatNumericUpDown.Size = new System.Drawing.Size(60, 22);
+            this.fpPreviewFlatNumericUpDown.TabIndex = 301;
+            this.fpPreviewFlatNumericUpDown.TabStop = false;
+            // 
+            // tpPreviewFlatNumericUpDown
+            // 
+            this.tpPreviewFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.tpPreviewFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.tpPreviewFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tpPreviewFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.tpPreviewFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.tpPreviewFlatNumericUpDown.Increment = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.tpPreviewFlatNumericUpDown.Location = new System.Drawing.Point(148, 91);
+            this.tpPreviewFlatNumericUpDown.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.tpPreviewFlatNumericUpDown.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.tpPreviewFlatNumericUpDown.Name = "tpPreviewFlatNumericUpDown";
+            this.tpPreviewFlatNumericUpDown.ReadOnly = true;
+            this.tpPreviewFlatNumericUpDown.Size = new System.Drawing.Size(60, 22);
+            this.tpPreviewFlatNumericUpDown.TabIndex = 302;
+            this.tpPreviewFlatNumericUpDown.TabStop = false;
+            // 
+            // kickPreviewFlatNumericUpDown
+            // 
+            this.kickPreviewFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.kickPreviewFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.kickPreviewFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.kickPreviewFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.kickPreviewFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.kickPreviewFlatNumericUpDown.Increment = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.kickPreviewFlatNumericUpDown.Location = new System.Drawing.Point(148, 117);
+            this.kickPreviewFlatNumericUpDown.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.kickPreviewFlatNumericUpDown.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.kickPreviewFlatNumericUpDown.Name = "kickPreviewFlatNumericUpDown";
+            this.kickPreviewFlatNumericUpDown.ReadOnly = true;
+            this.kickPreviewFlatNumericUpDown.Size = new System.Drawing.Size(60, 22);
+            this.kickPreviewFlatNumericUpDown.TabIndex = 303;
+            this.kickPreviewFlatNumericUpDown.TabStop = false;
+            // 
+            // dribblePreviewFlatNumericUpDown
+            // 
+            this.dribblePreviewFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.dribblePreviewFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.dribblePreviewFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dribblePreviewFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.dribblePreviewFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.dribblePreviewFlatNumericUpDown.Increment = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.dribblePreviewFlatNumericUpDown.Location = new System.Drawing.Point(148, 143);
+            this.dribblePreviewFlatNumericUpDown.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.dribblePreviewFlatNumericUpDown.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.dribblePreviewFlatNumericUpDown.Name = "dribblePreviewFlatNumericUpDown";
+            this.dribblePreviewFlatNumericUpDown.ReadOnly = true;
+            this.dribblePreviewFlatNumericUpDown.Size = new System.Drawing.Size(60, 22);
+            this.dribblePreviewFlatNumericUpDown.TabIndex = 304;
+            this.dribblePreviewFlatNumericUpDown.TabStop = false;
+            // 
+            // techniquePreviewFlatNumericUpDown
+            // 
+            this.techniquePreviewFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.techniquePreviewFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.techniquePreviewFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.techniquePreviewFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.techniquePreviewFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.techniquePreviewFlatNumericUpDown.Increment = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.techniquePreviewFlatNumericUpDown.Location = new System.Drawing.Point(148, 169);
+            this.techniquePreviewFlatNumericUpDown.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.techniquePreviewFlatNumericUpDown.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.techniquePreviewFlatNumericUpDown.Name = "techniquePreviewFlatNumericUpDown";
+            this.techniquePreviewFlatNumericUpDown.ReadOnly = true;
+            this.techniquePreviewFlatNumericUpDown.Size = new System.Drawing.Size(60, 22);
+            this.techniquePreviewFlatNumericUpDown.TabIndex = 305;
+            this.techniquePreviewFlatNumericUpDown.TabStop = false;
+            // 
+            // blockPreviewFlatNumericUpDown
+            // 
+            this.blockPreviewFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.blockPreviewFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.blockPreviewFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.blockPreviewFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.blockPreviewFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.blockPreviewFlatNumericUpDown.Increment = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.blockPreviewFlatNumericUpDown.Location = new System.Drawing.Point(148, 195);
+            this.blockPreviewFlatNumericUpDown.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.blockPreviewFlatNumericUpDown.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.blockPreviewFlatNumericUpDown.Name = "blockPreviewFlatNumericUpDown";
+            this.blockPreviewFlatNumericUpDown.ReadOnly = true;
+            this.blockPreviewFlatNumericUpDown.Size = new System.Drawing.Size(60, 22);
+            this.blockPreviewFlatNumericUpDown.TabIndex = 306;
+            this.blockPreviewFlatNumericUpDown.TabStop = false;
+            // 
+            // speedPreviewFlatNumericUpDown
+            // 
+            this.speedPreviewFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.speedPreviewFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.speedPreviewFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.speedPreviewFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.speedPreviewFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.speedPreviewFlatNumericUpDown.Increment = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.speedPreviewFlatNumericUpDown.Location = new System.Drawing.Point(148, 221);
+            this.speedPreviewFlatNumericUpDown.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.speedPreviewFlatNumericUpDown.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.speedPreviewFlatNumericUpDown.Name = "speedPreviewFlatNumericUpDown";
+            this.speedPreviewFlatNumericUpDown.ReadOnly = true;
+            this.speedPreviewFlatNumericUpDown.Size = new System.Drawing.Size(60, 22);
+            this.speedPreviewFlatNumericUpDown.TabIndex = 307;
+            this.speedPreviewFlatNumericUpDown.TabStop = false;
+            // 
+            // staminaPreviewFlatNumericUpDown
+            // 
+            this.staminaPreviewFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.staminaPreviewFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.staminaPreviewFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.staminaPreviewFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.staminaPreviewFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.staminaPreviewFlatNumericUpDown.Increment = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.staminaPreviewFlatNumericUpDown.Location = new System.Drawing.Point(148, 247);
+            this.staminaPreviewFlatNumericUpDown.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.staminaPreviewFlatNumericUpDown.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.staminaPreviewFlatNumericUpDown.Name = "staminaPreviewFlatNumericUpDown";
+            this.staminaPreviewFlatNumericUpDown.ReadOnly = true;
+            this.staminaPreviewFlatNumericUpDown.Size = new System.Drawing.Size(60, 22);
+            this.staminaPreviewFlatNumericUpDown.TabIndex = 308;
+            this.staminaPreviewFlatNumericUpDown.TabStop = false;
+            // 
+            // catchPreviewFlatNumericUpDown
+            // 
+            this.catchPreviewFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.catchPreviewFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.catchPreviewFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.catchPreviewFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.catchPreviewFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.catchPreviewFlatNumericUpDown.Increment = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.catchPreviewFlatNumericUpDown.Location = new System.Drawing.Point(148, 273);
+            this.catchPreviewFlatNumericUpDown.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.catchPreviewFlatNumericUpDown.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.catchPreviewFlatNumericUpDown.Name = "catchPreviewFlatNumericUpDown";
+            this.catchPreviewFlatNumericUpDown.ReadOnly = true;
+            this.catchPreviewFlatNumericUpDown.Size = new System.Drawing.Size(60, 22);
+            this.catchPreviewFlatNumericUpDown.TabIndex = 309;
+            this.catchPreviewFlatNumericUpDown.TabStop = false;
+            // 
+            // luckPreviewFlatNumericUpDown
+            // 
+            this.luckPreviewFlatNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.luckPreviewFlatNumericUpDown.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.luckPreviewFlatNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.luckPreviewFlatNumericUpDown.ButtonHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.luckPreviewFlatNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.luckPreviewFlatNumericUpDown.Increment = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.luckPreviewFlatNumericUpDown.Location = new System.Drawing.Point(148, 299);
+            this.luckPreviewFlatNumericUpDown.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.luckPreviewFlatNumericUpDown.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.luckPreviewFlatNumericUpDown.Name = "luckPreviewFlatNumericUpDown";
+            this.luckPreviewFlatNumericUpDown.ReadOnly = true;
+            this.luckPreviewFlatNumericUpDown.Size = new System.Drawing.Size(60, 22);
+            this.luckPreviewFlatNumericUpDown.TabIndex = 310;
+            this.luckPreviewFlatNumericUpDown.TabStop = false;
+            // 
+            // fpCurveButton
+            // 
+            this.fpCurveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.fpCurveButton.ForeColor = System.Drawing.Color.White;
+            this.fpCurveButton.Location = new System.Drawing.Point(340, 65);
+            this.fpCurveButton.Name = "fpCurveButton";
+            this.fpCurveButton.Size = new System.Drawing.Size(24, 22);
+            this.fpCurveButton.TabIndex = 311;
+            this.fpCurveButton.Text = "~";
+            this.fpCurveButton.UseVisualStyleBackColor = true;
+            this.fpCurveButton.Click += new System.EventHandler(this.CurveButton_Click);
+            // 
+            // tpCurveButton
+            // 
+            this.tpCurveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.tpCurveButton.ForeColor = System.Drawing.Color.White;
+            this.tpCurveButton.Location = new System.Drawing.Point(340, 91);
+            this.tpCurveButton.Name = "tpCurveButton";
+            this.tpCurveButton.Size = new System.Drawing.Size(24, 22);
+            this.tpCurveButton.TabIndex = 312;
+            this.tpCurveButton.Text = "~";
+            this.tpCurveButton.UseVisualStyleBackColor = true;
+            this.tpCurveButton.Click += new System.EventHandler(this.CurveButton_Click);
+            // 
+            // kickCurveButton
+            // 
+            this.kickCurveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.kickCurveButton.ForeColor = System.Drawing.Color.White;
+            this.kickCurveButton.Location = new System.Drawing.Point(340, 117);
+            this.kickCurveButton.Name = "kickCurveButton";
+            this.kickCurveButton.Size = new System.Drawing.Size(24, 22);
+            this.kickCurveButton.TabIndex = 313;
+            this.kickCurveButton.Text = "~";
+            this.kickCurveButton.UseVisualStyleBackColor = true;
+            this.kickCurveButton.Click += new System.EventHandler(this.CurveButton_Click);
+            // 
+            // dribbleCurveButton
+            // 
+            this.dribbleCurveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.dribbleCurveButton.ForeColor = System.Drawing.Color.White;
+            this.dribbleCurveButton.Location = new System.Drawing.Point(340, 143);
+            this.dribbleCurveButton.Name = "dribbleCurveButton";
+            this.dribbleCurveButton.Size = new System.Drawing.Size(24, 22);
+            this.dribbleCurveButton.TabIndex = 314;
+            this.dribbleCurveButton.Text = "~";
+            this.dribbleCurveButton.UseVisualStyleBackColor = true;
+            this.dribbleCurveButton.Click += new System.EventHandler(this.CurveButton_Click);
+            // 
+            // techniqueCurveButton
+            // 
+            this.techniqueCurveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.techniqueCurveButton.ForeColor = System.Drawing.Color.White;
+            this.techniqueCurveButton.Location = new System.Drawing.Point(340, 169);
+            this.techniqueCurveButton.Name = "techniqueCurveButton";
+            this.techniqueCurveButton.Size = new System.Drawing.Size(24, 22);
+            this.techniqueCurveButton.TabIndex = 315;
+            this.techniqueCurveButton.Text = "~";
+            this.techniqueCurveButton.UseVisualStyleBackColor = true;
+            this.techniqueCurveButton.Click += new System.EventHandler(this.CurveButton_Click);
+            // 
+            // blockCurveButton
+            // 
+            this.blockCurveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.blockCurveButton.ForeColor = System.Drawing.Color.White;
+            this.blockCurveButton.Location = new System.Drawing.Point(340, 195);
+            this.blockCurveButton.Name = "blockCurveButton";
+            this.blockCurveButton.Size = new System.Drawing.Size(24, 22);
+            this.blockCurveButton.TabIndex = 316;
+            this.blockCurveButton.Text = "~";
+            this.blockCurveButton.UseVisualStyleBackColor = true;
+            this.blockCurveButton.Click += new System.EventHandler(this.CurveButton_Click);
+            // 
+            // speedCurveButton
+            // 
+            this.speedCurveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.speedCurveButton.ForeColor = System.Drawing.Color.White;
+            this.speedCurveButton.Location = new System.Drawing.Point(340, 221);
+            this.speedCurveButton.Name = "speedCurveButton";
+            this.speedCurveButton.Size = new System.Drawing.Size(24, 22);
+            this.speedCurveButton.TabIndex = 317;
+            this.speedCurveButton.Text = "~";
+            this.speedCurveButton.UseVisualStyleBackColor = true;
+            this.speedCurveButton.Click += new System.EventHandler(this.CurveButton_Click);
+            // 
+            // staminaCurveButton
+            // 
+            this.staminaCurveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.staminaCurveButton.ForeColor = System.Drawing.Color.White;
+            this.staminaCurveButton.Location = new System.Drawing.Point(340, 247);
+            this.staminaCurveButton.Name = "staminaCurveButton";
+            this.staminaCurveButton.Size = new System.Drawing.Size(24, 22);
+            this.staminaCurveButton.TabIndex = 318;
+            this.staminaCurveButton.Text = "~";
+            this.staminaCurveButton.UseVisualStyleBackColor = true;
+            this.staminaCurveButton.Click += new System.EventHandler(this.CurveButton_Click);
+            // 
+            // catchCurveButton
+            // 
+            this.catchCurveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.catchCurveButton.ForeColor = System.Drawing.Color.White;
+            this.catchCurveButton.Location = new System.Drawing.Point(340, 273);
+            this.catchCurveButton.Name = "catchCurveButton";
+            this.catchCurveButton.Size = new System.Drawing.Size(24, 22);
+            this.catchCurveButton.TabIndex = 319;
+            this.catchCurveButton.Text = "~";
+            this.catchCurveButton.UseVisualStyleBackColor = true;
+            this.catchCurveButton.Click += new System.EventHandler(this.CurveButton_Click);
+            // 
+            // luckCurveButton
+            // 
+            this.luckCurveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.luckCurveButton.ForeColor = System.Drawing.Color.White;
+            this.luckCurveButton.Location = new System.Drawing.Point(340, 299);
+            this.luckCurveButton.Name = "luckCurveButton";
+            this.luckCurveButton.Size = new System.Drawing.Size(24, 22);
+            this.luckCurveButton.TabIndex = 320;
+            this.luckCurveButton.Text = "~";
+            this.luckCurveButton.UseVisualStyleBackColor = true;
+            this.luckCurveButton.Click += new System.EventHandler(this.CurveButton_Click);
+            // 
+            // profileLabel
+            // 
+            this.profileLabel.AutoSize = true;
+            this.profileLabel.Location = new System.Drawing.Point(148, 335);
+            this.profileLabel.Name = "profileLabel";
+            this.profileLabel.Text = "Profile";
+            // 
+            // profileFlatComboBox
+            // 
+            this.profileFlatComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.profileFlatComboBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.profileFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.profileFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.profileFlatComboBox.FormattingEnabled = true;
+            this.profileFlatComboBox.Location = new System.Drawing.Point(196, 331);
+            this.profileFlatComboBox.Name = "profileFlatComboBox";
+            this.profileFlatComboBox.Size = new System.Drawing.Size(138, 21);
+            this.profileFlatComboBox.TabIndex = 321;
+            this.profileFlatComboBox.SelectedIndexChanged += new System.EventHandler(this.ProfileFlatComboBox_SelectedIndexChanged);
+            // 
+            // profileButton
+            // 
+            this.profileButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.profileButton.ForeColor = System.Drawing.Color.White;
+            this.profileButton.Location = new System.Drawing.Point(340, 331);
+            this.profileButton.Name = "profileButton";
+            this.profileButton.Size = new System.Drawing.Size(24, 22);
+            this.profileButton.TabIndex = 322;
+            this.profileButton.Text = "...";
+            this.profileButton.UseVisualStyleBackColor = true;
+            this.profileButton.Click += new System.EventHandler(this.ProfileButton_Click);
+            // 
+            // generateButton
+            // 
+            this.generateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.generateButton.ForeColor = System.Drawing.Color.White;
+            this.generateButton.Location = new System.Drawing.Point(80, 361);
+            this.generateButton.Name = "generateButton";
+            this.generateButton.Size = new System.Drawing.Size(254, 23);
+            this.generateButton.TabIndex = 323;
+            this.generateButton.Text = "Generate level 99 stats";
+            this.generateButton.UseVisualStyleBackColor = true;
+            this.generateButton.Click += new System.EventHandler(this.GenerateButton_Click);
+            // 
             // CharaParamWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.ClientSize = new System.Drawing.Size(684, 639);
+            this.ClientSize = new System.Drawing.Size(706, 697);
             this.Controls.Add(this.characterGroupBox);
             this.Controls.Add(this.searchTextBox);
             this.Controls.Add(this.characterListBox);
             this.Controls.Add(this.menuStrip1);
-            this.MaximumSize = new System.Drawing.Size(700, 678);
-            this.MinimumSize = new System.Drawing.Size(700, 678);
+            this.MaximumSize = new System.Drawing.Size(722, 736);
+            this.MinimumSize = new System.Drawing.Size(722, 736);
             this.Name = "CharaParamWindow";
             this.Text = "CharaParamWindow";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CharaParamWindow_FormClosed);
@@ -1484,8 +2042,18 @@ namespace Lynx.Forms.Characters
             this.traitGroupBox.PerformLayout();
             this.statsGroupBox.ResumeLayout(false);
             this.statsGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.varianceFlatNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fpFlatNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.levelFlatNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fpPreviewFlatNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tpPreviewFlatNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kickPreviewFlatNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dribblePreviewFlatNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.techniquePreviewFlatNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.blockPreviewFlatNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.speedPreviewFlatNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.staminaPreviewFlatNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.catchPreviewFlatNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.luckPreviewFlatNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.kickFlatNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.freedomFlatNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dribbleFlatNumericUpDown)).EndInit();
@@ -1579,6 +2147,35 @@ namespace Lynx.Forms.Characters
         private UI.FlatComboBox trainingFlatComboBox;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.GroupBox statsGroupBox;
+        private System.Windows.Forms.Label levelLabel;
+        private UI.FlatNumericUpDown levelFlatNumericUpDown;
+        private System.Windows.Forms.Label baseHeaderLabel;
+        private System.Windows.Forms.Label previewHeaderLabel;
+        private System.Windows.Forms.Label curveHeaderLabel;
+        private UI.FlatNumericUpDown fpPreviewFlatNumericUpDown;
+        private UI.FlatNumericUpDown tpPreviewFlatNumericUpDown;
+        private UI.FlatNumericUpDown kickPreviewFlatNumericUpDown;
+        private UI.FlatNumericUpDown dribblePreviewFlatNumericUpDown;
+        private UI.FlatNumericUpDown techniquePreviewFlatNumericUpDown;
+        private UI.FlatNumericUpDown blockPreviewFlatNumericUpDown;
+        private UI.FlatNumericUpDown speedPreviewFlatNumericUpDown;
+        private UI.FlatNumericUpDown staminaPreviewFlatNumericUpDown;
+        private UI.FlatNumericUpDown catchPreviewFlatNumericUpDown;
+        private UI.FlatNumericUpDown luckPreviewFlatNumericUpDown;
+        private System.Windows.Forms.Button fpCurveButton;
+        private System.Windows.Forms.Button tpCurveButton;
+        private System.Windows.Forms.Button kickCurveButton;
+        private System.Windows.Forms.Button dribbleCurveButton;
+        private System.Windows.Forms.Button techniqueCurveButton;
+        private System.Windows.Forms.Button blockCurveButton;
+        private System.Windows.Forms.Button speedCurveButton;
+        private System.Windows.Forms.Button staminaCurveButton;
+        private System.Windows.Forms.Button catchCurveButton;
+        private System.Windows.Forms.Button luckCurveButton;
+        private System.Windows.Forms.Label profileLabel;
+        private UI.FlatComboBox profileFlatComboBox;
+        private System.Windows.Forms.Button profileButton;
+        private System.Windows.Forms.Button generateButton;
         private System.Windows.Forms.GroupBox movesGroupBox;
         private System.Windows.Forms.Label label21;
         private UI.FlatComboBox moveFlatComboBox1;
@@ -1613,7 +2210,6 @@ namespace Lynx.Forms.Characters
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.TextBox descriptionTextBox;
-        private UI.FlatNumericUpDown varianceFlatNumericUpDown;
         private System.Windows.Forms.ContextMenuStrip characterContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem insertToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;

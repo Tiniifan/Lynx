@@ -17,6 +17,7 @@ using Lynx.InazumaEleven.Save.Logic;
 using static Lynx.InazumaEleven.Games.GO.GOSupport;
 using Player = Lynx.InazumaEleven.Logic.Player;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using Lynx.UI;
 
 namespace Lynx.Forms.Characters
 {
@@ -37,6 +38,22 @@ namespace Lynx.Forms.Characters
         private List<Player> PlayersFiltred;
 
         private Player SelectedPlayer;
+
+        private IStatCalculator StatCalculator;
+
+        /// <summary>The ten stats, in the order their controls are laid out.</summary>
+        private static readonly PlayerStats[] StatOrder = (PlayerStats[])Enum.GetValues(typeof(PlayerStats));
+
+        private FlatNumericUpDown[] BaseNumericUpDowns;
+
+        private FlatNumericUpDown[] PreviewNumericUpDowns;
+
+        private FlatComboBox[] GrowComboBoxes;
+
+        private Button[] CurveButtons;
+
+        /// <summary>Raw growth values listed by each curve combo box, in display order.</summary>
+        private int[][] CurveValues;
 
         private T2bþ Charanames;
 
@@ -514,16 +531,7 @@ namespace Lynx.Forms.Characters
             elementFlatComboBox.Items.AddRange(EnumHelper.GetValues<Elements>().Select(s => s.Name).ToArray());
             experienceFlatComboBox.Items.AddRange(EnumHelper.GetValues<ExperienceCurve>().Select(s => s.Name).ToArray());
 
-            fpGrowFlatComboBox.Items.AddRange(EnumHelper.GetValues<GrowStats>().Select(s => s.Name).ToArray());
-            tpGrowFlatComboBox.Items.AddRange(EnumHelper.GetValues<GrowStats>().Select(s => s.Name).ToArray());
-            kickGrowFlatComboBox.Items.AddRange(EnumHelper.GetValues<GrowStats>().Select(s => s.Name).ToArray());
-            dribbleGrowFlatComboBox.Items.AddRange(EnumHelper.GetValues<GrowStats>().Select(s => s.Name).ToArray());
-            techniqueGrowFlatComboBox.Items.AddRange(EnumHelper.GetValues<GrowStats>().Select(s => s.Name).ToArray());
-            blockGrowFlatComboBox.Items.AddRange(EnumHelper.GetValues<GrowStats>().Select(s => s.Name).ToArray());
-            speedGrowFlatComboBox.Items.AddRange(EnumHelper.GetValues<GrowStats>().Select(s => s.Name).ToArray());
-            staminaGrowFlatComboBox.Items.AddRange(EnumHelper.GetValues<GrowStats>().Select(s => s.Name).ToArray());
-            catchGrowFlatComboBox.Items.AddRange(EnumHelper.GetValues<GrowStats>().Select(s => s.Name).ToArray());
-            luckGrowFlatComboBox.Items.AddRange(EnumHelper.GetValues<GrowStats>().Select(s => s.Name).ToArray());
+            SetupStatControls();
 
             //genderFlatComboBox.Items.AddRange(EnumHelper.GetValues<Genders>().Select(s => s.Name).ToArray());
 
@@ -635,28 +643,13 @@ namespace Lynx.Forms.Characters
             experienceFlatComboBox.SelectedIndex = SelectedPlayer.Charaparam.ExperienceGrow;
             groupFlatNumericUpDown.Value = SelectedPlayer.Charaparam.PlayerGroup;
 
-            fpFlatNumericUpDown.Value = SelectedPlayer.Charaparam.FP;
-            fpGrowFlatComboBox.SelectedIndex = SelectedPlayer.Charaparam.FPGrow;
-            tpFlatNumericUpDown.Value = SelectedPlayer.Charaparam.TP;
-            tpGrowFlatComboBox.SelectedIndex = SelectedPlayer.Charaparam.TPGrow;
-            kickFlatNumericUpDown.Value = SelectedPlayer.Charaparam.Kick;
-            kickGrowFlatComboBox.SelectedIndex = SelectedPlayer.Charaparam.KickGrow;
-            dribbleFlatNumericUpDown.Value = SelectedPlayer.Charaparam.Dribble;
-            dribbleGrowFlatComboBox.SelectedIndex = SelectedPlayer.Charaparam.DribbleGrow;
-            techniqueFlatNumericUpDown.Value = SelectedPlayer.Charaparam.Technique;
-            techniqueGrowFlatComboBox.SelectedIndex = SelectedPlayer.Charaparam.TechniqueGrow;
-            blockFlatNumericUpDown.Value = SelectedPlayer.Charaparam.Block;
-            blockGrowFlatComboBox.SelectedIndex = SelectedPlayer.Charaparam.BlockGrow;
-            speedFlatNumericUpDown.Value = SelectedPlayer.Charaparam.Speed;
-            speedGrowFlatComboBox.SelectedIndex = SelectedPlayer.Charaparam.SpeedGrow;
-            staminaFlatNumericUpDown.Value = SelectedPlayer.Charaparam.Stamina;
-            staminaGrowFlatComboBox.SelectedIndex = SelectedPlayer.Charaparam.StaminaGrow;
-            catchFlatNumericUpDown.Value = SelectedPlayer.Charaparam.Catch;
-            catchGrowFlatComboBox.SelectedIndex = SelectedPlayer.Charaparam.CatchGrow;
-            luckFlatNumericUpDown.Value = SelectedPlayer.Charaparam.Luck;
-            luckGrowFlatComboBox.SelectedIndex = SelectedPlayer.Charaparam.LuckGrow;
             freedomFlatNumericUpDown.Value = SelectedPlayer.Charaparam.Freedom;
-            varianceFlatNumericUpDown.Value = SelectedPlayer.Charaparam.StatVariance;
+
+            // every player opens on its level 99 stats
+            levelFlatNumericUpDown.Value = StatCalculator != null
+                ? Math.Min(StatCalculator.MaxLegalLevel, levelFlatNumericUpDown.Maximum)
+                : levelFlatNumericUpDown.Maximum;
+            LoadStatControls();
 
             if (FightingSpiritNames.ContainsKey(SelectedPlayer.Charaparam.FightingSpiritHash))
             {
@@ -773,6 +766,9 @@ namespace Lynx.Forms.Characters
             if (!elementFlatComboBox.Focused || elementFlatComboBox.SelectedIndex == -1) return;
 
             SelectedPlayer.Charaparam.Element = elementFlatComboBox.SelectedIndex;
+
+            // the element is a factor inside every growth curve
+            RefreshPreview();
         }
 
         private void TrainingFlatComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -798,72 +794,52 @@ namespace Lynx.Forms.Characters
 
         private void FpFlatNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (!fpFlatNumericUpDown.Focused) return;
-
-            SelectedPlayer.Charaparam.FP = Convert.ToInt32(fpFlatNumericUpDown.Value);
+            BaseStatChanged(PlayerStats.FP, fpFlatNumericUpDown);
         }
 
         private void TpFlatNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (!tpFlatNumericUpDown.Focused) return;
-
-            SelectedPlayer.Charaparam.TP = Convert.ToInt32(tpFlatNumericUpDown.Value);
+            BaseStatChanged(PlayerStats.TP, tpFlatNumericUpDown);
         }
 
         private void KickFlatNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (!kickFlatNumericUpDown.Focused) return;
-
-            SelectedPlayer.Charaparam.Kick = Convert.ToInt32(kickFlatNumericUpDown.Value);
+            BaseStatChanged(PlayerStats.Kick, kickFlatNumericUpDown);
         }
 
         private void DribbleFlatNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (!dribbleFlatNumericUpDown.Focused) return;
-
-            SelectedPlayer.Charaparam.Dribble = Convert.ToInt32(dribbleFlatNumericUpDown.Value);
+            BaseStatChanged(PlayerStats.Dribble, dribbleFlatNumericUpDown);
         }
 
         private void TechniqueFlatNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (!techniqueFlatNumericUpDown.Focused) return;
-
-            SelectedPlayer.Charaparam.Technique = Convert.ToInt32(techniqueFlatNumericUpDown.Value);
+            BaseStatChanged(PlayerStats.Technique, techniqueFlatNumericUpDown);
         }
 
         private void BlockFlatNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (!blockFlatNumericUpDown.Focused) return;
-
-            SelectedPlayer.Charaparam.Block = Convert.ToInt32(blockFlatNumericUpDown.Value);
+            BaseStatChanged(PlayerStats.Block, blockFlatNumericUpDown);
         }
 
         private void SpeedFlatNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (!speedFlatNumericUpDown.Focused) return;
-
-            SelectedPlayer.Charaparam.Speed = Convert.ToInt32(speedFlatNumericUpDown.Value);
+            BaseStatChanged(PlayerStats.Speed, speedFlatNumericUpDown);
         }
 
         private void StaminaFlatNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (!staminaFlatNumericUpDown.Focused) return;
-
-            SelectedPlayer.Charaparam.Stamina = Convert.ToInt32(staminaFlatNumericUpDown.Value);
+            BaseStatChanged(PlayerStats.Stamina, staminaFlatNumericUpDown);
         }
 
         private void CatchFlatNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (!catchFlatNumericUpDown.Focused) return;
-
-            SelectedPlayer.Charaparam.Catch = Convert.ToInt32(catchFlatNumericUpDown.Value);
+            BaseStatChanged(PlayerStats.Catch, catchFlatNumericUpDown);
         }
 
         private void LuckFlatNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (!luckFlatNumericUpDown.Focused) return;
-
-            SelectedPlayer.Charaparam.Luck = Convert.ToInt32(luckFlatNumericUpDown.Value);
+            BaseStatChanged(PlayerStats.Luck, luckFlatNumericUpDown);
         }
 
         private void FreedomFlatNumericUpDown_ValueChanged(object sender, EventArgs e)
@@ -875,79 +851,324 @@ namespace Lynx.Forms.Characters
 
         private void FpGrowFlatComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!fpGrowFlatComboBox.Focused || fpGrowFlatComboBox.SelectedIndex == -1) return;
-
-            SelectedPlayer.Charaparam.FPGrow = fpGrowFlatComboBox.SelectedIndex;
+            CurveChanged(PlayerStats.FP, fpGrowFlatComboBox);
         }
 
         private void TpGrowFlatComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!tpGrowFlatComboBox.Focused || tpGrowFlatComboBox.SelectedIndex == -1) return;
-
-            SelectedPlayer.Charaparam.TPGrow = tpGrowFlatComboBox.SelectedIndex;
+            CurveChanged(PlayerStats.TP, tpGrowFlatComboBox);
         }
 
         private void KickGrowFlatComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!kickGrowFlatComboBox.Focused || kickGrowFlatComboBox.SelectedIndex == -1) return;
-
-            SelectedPlayer.Charaparam.KickGrow = kickGrowFlatComboBox.SelectedIndex;
+            CurveChanged(PlayerStats.Kick, kickGrowFlatComboBox);
         }
 
         private void DribbleGrowFlatComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!dribbleGrowFlatComboBox.Focused || dribbleGrowFlatComboBox.SelectedIndex == -1) return;
-
-            SelectedPlayer.Charaparam.DribbleGrow = dribbleGrowFlatComboBox.SelectedIndex;
+            CurveChanged(PlayerStats.Dribble, dribbleGrowFlatComboBox);
         }
 
         private void TechniqueGrowFlatComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!techniqueGrowFlatComboBox.Focused || techniqueGrowFlatComboBox.SelectedIndex == -1) return;
-
-            SelectedPlayer.Charaparam.TechniqueGrow = techniqueGrowFlatComboBox.SelectedIndex;
+            CurveChanged(PlayerStats.Technique, techniqueGrowFlatComboBox);
         }
 
         private void BlockGrowFlatComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!blockGrowFlatComboBox.Focused || blockGrowFlatComboBox.SelectedIndex == -1) return;
-
-            SelectedPlayer.Charaparam.BlockGrow = blockGrowFlatComboBox.SelectedIndex;
+            CurveChanged(PlayerStats.Block, blockGrowFlatComboBox);
         }
 
         private void SpeedGrowFlatComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!speedGrowFlatComboBox.Focused || speedGrowFlatComboBox.SelectedIndex == -1) return;
-
-            SelectedPlayer.Charaparam.SpeedGrow = speedGrowFlatComboBox.SelectedIndex;
+            CurveChanged(PlayerStats.Speed, speedGrowFlatComboBox);
         }
 
         private void StaminaGrowFlatComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!staminaGrowFlatComboBox.Focused || staminaGrowFlatComboBox.SelectedIndex == -1) return;
-
-            SelectedPlayer.Charaparam.StaminaGrow = staminaGrowFlatComboBox.SelectedIndex;
+            CurveChanged(PlayerStats.Stamina, staminaGrowFlatComboBox);
         }
 
         private void CatchGrowFlatComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!catchGrowFlatComboBox.Focused || catchGrowFlatComboBox.SelectedIndex == -1) return;
-
-            SelectedPlayer.Charaparam.CatchGrow = catchGrowFlatComboBox.SelectedIndex;
+            CurveChanged(PlayerStats.Catch, catchGrowFlatComboBox);
         }
 
         private void LuckGrowFlatComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!luckGrowFlatComboBox.Focused || luckGrowFlatComboBox.SelectedIndex == -1) return;
-
-            SelectedPlayer.Charaparam.LuckGrow = luckGrowFlatComboBox.SelectedIndex;
+            CurveChanged(PlayerStats.Luck, luckGrowFlatComboBox);
         }
 
-        private void VarianceFlatNumericUpDown_ValueChanged(object sender, EventArgs e)
+        private void ProfileFlatComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!varianceFlatNumericUpDown.Focused) return;
+            if (!profileFlatComboBox.Focused || profileFlatComboBox.SelectedIndex == -1) return;
 
-            SelectedPlayer.Charaparam.StatVariance = Convert.ToInt32(varianceFlatNumericUpDown.Value);
+            SelectedPlayer.Charaparam.StatVariance = profileFlatComboBox.SelectedIndex + 1;
+            RefreshPreview();
+        }
+
+
+        /// <summary>
+        /// Collects the ten stat rows and fills the curve and profile lists. The curve names
+        /// come from the calculator, not from the raw values stored in the file.
+        /// </summary>
+        private void SetupStatControls()
+        {
+            StatCalculator = GameOpened.StatCalculator;
+
+            BaseNumericUpDowns = new FlatNumericUpDown[StatOrder.Length];
+            PreviewNumericUpDowns = new FlatNumericUpDown[StatOrder.Length];
+            GrowComboBoxes = new FlatComboBox[StatOrder.Length];
+            CurveButtons = new Button[StatOrder.Length];
+            CurveValues = new int[StatOrder.Length][];
+
+            for (int index = 0; index < StatOrder.Length; index++)
+            {
+                string prefix = StatOrder[index].ToString().ToLowerInvariant();
+
+                BaseNumericUpDowns[index] = Controls.Find(prefix + "FlatNumericUpDown", true).FirstOrDefault() as FlatNumericUpDown;
+                PreviewNumericUpDowns[index] = Controls.Find(prefix + "PreviewFlatNumericUpDown", true).FirstOrDefault() as FlatNumericUpDown;
+                GrowComboBoxes[index] = Controls.Find(prefix + "GrowFlatComboBox", true).FirstOrDefault() as FlatComboBox;
+                CurveButtons[index] = Controls.Find(prefix + "CurveButton", true).FirstOrDefault() as Button;
+
+                if (CurveButtons[index] != null) CurveButtons[index].Tag = StatOrder[index];
+
+                if (StatCalculator == null) continue;
+
+                CurveValues[index] = StatCalculator.GetCurves(StatOrder[index]);
+                GrowComboBoxes[index].Items.AddRange(CurveValues[index]
+                    .Select(grow => (object)StatCalculator.GetCurveName(StatOrder[index], grow))
+                    .ToArray());
+            }
+
+            if (StatCalculator == null)
+            {
+                statsGroupBox.Enabled = false;
+                return;
+            }
+
+            levelFlatNumericUpDown.Maximum = StatCalculator.MaxLegalLevel;
+            levelFlatNumericUpDown.Value = StatCalculator.MaxLegalLevel;
+
+            for (int profile = 1; profile <= StatCalculator.ProfileCount; profile++)
+            {
+                profileFlatComboBox.Items.Add(StatCalculator.GetProfileName(profile));
+            }
+        }
+
+        /// <summary>Pushes the selected player into the stat rows without firing any write back.</summary>
+        private void LoadStatControls()
+        {
+            if (StatCalculator == null || SelectedPlayer == null) return;
+
+            ICharaparam charaparam = SelectedPlayer.Charaparam;
+
+            for (int index = 0; index < StatOrder.Length; index++)
+            {
+                BaseNumericUpDowns[index].Value = Clamp(GetBaseStat(charaparam, StatOrder[index]),
+                                                        BaseNumericUpDowns[index]);
+                GrowComboBoxes[index].SelectedIndex = CurveIndexOf(index, GetGrow(charaparam, StatOrder[index]));
+            }
+
+            profileFlatComboBox.SelectedIndex = Math.Min(Math.Max(charaparam.StatVariance - 1, 0),
+                                                        profileFlatComboBox.Items.Count - 1);
+
+            RefreshPreview();
+        }
+
+        /// <summary>Recomputes the preview column for the level currently shown.</summary>
+        private void RefreshPreview()
+        {
+            if (StatCalculator == null || SelectedPlayer == null || PreviewNumericUpDowns == null) return;
+
+            ICharaparam charaparam = SelectedPlayer.Charaparam;
+            int level = Convert.ToInt32(levelFlatNumericUpDown.Value);
+
+            for (int index = 0; index < StatOrder.Length; index++)
+            {
+                int value = StatCalculator.GetStat(StatOrder[index],
+                                                   GetBaseStat(charaparam, StatOrder[index]),
+                                                   GetGrow(charaparam, StatOrder[index]),
+                                                   level,
+                                                   charaparam.Element,
+                                                   charaparam.StatVariance);
+
+                PreviewNumericUpDowns[index].Value = Clamp(value, PreviewNumericUpDowns[index]);
+            }
+        }
+
+        private void BaseStatChanged(PlayerStats stat, FlatNumericUpDown numericUpDown)
+        {
+            if (!numericUpDown.Focused) return;
+
+            SetBaseStat(SelectedPlayer.Charaparam, stat, Convert.ToInt32(numericUpDown.Value));
+            RefreshPreview();
+        }
+
+        private void CurveChanged(PlayerStats stat, FlatComboBox comboBox)
+        {
+            if (!comboBox.Focused || comboBox.SelectedIndex == -1) return;
+
+            SetGrow(SelectedPlayer.Charaparam, stat, CurveValues[(int)stat][comboBox.SelectedIndex]);
+            RefreshPreview();
+        }
+
+        private void LevelFlatNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            RefreshPreview();
+        }
+
+        private void CurveButton_Click(object sender, EventArgs e)
+        {
+            if (StatCalculator == null || SelectedPlayer == null) return;
+            if (!((sender as Button)?.Tag is PlayerStats stat)) return;
+
+            ICharaparam charaparam = SelectedPlayer.Charaparam;
+
+            using (GrowthCurveWindow window = new GrowthCurveWindow(StatCalculator, stat,
+                                                                   EnumHelper.GetEnumName(stat),
+                                                                   GetBaseStat(charaparam, stat),
+                                                                   GetGrow(charaparam, stat),
+                                                                   charaparam.Element,
+                                                                   charaparam.StatVariance))
+            {
+                window.ShowDialog(this);
+            }
+        }
+
+        private void ProfileButton_Click(object sender, EventArgs e)
+        {
+            if (StatCalculator == null || SelectedPlayer == null) return;
+
+            GrowthProfileWindow.ShowSingle(this, StatCalculator, SelectedPlayer.Charaparam.StatVariance);
+        }
+
+        private void GenerateButton_Click(object sender, EventArgs e)
+        {
+            if (StatCalculator == null || SelectedPlayer == null) return;
+
+            ICharaparam charaparam = SelectedPlayer.Charaparam;
+            int[] targets = new int[StatOrder.Length];
+            int[] grows = new int[StatOrder.Length];
+
+            for (int index = 0; index < StatOrder.Length; index++)
+            {
+                grows[index] = GetGrow(charaparam, StatOrder[index]);
+                targets[index] = StatCalculator.GetStat(StatOrder[index],
+                                                        GetBaseStat(charaparam, StatOrder[index]),
+                                                        grows[index],
+                                                        StatCalculator.MaxLegalLevel,
+                                                        charaparam.Element,
+                                                        charaparam.StatVariance);
+            }
+
+            using (GenerateStatsWindow window = new GenerateStatsWindow(StatCalculator, charaparam.Element,
+                                                                       targets, grows))
+            {
+                if (window.ShowDialog(this) != DialogResult.OK || window.SelectedMatch == null) return;
+
+                StatProfileMatch match = window.SelectedMatch;
+
+                for (int index = 0; index < StatOrder.Length; index++)
+                {
+                    SetBaseStat(charaparam, StatOrder[index], match.BaseStats[index]);
+                    SetGrow(charaparam, StatOrder[index], match.Grows[index]);
+                }
+
+                charaparam.StatVariance = match.Profile;
+            }
+
+            // the generated values are level 99 ones, so show that level back
+            levelFlatNumericUpDown.Value = StatCalculator.MaxLegalLevel;
+            LoadStatControls();
+        }
+
+        /// <summary>Index of a raw growth value in its combo box, folding curve 0 onto its twin.</summary>
+        private int CurveIndexOf(int index, int grow)
+        {
+            int position = Array.IndexOf(CurveValues[index], grow);
+
+            // curves 0 and 1 are the same branch of the game switch, only 1 is listed
+            if (position == -1 && grow == 0) position = Array.IndexOf(CurveValues[index], 1);
+
+            return position;
+        }
+
+        private static decimal Clamp(int value, NumericUpDown numericUpDown)
+        {
+            if (value < numericUpDown.Minimum) return numericUpDown.Minimum;
+            if (value > numericUpDown.Maximum) return numericUpDown.Maximum;
+            return value;
+        }
+
+        private static int GetBaseStat(ICharaparam charaparam, PlayerStats stat)
+        {
+            switch (stat)
+            {
+                case PlayerStats.FP: return charaparam.FP;
+                case PlayerStats.TP: return charaparam.TP;
+                case PlayerStats.Kick: return charaparam.Kick;
+                case PlayerStats.Dribble: return charaparam.Dribble;
+                case PlayerStats.Technique: return charaparam.Technique;
+                case PlayerStats.Block: return charaparam.Block;
+                case PlayerStats.Speed: return charaparam.Speed;
+                case PlayerStats.Stamina: return charaparam.Stamina;
+                case PlayerStats.Catch: return charaparam.Catch;
+                case PlayerStats.Luck: return charaparam.Luck;
+                default: return 0;
+            }
+        }
+
+        private static void SetBaseStat(ICharaparam charaparam, PlayerStats stat, int value)
+        {
+            switch (stat)
+            {
+                case PlayerStats.FP: charaparam.FP = value; break;
+                case PlayerStats.TP: charaparam.TP = value; break;
+                case PlayerStats.Kick: charaparam.Kick = value; break;
+                case PlayerStats.Dribble: charaparam.Dribble = value; break;
+                case PlayerStats.Technique: charaparam.Technique = value; break;
+                case PlayerStats.Block: charaparam.Block = value; break;
+                case PlayerStats.Speed: charaparam.Speed = value; break;
+                case PlayerStats.Stamina: charaparam.Stamina = value; break;
+                case PlayerStats.Catch: charaparam.Catch = value; break;
+                case PlayerStats.Luck: charaparam.Luck = value; break;
+            }
+        }
+
+        private static int GetGrow(ICharaparam charaparam, PlayerStats stat)
+        {
+            switch (stat)
+            {
+                case PlayerStats.FP: return charaparam.FPGrow;
+                case PlayerStats.TP: return charaparam.TPGrow;
+                case PlayerStats.Kick: return charaparam.KickGrow;
+                case PlayerStats.Dribble: return charaparam.DribbleGrow;
+                case PlayerStats.Technique: return charaparam.TechniqueGrow;
+                case PlayerStats.Block: return charaparam.BlockGrow;
+                case PlayerStats.Speed: return charaparam.SpeedGrow;
+                case PlayerStats.Stamina: return charaparam.StaminaGrow;
+                case PlayerStats.Catch: return charaparam.CatchGrow;
+                case PlayerStats.Luck: return charaparam.LuckGrow;
+                default: return 0;
+            }
+        }
+
+        private static void SetGrow(ICharaparam charaparam, PlayerStats stat, int value)
+        {
+            switch (stat)
+            {
+                case PlayerStats.FP: charaparam.FPGrow = value; break;
+                case PlayerStats.TP: charaparam.TPGrow = value; break;
+                case PlayerStats.Kick: charaparam.KickGrow = value; break;
+                case PlayerStats.Dribble: charaparam.DribbleGrow = value; break;
+                case PlayerStats.Technique: charaparam.TechniqueGrow = value; break;
+                case PlayerStats.Block: charaparam.BlockGrow = value; break;
+                case PlayerStats.Speed: charaparam.SpeedGrow = value; break;
+                case PlayerStats.Stamina: charaparam.StaminaGrow = value; break;
+                case PlayerStats.Catch: charaparam.CatchGrow = value; break;
+                case PlayerStats.Luck: charaparam.LuckGrow = value; break;
+            }
         }
 
         private void AvatarFlatComboBox_SelectedIndexChanged(object sender, EventArgs e)

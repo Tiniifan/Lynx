@@ -11,6 +11,8 @@ namespace Lynx.InazumaEleven.Games.GO
     {
         public override string Name => "Inazuma Eleven Go";
 
+        public override IStatCalculator StatCalculator => GOStatCalculator.Instance;
+
         private string FileName { get; set; }
 
         public GO(string filePath, string languageName)

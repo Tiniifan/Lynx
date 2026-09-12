@@ -29,6 +29,12 @@ namespace Lynx.InazumaEleven.Games
         public virtual string Name => "";
 
         /// <summary>
+        /// Gets the stat calculator of the game, which turns the base stats and growth curves
+        /// stored in chara_param into the stats a player shows at a given level.
+        /// </summary>
+        public virtual IStatCalculator StatCalculator => null;
+
+        /// <summary>
         /// Gets or sets the language code of the game.
         /// </summary>
         public string LanguageCode { get; set; }
