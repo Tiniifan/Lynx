@@ -251,7 +251,7 @@ namespace Lynx.InazumaEleven.Games.GO
             public int ItemID { get; set; }
             public int NameID { get; set; }
             public int DescriptionID { get; set; }
-            public int Unk3 { get; set; }
+            public int ItemRef { get; set; }
             public int ItemCategory { get; set; }
         }
 
@@ -262,7 +262,7 @@ namespace Lynx.InazumaEleven.Games.GO
             public int NameID { get; set; }
             public int FullNameID { get; set; }
             public int DescriptionID { get; set; }
-            public int Unk5 { get; set; }
+            public int ItemRef { get; set; }
             public int ItemCategory { get; set; }
 
             // Méthode pour convertir explicitement en ItemConfig
@@ -273,6 +273,7 @@ namespace Lynx.InazumaEleven.Games.GO
                     ItemID = this.ItemID,
                     NameID = this.NameID,
                     DescriptionID = this.DescriptionID,
+                    ItemRef = this.ItemRef,
                     ItemCategory = this.ItemCategory
                 };
             }
@@ -284,7 +285,7 @@ namespace Lynx.InazumaEleven.Games.GO
             public int ItemNumber { get; set; }
             public int NameID { get; set; }
             public int DescriptionID { get; set; }
-            public int Unk4 { get; set; }
+            public int ItemRef { get; set; }
             public int ItemCategory { get; set; }
             public int Unk6 { get; set; }
             public int Unk7 { get; set; }
@@ -326,7 +327,7 @@ namespace Lynx.InazumaEleven.Games.GO
             public int NameID { get; set; }
             public int DescriptionID { get; set; }
             public int ItemNumber { get; set; }
-            public int Unk4 { get; set; }
+            public int ItemRef { get; set; }
             public int ItemCategory { get; set; }
 
             // Méthode pour convertir explicitement en ItemConfig
@@ -337,6 +338,7 @@ namespace Lynx.InazumaEleven.Games.GO
                     ItemID = this.ItemID,
                     NameID = this.NameID,
                     DescriptionID = this.DescriptionID,
+                    ItemRef = this.ItemRef,
                     ItemCategory = this.ItemCategory
                 };
             }
@@ -513,7 +515,7 @@ namespace Lynx.InazumaEleven.Games.GO
             public int ItemID { get; set; }
             public int NameID { get; set; }
             public int DescriptionID { get; set; }
-            public int Unk1 { get; set; }
+            public int ItemRef { get; set; }
             public int ItemCategory { get; set; }
             public int MaxQuantity { get; set; }
             public int Unk2 { get; set; }

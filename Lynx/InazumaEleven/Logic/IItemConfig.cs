@@ -5,6 +5,7 @@
         int ItemID { get; set; }
         int NameID { get; set; }
         int DescriptionID { get; set; }
+        int ItemRef { get; set; }
         int ItemCategory { get; set; }
     }
 
@@ -14,6 +15,7 @@
         int ItemNumber { get; set; }
         new int NameID { get; set; }
         new int DescriptionID { get; set; }
+        new int ItemRef { get; set; }
         new int ItemCategory { get; set; }
         int PlayerGroupBuff1 { get; set; }
         int PlayerGroupBuff2 { get; set; }
@@ -51,6 +53,7 @@
         new int NameID { get; set; }
         new int DescriptionID { get; set; }
         int MaxQuantity { get; set; }
+        new int ItemRef { get; set; }
         new int ItemCategory { get; set; }
         int SellingPrice { get; set; }
         int PurchasePrice { get; set; }
