@@ -255,16 +255,27 @@ namespace Lynx.Forms.PalpackCards
 
         private string[] GetPlayerNames(Player[] players)
         {
+            Dictionary<string, int> nameCounts = new Dictionary<string, int>();
+
             return players.Select((player, index) =>
             {
                 var charabase = Charabases.FirstOrDefault(cb => cb.BaseHash == player.Charaparam.BaseHash);
 
-                if (charabase != null && Charanames.Nouns.TryGetValue(charabase.NameHash, out var noun) && noun.Strings.Count > 0)
+                string name = (charabase != null && Charanames.Nouns.TryGetValue(charabase.NameHash, out var noun) && noun.Strings.Count > 0)
+                    ? noun.Strings[0].Text
+                    : "Player " + index;
+
+                if (nameCounts.ContainsKey(name))
                 {
-                    return noun.Strings[0].Text;
+                    nameCounts[name]++;
+                    name += $" ({nameCounts[name]})";
+                }
+                else
+                {
+                    nameCounts[name] = 1;
                 }
 
-                return "Player " + index;
+                return name;
             }).ToArray();
         }
 
