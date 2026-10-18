@@ -41,6 +41,30 @@ namespace Lynx.Forms.Nyanko
             ShowNoun = showNoun;
             FocusHash = focusHash;
             T2bþFileOpened = t2bþFileOpened;
+
+            ToolStripMenuItem addItemToolStripMenuItem = new ToolStripMenuItem("Add")
+            {
+                ForeColor = System.Drawing.Color.White
+            };
+            addItemToolStripMenuItem.Click += AddFromItemToolStripMenuItem_Click;
+            textItemContextMenuStrip.Items.Insert(0, addItemToolStripMenuItem);
+        }
+
+        private void AddFromItemToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TreeNode parent = SelectedRightClickTreeNode?.Parent;
+            if (parent == null) return;
+
+            SelectedRightClickTreeNode = parent;
+
+            if (parent.Tag is TreeNodeTag tag && tag.Type == "NounType")
+            {
+                NounTypeAddTextToolStripMenuItem_Click(sender, e);
+            }
+            else
+            {
+                AddKeyToolStripMenuItem_Click_1(sender, e);
+            }
         }
 
         private void SelectNodeByTagKey(int keyToFind)

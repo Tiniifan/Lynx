@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using StudioElevenLib.Tools;
 using StudioElevenLib.Level5.Text;
+using StudioElevenLib.Level5.Text.Logic;
 using StudioElevenLib.Level5.Image;
 using Lynx.InazumaEleven.Games;
 using Lynx.InazumaEleven.Logic;
@@ -674,6 +675,35 @@ namespace Lynx.Forms.Characters
             }
         }
 
+        private bool IsNameHashUsed(int hash)
+        {
+            return Charanames.Nouns.ContainsKey(hash) || Charanames.Texts.ContainsKey(hash);
+        }
+
+        private string GetUsedNameText(int hash)
+        {
+            if (Charanames.Nouns.TryGetValue(hash, out TextConfig noun) && noun.Strings.Count > 0)
+            {
+                return "\"" + noun.Strings[0].Text + "\"";
+            }
+            if (Charanames.Texts.TryGetValue(hash, out TextConfig text) && text.Strings.Count > 0)
+            {
+                return "\"" + text.Strings[0].Text + "\"";
+            }
+            return "(empty text)";
+        }
+
+        private int GenerateRandomNameHash()
+        {
+            int hash;
+            do
+            {
+                hash = unchecked((int)Crc32.Compute(Encoding.UTF8.GetBytes(Guid.NewGuid().ToString())));
+            }
+            while (hash == 0 || IsNameHashUsed(hash));
+            return hash;
+        }
+
         private void InsertToolStripMenuItem_Click(object sender, EventArgs e)
         {
             NewCharabaseWindow newCharabaseWindow = new NewCharabaseWindow(Charabases.Select(x => x.BaseHash).Distinct().ToList());
@@ -681,6 +711,60 @@ namespace Lynx.Forms.Characters
 
             if (newCharabaseWindow.SelectedCharaNameHash != 0)
             {
+                // Name texts: fname_<id> / pname_<id>, hashed with CRC32
+                string charaId = newCharabaseWindow.SelectedCharaId;
+                string charaNumber = charaId.Substring(2);
+
+                string fullNameKey = "fname_" + charaId;
+                string nicknameKey = "pname_" + charaId;
+                int fullNameHash = unchecked((int)Crc32.Compute(Encoding.UTF8.GetBytes(fullNameKey)));
+                int nicknameHash = unchecked((int)Crc32.Compute(Encoding.UTF8.GetBytes(nicknameKey)));
+
+                bool fullNameConflict = IsNameHashUsed(fullNameHash);
+                bool nicknameConflict = IsNameHashUsed(nicknameHash);
+
+                if (fullNameConflict || nicknameConflict)
+                {
+                    StringBuilder conflicts = new StringBuilder();
+                    if (fullNameConflict)
+                    {
+                        conflicts.AppendLine($"- Full name \"{fullNameKey}\" (CRC32 {fullNameHash:X8}) already used by: {GetUsedNameText(fullNameHash)}");
+                    }
+                    if (nicknameConflict)
+                    {
+                        conflicts.AppendLine($"- Nickname \"{nicknameKey}\" (CRC32 {nicknameHash:X8}) already used by: {GetUsedNameText(nicknameHash)}");
+                    }
+
+                    DialogResult result = MessageBox.Show(
+                        "CRC32 collision detected:\n\n" + conflicts +
+                        "\nYes: force the creation, a random CRC32 will be generated for the conflicting text(s).\n" +
+                        "No: cancel the creation so you can fix the conflict first.",
+                        "CRC32 collision",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning);
+
+                    if (result != DialogResult.Yes)
+                    {
+                        return;
+                    }
+
+                    if (fullNameConflict)
+                    {
+                        fullNameHash = GenerateRandomNameHash();
+                    }
+                    if (nicknameConflict)
+                    {
+                        nicknameHash = GenerateRandomNameHash();
+                        while (nicknameHash == fullNameHash)
+                        {
+                            nicknameHash = GenerateRandomNameHash();
+                        }
+                    }
+                }
+
+                Charanames.Nouns[fullNameHash] = new TextConfig(new List<StringLevel5>() { new StringLevel5(0, "FullName " + charaNumber) });
+                Charanames.Nouns[nicknameHash] = new TextConfig(new List<StringLevel5>() { new StringLevel5(0, "Nickname " + charaNumber) });
+
                 ICharabase newCharabase = null;
                 int insertIndex = Charabases.Count;
 
@@ -719,6 +803,8 @@ namespace Lynx.Forms.Characters
                 }
 
                 newCharabase.BaseHash = newCharabaseWindow.SelectedCharaNameHash;
+                newCharabase.NameHash = fullNameHash;
+                newCharabase.NicknameHash = nicknameHash;
 
                 Charabases.Insert(insertIndex, newCharabase);
 

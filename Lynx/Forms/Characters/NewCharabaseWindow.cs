@@ -18,7 +18,9 @@ namespace Lynx.Forms.Characters
         public int SelectedCharaType;
 
         public int SelectedCharaNameHash;
-        
+
+        public string SelectedCharaId;
+
         public NewCharabaseWindow(List<int> usedHash)
         {
             InitializeComponent();
@@ -78,15 +80,17 @@ namespace Lynx.Forms.Characters
             switch(SelectedCharaType)
             {
                 case 0:
-                    SelectedCharaNameHash = unchecked((int)Crc32.Compute(Encoding.UTF8.GetBytes(playerListBox.SelectedItem.ToString())));
+                    SelectedCharaId = playerListBox.SelectedItem.ToString();
                     break;
                 case 1:
-                    SelectedCharaNameHash = unchecked((int)Crc32.Compute(Encoding.UTF8.GetBytes(npcListBox.SelectedItem.ToString())));
+                    SelectedCharaId = npcListBox.SelectedItem.ToString();
                     break;
                 case 2:
-                    SelectedCharaNameHash = unchecked((int)Crc32.Compute(Encoding.UTF8.GetBytes(npcOtherListBox.SelectedItem.ToString())));
+                    SelectedCharaId = npcOtherListBox.SelectedItem.ToString();
                     break;
             }
+
+            SelectedCharaNameHash = unchecked((int)Crc32.Compute(Encoding.UTF8.GetBytes(SelectedCharaId)));
 
             Close();
         }
