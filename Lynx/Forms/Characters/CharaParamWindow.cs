@@ -10,7 +10,7 @@ using StudioElevenLib.Level5.Text;
 using StudioElevenLib.Level5.Image;
 using Lynx.InazumaEleven.Games;
 using Lynx.InazumaEleven.Logic;
-using Lynx.InazumaEleven.Common;
+using Lynx.InazumaEleven.Data;
 using Lynx.InazumaEleven.Games.GO;
 using OfficeOpenXml;
 using Lynx.InazumaEleven.Save.Logic;
@@ -527,13 +527,13 @@ namespace Lynx.Forms.Characters
             GameSupports.GameFile skillText = GameOpened.Files["skill_text"];
             Skillnames = new T2bþ(skillText.File.Directory.GetFileFromFullPath(skillText.Path));
 
-            positionFlatComboBox.Items.AddRange(EnumHelper.GetValues<PlayerPositions>().Select(s => s.Name).ToArray());
-            elementFlatComboBox.Items.AddRange(EnumHelper.GetValues<Elements>().Select(s => s.Name).ToArray());
-            experienceFlatComboBox.Items.AddRange(EnumHelper.GetValues<ExperienceCurve>().Select(s => s.Name).ToArray());
+            positionFlatComboBox.Items.AddRange(CommonData.GetNames(CommonData.PlayerPositions));
+            elementFlatComboBox.Items.AddRange(CommonData.GetNames(CommonData.Elements));
+            experienceFlatComboBox.Items.AddRange(CommonData.GetNames(CommonData.ExperienceCurve));
 
             SetupStatControls();
 
-            //genderFlatComboBox.Items.AddRange(EnumHelper.GetValues<Genders>().Select(s => s.Name).ToArray());
+            //genderFlatComboBox.Items.AddRange(CommonData.GetNames(CommonData.Genders));
 
             baseFlatComboBox.Items.AddRange(GetNames(Charabases.ToArray()).ToArray());
             characterListBox.Items.AddRange(GetNames(Players.Select(x => x.Charaparam).ToArray()).ToArray());
@@ -1026,7 +1026,7 @@ namespace Lynx.Forms.Characters
             ICharaparam charaparam = SelectedPlayer.Charaparam;
 
             using (GrowthCurveWindow window = new GrowthCurveWindow(StatCalculator, stat,
-                                                                   EnumHelper.GetEnumName(stat),
+                                                                   CommonData.GetName(CommonData.PlayerStats, (int)stat),
                                                                    GetBaseStat(charaparam, stat),
                                                                    GetGrow(charaparam, stat),
                                                                    charaparam.Element,

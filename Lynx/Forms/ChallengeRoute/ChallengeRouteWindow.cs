@@ -11,7 +11,7 @@ using StudioElevenLib.Level5.Text;
 using StudioElevenLib.Level5.Image;
 using Lynx.InazumaEleven.Games;
 using Lynx.InazumaEleven.Logic;
-using Lynx.InazumaEleven.Common;
+using Lynx.InazumaEleven.Data;
 using OfficeOpenXml;
 using Font = System.Drawing.Font ;
 //using Color = System.Drawing.Color;
@@ -589,7 +589,7 @@ namespace Lynx.Forms.ChallengeRoute
             GameSupports.GameFile trouteText = GameOpened.Files["troute_text"];
             RouteText = new T2bþ(trouteText.File.Directory.GetFileFromFullPath(trouteText.Path));
 
-            matchFlatComboBox.Items.AddRange(MatchRestrictions.IEGO.ToArray());
+            matchFlatComboBox.Items.AddRange(CommonData.GetNames(CommonData.MatchRestrictions));
 
             ItemsConfigs = GameOpened.GetItems("all").ToList();
             ItemsNamesDict = GetNames(ItemsConfigs.ToArray());

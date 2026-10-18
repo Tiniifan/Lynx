@@ -10,7 +10,7 @@ using StudioElevenLib.Level5.Text;
 using StudioElevenLib.Level5.Image;
 using Lynx.InazumaEleven.Games;
 using Lynx.InazumaEleven.Logic;
-using Lynx.InazumaEleven.Common;
+using Lynx.InazumaEleven.Data;
 using OfficeOpenXml;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using static Lynx.InazumaEleven.Games.GO.GOSupport;

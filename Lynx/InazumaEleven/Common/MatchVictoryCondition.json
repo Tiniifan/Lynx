@@ -1,0 +1,26 @@
+{
+  "games": {
+    "iego": [
+      {
+        "id": 0,
+        "name": "None"
+      },
+      {
+        "id": 1,
+        "name": "Take the ball"
+      },
+      {
+        "id": 2,
+        "name": "Score a goal"
+      },
+      {
+        "id": 3,
+        "name": "Don't lose the ball"
+      },
+      {
+        "id": 4,
+        "name": "Random (between condition 1-2-3)"
+      }
+    ]
+  }
+}

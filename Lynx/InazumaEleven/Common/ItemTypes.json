@@ -1,0 +1,102 @@
+{
+  "games": {
+    "iego": [
+      {
+        "id": 1,
+        "name": "Boots"
+      },
+      {
+        "id": 2,
+        "name": "Gloves"
+      },
+      {
+        "id": 3,
+        "name": "Bracelet"
+      },
+      {
+        "id": 4,
+        "name": "Pendant"
+      },
+      {
+        "id": 5,
+        "name": "Unused"
+      },
+      {
+        "id": 6,
+        "name": "Special Move (Block)"
+      },
+      {
+        "id": 7,
+        "name": "Special Move (Save)"
+      },
+      {
+        "id": 8,
+        "name": "Special Move (Dribble)"
+      },
+      {
+        "id": 9,
+        "name": "Special Move (Skill)"
+      },
+      {
+        "id": 10,
+        "name": "Special Move (Shot)"
+      },
+      {
+        "id": 11,
+        "name": "Healing Item (FP)"
+      },
+      {
+        "id": 12,
+        "name": "Healing Item (TP)"
+      },
+      {
+        "id": 13,
+        "name": "Healing Item (FP/TP)"
+      },
+      {
+        "id": 14,
+        "name": "Key Item"
+      },
+      {
+        "id": 15,
+        "name": "Versus Ticket"
+      },
+      {
+        "id": 16,
+        "name": "Kit"
+      },
+      {
+        "id": 17,
+        "name": "Palpack"
+      },
+      {
+        "id": 18,
+        "name": "Fighting Spirit"
+      },
+      {
+        "id": 19,
+        "name": "Formation (Match)"
+      },
+      {
+        "id": 20,
+        "name": "Formation (Mini-Battle)"
+      },
+      {
+        "id": 21,
+        "name": "Coach"
+      },
+      {
+        "id": 22,
+        "name": "Goal Celebration"
+      },
+      {
+        "id": 23,
+        "name": "Tactic"
+      },
+      {
+        "id": 24,
+        "name": "Emblem"
+      }
+    ]
+  }
+}

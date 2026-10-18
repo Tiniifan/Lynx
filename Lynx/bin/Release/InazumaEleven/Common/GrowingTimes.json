@@ -1,0 +1,22 @@
+{
+  "games": {
+    "iego": [
+      {
+        "id": 0,
+        "name": "No growth time"
+      },
+      {
+        "id": 1,
+        "name": "Fast"
+      },
+      {
+        "id": 2,
+        "name": "Medium"
+      },
+      {
+        "id": 3,
+        "name": "Slow"
+      }
+    ]
+  }
+}

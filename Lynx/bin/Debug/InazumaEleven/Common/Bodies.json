@@ -1,0 +1,42 @@
+{
+  "games": {
+    "iego": [
+      {
+        "id": 0,
+        "name": "No Body"
+      },
+      {
+        "id": 1,
+        "name": "Normal (Collar)"
+      },
+      {
+        "id": 2,
+        "name": "Fat"
+      },
+      {
+        "id": 3,
+        "name": "Bulk"
+      },
+      {
+        "id": 4,
+        "name": "Normal"
+      },
+      {
+        "id": 5,
+        "name": "Short"
+      },
+      {
+        "id": 6,
+        "name": "Tall"
+      },
+      {
+        "id": 7,
+        "name": "Girl"
+      },
+      {
+        "id": 8,
+        "name": "Short Fat"
+      }
+    ]
+  }
+}

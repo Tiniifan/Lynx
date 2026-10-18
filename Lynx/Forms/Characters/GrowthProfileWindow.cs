@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using Lynx.InazumaEleven.Common;
+using Lynx.InazumaEleven.Data;
 using Lynx.InazumaEleven.Games;
 using Lynx.InazumaEleven.Logic;
 
@@ -56,7 +56,7 @@ namespace Lynx.Forms.Characters
 
             foreach (PlayerStats stat in Enum.GetValues(typeof(PlayerStats)))
             {
-                profileDataGridView.Columns.Add(NewColumn(EnumHelper.GetEnumName(stat), 62));
+                profileDataGridView.Columns.Add(NewColumn(CommonData.GetName(CommonData.PlayerStats, (int)stat), 62));
             }
 
             for (int profile = 1; profile <= Calculator.ProfileCount; profile++)

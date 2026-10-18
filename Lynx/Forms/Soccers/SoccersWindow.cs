@@ -12,7 +12,7 @@ using StudioElevenLib.Level5.Text;
 using StudioElevenLib.Level5.Image;
 using Lynx.InazumaEleven.Games;
 using Lynx.InazumaEleven.Logic;
-using Lynx.InazumaEleven.Common;
+using Lynx.InazumaEleven.Data;
 using Lynx.InazumaEleven.Games.GO;
 using OfficeOpenXml;
 using OfficeOpenXml.FormulaParsing;
@@ -723,6 +723,7 @@ namespace Lynx.Forms.Soccers
                 AddLazyItems(dropComboBox, DropItems);
             }
 
+            victoryConditionFlatComboBox.Items.AddRange(CommonData.GetNames(CommonData.MatchVictoryCondition));
             bootsFlatComboBox.Items.AddRange(BootsNamesDict.Values.ToArray());
             glovesFlatComboBox.Items.AddRange(GlovesNamesDict.Values.ToArray());
             braceletFlatComboBox.Items.AddRange(BraceletNamesDict.Values.ToArray());

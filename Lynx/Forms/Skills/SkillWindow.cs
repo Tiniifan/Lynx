@@ -11,7 +11,7 @@ using StudioElevenLib.Level5.Image;
 using StudioElevenLib.Level5.Binary;
 using Lynx.InazumaEleven.Games;
 using Lynx.InazumaEleven.Logic;
-using Lynx.InazumaEleven.Common;
+using Lynx.InazumaEleven.Data;
 using Lynx.InazumaEleven.Games.GO;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using OfficeOpenXml;

@@ -18,7 +18,7 @@ using StudioElevenLib.Level5.Binary.Logic;
 using StudioElevenLib.Level5.Binary.Collections;
 using Lynx.InazumaEleven.Games;
 using Lynx.InazumaEleven.Logic;
-using Lynx.InazumaEleven.Common;
+using Lynx.InazumaEleven.Data;
 using Lynx.InazumaEleven.Games.GO;
 using Lynx.Forms.Scipts;
 using System.Threading;
@@ -377,7 +377,7 @@ namespace Lynx.Forms.Maps
             foreach (var charabase in charabases)
             {
                 string name = "";
-                string type = $" ({EnumHelper.GetEnumName((CharaTypes)charabase.CharaBaseType)})";
+                string type = $" ({CommonData.GetName(CommonData.CharaTypes, charabase.CharaBaseType)})";
 
                 if (charanames.Nouns.TryGetValue(charabase.NameHash, out var noun) && noun.Strings.Count > 0)
                 {

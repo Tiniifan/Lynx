@@ -11,7 +11,7 @@ using StudioElevenLib.Level5.Text;
 using StudioElevenLib.Level5.Image;
 using Lynx.InazumaEleven.Games;
 using Lynx.InazumaEleven.Logic;
-using Lynx.InazumaEleven.Common;
+using Lynx.InazumaEleven.Data;
 using Lynx.InazumaEleven.Games.GO;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Lynx.InazumaEleven.Save.Saves;
@@ -61,7 +61,7 @@ namespace Lynx.Forms.Characters
             Color textColor = e.ForeColor;
 
             // Determine the text color based on the item index
-            textColor = EnumHelper.GetColorById<Skins>(e.Index);
+            textColor = CommonData.GetColor(CommonData.Skins, e.Index);
 
             // Draw the ComboBox item with the appropriate text color
             e.DrawBackground();
@@ -221,11 +221,11 @@ namespace Lynx.Forms.Characters
             modelNPCOtherFlatComboBox.Items.AddRange(Models["NPCOther"].Select(x => x.ToString()).ToArray());
             modelPlayerFlatComboBox.Items.AddRange(Models["Player"].Select(x => x.ToString()).ToArray());
 
-            yearFlatComboBox.Items.AddRange(EnumHelper.GetValues<Years>().Select(s => s.Name).ToArray());
-            modelTypeflatComboBox.Items.AddRange(EnumHelper.GetValues<CharaTypes>().Select(s => s.Name).ToArray());
-            skinFlatComboBox.Items.AddRange(EnumHelper.GetValues<Skins>().Select(s => s.Name).ToArray());
-            bodyFlatComboBox.Items.AddRange(EnumHelper.GetValues<Bodies>().Select(s => s.Name).ToArray());
-            genderFlatComboBox.Items.AddRange(EnumHelper.GetValues<Genders>().Select(s => s.Name).ToArray());
+            yearFlatComboBox.Items.AddRange(CommonData.GetNames(CommonData.Years));
+            modelTypeflatComboBox.Items.AddRange(CommonData.GetNames(CommonData.CharaTypes));
+            skinFlatComboBox.Items.AddRange(CommonData.GetNames(CommonData.Skins));
+            bodyFlatComboBox.Items.AddRange(CommonData.GetNames(CommonData.Bodies));
+            genderFlatComboBox.Items.AddRange(CommonData.GetNames(CommonData.Genders));
 
             if (GameOpened.Files.ContainsKey("kiznax_hint_text"))
             {
@@ -581,7 +581,7 @@ namespace Lynx.Forms.Characters
         {
             if (skinFlatComboBox.SelectedIndex == -1) return;
 
-            colorPictureBox.BackColor = EnumHelper.GetColorById<Skins>(skinFlatComboBox.SelectedIndex);
+            colorPictureBox.BackColor = CommonData.GetColor(CommonData.Skins, skinFlatComboBox.SelectedIndex);
 
             if (skinFlatComboBox.Focused)
             {

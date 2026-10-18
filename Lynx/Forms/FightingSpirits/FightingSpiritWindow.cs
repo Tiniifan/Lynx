@@ -10,7 +10,7 @@ using StudioElevenLib.Level5.Text;
 using StudioElevenLib.Level5.Image;
 using Lynx.InazumaEleven.Games;
 using Lynx.InazumaEleven.Logic;
-using Lynx.InazumaEleven.Common;
+using Lynx.InazumaEleven.Data;
 using OfficeOpenXml;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
@@ -182,8 +182,8 @@ namespace Lynx.Forms.FightingSpirits
 
             if (statGrowthflatComboBox.SelectedIndex > 0 && levelGrowthFlatComboBox.SelectedIndex > 0)
             {
-                fgTable = AvatarGrowthStats.IEGO[statGrowthflatComboBox.SelectedIndex][levelGrowthFlatComboBox.SelectedIndex].FG.ToArray();
-                powerTable = AvatarGrowthStats.IEGO[statGrowthflatComboBox.SelectedIndex][levelGrowthFlatComboBox.SelectedIndex].Attack.ToArray();
+                fgTable = CommonData.AvatarGrowthStats[statGrowthflatComboBox.SelectedIndex][levelGrowthFlatComboBox.SelectedIndex].FG.ToArray();
+                powerTable = CommonData.AvatarGrowthStats[statGrowthflatComboBox.SelectedIndex][levelGrowthFlatComboBox.SelectedIndex].Attack.ToArray();
             }
 
             fg2FlatNumericUpDown.Value = fgFlatNumericUpDown.Value + fgTable[0];
@@ -239,9 +239,9 @@ namespace Lynx.Forms.FightingSpirits
             GameSupports.GameFile skillText = GameOpened.Files["skill_text"];
             Skillnames = new T2bþ(skillText.File.Directory.GetFileFromFullPath(skillText.Path));
 
-            positonFlatComboBox.Items.AddRange(EnumHelper.GetValues<PlayerPositions>().Select(s => s.Name).ToArray());
-            elementFlatComboBox.Items.AddRange(EnumHelper.GetValues<Elements>().Select(s => s.Name).ToArray());
-            levelGrowthFlatComboBox.Items.AddRange(EnumHelper.GetValues<GrowingTimes>().Select(s => s.Name).ToArray());
+            positonFlatComboBox.Items.AddRange(CommonData.GetNames(CommonData.PlayerPositions));
+            elementFlatComboBox.Items.AddRange(CommonData.GetNames(CommonData.Elements));
+            levelGrowthFlatComboBox.Items.AddRange(CommonData.GetNames(CommonData.GrowingTimes));
 
             SkillConfigs = GameOpened.GetSkillConfigs(true).ToList();
             SkillNamesDict = GetNames(SkillConfigs.ToArray());
@@ -838,7 +838,7 @@ namespace Lynx.Forms.FightingSpirits
             if (avatar.EvolutionStatGrow > 0 && avatar.EvolutionGrow > 0 &&
                 levelIndex >= 0 && levelIndex <= 5)
             {
-                var fgTable = AvatarGrowthStats.IEGO[avatar.EvolutionStatGrow][avatar.EvolutionGrow].FG;
+                var fgTable = CommonData.AvatarGrowthStats[avatar.EvolutionStatGrow][avatar.EvolutionGrow].FG;
                 int baseFSP = avatar.FightingSpiritPoint;
                 int total = baseFSP;
 
@@ -858,7 +858,7 @@ namespace Lynx.Forms.FightingSpirits
             if (avatar.EvolutionStatGrow > 0 && avatar.EvolutionGrow > 0 &&
                 levelIndex >= 0 && levelIndex <= 5)
             {
-                var powerTable = AvatarGrowthStats.IEGO[avatar.EvolutionStatGrow][avatar.EvolutionGrow].Attack;
+                var powerTable = CommonData.AvatarGrowthStats[avatar.EvolutionStatGrow][avatar.EvolutionGrow].Attack;
                 int basePower = avatar.Attack;
                 int total = basePower;
 

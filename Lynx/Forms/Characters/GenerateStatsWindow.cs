@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using Lynx.InazumaEleven.Common;
+using Lynx.InazumaEleven.Data;
 using Lynx.InazumaEleven.Games;
 using Lynx.InazumaEleven.Logic;
 using Lynx.UI;
@@ -62,7 +62,7 @@ namespace Lynx.Forms.Characters
                     AutoSize = true,
                     ForeColor = Color.White,
                     Location = new Point(12, top + 4),
-                    Text = EnumHelper.GetEnumName(stat),
+                    Text = CommonData.GetName(CommonData.PlayerStats, (int)stat),
                 };
 
                 Calculator.GetReachableRange(stat, TargetLevel, Element, out int lowest, out int highest);
@@ -98,7 +98,7 @@ namespace Lynx.Forms.Characters
 
             foreach (PlayerStats stat in Enum.GetValues(typeof(PlayerStats)))
             {
-                resultDataGridView.Rows.Add(EnumHelper.GetEnumName(stat), string.Empty, string.Empty, string.Empty);
+                resultDataGridView.Rows.Add(CommonData.GetName(CommonData.PlayerStats, (int)stat), string.Empty, string.Empty, string.Empty);
             }
 
             // the grid only reports, a selected row would only be noise

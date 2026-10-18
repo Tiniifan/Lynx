@@ -12,7 +12,7 @@ using StudioElevenLib.Level5.Binary;
 using StudioElevenLib.Level5.Binary.Collections;
 using Lynx.InazumaEleven.Games;
 using Lynx.InazumaEleven.Logic;
-using Lynx.InazumaEleven.Common;
+using Lynx.InazumaEleven.Data;
 using Lynx.InazumaEleven.Games.GO;
 using Microsoft.WindowsAPICodePack.Dialogs;
 

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Lynx.InazumaEleven.Common;
+using Lynx.InazumaEleven.Data;
 using Lynx.InazumaEleven.Logic;
 
 namespace Lynx.InazumaEleven.Games.GO

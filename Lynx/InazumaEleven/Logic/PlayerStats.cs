@@ -1,42 +1,23 @@
-﻿using System;
-using System.ComponentModel;
+using System;
 
-namespace Lynx.InazumaEleven.Common
+namespace Lynx.InazumaEleven.Logic
 {
     /// <summary>
     /// The ten stats of a player, in the exact order the game reads them
     /// (CHARA_PARAM_INFO field order, and index order of the growth tables).
+    /// Display names live in Common/PlayerStats.json.
     /// </summary>
     public enum PlayerStats
     {
-        [Description("FP")]
         FP = 0,
-
-        [Description("TP")]
         TP = 1,
-
-        [Description("Kick")]
         Kick = 2,
-
-        [Description("Dribble")]
         Dribble = 3,
-
-        [Description("Technique")]
         Technique = 4,
-
-        [Description("Block")]
         Block = 5,
-
-        [Description("Speed")]
         Speed = 6,
-
-        [Description("Stamina")]
         Stamina = 7,
-
-        [Description("Catch")]
         Catch = 8,
-
-        [Description("Luck")]
         Luck = 9,
     }
 }

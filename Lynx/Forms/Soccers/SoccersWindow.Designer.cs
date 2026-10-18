@@ -2066,12 +2066,6 @@ namespace Lynx.Forms.Soccers
             this.victoryConditionFlatComboBox.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.victoryConditionFlatComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.victoryConditionFlatComboBox.FormattingEnabled = true;
-            this.victoryConditionFlatComboBox.Items.AddRange(new object[] {
-            "None",
-            "Victory Condition 1",
-            "Victory Condition 2",
-            "Victory Condition 3",
-            "Victory Condition 4"});
             this.victoryConditionFlatComboBox.Location = new System.Drawing.Point(113, 48);
             this.victoryConditionFlatComboBox.Name = "victoryConditionFlatComboBox";
             this.victoryConditionFlatComboBox.Size = new System.Drawing.Size(152, 21);

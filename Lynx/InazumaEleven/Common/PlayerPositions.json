@@ -1,0 +1,26 @@
+{
+  "games": {
+    "iego": [
+      {
+        "id": 0,
+        "name": "Unposition"
+      },
+      {
+        "id": 1,
+        "name": "Goalkeeper"
+      },
+      {
+        "id": 2,
+        "name": "Forward"
+      },
+      {
+        "id": 3,
+        "name": "Midfielder"
+      },
+      {
+        "id": 4,
+        "name": "Defender"
+      }
+    ]
+  }
+}

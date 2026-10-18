@@ -1,0 +1,81 @@
+{
+  "games": {
+    "iego": [
+      {
+        "id": 0,
+        "name": "NPC",
+        "color": "#000000"
+      },
+      {
+        "id": 1,
+        "name": "Color 1",
+        "color": "#F1B67B"
+      },
+      {
+        "id": 2,
+        "name": "Color 2",
+        "color": "#FFC988"
+      },
+      {
+        "id": 3,
+        "name": "Color 3",
+        "color": "#F8C89A"
+      },
+      {
+        "id": 4,
+        "name": "Color 4",
+        "color": "#FFFF75"
+      },
+      {
+        "id": 5,
+        "name": "Color 5",
+        "color": "#DAC6A8"
+      },
+      {
+        "id": 6,
+        "name": "Color 6",
+        "color": "#C9956B"
+      },
+      {
+        "id": 7,
+        "name": "Color 7",
+        "color": "#E4A363"
+      },
+      {
+        "id": 8,
+        "name": "Color 8",
+        "color": "#BA8D6C"
+      },
+      {
+        "id": 9,
+        "name": "Color 9",
+        "color": "#88B4A5"
+      },
+      {
+        "id": 10,
+        "name": "Color 10",
+        "color": "#C77454"
+      },
+      {
+        "id": 11,
+        "name": "Color 11",
+        "color": "#BB8652"
+      },
+      {
+        "id": 12,
+        "name": "Color 12",
+        "color": "#F7E5CB"
+      },
+      {
+        "id": 13,
+        "name": "Color 13",
+        "color": "#F0CFB0"
+      },
+      {
+        "id": 14,
+        "name": "Color 14",
+        "color": "#AC8864"
+      }
+    ]
+  }
+}

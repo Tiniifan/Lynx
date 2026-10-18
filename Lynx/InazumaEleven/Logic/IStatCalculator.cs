@@ -1,4 +1,4 @@
-﻿using Lynx.InazumaEleven.Common;
+﻿using Lynx.InazumaEleven.Data;
 
 namespace Lynx.InazumaEleven.Logic
 {

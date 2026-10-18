@@ -1,0 +1,46 @@
+{
+  "games": {
+    "iego": [
+      {
+        "id": 0,
+        "name": "No condition (Other)"
+      },
+      {
+        "id": 1,
+        "name": "No condition (Match)"
+      },
+      {
+        "id": 2,
+        "name": "Win with wind team"
+      },
+      {
+        "id": 3,
+        "name": "Win with wood team"
+      },
+      {
+        "id": 4,
+        "name": "Win with fire team"
+      },
+      {
+        "id": 5,
+        "name": "Win with earth team"
+      },
+      {
+        "id": 6,
+        "name": "Win with female team"
+      },
+      {
+        "id": 7,
+        "name": "Win with male team"
+      },
+      {
+        "id": 8,
+        "name": "Win without shot special moves"
+      },
+      {
+        "id": 9,
+        "name": "Win without save special moves"
+      }
+    ]
+  }
+}

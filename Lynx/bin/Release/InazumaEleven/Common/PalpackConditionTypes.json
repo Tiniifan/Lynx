@@ -1,0 +1,18 @@
+{
+  "games": {
+    "iego": [
+      {
+        "id": 0,
+        "name": "None"
+      },
+      {
+        "id": 1,
+        "name": "Item"
+      },
+      {
+        "id": 2,
+        "name": "Player"
+      }
+    ]
+  }
+}

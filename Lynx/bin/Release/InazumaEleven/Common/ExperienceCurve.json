@@ -1,0 +1,38 @@
+{
+  "games": {
+    "iego": [
+      {
+        "id": 0,
+        "name": "Uncurve"
+      },
+      {
+        "id": 1,
+        "name": "Curve 4"
+      },
+      {
+        "id": 2,
+        "name": "Curve 3"
+      },
+      {
+        "id": 3,
+        "name": "Curve 2"
+      },
+      {
+        "id": 4,
+        "name": "Curve 1"
+      },
+      {
+        "id": 5,
+        "name": "Curve 5"
+      },
+      {
+        "id": 6,
+        "name": "Curve 6"
+      },
+      {
+        "id": 7,
+        "name": "Curve 7"
+      }
+    ]
+  }
+}

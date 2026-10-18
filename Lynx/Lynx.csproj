@@ -315,22 +315,10 @@
     <Compile Include="Forms\TranslationHelper\TranslationHelperWindow.Designer.cs">
       <DependentUpon>TranslationHelperWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="InazumaEleven\Common\AvatarGrowthStats.cs" />
-    <Compile Include="InazumaEleven\Common\GrowingTimes.cs" />
-    <Compile Include="InazumaEleven\Common\GrowStats.cs" />
-    <Compile Include="InazumaEleven\Common\PlayerStats.cs" />
-    <Compile Include="InazumaEleven\Common\Bodies.cs" />
-    <Compile Include="InazumaEleven\Common\CharaTypes.cs" />
-    <Compile Include="InazumaEleven\Common\ExperienceCurve.cs" />
-    <Compile Include="InazumaEleven\Common\ItemTypes.cs" />
-    <Compile Include="InazumaEleven\Common\MatchRestrictions.cs" />
-    <Compile Include="InazumaEleven\Common\MovePositions.cs" />
-    <Compile Include="InazumaEleven\Common\PalpackConditionTypes.cs" />
-    <Compile Include="InazumaEleven\Common\PlayerPositions.cs" />
-    <Compile Include="InazumaEleven\Common\Genders.cs" />
-    <Compile Include="InazumaEleven\Common\Skins.cs" />
-    <Compile Include="InazumaEleven\Common\Elements.cs" />
-    <Compile Include="InazumaEleven\Common\Years.cs" />
+    <Compile Include="InazumaEleven\Data\CommonData.cs" />
+    <Compile Include="InazumaEleven\Logic\PlayerStats.cs" />
+    <Compile Include="InazumaEleven\Logic\PalpackConditionTypes.cs" />
+    <Compile Include="InazumaEleven\Logic\ItemTypes.cs" />
     <Compile Include="InazumaEleven\Games\Game.cs" />
     <Compile Include="InazumaEleven\Games\GameSupports.cs" />
     <Compile Include="InazumaEleven\Games\GO\GO.cs" />
@@ -410,6 +398,12 @@
     <Compile Include="UI\VSTabControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Content Include="InazumaEleven\Common\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="InazumaEleven\Common\*.json">
+      <LogicalName>Lynx.InazumaEleven.Common.%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ChallengeRoute\AddCellWindow.resx">
       <DependentUpon>AddCellWindow.cs</DependentUpon>
     </EmbeddedResource>

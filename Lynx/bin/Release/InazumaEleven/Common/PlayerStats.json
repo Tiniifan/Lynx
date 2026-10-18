@@ -1,0 +1,46 @@
+{
+  "games": {
+    "iego": [
+      {
+        "id": 0,
+        "name": "FP"
+      },
+      {
+        "id": 1,
+        "name": "TP"
+      },
+      {
+        "id": 2,
+        "name": "Kick"
+      },
+      {
+        "id": 3,
+        "name": "Dribble"
+      },
+      {
+        "id": 4,
+        "name": "Technique"
+      },
+      {
+        "id": 5,
+        "name": "Block"
+      },
+      {
+        "id": 6,
+        "name": "Speed"
+      },
+      {
+        "id": 7,
+        "name": "Stamina"
+      },
+      {
+        "id": 8,
+        "name": "Catch"
+      },
+      {
+        "id": 9,
+        "name": "Luck"
+      }
+    ]
+  }
+}

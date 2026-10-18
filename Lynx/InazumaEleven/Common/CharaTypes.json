@@ -1,0 +1,26 @@
+{
+  "games": {
+    "iego": [
+      {
+        "id": 0,
+        "name": "Unknown"
+      },
+      {
+        "id": 1,
+        "name": "Player"
+      },
+      {
+        "id": 2,
+        "name": "Unused"
+      },
+      {
+        "id": 3,
+        "name": "NPC"
+      },
+      {
+        "id": 4,
+        "name": "NPC Other"
+      }
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "games": {
+    "iego": [
+      {
+        "id": 0,
+        "name": "Unknown"
+      },
+      {
+        "id": 1,
+        "name": "First Year"
+      },
+      {
+        "id": 2,
+        "name": "Second Year"
+      },
+      {
+        "id": 3,
+        "name": "Third Year"
+      },
+      {
+        "id": 4,
+        "name": "Adult"
+      }
+    ]
+  }
+}

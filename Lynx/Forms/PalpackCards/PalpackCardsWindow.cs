@@ -11,7 +11,7 @@ using StudioElevenLib.Level5.Text.Logic;
 using StudioElevenLib.Level5.Image;
 using Lynx.InazumaEleven.Games;
 using Lynx.InazumaEleven.Logic;
-using Lynx.InazumaEleven.Common;
+using Lynx.InazumaEleven.Data;
 using OfficeOpenXml;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Player = Lynx.InazumaEleven.Logic.Player;
@@ -105,7 +105,7 @@ namespace Lynx.Forms.PalpackCards
                 if (conditionTypeComboBox != null)
                 {
                     conditionTypeComboBox.Items.Clear();
-                    conditionTypeComboBox.Items.AddRange(EnumHelper.GetValues<PalpackConditionTypes>().Select(s => s.Name).ToArray());
+                    conditionTypeComboBox.Items.AddRange(CommonData.GetNames(CommonData.PalpackConditionTypes));
                 }
 
                 if (conditionObjectComboBox != null)

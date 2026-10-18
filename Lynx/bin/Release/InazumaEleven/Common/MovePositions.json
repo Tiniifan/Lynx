@@ -1,0 +1,30 @@
+{
+  "games": {
+    "iego": [
+      {
+        "id": 0,
+        "name": "Unposition"
+      },
+      {
+        "id": 1,
+        "name": "Save"
+      },
+      {
+        "id": 2,
+        "name": "Shot"
+      },
+      {
+        "id": 3,
+        "name": "Dribble"
+      },
+      {
+        "id": 4,
+        "name": "Block"
+      },
+      {
+        "id": 5,
+        "name": "Skill"
+      }
+    ]
+  }
+}
