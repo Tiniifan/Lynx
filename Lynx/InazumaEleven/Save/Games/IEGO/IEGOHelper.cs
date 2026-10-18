@@ -26,7 +26,19 @@ namespace Lynx.InazumaEleven.Save.Games.IEGO
 
         public uint CustomTeamPlayersOffset = 0x9088;
 
-        public int MaximumPlayer = 112;
+        public const int DefaultMaximumPlayer = 112;
+
+        // Size of one entry of the player data block, and of one entry of the player index
+        public const int PlayerBlockSize = 0xCC;
+        public const int PlayerIndexSize = 0x04;
+
+        public int MaximumPlayer = DefaultMaximumPlayer;
+
+        // Offset shift applied to everything located after the player data block
+        public int PlayerShift;
+
+        // Same, for what comes after the player index (the custom teams players)
+        public int PlayerIndexShift;
 
         public bool IsJP;
 
@@ -47,6 +59,20 @@ namespace Lynx.InazumaEleven.Save.Games.IEGO
                 CustomTeamPlayersOffset = 0x9038;
             }
 
+            // The player data block and the player index grow with MAX_PLAYER (SAVE_EDITOR.ini),
+            // so every offset located after them is moved.
+            MaximumPlayer = SaveEditorConfig.MaxPlayer;
+            int extraPlayers = MaximumPlayer - DefaultMaximumPlayer;
+
+            PlayerShift = extraPlayers * PlayerBlockSize;
+            PlayerIndexShift = PlayerShift + extraPlayers * PlayerIndexSize;
+
+            MoneyOffset += PlayerShift;
+            MainTeamInfoOffset += (uint)PlayerShift;
+            CustomTeamInfoOffset += (uint)PlayerShift;
+            PlayerIndexOffset += PlayerShift;
+            MainTeamPlayersOffset += (uint)PlayerShift;
+            CustomTeamPlayersOffset += (uint)PlayerIndexShift;
         }
 
         private static IEGOHelper _instance;

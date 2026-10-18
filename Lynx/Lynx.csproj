@@ -398,6 +398,10 @@
     <Compile Include="UI\VSTabControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Content Include="SAVE_EDITOR.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Compile Include="InazumaEleven\Save\SaveEditorConfig.cs" />
     <Content Include="InazumaEleven\Common\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
