@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Drawing;
 using System.IO;
 using System.Data;
@@ -95,8 +96,63 @@ namespace Lynx.Forms.Soccers
 
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
-            InitializeComponent();
-            InitializeSoccersResource();
+            Cursor previousCursor = Cursor.Current;
+            Cursor.Current = Cursors.WaitCursor;
+
+            try
+            {
+                InitializeComponent();
+                InitializeSoccersResource();
+            }
+            finally
+            {
+                Cursor.Current = previousCursor;
+            }
+        }
+
+        private readonly Dictionary<FlatComboBox, object[]> PendingComboBoxItems = new Dictionary<FlatComboBox, object[]>();
+
+        private void AddLazyItems(FlatComboBox comboBox, object[] items)
+        {
+            PendingComboBoxItems[comboBox] = items;
+            comboBox.Enter += (sender, e) => EnsureFilled(comboBox);
+            comboBox.DropDown += (sender, e) => EnsureFilled(comboBox);
+        }
+
+        private void SetLazySelection(FlatComboBox comboBox, string name)
+        {
+            if (PendingComboBoxItems.ContainsKey(comboBox))
+            {
+                comboBox.BeginUpdate();
+                comboBox.Items.Clear();
+                comboBox.Items.Add(name);
+                comboBox.SelectedIndex = 0;
+                comboBox.EndUpdate();
+            }
+            else
+            {
+                comboBox.SelectedIndex = comboBox.Items.IndexOf(name);
+            }
+        }
+
+        private void EnsureFilled(FlatComboBox comboBox)
+        {
+            if (!PendingComboBoxItems.TryGetValue(comboBox, out object[] items)) return;
+
+            PendingComboBoxItems.Remove(comboBox);
+
+            string selected = comboBox.SelectedItem as string;
+
+            comboBox.BeginUpdate();
+            comboBox.Items.Clear();
+            comboBox.Items.AddRange(items);
+
+            if (selected != null)
+            {
+                comboBox.SelectedIndex = comboBox.Items.IndexOf(selected);
+            }
+
+            comboBox.EndUpdate();
         }
 
         private Dictionary<int, string> GetNames(IItemConfig[] items)
@@ -212,13 +268,22 @@ namespace Lynx.Forms.Soccers
             Dictionary<int, string> output = new Dictionary<int, string>();
             Dictionary<string, int> nameCounts = new Dictionary<string, int>();
 
+            Dictionary<int, ICharabase> charabaseByHash = new Dictionary<int, ICharabase>();
+            foreach (ICharabase charabase in charabases)
+            {
+                if (!charabaseByHash.ContainsKey(charabase.BaseHash))
+                {
+                    charabaseByHash.Add(charabase.BaseHash, charabase);
+                }
+            }
+
             int index = 0;
             foreach (var charaparam in charaparams)
             {
                 string name = $"Player {index}";
 
                 // Get the charabase
-                ICharabase charabase = charabases.FirstOrDefault(x => x.BaseHash == charaparam.BaseHash);
+                charabaseByHash.TryGetValue(charaparam.BaseHash, out ICharabase charabase);
 
                 if (charabase != null)
                 {
@@ -308,6 +373,15 @@ namespace Lynx.Forms.Soccers
             Dictionary<int, string> output = new Dictionary<int, string>();
             Dictionary<string, int> nameCounts = new Dictionary<string, int>();
 
+            Dictionary<int, IItemConfig> itemByID = new Dictionary<int, IItemConfig>();
+            foreach (IItemConfig item in items)
+            {
+                if (!itemByID.ContainsKey(item.ItemID))
+                {
+                    itemByID.Add(item.ItemID, item);
+                }
+            }
+
             foreach (string fileName in modelRpgBodyFolder.Files.Keys)
             {
                 if (fileName.StartsWith("uza"))
@@ -321,7 +395,7 @@ namespace Lynx.Forms.Soccers
 
                         string name = kitID;
 
-                        IItemConfig kitConfig = items.FirstOrDefault(x => x.ItemID == crc32);
+                        itemByID.TryGetValue(crc32, out IItemConfig kitConfig);
 
                         if (kitConfig != null)
                         {
@@ -357,80 +431,59 @@ namespace Lynx.Forms.Soccers
             return output;
         }
 
-        private bool SameID(int id, string name)
+        private static Dictionary<int, string> BuildIDLookup(params string[] prefixes)
         {
-            int crc32 = unchecked((int)Crc32.Compute(Encoding.UTF8.GetBytes(name)));
-            return id == crc32;
+            Dictionary<int, string> lookup = new Dictionary<int, string>();
+
+            for (int i = 0; i < 10000; i++)
+            {
+                string number = i.ToString().PadLeft(4, '0');
+
+                foreach (string prefix in prefixes)
+                {
+                    string name = prefix + number;
+                    int crc32 = unchecked((int)Crc32.Compute(Encoding.UTF8.GetBytes(name)));
+
+                    // Keep the first match, same as the previous linear search
+                    if (!lookup.ContainsKey(crc32))
+                    {
+                        lookup.Add(crc32, name);
+                    }
+                }
+            }
+
+            return lookup;
+        }
+
+        private static readonly Lazy<Dictionary<int, string>> SoccerIDLookup = new Lazy<Dictionary<int, string>>(() => BuildIDLookup("btl"));
+        private static readonly Lazy<Dictionary<int, string>> ParamIDLookup = new Lazy<Dictionary<int, string>>(() => BuildIDLookup("para_ts", "para_te"));
+        private static readonly Lazy<Dictionary<int, string>> ConfigIDLookup = new Lazy<Dictionary<int, string>>(() => BuildIDLookup("ts", "te"));
+
+        private static string FindID(Lazy<Dictionary<int, string>> lookup, int id)
+        {
+            return lookup.Value.TryGetValue(id, out string name) ? name : id.ToString("X8");
         }
 
         private string FindSoccerID(int soccerID = 0x0)
         {
-            for (int i = 0; i < 10000; i++)
-            {
-                string prefix = "";
-
-                string trySoccerID = $"btl{prefix}{i.ToString().PadLeft(4, '0')}";
-
-                if (SameID(soccerID, trySoccerID))
-                {
-                    return trySoccerID;
-                }
-            }
-
-            // Not found
-            return soccerID.ToString("X8");
+            return FindID(SoccerIDLookup, soccerID);
         }
 
         private string FindParamID(int paramID = 0x0)
         {
-            for (int i = 0; i < 10000; i++)
-            {
-                string prefix = "";
-
-                string tryParamID = $"para_ts{prefix}{i.ToString().PadLeft(4, '0')}";
-                string tryParamID2 = $"para_te{prefix}{i.ToString().PadLeft(4, '0')}";
-
-                if (SameID(paramID, tryParamID))
-                {
-                    return tryParamID;
-                } else if (SameID(paramID, tryParamID2))
-                {
-                    return tryParamID2;
-                }
-            }
-
-            // Not found
-            return paramID.ToString("X8");
+            return FindID(ParamIDLookup, paramID);
         }
 
         private string FindConfigID(int configID = 0x0)
         {
-            for (int i = 0; i < 10000; i++)
-            {
-                string prefix = "";
-
-                string tryConfigID = $"ts{prefix}{i.ToString().PadLeft(4, '0')}";
-                string tryConfigID2 = $"te{prefix}{i.ToString().PadLeft(4, '0')}";
-
-                if (SameID(configID, tryConfigID))
-                {
-                    return tryConfigID;
-                }
-                else if (SameID(configID, tryConfigID2))
-                {
-                    return tryConfigID2;
-                }
-            }
-
-            // Not found
-            return configID.ToString("X8");
+            return FindID(ConfigIDLookup, configID);
         }
 
         private void SetPlayerComboBox(FlatComboBox comboBox, int playerID)
         {
             if (CharaNamesDict.ContainsKey(playerID))
             {
-                comboBox.SelectedIndex = comboBox.Items.IndexOf(CharaNamesDict[playerID]);
+                SetLazySelection(comboBox, CharaNamesDict[playerID]);
             } else
             {
                 comboBox.SelectedIndex = -1;
@@ -485,8 +538,41 @@ namespace Lynx.Forms.Soccers
             }
         }
 
+        private IEnumerable<FlatComboBox> GetAllComboBoxes(Control parent)
+        {
+            foreach (Control control in parent.Controls)
+            {
+                if (control is FlatComboBox comboBox)
+                {
+                    yield return comboBox;
+                }
+
+                foreach (FlatComboBox child in GetAllComboBoxes(control))
+                {
+                    yield return child;
+                }
+            }
+        }
+
+        private void SetComboBoxesUpdating(bool updating)
+        {
+            foreach (FlatComboBox comboBox in GetAllComboBoxes(this))
+            {
+                if (updating)
+                {
+                    comboBox.BeginUpdate();
+                }
+                else
+                {
+                    comboBox.EndUpdate();
+                }
+            }
+        }
+
         private void FillCombobox()
         {
+            SetComboBoxesUpdating(true);
+
             int configFlatComboBoxIndex = configFlatComboBox.SelectedIndex;
             int configFromParamFlatComboBoxIndex = configFromParamFlatComboBox.SelectedIndex;
             int paramFlatComboBoxIndex = paramFlatComboBox.SelectedIndex;
@@ -515,6 +601,8 @@ namespace Lynx.Forms.Soccers
             paramFlatComboBox.SelectedIndex = configFlatComboBoxIndex;
             paramFromSoccerFlatComboBox.SelectedIndex = paramFromSoccerFlatComboBoxIndex;
             soccerFlatComboBox.SelectedIndex = soccerFlatComboBoxIndex;
+
+            SetComboBoxesUpdating(false);
         }
 
         private void Save()
@@ -539,7 +627,12 @@ namespace Lynx.Forms.Soccers
             }
         }
 
-        private void InitializeSoccersResource()
+        private object[] PlayerItems;
+        private object[] DropItems;
+
+        // Reads the game data and builds the name dictionaries. It never touches a control, so it
+        // runs on a worker thread while the UI thread builds the form.
+        private void LoadSoccersData()
         {
             // Text
             GameSupports.GameFile skillTextGameFile = GameOpened.Files["item_text"];
@@ -554,22 +647,7 @@ namespace Lynx.Forms.Soccers
             ICharaparam[] charaparams = GameOpened.GetCharaparams();
             CharaNamesDict = GetNames(charaparams, charabases);
             CharaNamesDict.Add(0, "");
-            playerFlatComboBox1.Items.AddRange(CharaNamesDict.Values.ToArray());
-            playerFlatComboBox2.Items.AddRange(playerFlatComboBox1.Items.Cast<Object>().ToArray());
-            playerFlatComboBox3.Items.AddRange(playerFlatComboBox1.Items.Cast<Object>().ToArray());
-            playerFlatComboBox4.Items.AddRange(playerFlatComboBox1.Items.Cast<Object>().ToArray());
-            playerFlatComboBox5.Items.AddRange(playerFlatComboBox1.Items.Cast<Object>().ToArray());
-            playerFlatComboBox6.Items.AddRange(playerFlatComboBox1.Items.Cast<Object>().ToArray());
-            playerFlatComboBox7.Items.AddRange(playerFlatComboBox1.Items.Cast<Object>().ToArray());
-            playerFlatComboBox8.Items.AddRange(playerFlatComboBox1.Items.Cast<Object>().ToArray());
-            playerFlatComboBox9.Items.AddRange(playerFlatComboBox1.Items.Cast<Object>().ToArray());
-            playerFlatComboBox10.Items.AddRange(playerFlatComboBox1.Items.Cast<Object>().ToArray());
-            playerFlatComboBox11.Items.AddRange(playerFlatComboBox1.Items.Cast<Object>().ToArray());
-            playerFlatComboBox12.Items.AddRange(playerFlatComboBox1.Items.Cast<Object>().ToArray());
-            playerFlatComboBox13.Items.AddRange(playerFlatComboBox1.Items.Cast<Object>().ToArray());
-            playerFlatComboBox14.Items.AddRange(playerFlatComboBox1.Items.Cast<Object>().ToArray());
-            playerFlatComboBox15.Items.AddRange(playerFlatComboBox1.Items.Cast<Object>().ToArray());
-            playerFlatComboBox16.Items.AddRange(playerFlatComboBox1.Items.Cast<Object>().ToArray());
+            PlayerItems = CharaNamesDict.Values.Cast<object>().ToArray();
 
             // Equipments
             ItemsConfigs = GameOpened.GetItems("all").ToList();
@@ -585,50 +663,78 @@ namespace Lynx.Forms.Soccers
             BraceletNamesDict.Add(0, "");
             PendantNamesDict = GetNames(pendeant);
             PendantNamesDict.Add(0, "");
-            bootsFlatComboBox.Items.AddRange(BootsNamesDict.Values.ToArray());
-            glovesFlatComboBox.Items.AddRange(GlovesNamesDict.Values.ToArray());
-            braceletFlatComboBox.Items.AddRange(BraceletNamesDict.Values.ToArray());
-            pendantFlatComboBox.Items.AddRange(PendantNamesDict.Values.ToArray());
 
             // coach
             IItemConfig[] coaches = ItemsConfigs.Where(x => x.ItemCategory == (int)ItemTypes.Coach).ToArray();
             CoachNamesDict = GetNames(coaches);
             CoachNamesDict.Add(0, "");
-            coachFlatComboBox.Items.AddRange(CoachNamesDict.Values.ToArray());
 
             // formation
             IItemConfig[] formations = ItemsConfigs.Where(x => x.ItemCategory == (int)ItemTypes.FormationMatch || x.ItemCategory == (int)ItemTypes.FormationMiniBattle).ToArray();
             FormationNamesDict = GetNames(formations);
             FormationNamesDict.Add(0, "");
-            formationFlatComboBox.Items.AddRange(FormationNamesDict.Values.ToArray());
 
             // tactic
             IItemConfig[] tactics = ItemsConfigs.Where(x => x.ItemCategory == (int)ItemTypes.Tactic).ToArray();
             TacticNamesDict = GetNames(tactics);
             TacticNamesDict.Add(0, "");
-            tacticFlatComboBox.Items.AddRange(TacticNamesDict.Values.ToArray());
 
             // Kits
             IItemConfig[] kits = ItemsConfigs.Where(x => x.ItemCategory == (int)ItemTypes.Kit).ToArray();
             KitNamesDict = GetKitNames(kits);
             KitNamesDict.Add(0, "");
-            kitFlatComboBox.Items.AddRange(KitNamesDict.Values.ToArray());
 
             // All items
             ItemsNamesDict = GetNames(ItemsConfigs.ToArray());
             ItemsNamesDict.Add(0, "");
-            dropFlatComboBox1.Items.AddRange(ItemsNamesDict.Values.ToArray());
-            dropFlatComboBox2.Items.AddRange(dropFlatComboBox1.Items.Cast<Object>().ToArray());
-            dropFlatComboBox3.Items.AddRange(dropFlatComboBox1.Items.Cast<Object>().ToArray());
-            dropFlatComboBox4.Items.AddRange(dropFlatComboBox1.Items.Cast<Object>().ToArray());
-            dropFlatComboBox5.Items.AddRange(dropFlatComboBox1.Items.Cast<Object>().ToArray());
-            dropFlatComboBox6.Items.AddRange(dropFlatComboBox1.Items.Cast<Object>().ToArray());
+            DropItems = ItemsNamesDict.Values.Cast<object>().ToArray();
 
             Soccers = GameOpened.GetSoccers().ToList();
             TeamParams = GameOpened.GetTeamParams().ToList();
             TeamConfigs = GameOpened.GetTeamConfig().ToList();
+        }
+
+        private void InitializeSoccersResource()
+        {
+            // Read the game data on a worker thread while the UI thread creates the native handles
+            Task loadTask = Task.Run((Action)LoadSoccersData);
+
+            // Create the native handles while the combo boxes are still empty: creating a handle
+            // that already holds thousands of items is ~10x slower than filling it afterwards
+            foreach (FlatComboBox comboBox in GetAllComboBoxes(this))
+            {
+                IntPtr handle = comboBox.Handle;
+            }
+
+            loadTask.GetAwaiter().GetResult();
+
+            SetComboBoxesUpdating(true);
+
+            foreach (FlatComboBox playerComboBox in new[] { playerFlatComboBox1, playerFlatComboBox2, playerFlatComboBox3, playerFlatComboBox4,
+                playerFlatComboBox5, playerFlatComboBox6, playerFlatComboBox7, playerFlatComboBox8, playerFlatComboBox9, playerFlatComboBox10,
+                playerFlatComboBox11, playerFlatComboBox12, playerFlatComboBox13, playerFlatComboBox14, playerFlatComboBox15, playerFlatComboBox16 })
+            {
+                AddLazyItems(playerComboBox, PlayerItems);
+            }
+
+            foreach (FlatComboBox dropComboBox in new[] { dropFlatComboBox1, dropFlatComboBox2, dropFlatComboBox3,
+                dropFlatComboBox4, dropFlatComboBox5, dropFlatComboBox6 })
+            {
+                AddLazyItems(dropComboBox, DropItems);
+            }
+
+            bootsFlatComboBox.Items.AddRange(BootsNamesDict.Values.ToArray());
+            glovesFlatComboBox.Items.AddRange(GlovesNamesDict.Values.ToArray());
+            braceletFlatComboBox.Items.AddRange(BraceletNamesDict.Values.ToArray());
+            pendantFlatComboBox.Items.AddRange(PendantNamesDict.Values.ToArray());
+            coachFlatComboBox.Items.AddRange(CoachNamesDict.Values.ToArray());
+            formationFlatComboBox.Items.AddRange(FormationNamesDict.Values.ToArray());
+            tacticFlatComboBox.Items.AddRange(TacticNamesDict.Values.ToArray());
+            kitFlatComboBox.Items.AddRange(KitNamesDict.Values.ToArray());
 
             FillCombobox();
+
+            SetComboBoxesUpdating(false);
         }
 
         private void SoccersWindow_FormClosed(object sender, FormClosedEventArgs e)
@@ -726,17 +832,17 @@ namespace Lynx.Forms.Soccers
             nicePlayFlatNumericUpDown.Value = SelectedTeamParam.NicePlayBonus;
 
             // drops
-            dropFlatComboBox1.SelectedIndex = dropFlatComboBox1.Items.IndexOf(ItemsNamesDict[SelectedTeamParam.DropID1]);
+            SetLazySelection(dropFlatComboBox1, ItemsNamesDict[SelectedTeamParam.DropID1]);
             droptRateFlatNumericUpDown1.Value = SelectedTeamParam.DropRate1;
-            dropFlatComboBox2.SelectedIndex = dropFlatComboBox2.Items.IndexOf(ItemsNamesDict[SelectedTeamParam.DropID2]);
+            SetLazySelection(dropFlatComboBox2, ItemsNamesDict[SelectedTeamParam.DropID2]);
             droptRateFlatNumericUpDown2.Value = SelectedTeamParam.DropRate2;
-            dropFlatComboBox3.SelectedIndex = dropFlatComboBox3.Items.IndexOf(ItemsNamesDict[SelectedTeamParam.DropID3]);
+            SetLazySelection(dropFlatComboBox3, ItemsNamesDict[SelectedTeamParam.DropID3]);
             droptRateFlatNumericUpDown3.Value = SelectedTeamParam.DropRate3;
-            dropFlatComboBox4.SelectedIndex = dropFlatComboBox4.Items.IndexOf(ItemsNamesDict[SelectedTeamParam.DropID4]);
+            SetLazySelection(dropFlatComboBox4, ItemsNamesDict[SelectedTeamParam.DropID4]);
             droptRateFlatNumericUpDown4.Value = SelectedTeamParam.DropRate4;
-            dropFlatComboBox5.SelectedIndex = dropFlatComboBox5.Items.IndexOf(ItemsNamesDict[SelectedTeamParam.DropID5]);
+            SetLazySelection(dropFlatComboBox5, ItemsNamesDict[SelectedTeamParam.DropID5]);
             droptRateFlatNumericUpDown5.Value = SelectedTeamParam.DropRate5;
-            dropFlatComboBox6.SelectedIndex = dropFlatComboBox6.Items.IndexOf(ItemsNamesDict[SelectedTeamParam.DropID6]);
+            SetLazySelection(dropFlatComboBox6, ItemsNamesDict[SelectedTeamParam.DropID6]);
             droptRateFlatNumericUpDown6.Value = SelectedTeamParam.DropRate6;
 
             // Team config
@@ -1486,6 +1592,7 @@ namespace Lynx.Forms.Soccers
         {
             if (SelectedTeamConfig == null) return;
 
+            EnsureFilled(playerFlatComboBox1);
             playerFlatComboBox1.SelectedIndex = playerFlatComboBox1.Items.Count - 1;
 
             // Dynamically determine the player number from the ComboBox name (assuming "playerFlatComboBox1")
