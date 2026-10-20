@@ -1,8 +1,9 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
+﻿using Lynx.InazumaEleven.Logic;
 using StudioElevenLib.Level5.Archive.ARC0;
-using Lynx.InazumaEleven.Logic;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using static Lynx.InazumaEleven.Games.GameSupports;
 using static Lynx.InazumaEleven.Games.GO.GOSupport;
 
 namespace Lynx.InazumaEleven.Games.GO
@@ -94,6 +95,8 @@ namespace Lynx.InazumaEleven.Games.GO
                 { "kiznax_hint_text", new GameSupports.GameFile(IE_A, "/data/res/text/kiznax_hint_text_" + LanguageCode + ".cfg.bin") },
                 { "team_text", new GameSupports.GameFile(IE_A, "/data/res/text/team_text_" + LanguageCode + ".cfg.bin") },
                 { "troute_text", new GameSupports.GameFile(IE_A, "/data/res/text/troute_text_" + LanguageCode + ".cfg.bin") },
+                { "community_text", new GameSupports.GameFile(IE_A, "/data/txt/43010000_" + LanguageCode + ".cfg.bin") },
+                { "shop_text", new GameSupports.GameFile(IE_A, "/data/txt/43020000_" + LanguageCode + ".cfg.bin") },
             };
         }
 

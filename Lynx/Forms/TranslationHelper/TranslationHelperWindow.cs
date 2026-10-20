@@ -41,6 +41,10 @@ namespace Lynx.Forms.TranslationHelper
 
         private Dictionary<string, T2bþ> Teamtexts;
 
+        private Dictionary<string, T2bþ> Communitytexts;
+
+        private Dictionary<string, T2bþ> Shoptexts;
+
         public TranslationHelperWindow(Game game)
         {
             GameOpened = game;
@@ -64,6 +68,8 @@ namespace Lynx.Forms.TranslationHelper
             Itemtexts = new Dictionary<string, T2bþ>();
             Skilltexts = new Dictionary<string, T2bþ>();
             Teamtexts = new Dictionary<string, T2bþ>();
+            Communitytexts = new Dictionary<string, T2bþ>();
+            Shoptexts = new Dictionary<string, T2bþ>();
 
             foreach (string key in GOSupport.AvailableLanguages.Values)
             {
@@ -87,6 +93,12 @@ namespace Lynx.Forms.TranslationHelper
 
                 GameSupports.GameFile teamTextGameFile = GameOpened.Files["team_text"];
                 Teamtexts[key] = new T2bþ(teamTextGameFile.File.Directory.GetFileFromFullPath(teamTextGameFile.Path));
+
+                GameSupports.GameFile communityTextGameFile = GameOpened.Files["community_text"];
+                Communitytexts[key] = new T2bþ(communityTextGameFile.File.Directory.GetFileFromFullPath(communityTextGameFile.Path));
+
+                GameSupports.GameFile shopTextGameFile = GameOpened.Files["shop_text"];
+                Shoptexts[key] = new T2bþ(shopTextGameFile.File.Directory.GetFileFromFullPath(shopTextGameFile.Path));
             }
 
             GameOpened.LanguageCode = CibleLanguage;
@@ -114,6 +126,8 @@ namespace Lynx.Forms.TranslationHelper
                         ImportSheetToDictionary(package, "Itemtexts", Itemtexts);
                         ImportSheetToDictionary(package, "Skilltexts", Skilltexts);
                         ImportSheetToDictionary(package, "Teamtexts", Teamtexts);
+                        ImportSheetToDictionary(package, "Communitytexts", Communitytexts);
+                        ImportSheetToDictionary(package, "Shoptexts", Shoptexts);
 
                         MessageBox.Show("Import completed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -277,6 +291,8 @@ namespace Lynx.Forms.TranslationHelper
                 GameOpened.SaveTextFile(GameOpened.Files["item_text"], Itemtexts[key]);
                 GameOpened.SaveTextFile(GameOpened.Files["skill_text"], Skilltexts[key]);
                 GameOpened.SaveTextFile(GameOpened.Files["team_text"], Teamtexts[key]);
+                GameOpened.SaveTextFile(GameOpened.Files["community_text"], Communitytexts[key]);
+                GameOpened.SaveTextFile(GameOpened.Files["shop_text"], Shoptexts[key]);
             }
 
             // Restaure default game language files
@@ -302,6 +318,8 @@ namespace Lynx.Forms.TranslationHelper
                     ExportDictionaryToSheet(package, Itemtexts, "Itemtexts");
                     ExportDictionaryToSheet(package, Skilltexts, "Skilltexts");
                     ExportDictionaryToSheet(package, Teamtexts, "Teamtexts");
+                    ExportDictionaryToSheet(package, Communitytexts, "Communitytexts");
+                    ExportDictionaryToSheet(package, Shoptexts, "Shoptexts");
 
                     package.SaveAs(new FileInfo(saveFileDialog.FileName));
                     MessageBox.Show("Export completed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -426,6 +444,8 @@ namespace Lynx.Forms.TranslationHelper
                     (string, byte[]) itemtext = GameOpened.GetFileNameAndContent("item_text");
                     (string, byte[]) skilltext = GameOpened.GetFileNameAndContent("skill_text");
                     (string, byte[]) teamtext = GameOpened.GetFileNameAndContent("team_text");
+                    (string, byte[]) communitytext = GameOpened.GetFileNameAndContent("community_text");
+                    (string, byte[]) shoptext = GameOpened.GetFileNameAndContent("shop_text");
 
                     // Export files
                     File.WriteAllBytes(Path.Combine(dialog.FileName, charatext.Item1), charatext.Item2);
@@ -434,6 +454,8 @@ namespace Lynx.Forms.TranslationHelper
                     File.WriteAllBytes(Path.Combine(dialog.FileName, itemtext.Item1), itemtext.Item2);
                     File.WriteAllBytes(Path.Combine(dialog.FileName, skilltext.Item1), skilltext.Item2);
                     File.WriteAllBytes(Path.Combine(dialog.FileName, teamtext.Item1), teamtext.Item2);
+                    File.WriteAllBytes(Path.Combine(dialog.FileName, communitytext.Item1), communitytext.Item2);
+                    File.WriteAllBytes(Path.Combine(dialog.FileName, shoptext.Item1), shoptext.Item2);
                 }
 
                 // Restaure default game language files
